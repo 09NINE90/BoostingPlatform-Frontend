@@ -123,9 +123,9 @@ const Header = ({forBoosterPage}) => {
                     )
                 }
                 <nav className="flex justify-between flex-row" >
-                   <div className="px-4">
+                   <div className="px-4 justify-center items-center">
                         <Badge badgeContent={cartCount} color="primary">
-                            <IconButton onClick={handleCartClick}>
+                            <IconButton onClick={handleCartClick}  sx={{ width: 48, height: 48 }}>
                                 <ShoppingCartIcon color='secondary'/>
                             </IconButton>
                         </Badge>
