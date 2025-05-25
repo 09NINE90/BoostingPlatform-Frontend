@@ -30,6 +30,7 @@ export const selectAuth = (state) => state.auth.isAuthenticated;
 export const selectRole = (state) => state.auth.role;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
+export const getToken = (state) => state.auth.token;
 
 export const { setAuth, setRole, clearAuth } = authSlice.actions;
 export default authSlice.reducer;

@@ -33,8 +33,8 @@ const SignUp = ({closeModal, signInRedirect}) => {
 
                 const credentials = {
                     nickname: nickname,
-                    username: username,
-                    password: password,
+                    username: email,
+                    password: password
                 }
 
                 const {roles} = await postRegister(credentials);
