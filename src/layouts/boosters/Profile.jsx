@@ -1,34 +1,32 @@
 import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Box, Typography, LinearProgress, Avatar, Button } from '@mui/material';
-import LogoutIcon from '@mui/icons-material/Logout';
 import EditIcon from '@mui/icons-material/Edit';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
-import { clearAuth, setAuth, setRole, selectAvatar, selectUsername, setUsername, setAvatar } from "../../store/slice/authSlice.js";
+import { clearAuth, setAuth, setRole, selectAvatar, selectUsername, setUsername } from "../../store/slice/authSlice.js";
 
-function ProfileMain() {
+const ProfileMain = () => {
     const dispatch = useDispatch();
-    const [orders, setOrders] = useState([]);
-    const [totalSpent, setTotalSpent] = useState(0);
     const [isEditingName, setIsEditingName] = useState(false);
-     const [userName, setUserName] = useState(useSelector(selectUsername));
-    const [tempName, setTempName] = useState(userName);
-    const fileInputRef = useRef(null);
     const [userAvatar, setUserAvatar] = useState(useSelector(selectAvatar));
-    
-    const getMyOrders = () => {
-        return [
-            {uuid:"123141", orderId:"1", platform: "PC", name:"Dark matter Camo", status: "Completed", estimateDate:"20.05.2025", price: "100"},
-            {uuid:"213445", orderId:"2", platform: "PS5", name:"Dark matter Camo", status: "In Progress", estimateDate:"20.05.2025", price: "200"},
-            {uuid:"124361", orderId:"3", platform: "PS4", name:"Dark matter Camo", status: "Completed", estimateDate:"20.05.2025", price: "300"},
-        ];
-    };
+    const [userName, setUserName] = useState(useSelector(selectUsername));
+    const [tempName, setTempName] = useState(userName);
+    const [profileInfo, setProfileInfo] = useState(null);
+    const fileInputRef = useRef(null);
+
+    const getProfileInfo = () => {
+        return {
+            totalEarn: 1000,
+            totalTips: 50,
+            ordersDone: 12,
+            balance: 75
+        }
+    }
 
     React.useEffect(() => {
-        const orders = getMyOrders();
-        setOrders(orders);
-        const total = orders.reduce((acc, order) => acc + parseFloat(order.price), 0);
-        setTotalSpent(total);
+        const profileInfo = getProfileInfo();
+        setProfileInfo(profileInfo);
+        console.log(userName);
     }, []);
 
     const handleLogout = async () => {
@@ -70,14 +68,14 @@ function ProfileMain() {
         }
     };
 
-    const getCashbackLevel = () => {
-        if (totalSpent >= 2000) return { level: "Legend", percentage: 20, nextLevel: null, progress: 100 };
-        if (totalSpent >= 1000) return { level: "Hero", percentage: 15, nextLevel: "Legend", progress: (totalSpent - 1000) / 10 };
-        if (totalSpent >= 0) return { level: "Explorer", percentage: 10, nextLevel: "Hero", progress: totalSpent / 10 };
+    const getAccountLevel = () => {
+        if (profileInfo?.ordersDone >= 150) return { level: "Legend", percentage: 55, nextLevel: null, progress: 100 };
+        if (profileInfo?.ordersDone >= 50) return { level: "Hero", percentage: 50, nextLevel: "Legend", progress: (profileInfo?.ordersDone - 50) / 10 };
+        if (profileInfo?.ordersDone >= 0) return { level: "Explorer", percentage: 45, nextLevel: "Hero", progress: profileInfo?.ordersDone / 10 };
         return { level: "Explorer", percentage: 10, nextLevel: "Hero", progress: 0 };
     };
 
-    const cashbackInfo = getCashbackLevel();
+    const accountLevelInfo = getAccountLevel();
 
     return (
         <Box sx={{ height: '100%', padding: 3, display: 'flex', gap: 3 }}>
@@ -126,7 +124,7 @@ function ProfileMain() {
                             style={{ display: 'none' }}
                         />
                     </Box>
-                    <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}>
                         {isEditingName ? (
                             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                                 <input
@@ -153,39 +151,49 @@ function ProfileMain() {
                                 </Box>
                             </Box>
                         ) : (
-                            <>
+                            <Box sx={{display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <Typography variant="h6" sx={{ color: '#fff' }}>
                                     {userName}
                                 </Typography>
                                 <IconButton size="small" onClick={handleNameEdit}>
                                     <EditIcon sx={{ color: 'white', fontSize: 16 }} />
                                 </IconButton>
-                            </>
+                            </Box>
                         )}
+                        <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', gap: 1 }}>
+                            <Typography variant="h6" sx={{ color: '#fff' }}>
+                                Orders Done: {profileInfo?.ordersDone}
+                            </Typography>
+                            <Typography variant="h6" sx={{ color: '#fff' }}>
+                                Total Earn: {profileInfo?.totalEarn}
+                            </Typography>
+                            <Typography variant="h6" sx={{ color: '#fff' }}>
+                                Total Tips: {profileInfo?.totalTips}
+                            </Typography>
+                        </Box>
                     </Box>
                 </Box>
             </Box>
 
             {/* Main Content */}
             <Box sx={{ flex: 1 }}>
-                {/* Cashback Block */}
                 <Box sx={{ 
                     backgroundColor: '#1E1930',
                     borderRadius: 2,
                     padding: 3,
                     marginBottom: 3,
                 }}>
-                    <Typography variant="h5" sx={{ color: '#fff', marginBottom: 2 }}>
-                        Unlock higher cashback rewards as you level up!
+                    <Typography variant="h4" sx={{ color: '#fff', marginBottom: 2 }}>
+                       Account Status
                     </Typography>
                     <Typography variant="body1" sx={{ color: '#fff', marginBottom: 1 }}>
-                        Current Level: {cashbackInfo.level} • {cashbackInfo.percentage}% Cashback
+                        Current Level: {accountLevelInfo.level} • {accountLevelInfo.percentage}% 
                     </Typography>
-                    {cashbackInfo.nextLevel && (
+                    {accountLevelInfo.nextLevel && (
                         <>
                             <LinearProgress 
                                 variant="determinate" 
-                                value={cashbackInfo.progress} 
+                                value={accountLevelInfo.progress} 
                                 sx={{ 
                                     height: 10, 
                                     borderRadius: 5,
@@ -195,37 +203,32 @@ function ProfileMain() {
                                     }
                                 }} 
                             />
-                            <Typography variant="body2" sx={{ color: '#fff', marginTop: 1 }}>
-                                ${totalSpent} spent • Next level: {cashbackInfo.nextLevel}
-                            </Typography>
                         </>
                     )}
                 </Box>
 
-                {/* Orders List */}
-                <Typography variant="h5" sx={{ color: '#fff', marginBottom: 2 }}>
-                    Your Orders
-                </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                    {orders.map((order) => (
-                        <Box key={order.uuid} sx={{ 
-                            backgroundColor: '#1E1930',
-                            borderRadius: 2,
-                            padding: 2,
-                            width: 280
-                        }}>
-                            <Typography variant="h6" sx={{ color: '#fff', marginBottom: 1 }}>
-                                Order #{order.orderId}
-                            </Typography>
-                            <Box sx={{ color: '#fff' }}>
-                                <Typography variant="body2">Service: {order.name}</Typography>
-                                <Typography variant="body2">Platform: {order.platform}</Typography>
-                                <Typography variant="body2">Status: {order.status}</Typography>
-                                <Typography variant="body2">Price: ${order.price}</Typography>
-                                <Typography variant="body2">Estimate: {order.estimateDate}</Typography>
-                            </Box>
-                        </Box>
-                    ))}
+                {/* My Balance */}
+                <Box sx={{ 
+                    backgroundColor: '#1E1930',
+                    borderRadius: 2,
+                    padding: 3,
+                    height: 'fit-content'
+                }}>
+                    <Typography variant="h4" sx={{ color: '#fff', marginBottom: 2 }}>
+                        My Balance
+                    </Typography>
+                    <Box sx={{ mt:15, display: 'flex', justifyContent: 'space-between'}}>
+                        <Typography variant="h6" sx={{ color: '#fff', marginBottom: 2 }}>
+                            ${profileInfo?.balance}
+                        </Typography>
+                        <Button variant="contained">
+                            Withdrawal
+                        </Button>
+                    </Box>
+                    <Box sx={{mt:10, display: 'flex', flexDirection: 'column'}}>
+                        <a href="">How to get paid?</a>
+                        <a href="">Payout methods</a>
+                    </Box>
                 </Box>
             </Box>
         </Box>

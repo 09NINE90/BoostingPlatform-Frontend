@@ -1,12 +1,12 @@
 import React from "react";
-import BoosterHeader from "../layouts/boosters/BoosterHeader";
+import Header from "../layouts/common/Header"
 import { Outlet } from "react-router";
 
 
 const BoosterMainPage = () => {
     return (
         <div className="flex flex-col h-full">
-            <BoosterHeader/>
+            <Header forBoosterPage={true}/>
             <Outlet />
         </div>
     );

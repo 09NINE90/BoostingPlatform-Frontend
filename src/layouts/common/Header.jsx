@@ -16,14 +16,17 @@ import CartIcon from "src/assets/cart.svg"
 import Logo from "../../assets/logo-footer.svg"
 
 
-const Header = () => {
-
+const Header = ({forBoosterPage}) => {
+    const dispatch = useDispatch();
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modelType, setModalType] = useState("signin");
     const [cartCount, setCartCount] = useState(0);
-
+    const [anchorEl, setAnchorEl] = useState(null);
+    
     const isAuthenticated = useSelector(selectAuth);
+    const role = useSelector(selectRole);
     const navigate = useNavigate();
+    const [userAvatar, setUserAvatar] = useState(useSelector(selectAvatar));
 
     const handleProfileClick = () => {
         if (isAuthenticated) {
@@ -31,6 +34,26 @@ const Header = () => {
         } else {
             setModalIsOpen(true);
         }
+    };
+
+    const handleBoosterProfileNavigate = () => {
+        handleMenuClose();
+        navigate("/booster/profile");
+    }
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleProfileNavigate = () => {
+        handleMenuClose();
+        navigate("/profile");
+    };
+
+    const handleLogout = () => {
+        handleMenuClose();
+        dispatch(clearAuth());
+
     };
 
     const handleCartClick = () => {

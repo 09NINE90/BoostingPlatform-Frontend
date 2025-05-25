@@ -5,11 +5,10 @@ import axios from "axios";
 export const getAuthenticated = async () => {
     const authenticatedResponse = await axios.get(`/api/auth/me`);
     if (authenticatedResponse.data) {
-        const {roles, token} = authenticatedResponse.data;
-        console.log('token', token, 'roles', roles[0]);
+        const {role, token} = authenticatedResponse.data;
 
         return ({
-            roles: roles[0],
+            roles: role,
             token,
         });
     }
@@ -33,6 +32,7 @@ export const postAuthenticated = async (credentials) => {
         roles: Array.isArray(roles) ? roles[0] : roles,
         token: token
     };
+
 
 }
 
