@@ -18,7 +18,13 @@ import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
 import { Navigate } from 'react-router-dom';
-import ProfileBoosterPage from "./pages/ProfileBoosterPage.jsx"
+import ProfileBoosterPage from './pages/ProfileBoosterPage.jsx';
+import '@fontsource/kanit/100.css';
+import '@fontsource/kanit/200.css';
+import '@fontsource/kanit/300.css';
+import '@fontsource/kanit/400.css';
+import '@fontsource/kanit/500.css';
+import '@fontsource/kanit/700.css';
 
 
 const root = document.getElementById('root');
@@ -27,7 +33,7 @@ export const App = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Navigate to="/wow" replace/>} /> 
+                <Route path="/" element={<Navigate to="/LoE" replace/>} />
                 
                 <Route element={<HomePage/>}> 
                         <Route path=":id" element={<HomeMain/>}></Route>

@@ -12,18 +12,18 @@ const GameSideBar = ({gameList, currentGame}) => {
     <div className="hidden md:flex p-4">
       <List color="primary">
         {gameList.map((game) => (
-          <div key={game.id}>
+          <div key={game.secondId}>
             <ListItem
               button
-              onClick={() =>navigate(`/${game.id}`)}
+              onClick={() =>navigate(`/${game.secondId}`)}
               sx={{
                 display: "flex",
                 justifyContent: 'space-between',
                 alignItems: 'center', 
-                backgroundColor: currentGame === game.id ? '#1e2530' : 'transparent',
-                color: currentGame === game.id ? '#fff' : 'inherit',
+                backgroundColor: currentGame === game.secondId ? '#1e2530' : 'transparent',
+                color: currentGame === game.secondId ? '#fff' : 'inherit',
                 '&:hover': {
-                  backgroundColor: currentGame === game.id ? '#1e2530' : '#3c434e',
+                  backgroundColor: currentGame === game.secondId ? '#1e2530' : '#3c434e',
                   cursor: 'pointer',
                 },
               }}

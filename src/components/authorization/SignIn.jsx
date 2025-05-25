@@ -4,7 +4,7 @@ import {selectAuthStatus, setAuth, setRole} from "../../store/slice/authSlice.js
 import {postAuthenticated} from "../../services/authApi.jsx";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {NavLink } from "react-router";
+import {NavLink} from "react-router";
 import Alert from '@mui/material/Alert';
 
 const SignIn = ({closeModal, signUpRedirect}) => {
@@ -17,12 +17,15 @@ const SignIn = ({closeModal, signUpRedirect}) => {
 
     const signIn = async () => {
         try {
-            if(credentials["username"] != "" && credentials["password"] != "") {
-                const {roles, token} = await postAuthenticated(credentials)
+            if (credentials["username"] !== "" && credentials["password"] !== "") {
+                const { roles, token } = await postAuthenticated(credentials);
 
                 if (token) {
+                    localStorage.setItem("token", token);
                     dispatch(setRole(roles));
                     dispatch(setAuth(true));
+                } else {
+                    console.error('Токен не был получен');
                 }
                 closeModal();
             } else {
@@ -33,18 +36,18 @@ const SignIn = ({closeModal, signUpRedirect}) => {
         }
     }
 
-    return (    
+    return (
         <div className="flex flex-col justify-between">
             <div className="h-full items-center justify-between p-2">
-                <p className="mb-5">By continuing, you agree to our&nbsp; 
-                    <NavLink 
+                <p className="mb-5">By continuing, you agree to our&nbsp;
+                    <NavLink
                         className={"text-sky-400 hover:text-sky-700"}
                         to="/"
                     >
                         User Agreement
                     </NavLink>
                     &nbsp;and acknowledge that you understand the&nbsp;
-                    <NavLink 
+                    <NavLink
                         className={"text-sky-400 hover:text-sky-700"}
                         to="/"
                     >
@@ -52,8 +55,8 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                     </NavLink>.
                 </p>
                 {
-                    errorMessage && 
-                    <Alert 
+                    errorMessage &&
+                    <Alert
                         onClick={() => setErrorMessage(null)}
                         className="my-4"
                         severity="error"
@@ -90,9 +93,9 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 <div className="w-full items-start">
                     <div className="flex w-full flex-col items-start my-5">
                         <div>
-                            <NavLink 
-                             className={"text-sky-400 hover:text-sky-700"}
-                             >
+                            <NavLink
+                                className={"text-sky-400 hover:text-sky-700"}
+                            >
                                 Forgot password?
                             </NavLink>
                         </div>
@@ -109,10 +112,10 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 </div>
             </div>
             <div className="relative">
-                <Button className="w-2/3" variant="contained" color="secondary" onClick={signIn} 
-                    loading={status === "loading"}>Log In</Button>
+                <Button className="w-2/3" variant="contained" color="secondary" onClick={signIn}
+                        loading={status === "loading"}>Log In</Button>
             </div>
-        </div>    
+        </div>
     );
 };
 

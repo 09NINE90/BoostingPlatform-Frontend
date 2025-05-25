@@ -14,7 +14,7 @@ const InfoBlockList = ({data}) => {
                     <ListItem key={`${blockId}_${index}`} sx={{ display: 'list-item', p: "4px" }}>
                         <ListItemText> 
                             <Typography variant="body1" className="text-gray-300">
-                                {item.description}
+                                {item.title}
                             </Typography>
                         </ListItemText>
                     </ListItem>

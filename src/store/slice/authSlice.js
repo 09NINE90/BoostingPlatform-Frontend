@@ -39,6 +39,7 @@ export const selectAvatar = (state) => state.auth.avatar;
 export const selectRole = (state) => state.auth.role;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
+export const getToken = (state) => state.auth.token;
 
 export const { setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
 export default authSlice.reducer;

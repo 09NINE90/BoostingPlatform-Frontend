@@ -1,23 +1,23 @@
-import {baseUrl} from "../constants/constants.jsx";
+
 import axios from "axios";
 
 export const getAllGamesApi = async () => {
-    const response = await axios.get(`${baseUrl}/games/getAllGames`, {withCredentials: true});
+    const response = await axios.get(`/api/games/getAllGames`, {withCredentials: true});
     return response.data;
 }
 
 export const getGameByIdApi = async (gameId) => {
-    const response = await axios.get(`${baseUrl}/games/${gameId}`, {withCredentials: true});
+    const response = await axios.get(`/api/games/getBySecondId/${gameId}`, {withCredentials: true});
     return response.data;
 }
 
 export const getAllGamesByPageApi = async (requestData) => {
-    const response = await axios.post(`${baseUrl}/games/getAllGamesByPage`, requestData, {withCredentials: true});
+    const response = await axios.post(`/games/getAllGamesByPage`, requestData, {withCredentials: true});
     return response.data.games;
 }
 
 export const addGameApi = async (requestData) => {
-    const response = await axios.post(`${baseUrl}/games/addNewGame`, requestData,{
+    const response = await axios.post(`/games/addNewGame`, requestData,{
         headers: {
             "Content-Type": "multipart/form-data",
         },

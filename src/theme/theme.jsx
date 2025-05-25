@@ -1,21 +1,5 @@
 import { createTheme } from "@mui/material";
 
-const darkPallete = {
-    palette: {
-        mode: 'dark',
-        primary: {
-          main: '#2D2540',
-        },
-        secondary: {
-          main: '#D08D4E',
-        },
-        background: {
-          default: '#1B1A27',
-          paper: '#272632',
-        },
-      },
-};
-
 const testPallete = {
   palette: {
     mode: 'dark',
@@ -28,8 +12,8 @@ const testPallete = {
       contrastText: '#FFFFFF',
     },
     background: {
-      default: '#1B0F2B',
-      paper: '#2E1E4D', 
+      default: '#110134',
+      paper: '#19054D',
     },
     text: {
       primary: '#E0E0E0',
