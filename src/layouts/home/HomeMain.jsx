@@ -25,8 +25,8 @@ const HomeMain = () => {
         fetchData();
     }, [id]);
     return (
-        <div className='flex flex-col'>
-            <Promo />
+        <div className='flex flex-col' >
+            <Promo/>
             <div className='flex flex-row gap-5'>
                 <GameSideBar gameList={games} currentGame={id}/>
                 <OffersList gameId={id}/>

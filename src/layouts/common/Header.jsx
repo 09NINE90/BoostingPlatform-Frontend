@@ -1,21 +1,19 @@
-import styles from '../../styles/Header.module.css'
 import {useSelector} from "react-redux";
-import { selectAuth } from "../../store/slice/authSlice.js";
-import { useState } from "react";
+import {selectAuth} from "../../store/slice/authSlice.js";
+import {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
+import SignIn from "../../components/authorization/SignIn.jsx";
+import SignUp from "../../components/authorization/SignUp.jsx";
+import ModalTemplate from "../../utils/modalTemplate/ModalTemplate.jsx";
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { AppBar, IconButton } from '@mui/material';
+import {AppBar, IconButton} from '@mui/material';
 import Badge from '@mui/material/Badge';
-import PersonIcon from '@mui/icons-material/Person';
-import SignIn from "../../components/authorization/SignIn.jsx";
-import SignUp from "../../components/authorization/SignUp.jsx";
-import ModalTemplate from "../../utils/modalTemplate/ModalTemplate.jsx";
-import logo from "../../assets/logo.png"
+import ProfileIcon from "src/assets/profile.svg"
+import CartIcon from "src/assets/cart.svg"
+import Logo from "../../assets/logo-footer.svg"
 
 
 const Header = () => {
@@ -28,7 +26,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleProfileClick = () => {
-        if(isAuthenticated){
+        if (isAuthenticated) {
             navigate("/profile");
         } else {
             setModalIsOpen(true);
@@ -43,15 +41,15 @@ const Header = () => {
         <ModalTemplate
             isOpen={modalIsOpen}
             onClose={() => setModalIsOpen(false)}
-            title={modelType == "signin" ? "Sign In" : "Sign Up"}
-            content= {
-                modelType == "signin" ? 
-                    <SignIn 
-                        closeModal={() => setModalIsOpen(false)} 
+            title={modelType === "signin" ? "Sign In" : "Sign Up"}
+            content={
+                modelType === "signin" ?
+                    <SignIn
+                        closeModal={() => setModalIsOpen(false)}
                         signUpRedirect={() => setModalType("signup")}
                     />
-                :  
-                    <SignUp 
+                    :
+                    <SignUp
                         closeModal={() => setModalIsOpen(false)}
                         signInRedirect={() => setModalType("signin")}
                     />
@@ -60,11 +58,16 @@ const Header = () => {
     );
 
     return (
-        <AppBar position='sticky' color="background.paper" enableColorOnDark>
+        <AppBar position='sticky' enableColorOnDark
+                sx={{
+                    backgroundColor: 'background.paper',
+                    backgroundImage: 'none',
+                }}
+        >
             <div className="flex flex-row items-center justify-between px-5 py-2">
                 <Link color='secondary' to="/">
-                    <div className={styles.logo}>
-                        <img className="w-15" src={logo} />
+                    <div className={Logo}>
+                        <img className="w-[50px]" src={Logo}/>
                     </div>
                 </Link>
                 <FormControl className="bg-conic-900" variant="standard">
@@ -72,26 +75,23 @@ const Header = () => {
                         id="search_field"
                         startAdornment={
                             <InputAdornment position="start">
-                                <SearchIcon color='secondary' />
+                                <SearchIcon color='secondary'/>
                             </InputAdornment>
                         }
                     />
                 </FormControl>
-                <nav className="flex justify-between flex-row" >
-                    <div className="px-4">
-                        <Badge badgeContent={cartCount} color="primary">
+                <nav className="flex justify-between flex-row">
+                    <div className="px-4 hover:scale-103">
+                        <Badge badgeContent={cartCount}>
                             <IconButton onClick={handleCartClick}>
-                                <ShoppingCartIcon color='secondary'/>
+                                <img src={CartIcon} className="w-[50px]" alt="cart"/>
                             </IconButton>
                         </Badge>
                     </div>
-                    <div className="px-4">
-                        {isAuthenticated ? 
-                            <IconButton onClick={handleProfileClick}> 
-                                <PersonIcon color='secondary'/>  
-                            </IconButton>:
-                            <Button sx={{ borderRadius: '25px' }} variant="contained" onClick={handleProfileClick}>Sign In</Button>
-                        }
+                    <div className="px-4 hover:scale-103">
+                        <IconButton onClick={handleProfileClick}>
+                            <img src={ProfileIcon} className="w-[50px]" alt="profile"/>
+                        </IconButton>
                     </div>
                 </nav>
             </div>

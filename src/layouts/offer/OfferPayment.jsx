@@ -74,6 +74,10 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                 if (block.type === "SLIDER" && selectedOptions[block.id]) {
                     price += (selectedOptions[block.id].value - block.min) * block.sliderPriceChange;
                 }
+
+                if (block.type === "SLIDER_INVERT" && selectedOptions[block.id]) {
+                    price -= (selectedOptions[block.id].value - block.min) * block.sliderPriceChange;
+                }
             });
         };
         processOptions(optionsBlocks);
@@ -200,6 +204,21 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                 )}
 
                 {option.type === "SLIDER" && (
+                    <Slider
+                        marks
+                        valueLabelDisplay="auto"
+                        value={selectedOptions[option.id]?.value || option.min}
+                        min={option.min}
+                        max={option.max}
+                        getAriaValueText={(value) => value}
+                        step={option.step}
+                        onChange={(_, value) => handleChange(option.id, value, value, option.title)}
+                        aria-labelledby="slider"
+                        color="secondary"
+                    />
+                )}
+
+                {option.type === "SLIDER_INVERT" && (
                     <Slider
                         marks
                         valueLabelDisplay="auto"
