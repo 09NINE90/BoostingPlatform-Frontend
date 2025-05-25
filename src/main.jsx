@@ -18,6 +18,7 @@ import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
 import { Navigate } from 'react-router-dom';
+import ProfileBoosterPage from './pages/ProfileBoosterPage.jsx';
 import '@fontsource/kanit/100.css';
 import '@fontsource/kanit/200.css';
 import '@fontsource/kanit/300.css';

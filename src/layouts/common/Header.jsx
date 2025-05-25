@@ -1,5 +1,5 @@
-import {useSelector} from "react-redux";
-import {selectAuth} from "../../store/slice/authSlice.js";
+import {useSelector, useDispatch} from "react-redux";
+import {selectAuth, selectRole, selectAvatar  } from "../../store/slice/authSlice.js";
 import {useState} from "react";
 import {useNavigate, Link} from "react-router-dom";
 import SignIn from "../../components/authorization/SignIn.jsx";
