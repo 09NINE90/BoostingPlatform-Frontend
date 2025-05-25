@@ -3,11 +3,10 @@ import axios from "axios";
 export const getAuthenticated = async () => {
     const authenticatedResponse = await axios.get(`/api/auth/me`);
     if (authenticatedResponse.data) {
-        const {roles, token} = authenticatedResponse.data;
-        console.log('token', token, 'roles', roles[0]);
+        const {role, token} = authenticatedResponse.data;
 
         return ({
-            roles: roles[0],
+            roles: role,
             token,
         });
     }
@@ -17,10 +16,10 @@ export const getAuthenticated = async () => {
 
 export const postAuthenticated = async (credentials) => {
     const authenticatedResponse = await axios.post(`/api/auth/signIn`, credentials, {withCredentials: true});
-    const {roles, token} = authenticatedResponse.data;
+    const {role, token} = authenticatedResponse.data;
 
     return ({
-        roles: roles[0],
+        roles: role,
         token,
     });
 
@@ -36,6 +35,6 @@ export const postLogout = async () => {
 export const postRegister = async (credentials) => {
     const authenticatedResponse = await axios.post(`/api/auth/signUp`, credentials, { withCredentials: true });
 
-    const {roles, token} = authenticatedResponse.data;
-    return ({roles});
+    const {role, token} = authenticatedResponse.data;
+    return ({role, token});
 }

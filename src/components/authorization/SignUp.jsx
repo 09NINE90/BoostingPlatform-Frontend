@@ -32,8 +32,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 }
 
                 const credentials = {
-                    nickname: nickname,
-                    username: username,
+                    username: email,
                     password: password,
                 }
 
@@ -44,7 +43,8 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     closeModal();
                 }
             } catch(error) {
-                setErrorMessage(error.response.data || "An error occurred, please contact the administrator!");
+                console.log(error)
+                setErrorMessage(error.response?.data || "An error occurred, please contact the administrator!");
             }
         } else {
             setRequredFieldEmpty(true);

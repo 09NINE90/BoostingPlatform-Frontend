@@ -24,7 +24,7 @@ const OrderInformation = () => {
     }, []);
 
   return (
-    <div className='flex flex-col items-center justify-between p-3 min-w-[350px]'>
+    <div className='flex flex-col items-center justify-between p-3 min-w-[350px] bg-surface m-3 rounded-2xl'>
             <div className='p-3'>Order Information</div>
             <div>
                 <div className='p-2'>Order Id: {orderDetail.id}</div>

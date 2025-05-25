@@ -18,6 +18,7 @@ import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
 import { Navigate } from 'react-router-dom';
+import ProfileBoosterPage from "./pages/ProfileBoosterPage.jsx"
 
 
 const root = document.getElementById('root');
@@ -37,10 +38,11 @@ export const App = () => {
                     <Route exact path = "/profile" element={<ProfilePage/>}></Route>
                 </Route>
                 <Route element={<ProtectedRoute allowedRoles={BOOSTER_ROLE}/>}>
-                    <Route exact path="booster" element={<BoosterMainPage/>}>
+                    <Route exact path="/booster" element={<BoosterMainPage/>}>
                         <Route index path="dashboard" element={<Dashboard/>} />
                         <Route exact path="orders" element={<Orders/>}></Route>
                         <Route exact path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
+                        <Route path="profile" element={<ProfileBoosterPage/>}></Route>
                     </Route>
                 </Route>
             </Routes>
