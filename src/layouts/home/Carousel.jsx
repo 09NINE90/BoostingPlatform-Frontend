@@ -15,14 +15,19 @@ import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 const Carousel = () => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
-
     const [carouselItems, setCarouselItems] = useState([]);
+    const [swiper, setSwiper] = useState(null);
+
+    clearInterval()
+    setTimeout(() => swiper.slidePrev(), 100);
+    setInterval(() => swiper.slidePrev(), 5000);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const carouselItemsApi = await getCarouselItemsApi();
                 setCarouselItems(carouselItemsApi);
+
             } catch (err) {
                 console.error('Ошибка при загрузке данных:', err);
             }
@@ -47,6 +52,7 @@ const Carousel = () => {
             </div>
 
             <Swiper
+                onSwiper={setSwiper}
                 effect="coverflow"
                 grabCursor
                 centeredSlides
