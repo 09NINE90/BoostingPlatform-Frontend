@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Card, CardContent, Typography, CardMedia, Box, Button, Chip} from '@mui/material';
-import {Link, NavLink} from 'react-router';
+import {Typography, Box, Chip} from '@mui/material';
+import {NavLink} from 'react-router';
 import {getGameByIdApi} from "src/services/gamesApi.jsx";
 import {getOffersByGameId} from "src/services/offerApi.jsx";
 
@@ -41,9 +41,9 @@ const OffersList = ({gameId}) => {
 
     return (
         <Box sx={{padding: 2, flex: "1"}}>
-            <Typography variant="h6" sx={{marginBottom: 2}}>
+            <div className="kanit-bold text-2xl mb-2">
                 {game.name} Offers
-            </Typography>
+            </div>
 
             <Box sx={{display: 'flex', overflowX: 'auto', marginBottom: 3}}>
                 {categories.map((subcategory) => (
@@ -63,32 +63,31 @@ const OffersList = ({gameId}) => {
                 gridAutoRows: 'auto'
             }}>
                 {offers.map((offer) => (
-                    <NavLink
-                        to={`/offer/${offer.id}`}
-                    >
-                        <Card key={offer.id}
-                              sx={{'maxWidth': '300px', display: 'flex', flexDirection: 'column', height: '100%'}}>
-                            <CardMedia
-                                component="img"
-                                image={offer.imageUrl}
+                    <NavLink to={`/offer/${offer.id}`}>
+                        <div className="group relative w-full max-w-[300px] h-[300px] flex flex-col overflow-hidden">
+                            <img
+                                src={offer.imageUrl}
                                 alt={offer.title}
-                                sx={{height: 200, objectFit: 'cover'}}
+                                className="absolute top-0 left-0 w-full h-full object-fill z-0"
                             />
-                            <CardContent sx={{flexGrow: 1}}>
-                                <Typography variant="h6">{offer.title}</Typography>
-                                <Typography variant="body2" color="text.secondary">
+
+                            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#0A0022] via-[#0A0022b3] to-[#0A002200] z-10" />
+
+                            <div className="relative z-20 flex flex-col h-full justify-end p-4">
+                                <h2 className="text-white kanit-bold text-xl mb-2">{offer.title}</h2>
+
+                                <p className="text-white/90 kanit-light mb-4 truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:text-clip">
                                     {offer.description}
-                                </Typography>
-                            </CardContent>
-                            <Box sx={{display: 'flex', justifyContent: 'space-between', padding: 1}}>
-                                <Typography variant="body1" color="secondary">
-                                    ${offer.price}
-                                </Typography>
-                                <Button variant="contained" color="primary">
-                                    Buy Now
-                                </Button>
-                            </Box>
-                        </Card>
+                                </p>
+
+                                <div className="flex justify-between items-end">
+                                    <span className="text-white kanit-light text-lg">$ {offer.price}</span>
+                                    <button className="bg-[#FD980B] hover:bg-[#e68900] text-white font-medium px-4 py-2 rounded">
+                                        Buy Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </NavLink>
                 ))}
             </Box>
