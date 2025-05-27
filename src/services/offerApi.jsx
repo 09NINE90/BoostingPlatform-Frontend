@@ -19,3 +19,8 @@ export const postOffersToCart = async (cartItem) => {
         });
     return response.data;
 }
+
+export const getCarouselItemsApi = async () => {
+    const response = await axios.get(`/api/carousel/getItems`, {withCredentials: true});
+    return response.data;
+}

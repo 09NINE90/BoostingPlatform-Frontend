@@ -4,7 +4,6 @@ import OffersList from "./OffersList"
 import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.jsx";
 import Carousel from "./Carousel.jsx";
-import carouselItems from "src/layouts/home/items.js";
 
 const HomeMain = () => {
     const {id} = useParams();
@@ -26,8 +25,8 @@ const HomeMain = () => {
     }, [id]);
     return (
         <div className='flex flex-col'>
-            <Carousel carouselItems={carouselItems}/>
-            <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] mt-10 mx-auto" />
+            <Carousel/>
+            <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] mt-10 mx-auto"/>
             <div className='flex flex-row gap-5  mt-6'>
                 <GameSideBar gameList={games} currentGame={id}/>
                 <OffersList gameId={id}/>

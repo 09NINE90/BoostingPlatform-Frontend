@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 
@@ -9,11 +9,27 @@ import 'swiper/css/navigation';
 
 import RightArrow from 'src/assets/right_arrow.svg'
 import LeftArrow from 'src/assets/left_arrow.svg'
+import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 
 
-const Carousel = ({ carouselItems }) => {
+const Carousel = () => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
+
+    const [carouselItems, setCarouselItems] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const carouselItemsApi = await getCarouselItemsApi();
+                setCarouselItems(carouselItemsApi);
+            } catch (err) {
+                console.error('Ошибка при загрузке данных:', err);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div className="w-full max-w-[80vw] mx-auto px-4 mt-6 md-10 relative h-[300px]">
@@ -59,20 +75,20 @@ const Carousel = ({ carouselItems }) => {
             >
                 {carouselItems.map((item) => (
                     <SwiperSlide
-                        key={item.title}
+                        key={Math.random()}
                         className="!w-[500px] !h-[300px] relative rounded-2xl overflow-hidden shadow-lg group"
                     >
                         <img
                             src={item.imageUrl}
-                            alt={item.title}
+                            alt={item?.title}
                             className="absolute top-0 left-0 w-full h-full object-cover z-0"
                         />
 
                         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#0A0022] via-[#0A0022b3] to-transparent z-10" />
 
                         <div className="relative z-20 flex flex-col h-full justify-end">
-                            <h3 className="ml-3 text-white text-xl kanit-bold">{item.title}</h3>
-                            <p className="ml-3 text-white/90 kanit-light text-l mb-3">{item.description}</p>
+                            <h3 className="ml-3 text-white text-xl kanit-bold">{item?.title}</h3>
+                            <p className="ml-3 text-white/90 kanit-light text-l mb-3">{item?.description}</p>
                         </div>
                     </SwiperSlide>
                 ))}
