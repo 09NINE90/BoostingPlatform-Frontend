@@ -8,12 +8,12 @@ import ModalTemplate from "../../utils/modalTemplate/ModalTemplate.jsx";
 import InputAdornment from '@mui/material/InputAdornment';
 import Input from '@mui/material/Input';
 import FormControl from '@mui/material/FormControl';
-import SearchIcon from '@mui/icons-material/Search';
 import {AppBar, IconButton} from '@mui/material';
 import Badge from '@mui/material/Badge';
-import ProfileIcon from "src/assets/profile.svg"
-import CartIcon from "src/assets/cart.svg"
-import Logo from "../../assets/logo-footer.svg"
+import ProfileIcon from "src/assets/profile.svg";
+import CartIcon from "src/assets/cart.svg";
+import Logo from "../../assets/logo-footer.svg";
+import SearchIcon from 'src/assets/search_icon.svg';
 
 
 const Header = ({forBoosterPage}) => {
@@ -88,21 +88,27 @@ const Header = ({forBoosterPage}) => {
                 }}
         >
             <div className="flex flex-row items-center justify-between px-5 py-2">
-                <Link color='secondary' to="/">
-                    <div className={Logo}>
-                        <img className="w-[50px]" src={Logo}/>
+                <div className="flex items-center">
+                    <Link color='secondary' to="/" className="mr-10">
+                        <div className={Logo}>
+                            <img className="w-[50px]" src={Logo}/>
+                        </div>
+                    </Link>
+
+                    <div className="relative w-[25vw]">
+                        <input
+                            id="search_field"
+                            type="text"
+                            placeholder="Find an offer"
+                            className="w-full bg-conic-900 text-[#00A0FF]/80 placeholder-[#004772]/80 border-b border-[#00A0FF] focus:outline-none focus:border-b-2 focus:border-[#00A0FF] hover:border-b-2 pl-10 py-2 kanit-light"
+                        />
+                        <div className="absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer hover:scale-105">
+                            <img src={SearchIcon} alt="Search Icon" />
+                        </div>
                     </div>
-                </Link>
-                <FormControl className="bg-conic-900" variant="standard">
-                    <Input
-                        id="search_field"
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <SearchIcon color='secondary'/>
-                            </InputAdornment>
-                        }
-                    />
-                </FormControl>
+
+                </div>
+
                 <nav className="flex justify-between flex-row">
                     <div className="px-4 hover:scale-103">
                         <Badge badgeContent={cartCount}>
