@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 export const getOffersByGameId = async (gameId) => {
@@ -6,6 +5,11 @@ export const getOffersByGameId = async (gameId) => {
         const response = await axios.get(`/api/offer/getOffersByGameId/${gameId}`, {withCredentials: true});
         return response.data;
     }
+}
+
+export const getOffersByRequest = async (request) => {
+    const response = await axios.post(`/api/offer/getOffersByRequest`, request, {withCredentials: true});
+    return response.data;
 }
 
 export const postOffersToCart = async (cartItem) => {
