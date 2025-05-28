@@ -57,6 +57,10 @@ body {
   height: calc(100vh - 64px);
 }
 
+::-webkit-scrollbar {
+  width: 0;
+}
+
 .kanit-thin {
   font-family: 'Kanit';
   font-weight: 100;
