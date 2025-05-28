@@ -6,7 +6,7 @@ import {getAllGamesApi} from "src/services/gamesApi.jsx";
 import Carousel from "./Carousel.jsx";
 import {PacmanLoader} from "react-spinners";
 import {getCarouselItemsApi} from "src/services/offerApi.jsx";
-import ErrorPage from "src/layouts/error/ErrorPage.jsx";
+import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 
 const HomeMain = () => {
     const {id} = useParams();
@@ -31,15 +31,7 @@ const HomeMain = () => {
                 setGames(gamesApi);
                 setCarouselItems(carouselApi);
             } catch (err) {
-                if (err.response?.data) {
-                    setError(err.response.data);
-                } else {
-                    setError({
-                        error: "NETWORK_ERROR",
-                        message: "Failed to fetch data",
-                        status: 500
-                    });
-                }
+                setError(handleApiError(err))
             } finally {
                 setLoading(false);
             }

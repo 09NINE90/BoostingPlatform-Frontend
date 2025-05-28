@@ -1,5 +1,18 @@
 import React from "react";
 
+export const handleApiError = (error) => {
+    if (error.response?.data) {
+        return error.response.data;
+    }
+
+    return {
+        error: "NETWORK_ERROR",
+        message: error.message || "Failed to fetch data",
+        status: 500,
+        timestamp: new Date().toISOString()
+    };
+};
+
 const ErrorPage = ({error}) => {
     return (
         <div className="relative w-[100%] flex flex-col justify-center items-center h-screen bg-[#0A0022] overflow-hidden">

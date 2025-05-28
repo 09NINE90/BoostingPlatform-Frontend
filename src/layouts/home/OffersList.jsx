@@ -3,7 +3,7 @@ import {Typography, Box, Chip} from '@mui/material';
 import {NavLink} from 'react-router';
 import {getGameByIdApi} from "src/services/gamesApi.jsx";
 import {getOffersByGameId} from "src/services/offerApi.jsx";
-import ErrorPage from "src/layouts/error/ErrorPage.jsx";
+import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 
 const OffersList = ({gameId}) => {
     const [currentCategory, setCurrentCategory] = useState(null);
@@ -43,15 +43,7 @@ const OffersList = ({gameId}) => {
                 const newOffers = await getOffersByGameId(game.id);
                 setOffers(newOffers);
             } catch (err) {
-                if (err.response?.data) {
-                    setError(err.response.data);
-                } else {
-                    setError({
-                        error: "NETWORK_ERROR",
-                        message: "Failed to fetch data",
-                        status: 500
-                    });
-                }
+                setError(handleApiError(err))
             }
         };
         fetchData();
