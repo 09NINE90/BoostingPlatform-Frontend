@@ -9,32 +9,16 @@ import 'swiper/css/navigation';
 
 import RightArrow from 'src/assets/right_arrow.svg'
 import LeftArrow from 'src/assets/left_arrow.svg'
-import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 
 
-const Carousel = () => {
+const Carousel = ({carouselItems}) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
-    const [carouselItems, setCarouselItems] = useState([]);
     const [swiper, setSwiper] = useState(null);
 
     clearInterval()
     setTimeout(() => swiper.slidePrev(), 100);
-    setInterval(() => swiper.slidePrev(), 5000);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const carouselItemsApi = await getCarouselItemsApi();
-                setCarouselItems(carouselItemsApi);
-
-            } catch (err) {
-                console.error('Ошибка при загрузке данных:', err);
-            }
-        };
-
-        fetchData();
-    }, []);
+    setInterval(() => swiper.slidePrev(), 10000);
 
     return (
         <div className="w-full max-w-[80vw] mx-auto px-4 mt-6 md-10 relative h-[300px]">

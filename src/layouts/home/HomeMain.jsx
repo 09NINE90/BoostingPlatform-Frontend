@@ -4,34 +4,77 @@ import OffersList from "./OffersList"
 import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.jsx";
 import Carousel from "./Carousel.jsx";
+import {PacmanLoader} from "react-spinners";
+import {getCarouselItemsApi} from "src/services/offerApi.jsx";
+import ErrorPage from "src/layouts/error/ErrorPage.jsx";
 
 const HomeMain = () => {
     const {id} = useParams();
     const [games, setGames] = useState([]);
+    const [carouselItems, setCarouselItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (!id) return;
 
-        const fetchData = async () => {
+        const fetchAllData = async () => {
             try {
-                const gamesApi = await getAllGamesApi();
+                setLoading(true);
+                setError(null);
+
+                const [gamesApi, carouselApi] = await Promise.all([
+                    getAllGamesApi(),
+                    getCarouselItemsApi()
+                ]);
+
                 setGames(gamesApi);
+                setCarouselItems(carouselApi);
             } catch (err) {
-                console.error('Ошибка при загрузке данных:', err);
+                if (err.response?.data) {
+                    setError(err.response.data);
+                } else {
+                    setError({
+                        error: "NETWORK_ERROR",
+                        message: "Failed to fetch data",
+                        status: 500
+                    });
+                }
+            } finally {
+                setLoading(false);
             }
         };
-
-        fetchData();
+        fetchAllData();
     }, [id]);
+
     return (
-        <div className='flex flex-col'>
-            <Carousel/>
-            <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] mt-10 mx-auto"/>
-            <div className='flex flex-row gap-5  mt-6'>
-                <GameSideBar gameList={games} currentGame={id}/>
-                <OffersList gameId={id}/>
-            </div>
-        </div>
+        <>
+            {loading &&
+                (
+                    <div className="flex justify-center items-center h-screen">
+                        <PacmanLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "0 auto"}}/>
+                    </div>
+                )}
+            {!loading && (
+                <>
+                    {error && (
+                        <ErrorPage error={error}/>
+                    )}
+                    <div className='flex flex-col'>
+                        {!error && (
+                            <>
+                                <Carousel carouselItems={carouselItems}/>
+                                <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] mt-10 mx-auto"/>
+                                <div className='flex flex-row gap-5  mt-6'>
+                                    <GameSideBar gameList={games} currentGame={id}/>
+                                    <OffersList gameId={id}/>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                </>
+            )}
+        </>
     );
 }
 
