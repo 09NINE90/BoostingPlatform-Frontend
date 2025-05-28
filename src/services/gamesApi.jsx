@@ -11,6 +11,11 @@ export const getGameByIdApi = async (gameId) => {
     return response.data;
 }
 
+export const getGameCategoriesApi = async (gameId) => {
+    const response = await axios.get(`/api/games/getCategoriesByGameId/${gameId}`, {withCredentials: true});
+    return response.data;
+}
+
 export const getAllGamesByPageApi = async (requestData) => {
     const response = await axios.post(`/games/getAllGamesByPage`, requestData, {withCredentials: true});
     return response.data.games;

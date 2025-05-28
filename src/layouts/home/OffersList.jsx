@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Box} from '@mui/material';
-import {getGameByIdApi} from "src/services/gamesApi.jsx";
+import {getGameByIdApi, getGameCategoriesApi} from "src/services/gamesApi.jsx";
 import {getOffersByRequest} from "src/services/offerApi.jsx";
 import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import EmptyResponse from "src/layouts/EmptyResponse.jsx";
@@ -27,13 +27,25 @@ const OffersList = ({gameId}) => {
             try {
                 const gameApi = await getGameByIdApi(gameId);
                 setGame(gameApi);
-                setCategories(gameApi.categories);
             } catch (err) {
                 setError(handleApiError(err))
             }
         };
         fetchData();
     }, [gameId]);
+
+    useEffect(() => {
+        if (!game.id) return;
+        const fetchData = async () => {
+            try {
+                const categoriesApi = await getGameCategoriesApi(game.id);
+                setCategories(categoriesApi);
+            } catch (err) {
+                setError(handleApiError(err))
+            }
+        };
+        fetchData();
+    }, [game]);
 
     useEffect(() => {
         if (!game.id) return;
