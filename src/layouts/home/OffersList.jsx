@@ -19,7 +19,7 @@ const OffersList = ({gameId}) => {
     const [totalPages, setTotalPages] = useState(0);
     const [recordTotal, setRecordTotal] = useState(20);
 
-    const employeesPerPage = 2;
+    const employeesPerPage = 8;
 
     useEffect(() => {
         if (!gameId) return;

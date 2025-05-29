@@ -1,6 +1,7 @@
 import { store } from "../store/store.js";
 
 import axios from "axios";
+import {getToken} from "src/store/slice/authSlice.js";
 
 export const getAuthenticated = async () => {
     const authenticatedResponse = await axios.get(`/api/auth/me`);
@@ -22,25 +23,18 @@ export const postAuthenticated = async (credentials) => {
         throw new Error('Сервер не вернул данные');
     }
 
-    const { roles, token } = authenticatedResponse.data;
+    const { role, token } = authenticatedResponse.data;
 
     if (!token) {
         throw new Error('Токен не найден в ответе сервера');
     }
 
     return {
-        roles: Array.isArray(roles) ? roles[0] : roles,
+        role: Array.isArray(role) ? role[0] : role,
         token: token
     };
 
 
-}
-
-export const postLogout = async () => {
-    // const authenticatedResponse = await axios.post(`/api/auth/logout`, {}, {withCredentials: true});
-    // const logout = authenticatedResponse.data;
-
-    return ({logout});
 }
 
 export const postRegister = async (credentials) => {
@@ -50,9 +44,10 @@ export const postRegister = async (credentials) => {
     return ({roles});
 }
 
-axios.interceptors.request.use((config) => {
-    if(localStorage.getItem("token")) {
-    config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`
+axios.interceptors.request.use(config => {
+    const token = getToken(store.getState()); // Получаем токен из текущего состояния
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
-})
+});

@@ -25,18 +25,22 @@ import '@fontsource/kanit/300.css';
 import '@fontsource/kanit/400.css';
 import '@fontsource/kanit/500.css';
 import '@fontsource/kanit/700.css';
+import {ToastContainer} from "react-toastify";
 
 const root = document.getElementById('root');
 
 export const App = () => {
     return (
         <BrowserRouter>
+            <ToastContainer position="bottom-right" autoClose={2000}
+                            toastClassName="custom-toast"
+                            bodyClassName="custom-toast-body"/>
             <Routes>
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
-                    <Route path="/games/:id" element={ <HomeMain/>}></Route>
+                    <Route path="/games/:id" element={<HomeMain/>}></Route>
                     <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
                 </Route>
 

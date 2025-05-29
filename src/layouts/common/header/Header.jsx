@@ -11,6 +11,7 @@ import {clearAuth, selectAuth, selectAvatar, selectRole} from "src/store/slice/a
 import Search from "src/layouts/common/header/utils/ui/Search.jsx";
 import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
+import {toast} from "react-toastify";
 
 const Header = ({forBoosterPage}) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -41,6 +42,7 @@ const Header = ({forBoosterPage}) => {
     const handleLogout = useCallback(() => {
         handleProfileMenuClose();
         dispatch(clearAuth());
+        toast.success('Logout successfully');
     }, [handleProfileMenuClose, dispatch]);
 
     const toggleModal = useCallback(() => {

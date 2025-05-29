@@ -14,7 +14,6 @@ const EmptyResponse = ({text}) => {
 
                 <p className="mt-6 text-gray-400 text-center max-w-md px-4">
                     <p> Nothing was found for your search.</p>
-                    <p> Try changing the search or filtering settings.</p>
                 </p>
             </div>
         </div>

@@ -1,12 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
-// Глобально включаем отправку куки
 axios.defaults.withCredentials = true;
 
 const initialState = {
     isAuthenticated: false,
     role: "",
+    token: null,
     username: null,
     avatar: "https://mos.gallery/upload/iblock/73a/73aa1e03826e05eafea7ec1da14d4b4e.jpg",
     status: "idle",
@@ -23,7 +23,10 @@ const authSlice = createSlice({
         setAuth: (state, action) => {
             state.isAuthenticated = action.payload;
         },
-        clearAuth: () => initialState,
+        setToken: (state, action) => {
+            state.token = action.payload;
+        },
+        clearAuth: () => ({ ...initialState }),
         setUsername: (state, action) => {
             state.username = action.payload;
         },
@@ -41,5 +44,5 @@ export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
 export const getToken = (state) => state.auth.token;
 
-export const { setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
+export const { setToken,setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
 export default authSlice.reducer;

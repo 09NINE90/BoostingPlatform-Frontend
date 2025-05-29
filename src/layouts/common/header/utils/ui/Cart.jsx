@@ -21,6 +21,7 @@ const Cart = ({cartCount}) => {
             const cartItemsApi = await getCartItemsApi();
             setCartItems(cartItemsApi);
         } catch (err) {
+            setCartItems([])
             console.error(handleApiError(err));
         } finally {
             setIsLoading(false);

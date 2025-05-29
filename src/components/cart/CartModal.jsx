@@ -1,5 +1,7 @@
 import CartItems from "src/components/cart/CartItems.jsx";
 import CartPayment from "src/components/cart/CartPayment.jsx";
+import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import React from "react";
 
 const CartModal = ({cartItems}) => {
     return (
@@ -10,9 +12,7 @@ const CartModal = ({cartItems}) => {
                         <CartItems item={item}/>
                     ))
                 ) : (
-                    <div className="flex justify-center text-center text-gray-400 py-8">
-                        Your cart is empty.
-                    </div>
+                    <EmptyResponse text={'Your cart is empty.'}/>
                 )}
             </div>
 

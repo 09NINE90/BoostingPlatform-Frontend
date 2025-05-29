@@ -5,8 +5,8 @@ import authReducer from "./slice/authSlice.js";
 
 const persistConfig = {
     key: 'auth',
-    storage, // Хранилище по умолчанию (localStorage)
-    whitelist: ['isAuthenticated', 'role', 'username', 'avatar'], // Только эти поля будут сохраняться
+    storage,
+    whitelist: ['isAuthenticated', 'role', 'username', 'avatar','token'], // Только эти поля будут сохраняться
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
