@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileMain from '../layouts/boosters/Profile'
+import ProfileMain from '../layouts/boosters/ProfilePage.jsx'
 
 const ProfileBoosterPage = () => {
   return (

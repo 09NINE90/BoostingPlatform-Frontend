@@ -1,4 +1,4 @@
-const Profile = () => {
+const ProfileIcon = () => {
     return (
         <svg width="47" height="40" viewBox="0 0 47 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -20,4 +20,4 @@ const Profile = () => {
     )
 }
 
-export default Profile;
+export default ProfileIcon;

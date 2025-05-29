@@ -1,4 +1,4 @@
-const Cart = () => {
+const CartIcon = () => {
     return (
         <svg width="52" height="49" viewBox="0 0 52 49" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M35.432 41V31.816L33.8 32.104V31L36.744 30.536V41H35.432Z" fill="#00A0FF"/>
@@ -9,4 +9,4 @@ const Cart = () => {
     )
 }
 
-export default Cart;
+export default CartIcon;

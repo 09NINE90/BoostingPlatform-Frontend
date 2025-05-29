@@ -24,7 +24,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const dispatch = useDispatch();
 
     const signUp = async () => {
-        if(nickname != "" && confirmPassword != "") {
+        if(nickname !== "" && confirmPassword !== "") {
             try {
                 if (password !== confirmPassword) {
                     setErrorMessage("Passwords do not match!");
@@ -33,7 +33,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
 
                 const credentials = {
                     nickname: nickname,
-                    username: email,
+                    email: email,
                     password: password
                 }
 

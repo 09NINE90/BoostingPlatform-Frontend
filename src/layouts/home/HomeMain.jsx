@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import GameSideBar from './GameSideBar'
+import GameSideBar from './gameSidebar/GameSideBar.jsx'
 import OffersList from "./OffersList"
 import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.jsx";

@@ -8,7 +8,7 @@ import {NavLink} from "react-router";
 import Alert from '@mui/material/Alert';
 
 const SignIn = ({closeModal, signUpRedirect}) => {
-    const [credentials, setCredentials] = useState({username: "", password: ""});
+    const [credentials, setCredentials] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState(null);
     const [requredFieldEmpty, setRequredFieldEmpty] = useState(false);
 
@@ -17,7 +17,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
 
     const signIn = async () => {
         try {
-            if (credentials["username"] !== "" && credentials["password"] !== "") {
+            if (credentials["email"] !== "" && credentials["password"] !== "") {
                 const { roles, token } = await postAuthenticated(credentials);
 
                 if (token) {
@@ -71,8 +71,8 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                         required
                         label="Login"
                         variant="outlined"
-                        value={credentials["username"]}
-                        onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+                        value={credentials["email"]}
+                        onChange={(e) => setCredentials({...credentials, email: e.target.value})}
                     />
                     <div className="form-field"/>
                     <TextField
