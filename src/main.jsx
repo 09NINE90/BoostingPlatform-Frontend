@@ -12,12 +12,12 @@ import Dashboard from './layouts/boosters/Dashboard.jsx';
 import Orders from './layouts/boosters/Orders.jsx';
 import OrderDetailPage from './pages/OrderDetailPage.jsx';
 import ProtectedRoute from './utils/routing/ProtectedRoute.jsx';
-import { ThemeProvider, CssBaseline } from '@mui/material';
+import {ThemeProvider, CssBaseline} from '@mui/material';
 import React from 'react';
 import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import ProfileBoosterPage from './pages/ProfileBoosterPage.jsx';
 import '@fontsource/kanit/100.css';
 import '@fontsource/kanit/200.css';
@@ -25,27 +25,31 @@ import '@fontsource/kanit/300.css';
 import '@fontsource/kanit/400.css';
 import '@fontsource/kanit/500.css';
 import '@fontsource/kanit/700.css';
-
+import {ToastContainer} from "react-toastify";
 
 const root = document.getElementById('root');
 
 export const App = () => {
     return (
         <BrowserRouter>
+            <ToastContainer position="bottom-right" autoClose={2000}
+                            toastClassName="custom-toast"
+                            bodyClassName="custom-toast-body"/>
             <Routes>
-                <Route path="/" element={<Navigate to="/LoE" replace/>} />
-                
-                <Route element={<HomePage/>}> 
-                        <Route path=":id" element={<HomeMain/>}></Route>
-                        <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
+                <Route path="/" element={<Navigate to="/LoE" replace/>}/>
+
+                <Route element={<HomePage/>}>
+                    <Route path=":id" element={<HomeMain/>}></Route>
+                    <Route path="/games/:id" element={<HomeMain/>}></Route>
+                    <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>
-                    <Route exact path = "/profile" element={<ProfilePage/>}></Route>
+                    <Route exact path="/profile" element={<ProfilePage/>}></Route>
                 </Route>
                 <Route element={<ProtectedRoute allowedRoles={BOOSTER_ROLE}/>}>
                     <Route exact path="/booster" element={<BoosterMainPage/>}>
-                        <Route index path="dashboard" element={<Dashboard/>} />
+                        <Route index path="dashboard" element={<Dashboard/>}/>
                         <Route exact path="orders" element={<Orders/>}></Route>
                         <Route exact path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
                         <Route path="profile" element={<ProfileBoosterPage/>}></Route>

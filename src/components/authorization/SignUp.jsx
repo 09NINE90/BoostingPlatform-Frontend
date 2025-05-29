@@ -3,7 +3,7 @@ import { useState } from "react";
 import {setAuth, setRole} from "../../store/slice/authSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthStatus } from "../../store/slice/authSlice.js";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {postRegister} from "../../services/authApi.jsx";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
@@ -24,7 +24,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const dispatch = useDispatch();
 
     const signUp = async () => {
-        if(nickname != "" && confirmPassword != "") {
+        if(nickname !== "" && confirmPassword !== "") {
             try {
                 if (password !== confirmPassword) {
                     setErrorMessage("Passwords do not match!");
@@ -33,7 +33,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
 
                 const credentials = {
                     nickname: nickname,
-                    username: email,
+                    email: email,
                     password: password
                 }
 

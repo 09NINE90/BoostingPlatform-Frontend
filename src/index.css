@@ -46,6 +46,17 @@ body {
   width: 100%;
 }
 
+.custom-toast {
+    background-color: #19054D;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.custom-toast-body {
+    padding: 12px 16px;
+}
+
 .dashboard-active {
   display: flex;
   flex-direction: column;
@@ -55,6 +66,10 @@ body {
   display: grid;
   grid-template-columns: 300px 1fr;
   height: calc(100vh - 64px);
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
 
 .kanit-thin {

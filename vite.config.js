@@ -1,11 +1,19 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
-
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ],
   server: {
     proxy: {
       "/api": {
@@ -17,13 +25,37 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    host: true, // needed for the Docker Container port mapping to work
+    host: true,
     strictPort: true,
-    port: 5173, // you can replace this port with any port
+    port: 5173,
   },
   resolve: {
     alias: {
       src: '/src'
     }
+  },
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.info', 'console.warn'],
+      },
+      format: {
+        comments: false,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes('node_modules')) {
+            return 'vendor'
+          }
+        }
+      }
+    },
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000,
   }
 })

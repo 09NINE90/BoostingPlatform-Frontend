@@ -1,98 +1,117 @@
 import React, {useEffect, useState} from 'react';
-import {Card, CardContent, Typography, CardMedia, Box, Button, Chip} from '@mui/material';
-import {Link, NavLink} from 'react-router';
-import {getGameByIdApi} from "src/services/gamesApi.jsx";
-import {getOffersByGameId} from "src/services/offerApi.jsx";
+import {Box} from '@mui/material';
+import {getGameByIdApi, getGameCategoriesApi} from "src/services/gamesApi.jsx";
+import {getOffersByRequest} from "src/services/offerApi.jsx";
+import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import OfferCard from "src/layouts/home/OfferCard.jsx";
+import CategoriesFilter from "src/layouts/home/CategoriesFilter.jsx";
+import OfferPagination from "src/layouts/home/OfferPagination.jsx";
 
 const OffersList = ({gameId}) => {
     const [currentCategory, setCurrentCategory] = useState(null);
     const [offers, setOffers] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [game, setGame] = useState({}); // Начальное значение - пустой массив
+    const [game, setGame] = useState({});
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [pageNumber, setPageNumber] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [recordTotal, setRecordTotal] = useState(20);
 
+    const employeesPerPage = 8;
 
     useEffect(() => {
-        if (!gameId) return; // Если id нет, не делаем запрос
-
+        if (!gameId) return;
         const fetchData = async () => {
             try {
                 const gameApi = await getGameByIdApi(gameId);
                 setGame(gameApi);
-                setCategories(gameApi.categories);
             } catch (err) {
-                console.error('Ошибка при загрузке данных:', err);
+                setError(handleApiError(err))
             }
         };
         fetchData();
     }, [gameId]);
 
     useEffect(() => {
+        if (!game.id) return;
         const fetchData = async () => {
             try {
-                const newOffers = await getOffersByGameId(game.id);
-                setOffers(newOffers);
+                const categoriesApi = await getGameCategoriesApi(game.id);
+                setCategories(categoriesApi);
             } catch (err) {
-                console.error('Ошибка при загрузке данных:', err);
+                setError(handleApiError(err))
+            }
+        };
+        fetchData();
+    }, [game]);
+
+    useEffect(() => {
+        if (!game.id) return;
+        const request = {
+            gameId: game.id,
+            category: currentCategory,
+            sort: null,
+            pageNumber: pageNumber + 1,
+            pageSize: employeesPerPage
+        }
+
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const newOffers = await getOffersByRequest(request);
+                setOffers(newOffers.offers);
+                setTotalPages(newOffers.pageTotal)
+                setRecordTotal(newOffers.recordTotal)
+            } catch (err) {
+                setError(handleApiError(err))
+            } finally {
+                setLoading(false);
             }
         };
         fetchData();
 
-    }, [game]);
+    }, [game, currentCategory, pageNumber]);
+
+    const changePage = ({selected}) => {
+        setPageNumber(selected);
+    };
 
     return (
-        <Box sx={{padding: 2, flex: "1"}}>
-            <Typography variant="h6" sx={{marginBottom: 2}}>
-                {game.name} Offers
-            </Typography>
-
-            <Box sx={{display: 'flex', overflowX: 'auto', marginBottom: 3}}>
-                {categories.map((subcategory) => (
-                    <Chip
-                        key={subcategory.id}
-                        label={subcategory.name}
-                        clickable
-                        onClick={() => setCurrentCategory(subcategory.id)}
-                        sx={{marginRight: 1}}
-                    />
-                ))}
-            </Box>
-            <Box sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-                gap: 2,
-                gridAutoRows: 'auto'
-            }}>
-                {offers.map((offer) => (
-                    <NavLink
-                        to={`/offer/${offer.id}`}
-                    >
-                        <Card key={offer.id}
-                              sx={{'maxWidth': '300px', display: 'flex', flexDirection: 'column', height: '100%'}}>
-                            <CardMedia
-                                component="img"
-                                image={offer.imageUrl}
-                                alt={offer.title}
-                                sx={{height: 200, objectFit: 'cover'}}
-                            />
-                            <CardContent sx={{flexGrow: 1}}>
-                                <Typography variant="h6">{offer.title}</Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {offer.description}
-                                </Typography>
-                            </CardContent>
-                            <Box sx={{display: 'flex', justifyContent: 'space-between', padding: 1}}>
-                                <Typography variant="body1" color="secondary">
-                                    ${offer.price}
-                                </Typography>
-                                <Button variant="contained" color="primary">
-                                    Buy Now
-                                </Button>
+        <>
+            {error && (
+                <ErrorPage error={error}/>
+            )}
+            {!error && (
+                <Box sx={{padding: 2, flex: "1"}}>
+                    <div className="kanit-bold text-2xl mb-2">
+                        {game.name} Offers
+                    </div>
+                    <CategoriesFilter categories={categories} setCurrentCategory={setCurrentCategory}/>
+                    {offers && (
+                        <>
+                            <Box sx={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                                gap: 2,
+                                gridAutoRows: 'auto'
+                            }}>
+                                {offers.map((offer) => (
+                                    <OfferCard offer={offer}/>
+                                ))}
                             </Box>
-                        </Card>
-                    </NavLink>
-                ))}
-            </Box>
-        </Box>
+                            {offers.length < recordTotal && (
+                                <OfferPagination totalPages={totalPages} changePage={changePage}/>
+                            )}
+                        </>
+                    )}
+                    {!loading && offers.length === 0 && (
+                        <EmptyResponse text={'no offers by filter \'' + currentCategory + '\''}/>
+                    )}
+                </Box>
+            )}
+        </>
     )
 }
 

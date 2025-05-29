@@ -1,8 +1,8 @@
 import React from "react";
 
 import ProfileMain from "../layouts/profile/ProfileMain.jsx";
-import Header from "../layouts/common/Header.jsx";
-import Footer from "../layouts/common/Footer.jsx"
+import Header from "../layouts/common/header/Header.jsx";
+import Footer from "../layouts/common/Footer/Footer.jsx"
 
 const ProfilePage = () => {
 

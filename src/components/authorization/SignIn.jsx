@@ -1,61 +1,89 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectAuthStatus, setAuth, setRole} from "../../store/slice/authSlice.js";
+import {
+    clearAuth,
+    selectAuthStatus,
+    setAuth,
+    setAvatar, setCountCartItems,
+    setRole,
+    setToken,
+    setUsername
+} from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.jsx";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {NavLink} from "react-router";
 import Alert from '@mui/material/Alert';
+import {toast} from "react-toastify";
+import {getUserProfileData} from "src/services/userApi.jsx";
+import {getCountCartItemsApi} from "src/services/offerApi.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
-    const [credentials, setCredentials] = useState({username: "", password: ""});
+    const [credentials, setCredentials] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState(null);
-    const [requredFieldEmpty, setRequredFieldEmpty] = useState(false);
+    const [requiredFieldEmpty, setRequiredFieldEmpty] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
     const status = useSelector(selectAuthStatus);
 
     const signIn = async () => {
         try {
-            if (credentials["username"] !== "" && credentials["password"] !== "") {
-                const { roles, token } = await postAuthenticated(credentials);
+            setIsLoading(true);
 
-                if (token) {
-                    localStorage.setItem("token", token);
-                    dispatch(setRole(roles));
-                    dispatch(setAuth(true));
-                } else {
-                    console.error('Токен не был получен');
-                }
-                closeModal();
-            } else {
-                setRequredFieldEmpty(true);
+            if (!credentials.email.trim() || !credentials.password.trim()) {
+                setRequiredFieldEmpty(true);
+                return;
             }
+
+            const {role, token} = await postAuthenticated(credentials);
+
+            if (!token) {
+                throw new Error('Токен не был получен');
+            }
+
+            dispatch(setToken(token));
+            dispatch(setRole(role));
+            dispatch(setAuth(true));
+
+            toast.success('Sign in successfully');
+
+            const userProfile = await getUserProfileData();
+            dispatch(setUsername(userProfile.nickname));
+            dispatch(setAvatar(userProfile.imageUrl));
+
+            const countCartItems = await getCountCartItemsApi();
+            dispatch(setCountCartItems(countCartItems));
+
+            closeModal();
+
         } catch (error) {
-            setErrorMessage(error.response?.data || "An error occurred, please contact the administrator!");
+            dispatch(clearAuth());
+            const serverError = error.response?.data?.message
+
+            setErrorMessage(serverError || "Произошла ошибка. Пожалуйста, попробуйте снова.");
+        } finally {
+            setIsLoading(false);
         }
-    }
+    };
+
+    const linkClass = "text-sky-400 hover:text-sky-700";
 
     return (
         <div className="flex flex-col justify-between">
-            <div className="h-full items-center justify-between p-2">
-                <p className="mb-5">By continuing, you agree to our&nbsp;
-                    <NavLink
-                        className={"text-sky-400 hover:text-sky-700"}
-                        to="/"
-                    >
+            <div className="h-full p-2">
+                <p className="mb-5">
+                    By continuing, you agree to our&nbsp;
+                    <NavLink to="/" className={linkClass}>
                         User Agreement
                     </NavLink>
                     &nbsp;and acknowledge that you understand the&nbsp;
-                    <NavLink
-                        className={"text-sky-400 hover:text-sky-700"}
-                        to="/"
-                    >
+                    <NavLink to="/" className={linkClass}>
                         Privacy Policy
                     </NavLink>.
                 </p>
-                {
-                    errorMessage &&
+
+                {errorMessage && (
                     <Alert
                         onClick={() => setErrorMessage(null)}
                         className="my-4"
@@ -64,56 +92,54 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                     >
                         {errorMessage}
                     </Alert>
-                }
-                <div className="mb-7">
+                )}
+
+                <div className="mb-7 flex flex-col gap-4">
                     <TextField
-                        error={requredFieldEmpty}
+                        error={requiredFieldEmpty}
                         required
                         label="Login"
                         variant="outlined"
-                        value={credentials["username"]}
-                        onChange={(e) => setCredentials({...credentials, username: e.target.value})}
+                        value={credentials.email}
+                        onChange={(e) =>
+                            setCredentials({...credentials, email: e.target.value})
+                        }
                     />
-                    <div className="form-field"/>
                     <TextField
-                        error={requredFieldEmpty}
+                        error={requiredFieldEmpty}
                         required
                         label="Password"
                         variant="outlined"
                         type="password"
-                        value={credentials["password"]}
-                        onChange={(e) => setCredentials({...credentials, password: e.target.value})}
-                        onKeyDown={(event) => {
-                            if (event.key === 'Enter')
-                                signIn();
-                        }}
+                        value={credentials.password}
+                        onChange={(e) =>
+                            setCredentials({...credentials, password: e.target.value})
+                        }
+                        onKeyDown={(e) => e.key === "Enter" && signIn()}
                     />
-                    <div className="form-field"/>
                 </div>
-                <div className="w-full items-start">
-                    <div className="flex w-full flex-col items-start my-5">
-                        <div>
-                            <NavLink
-                                className={"text-sky-400 hover:text-sky-700"}
-                            >
-                                Forgot password?
-                            </NavLink>
-                        </div>
-                        <div>
-                            New in V-Boosting?
-                            <NavLink
-                                className={"text-sky-400 hover:text-sky-700"}
-                                onClick={signUpRedirect}
-                            >
-                                &nbsp;Sign Up
-                            </NavLink>
-                        </div>
+
+                <div className="flex flex-col items-start my-5 gap-2">
+                    <NavLink className={linkClass}>Forgot password?</NavLink>
+                    <div>
+                        New in V-Boosting?
+                        <NavLink className={linkClass} onClick={signUpRedirect}>
+                            &nbsp;Sign Up
+                        </NavLink>
                     </div>
                 </div>
             </div>
+
             <div className="relative">
-                <Button className="w-2/3" variant="contained" color="secondary" onClick={signIn}
-                        loading={status === "loading"}>Log In</Button>
+                <Button
+                    className="w-2/3"
+                    variant="contained"
+                    color="secondary"
+                    onClick={signIn}
+                    loading={status === "loading"}
+                >
+                    Log In
+                </Button>
             </div>
         </div>
     );

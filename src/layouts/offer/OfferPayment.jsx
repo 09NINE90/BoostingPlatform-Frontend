@@ -268,7 +268,7 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
         <div className="m-2 mt-7 min-w-[300px] max-w-[400px] rounded-xl bg-surface">
             <div className="relative z-0">
                 <img
-                    src="https://overgear.com/cdn-cgi/image/width=360,quality=85,format=auto/cdn/uploads/2de1aabf7251e876e2b4f9583fcfcac8.jpeg"
+                    src={offerData.imageUrl}
                     alt="background"
                     className="w-full h-full object-cover opacity-100 rounded-xl"
                 />

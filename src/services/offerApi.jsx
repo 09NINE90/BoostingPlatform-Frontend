@@ -1,4 +1,3 @@
-
 import axios from "axios";
 
 export const getOffersByGameId = async (gameId) => {
@@ -6,6 +5,11 @@ export const getOffersByGameId = async (gameId) => {
         const response = await axios.get(`/api/offer/getOffersByGameId/${gameId}`, {withCredentials: true});
         return response.data;
     }
+}
+
+export const getOffersByRequest = async (request) => {
+    const response = await axios.post(`/api/offer/getOffersByRequest`, request, {withCredentials: true});
+    return response.data;
 }
 
 export const postOffersToCart = async (cartItem) => {
@@ -17,5 +21,20 @@ export const postOffersToCart = async (cartItem) => {
                 'Authorization': `Bearer ${token}`
             }
         });
+    return response.data;
+}
+
+export const getCarouselItemsApi = async () => {
+    const response = await axios.get(`/api/carousel/getItems`, {withCredentials: true});
+    return response.data;
+}
+
+export const getCartItemsApi = async () => {
+    const response = await axios.get(`/api/offer/getCartItems`, {withCredentials: true});
+    return response.data;
+}
+
+export const getCountCartItemsApi = async () => {
+    const response = await axios.get(`/api/offer/getCountCartItems`, {withCredentials: true});
     return response.data;
 }
