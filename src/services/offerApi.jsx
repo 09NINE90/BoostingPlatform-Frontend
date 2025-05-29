@@ -28,3 +28,8 @@ export const getCarouselItemsApi = async () => {
     const response = await axios.get(`/api/carousel/getItems`, {withCredentials: true});
     return response.data;
 }
+
+export const getCartItemsApi = async () => {
+    const response = await axios.get(`/api/offer/getCartItems`, {withCredentials: true});
+    return response.data;
+}

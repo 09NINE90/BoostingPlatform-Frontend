@@ -13,13 +13,12 @@
 }
 
 .modal {
-    background-color: #2d2c3c;
-    border-radius: 15px;
+    background-color: #110134;
     width: 90%;
     min-width: 400px;
-    max-width: 400px;
+    max-width: 85vw;
     min-height: 50%;
-    max-height: 90%;
+    max-height: 85vw;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
@@ -50,10 +49,9 @@
     right: 10px;
     width: 35px;
     height: 35px;
-    background: linear-gradient(135deg, #6a6ad8, #5050d0); /* Градиентный фон */
+    background: #2a206a; /* Градиентный фон */
     color: #fff;
     border: none;
-    border-radius: 50%; /* Круглая форма */
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
@@ -80,7 +78,7 @@
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 12px;
-    color: #d08d4e;
+    color: #FFFFFF;
 }
 
 .modalBody {
