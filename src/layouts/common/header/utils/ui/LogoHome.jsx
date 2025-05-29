@@ -5,7 +5,7 @@ const LogoHome = () => {
     return (
         <Link color='secondary' to="/" className="mr-10">
             <div className={Logo}>
-                <img className="w-[50px]" src={Logo}/>
+                <img className="w-[50px]" src={Logo} alt={"Logo"}/>
             </div>
         </Link>
     )

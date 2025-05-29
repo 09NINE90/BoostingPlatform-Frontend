@@ -3,7 +3,7 @@ import { useState } from "react";
 import {setAuth, setRole} from "../../store/slice/authSlice.js";
 import { useSelector, useDispatch } from "react-redux";
 import { selectAuthStatus } from "../../store/slice/authSlice.js";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {postRegister} from "../../services/authApi.jsx";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";

@@ -5,7 +5,7 @@ import {Telegram, YouTube} from "src/assets/icons/index.js";
 const LeftFooter = () => {
     return (
         <div className="flex flex-col items-center md:items-start mb-8 md:mb-0">
-            <img src={Logo} className="w-32 md:w-auto"/>
+            <img src={Logo} alt={"Logo"} className="w-32 md:w-auto"/>
             <div className="flex flex-col mt-4 items-center md:items-start">
                 <div className="kanit-bold text-xl">
                     Social media:

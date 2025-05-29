@@ -13,7 +13,7 @@ const PaymentMethods = () => {
     ];
 
     const getIcons = useMemo(() => (
-        paymentMethods.map((method, index) => (
+        paymentMethods.map((method) => (
             method.icon
         ))
     ), [paymentMethods]);
