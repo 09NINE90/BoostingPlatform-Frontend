@@ -7,6 +7,7 @@ const initialState = {
     isAuthenticated: false,
     role: "",
     token: null,
+    countCartItems: 0,
     username: null,
     avatar: "https://mos.gallery/upload/iblock/73a/73aa1e03826e05eafea7ec1da14d4b4e.jpg",
     status: "idle",
@@ -32,6 +33,9 @@ const authSlice = createSlice({
         },
         setAvatar: (state, action) => {
             state.avatar = action.payload;
+        },
+        setCountCartItems: (state, action) => {
+            state.countCartItems = action.payload;
         }
     },
 });
@@ -43,6 +47,7 @@ export const selectRole = (state) => state.auth.role;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
 export const getToken = (state) => state.auth.token;
+export const selectCountCartItems = (state) => state.auth.countCartItems;
 
-export const { setToken,setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
+export const { setCountCartItems, setToken,setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
 export default authSlice.reducer;

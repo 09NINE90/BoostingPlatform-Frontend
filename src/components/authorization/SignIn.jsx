@@ -4,7 +4,7 @@ import {
     clearAuth,
     selectAuthStatus,
     setAuth,
-    setAvatar,
+    setAvatar, setCountCartItems,
     setRole,
     setToken,
     setUsername
@@ -16,9 +16,10 @@ import {NavLink} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import {getUserProfileData} from "src/services/userApi.jsx";
+import {getCountCartItemsApi} from "src/services/offerApi.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
+    const [credentials, setCredentials] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState(null);
     const [requiredFieldEmpty, setRequiredFieldEmpty] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 return;
             }
 
-            const { role, token } = await postAuthenticated(credentials);
+            const {role, token} = await postAuthenticated(credentials);
 
             if (!token) {
                 throw new Error('Токен не был получен');
@@ -50,6 +51,9 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             const userProfile = await getUserProfileData();
             dispatch(setUsername(userProfile.nickname));
             dispatch(setAvatar(userProfile.imageUrl));
+
+            const countCartItems = await getCountCartItemsApi();
+            dispatch(setCountCartItems(countCartItems));
 
             closeModal();
 
@@ -98,7 +102,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                         variant="outlined"
                         value={credentials.email}
                         onChange={(e) =>
-                            setCredentials({ ...credentials, email: e.target.value })
+                            setCredentials({...credentials, email: e.target.value})
                         }
                     />
                     <TextField
@@ -109,7 +113,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                         type="password"
                         value={credentials.password}
                         onChange={(e) =>
-                            setCredentials({ ...credentials, password: e.target.value })
+                            setCredentials({...credentials, password: e.target.value})
                         }
                         onKeyDown={(e) => e.key === "Enter" && signIn()}
                     />

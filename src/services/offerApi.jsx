@@ -33,3 +33,8 @@ export const getCartItemsApi = async () => {
     const response = await axios.get(`/api/offer/getCartItems`, {withCredentials: true});
     return response.data;
 }
+
+export const getCountCartItemsApi = async () => {
+    const response = await axios.get(`/api/offer/getCountCartItems`, {withCredentials: true});
+    return response.data;
+}
