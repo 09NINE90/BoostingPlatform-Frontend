@@ -1,12 +1,21 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {clearAuth, selectAuthStatus, setAuth, setRole, setToken} from "../../store/slice/authSlice.js";
+import {
+    clearAuth,
+    selectAuthStatus,
+    setAuth,
+    setAvatar,
+    setRole,
+    setToken,
+    setUsername
+} from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.jsx";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {NavLink} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
+import {getUserProfileData} from "src/services/userApi.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -37,6 +46,10 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             dispatch(setAuth(true));
 
             toast.success('Sign in successfully');
+
+            const userProfile = await getUserProfileData();
+            dispatch(setUsername(userProfile.nickname));
+            dispatch(setAvatar(userProfile.imageUrl));
 
             closeModal();
 

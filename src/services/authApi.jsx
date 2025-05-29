@@ -45,7 +45,7 @@ export const postRegister = async (credentials) => {
 }
 
 axios.interceptors.request.use(config => {
-    const token = getToken(store.getState()); // Получаем токен из текущего состояния
+    const token = getToken(store.getState());
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }
