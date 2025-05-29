@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {List, ListItem, ListItemText} from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import {useNavigate} from 'react-router';
-import GamesIcon from 'src/assets/games.svg';
+import Games from 'src/assets/icons/Games.jsx';
 
 const GameSideBar = ({gameList, currentGame}) => {
 
@@ -11,7 +11,7 @@ const GameSideBar = ({gameList, currentGame}) => {
     return (
         <div className="hidden md:flex p-4 flex-col">
             <div className="flex space-x-3">
-                <img className="w-[25px]" src={GamesIcon}/>
+                <Games/>
                 <div className="kanit-bold text-3xl">
                     GAMES
                 </div>

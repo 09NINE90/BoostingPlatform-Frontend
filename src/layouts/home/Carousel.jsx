@@ -7,8 +7,8 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import RightArrow from 'src/assets/right_arrow.svg'
-import LeftArrow from 'src/assets/left_arrow.svg'
+import RightArrow from 'src/assets/icons/RightArrow.jsx'
+import LeftArrow from 'src/assets/icons/LeftArrow.jsx'
 
 
 const Carousel = ({carouselItems}) => {
@@ -26,13 +26,13 @@ const Carousel = ({carouselItems}) => {
                 ref={prevRef}
                 className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full  shadow-lg cursor-pointer"
             >
-                <img src={LeftArrow} alt="Right Arrow" />
+                <LeftArrow />
             </div>
             <div
                 ref={nextRef}
                 className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full  shadow-lg cursor-pointer"
             >
-                <img src={RightArrow} alt="Right Arrow" />
+                <RightArrow />
             </div>
 
             <Swiper

@@ -1,27 +1,33 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import {Box} from '@mui/material'
-import VisaIcon from 'src/assets/visa.svg'
-import MastercardIcon from 'src/assets/mastercard.svg'
-import PayPalIcon from 'src/assets/pay-pal.svg'
-import BitcoinIcon from 'src/assets/bitcoin.svg'
-import ApplePay from 'src/assets/apple-pay.svg'
-import GogglePay from 'src/assets/GPay.svg'
-import Logo from 'src/assets/logo-footer.svg'
-import YouTube from 'src/assets/you-tube.svg'
-import Telegram from 'src/assets/TG.svg';
-import Mail from 'src/assets/Mail.svg'
-import WhatsApp from 'src/assets/WA.svg'
+import ApplePay from "../../assets/icons/ApplePay.jsx";
+import Bitcoin from "../../assets/icons/Bitcoin.jsx";
+import PayPal from "../../assets/icons/PayPal.jsx";
+import Mastercard from "../../assets/icons/Mastercard.jsx";
+import Logo from "../../assets/icons/Logo.svg";
+import Visa from "../../assets/icons/Visa.jsx";
+import GogglePay from 'src/assets/icons/GogglePay.jsx'
+import Mail from "../../assets/icons/Mail.jsx";
+import Telegram from "../../assets/icons/Telegram.jsx";
+import WhatsApp from "../../assets/icons/WhatsApp.jsx";
+import YouTube from "../../assets/icons/YouTube.jsx";
 
 const Footer = () => {
 
     const paymentMethods = [
-        {icon: VisaIcon, alt: 'Visa'},
-        {icon: MastercardIcon, alt: 'Mastercard'},
-        {icon: PayPalIcon, alt: 'PayPal'},
-        {icon: BitcoinIcon, alt: 'Bitcoin'},
-        {icon: ApplePay, alt: 'ApplePay'},
-        {icon: GogglePay, alt: 'GogglePay'}
+        {icon: <Visa/>, alt: 'Visa'},
+        {icon: <Mastercard/>, alt: 'Mastercard'},
+        {icon: <PayPal/>, alt: 'PayPal'},
+        {icon: <Bitcoin/>, alt: 'Bitcoin'},
+        {icon: <ApplePay/>, alt: 'ApplePay'},
+        {icon: <GogglePay/>, alt: 'GogglePay'}
     ];
+
+    const getIcons = useMemo(() => (
+        paymentMethods.map((method, index) => (
+            method.icon
+        ))
+    ), [paymentMethods]);
 
     return (
         <Box
@@ -33,14 +39,7 @@ const Footer = () => {
 
             <div className="flex justify-between w-[80%] max-w-[1200px] px-8">
                 <div className="hidden md:flex w-full justify-between">
-                    {paymentMethods.map((method, index) => (
-                        <img
-                            key={index}
-                            src={method.icon}
-                            alt={method.alt}
-                            className="h-auto"
-                        />
-                    ))}
+                    {getIcons}
                 </div>
 
                 <div className="flex md:hidden flex-wrap justify-center gap-4 w-full px-2">
@@ -57,11 +56,11 @@ const Footer = () => {
 
             <Box
                 display='flex'
-                flexDirection={{ xs: 'column', md: 'row' }}
+                flexDirection={{xs: 'column', md: 'row'}}
                 justifyContent="space-between"
                 width='90%'
                 marginTop='55px'
-                gap={{ xs: 8, md: 0 }}
+                gap={{xs: 8, md: 0}}
             >
                 {/* Лого и соцсети */}
                 <div className="flex flex-col items-center md:items-start mb-8 md:mb-0">
@@ -71,16 +70,18 @@ const Footer = () => {
                             Social media:
                         </div>
                         <div className="flex flex-row mt-2 space-x-3">
-                            <a href="#"><img src={YouTube} className="w-10 h-7 md:w-[48px] md:h-[34px] hover:scale-105"/></a>
-                            <a href="#"><img src={Telegram} className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
+                            <a href="#"><YouTube className="w-10 h-7 md:w-[48px] md:h-[34px] hover:scale-105"/></a>
+                            <a href="#"><Telegram className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
                         </div>
                     </div>
                 </div>
 
                 {/* Центральный блок */}
-                <div className="flex flex-col w-full md:w-[50%] max-w-[670px] text-center mx-auto gap-2 kanit-light order-first md:order-none mb-8 md:mb-0">
+                <div
+                    className="flex flex-col w-full md:w-[50%] max-w-[670px] text-center mx-auto gap-2 kanit-light order-first md:order-none mb-8 md:mb-0">
                     <p className="text-sm md:text-base">
-                        <span className="font-bold">VBoost</span> is a service that helps players achieve goals in modern
+                        <span className="font-bold">VBoost</span> is a service that helps players achieve goals in
+                        modern
                     </p>
                     <p className="text-sm md:text-base">
                         multiplayer games. We offer rank ups, challenging missions,
@@ -111,9 +112,9 @@ const Footer = () => {
                             Contact:
                         </div>
                         <div className="flex flex-row mt-2 space-x-3">
-                            <a href="#"><img src={Mail} className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
-                            <a href="#"><img src={Telegram} className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
-                            <a href="#"><img src={WhatsApp} className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
+                            <a href="#"><Mail className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
+                            <a href="#"><Telegram className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
+                            <a href="#"><WhatsApp className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import { Link} from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { AppBar, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import logo from '../../assets/logo.png';
+import Logo from '../../assets/icons/Logo.svg';
 
 
 const BoosterHeader = () => {
@@ -24,8 +24,8 @@ const BoosterHeader = () => {
         <AppBar position='static' color="bgColor" enableColorOnDark>
             <div className="flex flex-row items-center justify-between px-5 py-2">
                 <Link color='secondary' to="/">
-                    <div className={styles.logo}>
-                        <img className="w-19" src={logo} />
+                    <div className={styles.Logo}>
+                        <img className="w-19" src={Logo} />
                     </div>
                 </Link>
                 <div className="flex items-center justify-between">

@@ -7,10 +7,10 @@ import SignUp from "../../components/authorization/SignUp.jsx";
 import ModalTemplate from "../../utils/modalTemplate/ModalTemplate.jsx";
 import {AppBar, IconButton} from '@mui/material';
 import Badge from '@mui/material/Badge';
-import ProfileIcon from "src/assets/profile.svg";
-import CartIcon from "src/assets/cart.svg";
-import Logo from "../../assets/logo-footer.svg";
-import SearchIcon from 'src/assets/search_icon.svg';
+import Logo from "../../assets/icons/Logo.svg";
+import Profile from "../../assets/icons/Profile.jsx";
+import Cart from "../../assets/icons/Cart.jsx";
+import Search from "../../assets/icons/Search.jsx";
 
 
 const Header = ({forBoosterPage}) => {
@@ -100,7 +100,7 @@ const Header = ({forBoosterPage}) => {
                             className="w-full bg-conic-900 text-[#00A0FF]/80 placeholder-[#004772]/80 border-b border-[#00A0FF] focus:outline-none focus:border-b-2 focus:border-[#00A0FF] hover:border-b-2 pl-10 py-2 kanit-light"
                         />
                         <div className="absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer hover:scale-105">
-                            <img src={SearchIcon} alt="Search Icon" />
+                            <Search/>
                         </div>
                     </div>
 
@@ -110,13 +110,13 @@ const Header = ({forBoosterPage}) => {
                     <div className="px-4 hover:scale-103">
                         <Badge badgeContent={cartCount}>
                             <IconButton onClick={handleCartClick}>
-                                <img src={CartIcon} className="w-[50px]" alt="cart"/>
+                                <Cart/>
                             </IconButton>
                         </Badge>
                     </div>
                     <div className="px-4 hover:scale-103">
                         <IconButton onClick={handleProfileClick}>
-                            <img src={ProfileIcon} className="w-[50px]" alt="profile"/>
+                            <Profile className="w-[50px]"/>
                         </IconButton>
                     </div>
                 </nav>

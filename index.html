@@ -2,12 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg" href="./src/assets/logo_icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>V-Boosting</title>
+
+    <meta property="og:title" content="The best boosting platform">
+    <meta property="og:description" content="V-Boost - the best boosting platform!">
+    <meta property="og:image" content="https://vboost.gg">
+    <meta property="og:url" content="https://vboost.gg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="V-Boost">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <title>V-Boost</title>
+    <link rel="icon" type="image/png" href="/src/assets/icons/Logo.svg" />
   </head>
   <body>
     <div id="root" style="height: 100%;"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RB5WDNY75L"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-RB5WDNY75L');
+    </script>
   </body>
 </html>
