@@ -24,13 +24,13 @@ const Carousel = ({carouselItems}) => {
         <div className="w-full max-w-[80vw] mx-auto px-4 mt-6 md-10 relative h-[300px]">
             <div
                 ref={prevRef}
-                className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full  shadow-lg cursor-pointer"
+                className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center shadow-lg cursor-pointer"
             >
                 <LeftArrow />
             </div>
             <div
                 ref={nextRef}
-                className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center rounded-full  shadow-lg cursor-pointer"
+                className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center shadow-lg cursor-pointer"
             >
                 <RightArrow />
             </div>
@@ -66,7 +66,7 @@ const Carousel = ({carouselItems}) => {
                 {carouselItems.map((item) => (
                     <SwiperSlide
                         key={Math.random()}
-                        className="!w-[500px] !h-[300px] relative rounded-2xl overflow-hidden shadow-lg group"
+                        className="!w-[500px] !h-[300px] relative overflow-hidden shadow-lg group"
                     >
                         <img
                             src={item.imageUrl}
