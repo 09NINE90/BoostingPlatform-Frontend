@@ -49,6 +49,7 @@ const Cart = ({cartCount}) => {
                 isOpen={modalIsOpen}
                 onClose={toggleModal}
                 title="Cart"
+                width="80vw"
                 content={isLoading ? (
                     <PacmanLoader size={40}/>
                 ) : (
