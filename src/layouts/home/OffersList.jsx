@@ -26,6 +26,7 @@ const OffersList = memo(({gameId}) => {
         const fetchData = async () => {
             try {
                 const gameApi = await getGameByIdApi(gameId);
+                setCurrentCategory(null)
                 setGame(gameApi);
             } catch (err) {
                 setError(handleApiError(err))
@@ -95,7 +96,8 @@ const OffersList = memo(({gameId}) => {
                                 display: offers.length > 0 && 'grid',
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                                 gap: 2,
-                                gridAutoRows: 'auto'
+                                gridAutoRows: 'auto',
+                                height: '620px',
                             }}>
                                 {offers.map((offer) => (
                                     <OfferCard offer={offer}/>

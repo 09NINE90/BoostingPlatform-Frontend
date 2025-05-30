@@ -6,7 +6,7 @@ import GameListItem from "src/layouts/home/gameSidebar/utils/GameListItem.jsx";
 const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
 
     return (
-        <div className="hidden md:flex p-4 flex-col min-h-[800px]">
+        <div className="hidden md:flex p-4 flex-col">
             <div className="flex space-x-3">
                 <Games/>
                 <div className="kanit-bold text-3xl">
