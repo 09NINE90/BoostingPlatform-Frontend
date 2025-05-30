@@ -4,16 +4,18 @@ import OffersList from "./OffersList"
 import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.jsx";
 import Carousel from "./Carousel.jsx";
-import {PacmanLoader} from "react-spinners";
 import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 
 const HomeMain = () => {
     const {id} = useParams();
     const [games, setGames] = useState([]);
+    const [currentGameId, setCurrentGameId] = useState(id);
     const [carouselItems, setCarouselItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    window.history.replaceState('', '', `/${currentGameId}`)
 
     useEffect(() => {
         if (!id) return;
@@ -41,12 +43,6 @@ const HomeMain = () => {
 
     return (
         <>
-            {loading &&
-                (
-                    <div className="flex justify-center items-center h-screen">
-                        <PacmanLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "0 auto"}}/>
-                    </div>
-                )}
             {!loading && (
                 <>
                     {error && (
@@ -56,15 +52,19 @@ const HomeMain = () => {
                         {!error && (
                             <>
                                 <Carousel carouselItems={carouselItems}/>
-                                <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] mt-10 mx-auto"/>
-                                <div className='flex flex-row gap-5  mt-6'>
-                                    <GameSideBar gameList={games} currentGame={id}/>
-                                    <OffersList gameId={id}/>
+                                <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] my-8 mx-auto"/>
+                                <div className='flex flex-row gap-5]'>
+                                    <GameSideBar gameList={games} currentGame={currentGameId} onGameSelect={setCurrentGameId}/>
+                                    <OffersList gameId={currentGameId}/>
                                 </div>
                             </>
                         )}
                     </div>
                 </>
+            )}
+            {loading && (
+                <div className="min-h-[100vh]">
+                </div>
             )}
         </>
     );

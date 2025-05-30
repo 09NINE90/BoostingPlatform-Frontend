@@ -11,19 +11,12 @@ const ModalTemplate = ({
                            modalClassName,
                            modalContentClassName,
                            additionalStyles,
-                           width
                        }) => {
     if (!isOpen) return null;
 
-    const modalStyle = {
-        width: width || '400px',
-    };
-
     return (
         <div className={`${styles.overlay}`}>
-            <div className={`${classNames(styles.modal, modalClassName)} ${additionalStyles}`}
-                 style={modalStyle}
-            >
+            <div className={`${classNames(styles.modal, modalClassName)} ${additionalStyles}`}>
                 <div className={classNames(styles.modalContent, modalContentClassName)}>
                     <button className={styles.modalClose} onClick={onClose}>
                         &times;

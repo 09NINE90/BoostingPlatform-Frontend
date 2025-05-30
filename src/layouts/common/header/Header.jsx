@@ -22,7 +22,7 @@ const Header = ({forBoosterPage}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const role = useSelector(selectRole);
-    const [userAvatar, setUserAvatar] = useSelector(selectAvatar);
+    const userAvatar = useSelector(selectAvatar);
 
     const username = useSelector(selectUsername);
     const isAuthenticated = useSelector(selectAuth);
