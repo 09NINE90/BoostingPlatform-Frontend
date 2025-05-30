@@ -17,6 +17,7 @@ import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import {getUserProfileData} from "src/services/userApi.jsx";
 import {getCountCartItemsApi} from "src/services/offerApi.jsx";
+import {ClipLoader} from "react-spinners";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -70,78 +71,88 @@ const SignIn = ({closeModal, signUpRedirect}) => {
     const linkClass = "text-sky-400 hover:text-sky-700";
 
     return (
-        <div className="flex flex-col justify-between">
-            <div className="h-full p-2">
-                <p className="mb-5">
-                    By continuing, you agree to our&nbsp;
-                    <NavLink to="/" className={linkClass}>
-                        User Agreement
-                    </NavLink>
-                    &nbsp;and acknowledge that you understand the&nbsp;
-                    <NavLink to="/" className={linkClass}>
-                        Privacy Policy
-                    </NavLink>.
-                </p>
+        <>
+            {!isLoading && (
+                <div className="flex flex-col justify-between">
+                    <div className="h-full p-2">
+                        <p className="mb-5">
+                            By continuing, you agree to our&nbsp;
+                            <NavLink to="/" className={linkClass}>
+                                User Agreement
+                            </NavLink>
+                            &nbsp;and acknowledge that you understand the&nbsp;
+                            <NavLink to="/" className={linkClass}>
+                                Privacy Policy
+                            </NavLink>.
+                        </p>
 
-                {errorMessage && (
-                    <Alert
-                        onClick={() => setErrorMessage(null)}
-                        className="my-4"
-                        severity="error"
-                        variant="filled"
-                    >
-                        {errorMessage}
-                    </Alert>
-                )}
+                        {errorMessage && (
+                            <Alert
+                                onClick={() => setErrorMessage(null)}
+                                className="my-4"
+                                severity="error"
+                                variant="filled"
+                            >
+                                {errorMessage}
+                            </Alert>
+                        )}
 
-                <div className="mb-7 flex flex-col gap-4">
-                    <TextField
-                        error={requiredFieldEmpty}
-                        required
-                        label="Login"
-                        variant="outlined"
-                        value={credentials.email}
-                        onChange={(e) =>
-                            setCredentials({...credentials, email: e.target.value})
-                        }
-                    />
-                    <TextField
-                        error={requiredFieldEmpty}
-                        required
-                        label="Password"
-                        variant="outlined"
-                        type="password"
-                        value={credentials.password}
-                        onChange={(e) =>
-                            setCredentials({...credentials, password: e.target.value})
-                        }
-                        onKeyDown={(e) => e.key === "Enter" && signIn()}
-                    />
-                </div>
+                        <div className="mb-7 flex flex-col gap-4">
+                            <TextField
+                                error={requiredFieldEmpty}
+                                required
+                                label="Login"
+                                variant="outlined"
+                                value={credentials.email}
+                                onChange={(e) =>
+                                    setCredentials({...credentials, email: e.target.value})
+                                }
+                            />
+                            <TextField
+                                error={requiredFieldEmpty}
+                                required
+                                label="Password"
+                                variant="outlined"
+                                type="password"
+                                value={credentials.password}
+                                onChange={(e) =>
+                                    setCredentials({...credentials, password: e.target.value})
+                                }
+                                onKeyDown={(e) => e.key === "Enter" && signIn()}
+                            />
+                        </div>
 
-                <div className="flex flex-col items-start my-5 gap-2">
-                    <NavLink className={linkClass}>Forgot password?</NavLink>
-                    <div>
-                        New in V-Boosting?
-                        <NavLink className={linkClass} onClick={signUpRedirect}>
-                            &nbsp;Sign Up
-                        </NavLink>
+                        <div className="flex flex-col items-start my-5 gap-2">
+                            <NavLink className={linkClass}>Forgot password?</NavLink>
+                            <div>
+                                New in V-Boosting?
+                                <NavLink className={linkClass} onClick={signUpRedirect}>
+                                    &nbsp;Sign Up
+                                </NavLink>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="relative">
+                        <Button
+                            className="w-2/3"
+                            variant="contained"
+                            color="secondary"
+                            onClick={signIn}
+                            loading={status === "loading"}
+                        >
+                            Log In
+                        </Button>
                     </div>
                 </div>
-            </div>
+            )}
+            {isLoading && (
+                <div className="flex justify-center items-center mt-[15vh]">
+                    <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
+                </div>
+            )}
+        </>
 
-            <div className="relative">
-                <Button
-                    className="w-2/3"
-                    variant="contained"
-                    color="secondary"
-                    onClick={signIn}
-                    loading={status === "loading"}
-                >
-                    Log In
-                </Button>
-            </div>
-        </div>
     );
 };
 
