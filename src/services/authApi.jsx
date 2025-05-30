@@ -1,7 +1,7 @@
 import {store} from "../store/store.js";
 
 import axios from "axios";
-import {getToken} from "src/store/slice/authSlice.js";
+import {selectToken} from "src/store/slice/authSlice.js";
 
 export const getAuthenticated = async () => {
     const authenticatedResponse = await axios.get(`/api/auth/me`);
@@ -61,7 +61,7 @@ export const confirmEmail = async (confirmationToken) => {
 }
 
 axios.interceptors.request.use(config => {
-    const token = getToken(store.getState());
+    const token = selectToken(store.getState());
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
     }

@@ -6,8 +6,8 @@ import {
     setAuth,
     setAvatar, setCountCartItems,
     setRole,
-    setToken,
-    setUsername
+    setUsername,
+    setToken
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.jsx";
 import {TextField} from "@mui/material";

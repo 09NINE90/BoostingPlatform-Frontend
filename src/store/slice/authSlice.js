@@ -38,6 +38,13 @@ const authSlice = createSlice({
             state.countCartItems = action.payload;
         }
     },
+    extraReducers: (builder) => {
+        builder.addCase('persist/REHYDRATE', (state, action) => {
+            if (action.error) {
+                return initialState;
+            }
+        });
+    }
 });
 
 export const selectAuth = (state) => state.auth.isAuthenticated;
@@ -46,7 +53,7 @@ export const selectAvatar = (state) => state.auth.avatar;
 export const selectRole = (state) => state.auth.role;
 export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
-export const getToken = (state) => state.auth.token;
+export const selectToken = (state) => state.auth.token;
 export const selectCountCartItems = (state) => state.auth.countCartItems;
 
 export const { setCountCartItems, setToken,setAuth, setRole, clearAuth, setUsername, setAvatar} = authSlice.actions;
