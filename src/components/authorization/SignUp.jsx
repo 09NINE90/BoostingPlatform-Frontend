@@ -24,7 +24,6 @@ const SignUp = ({closeModal, signInRedirect}) => {
 
 
     const status = useSelector(selectAuthStatus);
-    const dispatch = useDispatch();
 
     const signUp = async () => {
         if (nickname !== "" && confirmPassword !== "") {
@@ -49,8 +48,8 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 toast.success(message.confirmation + message.username);
 
             } catch (error) {
-                console.log(error)
-                setErrorMessage(error.response?.data || "An error occurred, please contact the administrator!");
+                const serverError = error.response?.data?.message
+                setErrorMessage(serverError || "An error occurred, please contact the administrator!");
             }
         } else {
             setRequredFieldEmpty(true);
