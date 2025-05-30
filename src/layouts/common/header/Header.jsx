@@ -7,7 +7,7 @@ import ModalTemplate from "../../../utils/modalTemplate/ModalTemplate.jsx";
 import {AppBar, IconButton} from '@mui/material';
 import ProfileIcon from "../../../assets/icons/ProfileIcon.jsx";
 import DropMenu from "src/layouts/common/header/utils/ui/DropMenu.jsx";
-import {clearAuth, selectAuth, selectAvatar, selectRole} from "src/store/slice/authSlice.js";
+import {clearAuth, selectAuth, selectAvatar, selectRole, selectUsername} from "src/store/slice/authSlice.js";
 import Search from "src/layouts/common/header/utils/ui/Search.jsx";
 import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
@@ -22,8 +22,9 @@ const Header = ({forBoosterPage}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const role = useSelector(selectRole);
-    const [userAvatar, setUserAvatar] = useState(useSelector(selectAvatar));
+    const [userAvatar, setUserAvatar] = useSelector(selectAvatar);
 
+    const username = useSelector(selectUsername);
     const isAuthenticated = useSelector(selectAuth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -110,19 +111,28 @@ const Header = ({forBoosterPage}) => {
                     <Search/>
                 </div>
 
-                <nav className="flex justify-between flex-row">
+                <nav className="flex justify-between flex-row text-center">
                     <Cart cartCount={cartCount} />
-                    <div className="px-4 hover:scale-103">
+
+                    <div className="flex justify-center hover:scale-103">
                         <IconButton onClick={handleProfileClick}>
                             <ProfileIcon className="w-[50px]"/>
+
                         </IconButton>
+
                         <DropMenu anchorEl={anchorEl}
                                   handleClose={handleProfileMenuClose}
                                   isAuthenticated={isAuthenticated}
                                   handleOpenProfile={handleOpenProfile}
                                   handleLogout={handleLogout}
                                   onOpen={toggleModal}/>
+
                     </div>
+                    {username && (
+                        <div className="kanit-light py-5 text-xl ml-2">
+                            {username}
+                        </div>
+                    )}
                 </nav>
             </div>
             {renderModal}
