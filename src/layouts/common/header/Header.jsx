@@ -12,12 +12,13 @@ import Search from "src/layouts/common/header/utils/ui/Search.jsx";
 import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
 import {toast} from "react-toastify";
+import {SIGN_IN_STATE, SIGN_IN_TEXT, SIGN_UP_STATE, SIGN_UP_TEXT} from "src/utils/constants/authForm.js";
 
 const Header = ({forBoosterPage}) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [cartCount, setCartCount] = useState(0);
     const profileRef = useRef(null);
-    const [modelType, setModalType] = useState("signin");
+    const [modelType, setModalType] = useState(SIGN_IN_STATE);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const role = useSelector(selectRole);
@@ -66,17 +67,17 @@ const Header = ({forBoosterPage}) => {
             <ModalTemplate
                 isOpen={modalIsOpen}
                 onClose={toggleModal}
-                title={modelType === "signin" ? "Sign In" : "Sign Up"}
+                title={modelType === SIGN_IN_STATE ? SIGN_IN_TEXT : SIGN_UP_TEXT}
                 content={
-                    modelType === "signin" ?
+                    modelType === SIGN_IN_STATE ?
                         <SignIn
                             closeModal={toggleModal}
-                            signUpRedirect={() => setModalType("signup")}
+                            signUpRedirect={() => setModalType(SIGN_UP_STATE)}
                         />
                         :
                         <SignUp
                             closeModal={toggleModal}
-                            signInRedirect={() => setModalType("signin")}
+                            signInRedirect={() => setModalType(SIGN_IN_STATE)}
                         />
                 }
             />

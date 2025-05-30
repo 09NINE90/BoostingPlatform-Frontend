@@ -1,0 +1,6 @@
+const SIGN_IN_STATE = 'SIGN_IN_STATE';
+const SIGN_UP_STATE = 'SIGN_UP_STATE';
+const SIGN_IN_TEXT = 'Sign In';
+const SIGN_UP_TEXT = 'Sign Up';
+
+export {SIGN_IN_STATE, SIGN_UP_STATE, SIGN_IN_TEXT, SIGN_UP_TEXT};
