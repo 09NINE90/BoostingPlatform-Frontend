@@ -39,9 +39,7 @@ export const postAuthenticated = async (credentials) => {
 
 export const postRegister = async (credentials) => {
     const authenticatedResponse = await axios.post(`/api/auth/signUp`, credentials, { withCredentials: true });
-
-    const {roles, token} = authenticatedResponse.data;
-    return ({roles});
+    return authenticatedResponse.data;
 }
 
 axios.interceptors.request.use(config => {
