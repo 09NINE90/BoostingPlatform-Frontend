@@ -6,7 +6,7 @@ import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import {getCartItemsApi} from "src/services/offerApi.jsx";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import CartModal from "src/components/cart/CartModal.jsx";
-import {PacmanLoader} from "react-spinners";
+import {ClipLoader} from "react-spinners";
 import {selectCountCartItems} from "src/store/slice/authSlice.js";
 import {useSelector} from "react-redux";
 
@@ -16,7 +16,7 @@ const Cart = ({cartCount}) => {
     const reduxCount = useSelector(selectCountCartItems);
     const [countItems, setCountItems] = useState(reduxCount);
     const [cartItems, setCartItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
@@ -24,10 +24,10 @@ const Cart = ({cartCount}) => {
     }, [reduxCount]);
 
     const fetchCartItems = useCallback(async () => {
-        setIsLoading(true);
         try {
             const cartItemsApi = await getCartItemsApi();
             setCartItems(cartItemsApi);
+            setIsLoading(false);
         } catch (err) {
             setCartItems([])
             console.error(handleApiError(err));
@@ -51,7 +51,9 @@ const Cart = ({cartCount}) => {
                 title="Cart"
                 width="80vw"
                 content={isLoading ? (
-                    <PacmanLoader size={40}/>
+                    <div className="flex justify-center items-center mt-[15vh]">
+                        <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
+                    </div>
                 ) : (
                     <CartModal cartItems={cartItems}/>
                 )}

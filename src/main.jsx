@@ -26,6 +26,7 @@ import '@fontsource/kanit/400.css';
 import '@fontsource/kanit/500.css';
 import '@fontsource/kanit/700.css';
 import {ToastContainer} from "react-toastify";
+import EmailConfirmationPage from "src/pages/EmailConfirmationPage.jsx";
 
 const root = document.getElementById('root');
 
@@ -37,6 +38,7 @@ export const App = () => {
                             bodyClassName="custom-toast-body"/>
             <Routes>
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
+                <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage />} />
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
