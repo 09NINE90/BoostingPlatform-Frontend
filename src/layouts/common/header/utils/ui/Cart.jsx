@@ -62,7 +62,7 @@ const Cart = ({cartCount}) => {
                                 <ClipLoader color="#FD980B" size={50}
                                             cssOverride={{display: "block", margin: "auto auto"}}/>
                             </div>)}
-                        {!loading && (<CartModal cartItems={cartItems}/>)}
+                        {!loading && !error && (<CartModal cartItems={cartItems}/>)}
                     </>}
                               anchorEl={anchorEl}
                               handleClose={handleCartMenuClose}
