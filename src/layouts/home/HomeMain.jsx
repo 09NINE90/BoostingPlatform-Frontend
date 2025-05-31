@@ -6,6 +6,7 @@ import {getAllGamesApi} from "src/services/gamesApi.jsx";
 import Carousel from "./Carousel.jsx";
 import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {ClipLoader} from "react-spinners";
 
 const HomeMain = () => {
     const {id} = useParams();
@@ -64,6 +65,9 @@ const HomeMain = () => {
             )}
             {loading && (
                 <div className="min-h-[100vh]">
+                    <div className="flex justify-center items-center mt-[50vh]">
+                        <ClipLoader color="#FD980B" size={100} cssOverride={{display: "block", margin: "auto auto"}}/>
+                    </div>
                 </div>
             )}
         </>

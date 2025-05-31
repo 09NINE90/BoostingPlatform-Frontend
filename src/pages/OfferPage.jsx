@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router';
 import Box from '@mui/material/Box';
 import OfferInfo from '../layouts/offer/OfferInfo';
 import OfferPayment from '../layouts/offer/OfferPayment';
-import { getOfferData, getOptions } from "src/services/option.jsx";
+import {getOfferData, getOptions} from "src/services/option.jsx";
+import {ClipLoader} from "react-spinners";
 
 const OfferPage = () => {
-    const { offerId } = useParams();
+    const {offerId} = useParams();
     const [options, setOptions] = useState([]);
     const [offerData, setOfferData] = useState(null);
 
@@ -29,18 +30,24 @@ const OfferPage = () => {
         fetchData();
     }, [offerId]);
 
-    if (!offerData) {
-        return <div>Загрузка...</div>;
-    }
-
     return (
-        <Box className="flex items-center justify-center flex-col lg:items-start lg:flex-row" sx={{ mx: 2 }}>
-            <Box sx={{ pl: 20 }}>
-                <OfferInfo offerData={offerData} />
-            </Box>
-            <Box className="pl-20">
-                <OfferPayment offerData={offerData} optionsBlocks={options} />
-            </Box>
+        <Box className="flex items-center justify-center flex-col lg:items-start lg:flex-row" sx={{mx: 2}}>
+            {offerData && (
+                <><Box sx={{pl: 20}}>
+                    <OfferInfo offerData={offerData}/>
+                </Box>
+                    <Box className="pl-20">
+                        <OfferPayment offerData={offerData} optionsBlocks={options}/>
+                    </Box>
+                </>
+            )}
+            {!offerData && (
+                <div className="min-h-[100vh]">
+                    <div className="flex justify-center items-center mt-[50vh]">
+                        <ClipLoader color="#FD980B" size={100} cssOverride={{display: "block", margin: "auto auto"}}/>
+                    </div>
+                </div>
+            )}
         </Box>
     );
 };
