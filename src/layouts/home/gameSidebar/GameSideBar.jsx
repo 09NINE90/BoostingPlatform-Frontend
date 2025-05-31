@@ -15,7 +15,11 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
             </div>
             <List color="primary">
                 {gameList.map((game) => (
-                    <GameListItem key={game.secondId} game={game} currentGame={currentGame} onClick={() => onGameSelect(game.secondId)}/>
+                    <GameListItem key={game.secondId}
+                                  game={game}
+                                  currentGame={currentGame}
+                                  onClick={() => onGameSelect(game.secondId)}
+                    />
                 ))}
             </List>
         </div>
