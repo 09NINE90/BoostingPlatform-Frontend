@@ -13,11 +13,15 @@ import {
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {postOffersToCart} from "src/services/offerApi.jsx";
+import {useDispatch} from "react-redux";
+import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
+import {store} from "src/store/store.js";
 
 const OfferPayment = ({offerData, optionsBlocks}) => {
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
+    const dispatch = useDispatch();
 
     const handleChange = (blockId, value, label, optionTitle) => {
         setSelectedOptions((prev) => {
@@ -95,7 +99,10 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
             totalTime
         };
 
+
         postOffersToCart(cartItem).then(r => console.log('Successfully added to cart!', r));
+        const currentCount = selectCountCartItems(store.getState());
+        dispatch(setCountCartItems(currentCount + 1));
     }, [offerData, basePrice, selectedOptions, totalPrice, totalTime]);
 
 
