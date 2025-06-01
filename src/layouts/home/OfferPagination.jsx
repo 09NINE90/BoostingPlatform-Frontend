@@ -16,7 +16,7 @@ const OfferPagination = ({totalPages, changePage}) => {
                 breakLabel="..."
                 breakClassName="text-[#004772] px-2"
                 marginPagesDisplayed={1}
-                pageRangeDisplayed={3}
+                pageRangeDisplayed={2}
             />
         </div>
     )

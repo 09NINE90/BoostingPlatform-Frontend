@@ -2,7 +2,7 @@ import {FaBoxOpen} from 'react-icons/fa';
 
 const EmptyResponse = ({text}) => {
     return (
-        <div className="relative w-full flex flex-col justify-center items-center min-h-[50vh] py-12 overflow-hidden">
+        <div className="relative w-full flex flex-col justify-center items-center min-h-[50vh] overflow-hidden">
             <div className="relative z-10 flex flex-col items-center">
                 <h2 className="text-2xl md:text-3xl font-bold text-[#FD980B] mb-6 text-center">
                     {text.toUpperCase()}

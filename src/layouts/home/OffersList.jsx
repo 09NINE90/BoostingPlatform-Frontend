@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {memo, useEffect, useState} from 'react';
 import {Box} from '@mui/material';
 import {getGameByIdApi, getGameCategoriesApi} from "src/services/gamesApi.jsx";
 import {getOffersByRequest} from "src/services/offerApi.jsx";
@@ -8,7 +8,7 @@ import OfferCard from "src/layouts/home/OfferCard.jsx";
 import CategoriesFilter from "src/layouts/home/CategoriesFilter.jsx";
 import OfferPagination from "src/layouts/home/OfferPagination.jsx";
 
-const OffersList = ({gameId}) => {
+const OffersList = memo(({gameId}) => {
     const [currentCategory, setCurrentCategory] = useState(null);
     const [offers, setOffers] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -26,6 +26,7 @@ const OffersList = ({gameId}) => {
         const fetchData = async () => {
             try {
                 const gameApi = await getGameByIdApi(gameId);
+                setCurrentCategory(null)
                 setGame(gameApi);
             } catch (err) {
                 setError(handleApiError(err))
@@ -92,27 +93,30 @@ const OffersList = ({gameId}) => {
                     {offers && (
                         <>
                             <Box sx={{
-                                display: 'grid',
+                                display: offers.length > 0 && 'grid',
                                 gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
                                 gap: 2,
-                                gridAutoRows: 'auto'
+                                gridAutoRows: 'auto',
+                                height: '620px',
                             }}>
                                 {offers.map((offer) => (
                                     <OfferCard offer={offer}/>
                                 ))}
+
+                                {!loading && offers.length === 0 && (
+                                    <EmptyResponse text={'no offers by filter \'' + currentCategory + '\''}/>
+                                )}
                             </Box>
                             {offers.length < recordTotal && (
                                 <OfferPagination totalPages={totalPages} changePage={changePage}/>
                             )}
                         </>
                     )}
-                    {!loading && offers.length === 0 && (
-                        <EmptyResponse text={'no offers by filter \'' + currentCategory + '\''}/>
-                    )}
+
                 </Box>
             )}
         </>
     )
-}
+});
 
 export default OffersList

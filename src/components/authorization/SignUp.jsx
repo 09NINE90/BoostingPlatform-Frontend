@@ -1,13 +1,14 @@
 import "../../styles/AuthForms.css";
-import { useState } from "react";
-import {setAuth, setRole} from "../../store/slice/authSlice.js";
-import { useSelector, useDispatch } from "react-redux";
-import { selectAuthStatus } from "../../store/slice/authSlice.js";
-import { NavLink } from "react-router-dom";
+import {useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {selectAuthStatus} from "../../store/slice/authSlice.js";
+import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.jsx";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
+import {toast} from "react-toastify";
+import {ClipLoader} from "react-spinners";
 
 const SignUp = ({closeModal, signInRedirect}) => {
 
@@ -19,13 +20,16 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const [requredFieldEmpty, setRequredFieldEmpty] = useState(false);
     const [passwordFieldIsValid, setPasswordFieldIsValid] = useState(true);
     const [emailFieldIsValid, setEmailFieldIsValid] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const status = useSelector(selectAuthStatus);
-    const dispatch = useDispatch();
 
     const signUp = async () => {
-        if(nickname !== "" && confirmPassword !== "") {
+        if (nickname !== "" && confirmPassword !== "") {
             try {
+                setIsLoading(true);
+
                 if (password !== confirmPassword) {
                     setErrorMessage("Passwords do not match!");
                     return;
@@ -37,15 +41,15 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     password: password
                 }
 
-                const {roles} = await postRegister(credentials);
-                if (roles) {
-                    dispatch(setRole(roles));
-                    dispatch(setAuth(true));
-                    closeModal();
-                }
-            } catch(error) {
-                console.log(error)
-                setErrorMessage(error.response?.data || "An error occurred, please contact the administrator!");
+                const message = await postRegister(credentials);
+
+                closeModal();
+
+                toast.success(message.confirmation + message.username);
+
+            } catch (error) {
+                const serverError = error.response?.data?.message
+                setErrorMessage(serverError || "An error occurred, please contact the administrator!");
             }
         } else {
             setRequredFieldEmpty(true);
@@ -56,9 +60,9 @@ const SignUp = ({closeModal, signInRedirect}) => {
         const isEmailValid = String(email)
             .toLowerCase()
             .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             );
-        if(!isEmailValid) {
+        if (!isEmailValid) {
             setEmailFieldIsValid(false);
         } else {
             setEmailFieldIsValid(true);
@@ -70,7 +74,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
         const isPasswordValid = String(password)
             .toLowerCase()
             .match(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,40}$/);
-        if(!isPasswordValid) {
+        if (!isPasswordValid) {
             setPasswordFieldIsValid(false);
         } else {
             setPasswordFieldIsValid(true);
@@ -79,93 +83,104 @@ const SignUp = ({closeModal, signInRedirect}) => {
     }
 
     return (
-        <div className="items-center justify-center p-2">
-            <div className="mb-4">By continuing, you agree to our&nbsp; 
-                <NavLink 
-                    className={"text-sky-400 hover:text-sky-700"}
-                    to="/"
-                >
-                    User Agreement
-                </NavLink>
-                &nbsp;and acknowledge that you understand the&nbsp;
-                <NavLink 
-                    className={"text-sky-400 hover:text-sky-700"}
-                    to="/"
-                >
-                    Privacy Policy
-                </NavLink>.
-            </div>
-            {
-                errorMessage && 
-                <Alert 
-                    onClick={() => setErrorMessage(null)}
-                    className="my-4"
-                    severity="error"
-                    variant="filled"
-                >
-                    {errorMessage}
-                </Alert>
-            }
-            <div>
-                <TextField
-                    error={requredFieldEmpty}
-                    required
-                    sx={{my: 1}}
-                    type="text"
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
-                    label="Nickname"
-                />
-                <TextField
-                    error={!emailFieldIsValid || requredFieldEmpty}
-                    required
-                    sx={{my: 1}}
-                    type="email"
-                    value={email}
-                    onChange={(e) => onChangeEmail(e.target.value)}
-                    label="Email"
-                />
-                <TextField
-                    error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requredFieldEmpty}
-                    required
-                    sx={{my: 1}}
-                    type="password"
-                    value={password}
-                    onChange={(e) => onChangePassword(e.target.value)}
-                    label="Password"
-                />
-                { !passwordFieldIsValid ? 
-                    <div className="text-[#f44336] text-sm">The minimum password length is 6. Must contain the letters digits and at least one special character.
-                    </div> : null}
-                <TextField
-                    error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
-                    required
-                    sx={{mt: 1}}
-                    type="password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    label="Confirm Password"
-                    onKeyDown={(event) => {
-                        if (event.key === 'Enter')
-                            signUp();
-                    }}
-                />
-            </div>
-            <div className="flex flex-col items-start my-5">
-                <div>
-                    Already have account? 
-                    <NavLink 
-                        className={"text-sky-400 hover:text-sky-700"}
-                        onClick={signInRedirect}
-                    >
-                        &nbsp;Sign In
-                    </NavLink>
+        <>
+            {!isLoading && (
+                <div className="items-center justify-center p-2">
+                    <div className="mb-4">By continuing, you agree to our&nbsp;
+                        <NavLink
+                            className={"text-sky-400 hover:text-sky-700"}
+                            to="/"
+                        >
+                            User Agreement
+                        </NavLink>
+                        &nbsp;and acknowledge that you understand the&nbsp;
+                        <NavLink
+                            className={"text-sky-400 hover:text-sky-700"}
+                            to="/"
+                        >
+                            Privacy Policy
+                        </NavLink>.
+                    </div>
+                    {
+                        errorMessage &&
+                        <Alert
+                            onClick={() => setErrorMessage(null)}
+                            className="my-4"
+                            severity="error"
+                            variant="filled"
+                        >
+                            {errorMessage}
+                        </Alert>
+                    }
+                    <div>
+                        <TextField
+                            error={requredFieldEmpty}
+                            required
+                            sx={{my: 1}}
+                            type="text"
+                            value={nickname}
+                            onChange={(e) => setNickname(e.target.value)}
+                            label="Nickname"
+                        />
+                        <TextField
+                            error={!emailFieldIsValid || requredFieldEmpty}
+                            required
+                            sx={{my: 1}}
+                            type="email"
+                            value={email}
+                            onChange={(e) => onChangeEmail(e.target.value)}
+                            label="Email"
+                        />
+                        <TextField
+                            error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requredFieldEmpty}
+                            required
+                            sx={{my: 1}}
+                            type="password"
+                            value={password}
+                            onChange={(e) => onChangePassword(e.target.value)}
+                            label="Password"
+                        />
+                        {!passwordFieldIsValid ?
+                            <div className="text-[#f44336] text-sm">The minimum password length is 6. Must contain the
+                                letters digits and at least one special character.
+                            </div> : null}
+                        <TextField
+                            error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
+                            required
+                            sx={{mt: 1}}
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            label="Confirm Password"
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter')
+                                    signUp();
+                            }}
+                        />
+                    </div>
+                    <div className="flex flex-col items-start my-5">
+                        <div>
+                            Already have account?
+                            <NavLink
+                                className={"text-sky-400 hover:text-sky-700"}
+                                onClick={signInRedirect}
+                            >
+                                &nbsp;Sign In
+                            </NavLink>
+                        </div>
+                    </div>
+                    <div>
+                        <Button className="w-2/3" variant="contained" color="secondary" onClick={signUp}
+                                loading={status === "loading"}>Sign Up</Button>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <Button className="w-2/3" variant="contained" color="secondary" onClick={signUp} loading={status === "loading"}>Sign Up</Button>
-            </div>
-        </div>
+            )}
+            {isLoading && (
+                <div className="flex justify-center items-center mt-[15vh]">
+                    <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
+                </div>
+            )}
+        </>
     );
 };
 

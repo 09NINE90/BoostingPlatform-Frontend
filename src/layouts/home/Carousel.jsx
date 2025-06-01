@@ -16,12 +16,10 @@ const Carousel = ({carouselItems}) => {
     const nextRef = useRef(null);
     const [swiper, setSwiper] = useState(null);
 
-    clearInterval()
     setTimeout(() => swiper.slidePrev(), 100);
-    setInterval(() => swiper.slidePrev(), 10000);
 
     return (
-        <div className="w-full max-w-[80vw] mx-auto px-4 mt-6 md-10 relative h-[300px]">
+        <div className="w-full max-w-[80vw] mx-auto px-4 mt-6 md-10 relative h-[300px] min-h-[300px]">
             <div
                 ref={prevRef}
                 className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center shadow-lg cursor-pointer"

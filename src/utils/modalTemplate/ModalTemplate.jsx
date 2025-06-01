@@ -10,7 +10,7 @@ const ModalTemplate = ({
                            onClose,
                            modalClassName,
                            modalContentClassName,
-                           additionalStyles
+                           additionalStyles,
                        }) => {
     if (!isOpen) return null;
 
