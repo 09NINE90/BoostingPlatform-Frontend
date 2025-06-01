@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useMemo, useCallback} from "react";
 import {
     FormControl,
     InputLabel,
@@ -15,17 +15,9 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {postOffersToCart} from "src/services/offerApi.jsx";
 
 const OfferPayment = ({offerData, optionsBlocks}) => {
-    const [basePrice, setBasePrice] = useState(200);
-    const [baseTime, setBaseTime] = useState(8);
+    const [basePrice] = useState(200);
+    const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
-    const [totalPrice, setTotalPrice] = useState(0);
-    const [totalTime, setTotalTime] = useState(0);
-
-
-    useEffect(() => {
-        calculateTotals();
-
-    }, [selectedOptions]);
 
     const handleChange = (blockId, value, label, optionTitle) => {
         setSelectedOptions((prev) => {
@@ -40,12 +32,10 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
         });
     };
 
-    const calculateTotals = () => {
+    const { totalPrice, totalTime } = useMemo(() => {
         let price = basePrice;
         let time = baseTime;
-
         let totalPercentChange = 0;
-
 
         const processOptions = (blocks) => {
             blocks.forEach((block) => {
@@ -80,56 +70,41 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                 }
             });
         };
+
         processOptions(optionsBlocks);
 
         if (totalPercentChange !== 0) {
             price += (price * totalPercentChange) / 100;
         }
 
-        setTotalPrice(price);
-        setTotalTime(time);
-    };
+        return { totalPrice: price, totalTime: time };
+    }, [selectedOptions, basePrice, baseTime, optionsBlocks]);
 
-    const handleAddToCart = () => {
+    const handleAddToCart = useCallback(() => {
         const cartItem = {
             offerId: offerData.offerId,
-            basePrice: basePrice,
+            basePrice,
             gameName: offerData.gameName,
-            selectedOptions: Object.entries(selectedOptions).map(([optionId, optionData]) => {
-                return {
-                    optionId,
-                    value: optionData.value,
-                    label: optionData.label,
-                    optionTitle: optionData.optionTitle
-                };
-            }),
-            totalPrice: totalPrice,
-            totalTime: totalTime
+            selectedOptions: Object.entries(selectedOptions).map(([optionId, optionData]) => ({
+                optionId,
+                value: optionData.value,
+                label: optionData.label,
+                optionTitle: optionData.optionTitle
+            })),
+            totalPrice,
+            totalTime
         };
 
-        // Отправка в API или сохранение в контекст/сторе
-        // console.log('Adding to cart:', cartItem);
         postOffersToCart(cartItem).then(r => console.log('Successfully added to cart!', r));
-        // Пример с использованием контекста:
-        // addToCart(cartItem);
-
-        // Или отправка на бэкенд:
-        // fetch('/api/cart/add', {
-        //     method: 'POST',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify(cartItem)
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // Обработка успешного добавления
-        //     })
-        //     .catch(error => {
-        //         // Обработка ошибки
-        //     });
-    };
+    }, [offerData, basePrice, selectedOptions, totalPrice, totalTime]);
 
 
-    const renderOption = (option) => {
+    const renderOption = useCallback((option) => {
+        const selected = selectedOptions[option.id];
+
+        const handleSliderChange = (_, value) =>
+            handleChange(option.id, value, value, option.title);
+
         return (
             <div key={option.id} className="mb-5">
                 <h3 className="mb-2 font-semibold">{option.title}</h3>
@@ -138,9 +113,8 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                     <FormControl fullWidth>
                         <InputLabel color="secondary">{option.title}</InputLabel>
                         <Select
-                            value={selectedOptions[option.id]?.value || ""}
-                            onChange={(e) =>
-                            {
+                            value={selected?.value || ""}
+                            onChange={(e) => {
                                 const selectedItem = option.items.find(item => item.value === e.target.value);
                                 handleChange(option.id, e.target.value, selectedItem.label, option.title);
                             }}
@@ -162,21 +136,18 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                                 key={item.value}
                                 control={
                                     <Checkbox
-                                        checked={selectedOptions[option.id]?.value?.includes(item.value) || false}
+                                        checked={selected?.value?.includes(item.value) || false}
                                         color="secondary"
                                         onChange={(e) => {
-                                            const currentValues = selectedOptions[option.id]?.value || [];
-                                            const currentLabels = selectedOptions[option.id]?.label || [];
+                                            const currentValues = selected?.value || [];
+                                            const currentLabels = selected?.label || [];
 
-                                            let newValues, newLabels;
-
-                                            if (e.target.checked) {
-                                                newValues = [...currentValues, item.value];
-                                                newLabels = [...currentLabels, item.label];
-                                            } else {
-                                                newValues = currentValues.filter(v => v !== item.value);
-                                                newLabels = currentLabels.filter((_, i) => currentValues[i] !== item.value);
-                                            }
+                                            const [newValues, newLabels] = e.target.checked
+                                                ? [[...currentValues, item.value], [...currentLabels, item.label]]
+                                                : [
+                                                    currentValues.filter(v => v !== item.value),
+                                                    currentLabels.filter((_, i) => currentValues[i] !== item.value)
+                                                ];
 
                                             handleChange(option.id, newValues, newLabels, option.title);
                                         }}
@@ -192,9 +163,9 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                     <Box>
                         {option.items.map((item) => (
                             <Button
-                                sx={{m: 1}}
+                                sx={{ m: 1 }}
                                 key={item.value}
-                                variant={selectedOptions[option.id]?.value === item.value ? "contained" : "outlined"}
+                                variant={selected?.value === item.value ? "contained" : "outlined"}
                                 onClick={() => handleChange(option.id, item.value, item.label, option.title)}
                             >
                                 {item.label}
@@ -203,45 +174,26 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                     </Box>
                 )}
 
-                {option.type === "SLIDER" && (
+                {(option.type === "SLIDER" || option.type === "SLIDER_INVERT") && (
                     <Slider
                         marks
                         valueLabelDisplay="auto"
-                        value={selectedOptions[option.id]?.value || option.min}
+                        value={selected?.value || option.min}
                         min={option.min}
                         max={option.max}
-                        getAriaValueText={(value) => value}
                         step={option.step}
-                        onChange={(_, value) => handleChange(option.id, value, value, option.title)}
-                        aria-labelledby="slider"
-                        color="secondary"
-                    />
-                )}
-
-                {option.type === "SLIDER_INVERT" && (
-                    <Slider
-                        marks
-                        valueLabelDisplay="auto"
-                        value={selectedOptions[option.id]?.value || option.min}
-                        min={option.min}
-                        max={option.max}
-                        getAriaValueText={(value) => value}
-                        step={option.step}
-                        onChange={(_, value) => handleChange(option.id, value, value, option.title)}
+                        onChange={handleSliderChange}
                         aria-labelledby="slider"
                         color="secondary"
                     />
                 )}
             </div>
         );
-    }
+    }, [selectedOptions, handleChange]);
 
-
-    const renderOptions = (optionsBlocks) => {
+    const renderOptions = useMemo(() => {
         const run = (acc, remainingBlocks) => {
-            if (remainingBlocks.length === 0) {
-                return acc;
-            }
+            if (remainingBlocks.length === 0) return acc;
 
             const block = remainingBlocks[0];
             acc.push(renderOption(block));
@@ -251,18 +203,18 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                     const isSelected = block.type === "CHECKBOX"
                         ? selectedOptions[block.id]?.value?.includes(item.value)
                         : selectedOptions[block.id]?.value === item.value;
-                    if (item.subOptions && item.subOptions.length !== 0 && isSelected) {
+
+                    if (item.subOptions && isSelected) {
                         run(acc, item.subOptions);
                     }
                 });
             }
 
-
             return run(acc, remainingBlocks.slice(1));
         };
 
         return run([], optionsBlocks);
-    };
+    }, [optionsBlocks, selectedOptions, renderOption]);
 
     return (
         <div className="m-2 mt-7 min-w-[300px] max-w-[400px] rounded-xl bg-surface">
@@ -272,26 +224,25 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
                     alt="background"
                     className="w-full h-full object-cover opacity-100 rounded-xl"
                 />
-                <div
-                    className="absolute inset-0 h-[calc(100%)] bg-gradient-to-t from-surface to-transparent z-10 pointer-events-none"/>
+                <div className="absolute inset-0 h-[calc(100%)] bg-gradient-to-t from-surface to-transparent z-10 pointer-events-none" />
             </div>
-            <div className=" relative -mt-40 z-20 p-5 text-white rounded-xl">
-                {renderOptions(optionsBlocks)}
-                <Divider/>
+            <div className="relative -mt-40 z-20 p-5 text-white rounded-xl">
+                {renderOptions}
+                <Divider />
                 <div className="flex flex-col">
                     <div className="my-5">
                         <h3 className="font-bold">Total Price: ${totalPrice.toFixed(2)}</h3>
                         <h3 className="font-bold">Estimated Time: {totalTime} hours</h3>
                     </div>
-                    <Button variant="contained"
-                            startIcon={<ShoppingCartOutlinedIcon/>}
-                            onClick={handleAddToCart}
+                    <Button
+                        variant="contained"
+                        startIcon={<ShoppingCartOutlinedIcon />}
+                        onClick={handleAddToCart}
                     >
                         Add to cart
                     </Button>
                 </div>
             </div>
-
         </div>
     );
 };

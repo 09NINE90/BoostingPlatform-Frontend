@@ -1,14 +1,15 @@
 import Badge from "@mui/material/Badge";
 import {IconButton} from "@mui/material";
 import CartIcon from "src/assets/icons/CartIcon.jsx";
-import {useCallback, useEffect, useMemo, useState} from "react";
-import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
+import React, {useCallback, useEffect, useState} from "react";
 import {getCartItemsApi} from "src/services/offerApi.jsx";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import CartModal from "src/components/cart/CartModal.jsx";
 import {ClipLoader} from "react-spinners";
 import {selectCountCartItems} from "src/store/slice/authSlice.js";
 import {useSelector} from "react-redux";
+import DropCart from "src/components/cart/DropCart.jsx";
+import EmptyResponse from "src/layouts/EmptyResponse.jsx";
 
 
 const Cart = ({cartCount}) => {
@@ -16,61 +17,58 @@ const Cart = ({cartCount}) => {
     const reduxCount = useSelector(selectCountCartItems);
     const [countItems, setCountItems] = useState(reduxCount);
     const [cartItems, setCartItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    useEffect(() => {
-        setCountItems(reduxCount);
-    }, [reduxCount]);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const fetchCartItems = useCallback(async () => {
         try {
             const cartItemsApi = await getCartItemsApi();
             setCartItems(cartItemsApi);
-            setIsLoading(false);
+            setLoading(false);
+            setError(null)
         } catch (err) {
             setCartItems([])
-            console.error(handleApiError(err));
-        } finally {
-            setIsLoading(false);
+            setError(handleApiError(err).status)
         }
-    }, []);
+    }, [setAnchorEl, setLoading]);
 
-    const toggleModal = useCallback(async () => {
-        if (!modalIsOpen) {
-            await fetchCartItems();
-        }
-        setModalIsOpen(prev => !prev);
-    }, [modalIsOpen, fetchCartItems]);
+    const handleCartClick = useCallback((event) => {
+        setAnchorEl(event.currentTarget);
+        fetchCartItems();
+    }, [fetchCartItems]);
 
-    const handleCartClick = useMemo(() => {
-        return (
-            <ModalTemplate
-                isOpen={modalIsOpen}
-                onClose={toggleModal}
-                title="Cart"
-                width="80vw"
-                content={isLoading ? (
-                    <div className="flex justify-center items-center mt-[15vh]">
-                        <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
-                    </div>
-                ) : (
-                    <CartModal cartItems={cartItems}/>
-                )}
-            />
-        )
-    }, [modalIsOpen, toggleModal]);
+    const handleCartMenuClose = useCallback(() => {
+        setAnchorEl(null);
+    }, [setAnchorEl]);
+
+    useEffect(() => {
+        setCountItems(reduxCount);
+    }, [reduxCount]);
 
     return (
         <>
             <div className="px-4 hover:scale-103">
                 <Badge badgeContent={cartCount}>
-                    <IconButton onClick={toggleModal}>
+                    <IconButton onClick={handleCartClick}>
                         <CartIcon count={countItems}/>
                     </IconButton>
+                    <DropCart content={<>
+                        {error === 401 && (
+                            <EmptyResponse text={'Log in to view the shopping cart'}/>
+                        )}
+                        {loading && !error && (
+                            <div className="flex justify-center items-center mx-auto mt-[12vh] min-h-[20vw] min-w-[40vw]">
+                                <ClipLoader color="#FD980B" size={50}
+                                            cssOverride={{display: "block", margin: "auto auto"}}/>
+                            </div>)}
+                        {!loading && !error && (<CartModal cartItems={cartItems}/>)}
+                    </>}
+                              anchorEl={anchorEl}
+                              handleClose={handleCartMenuClose}
+                    />
                 </Badge>
             </div>
-            {handleCartClick}
         </>
 
     )
