@@ -119,4 +119,4 @@ const OffersList = memo(({gameId}) => {
     )
 });
 
-export default OffersList
+export default memo(OffersList)
