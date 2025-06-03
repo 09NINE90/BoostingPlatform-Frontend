@@ -1,10 +1,11 @@
 import ReactPaginate from "react-paginate";
 import React from "react";
 
-const OfferPagination = ({totalPages, changePage}) => {
+const OfferPagination = ({totalPages, changePage, currentPage }) => {
     return (
         <div className="py-6">
             <ReactPaginate
+                forcePage={currentPage}
                 previousLabel={null}
                 nextLabel={null}
                 pageCount={totalPages}
