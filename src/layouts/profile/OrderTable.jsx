@@ -15,6 +15,7 @@ const OrderTable = () => {
             const ordersApi = await getOffersByCreator(selectedStatus)
             setOrders(ordersApi);
         } catch (error) {
+            setOrders([]);
             console.log(error);
         }
     }, [getOffersByCreator, selectedStatus]);
@@ -73,8 +74,11 @@ const OrderTable = () => {
                     ))}
                 </>
             )}
-            {orders.length === 0 && (
+            {orders.length === 0 && selectedStatus.status !== null && (
                 <EmptyResponse text={'no orders by filter'}/>
+            )}
+            {orders.length === 0 && selectedStatus.status === null && (
+                <EmptyResponse text={'you have not orders'}/>
             )}
         </div>
     )
