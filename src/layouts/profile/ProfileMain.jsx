@@ -84,7 +84,7 @@ function ProfileMain() {
     const cashbackInfo = getCashbackLevel();
 
     return (
-        <Box sx={{ height: '100%', padding: 3, display: 'flex', gap: 3 }}>
+        <Box sx={{ padding: 3, display: 'flex', gap: 3 }}>
             <Box sx={{
                 backgroundColor: '#1E1930',
                 borderRadius: 2,
