@@ -12,7 +12,7 @@ import {
 } from "../../store/slice/authSlice.js";
 import { changeNickname } from "src/services/userApi.jsx";
 import { handleApiError } from "src/layouts/error/ErrorPage.jsx";
-import OrderTable from "src/layouts/profile/OrderTable.jsx";
+import OrderTable from "src/layouts/profile/utils/ui/OrderTable.jsx";
 
 function ProfileMain() {
     const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React from 'react';
 import {List} from '@mui/material';
 import {Games} from "src/assets/icons/index.js";
-import GameListItem from "src/layouts/home/gameSidebar/utils/GameListItem.jsx";
+import GameListItem from "src/layouts/home/utils/ui/gameSidebar/GameListItem.jsx";
 
 const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
 

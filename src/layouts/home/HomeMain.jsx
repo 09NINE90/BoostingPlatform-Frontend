@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import GameSideBar from './gameSidebar/GameSideBar.jsx'
-import OffersList from "./OffersList"
+import GameSideBar from './utils/ui/gameSidebar/GameSideBar.jsx'
+import OffersList from "./utils/ui/offers/OffersList.jsx"
 import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.jsx";
-import Carousel from "./Carousel.jsx";
+import Carousel from "./utils/ui/Carousel.jsx";
 import {getCarouselItemsApi} from "src/services/offerApi.jsx";
 import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";

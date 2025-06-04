@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {getOffersByCreator, getOrderStatuses} from "src/services/orderApi.js";
+import {getOffersByCreator} from "src/services/orderApi.js";
 import EmptyResponse from "src/layouts/EmptyResponse.jsx";
-import OrderStatusesFilter from "src/layouts/profile/OrderStatusesFilter.jsx";
+import OrderStatusesFilter from "src/layouts/profile/utils/ui/OrderStatusesFilter.jsx";
+import {statuses} from "src/layouts/profile/utils/data/StatusesData.json.js";
 
 const OrderTable = () => {
 
     const [orders, setOrders] = useState([]);
-    const [statuses, setStatuses] = useState([]);
-
-    const [selectedStatus, setSelectedStatus] = useState({status: null});
+    const [selectedStatus, setSelectedStatus] = useState({status: "CREATED"});
 
     const fetchOrdersData = useCallback(async () => {
         try {
@@ -20,23 +19,9 @@ const OrderTable = () => {
         }
     }, [getOffersByCreator, selectedStatus]);
 
-    const fetchOrdersStatusesData = useCallback(async () => {
-        try {
-            const orderFiltersApi = await getOrderStatuses()
-            setStatuses(orderFiltersApi);
-        } catch (error) {
-            console.log(error);
-        }
-    }, [getOrderStatuses]);
-
-
     useEffect(() => {
         fetchOrdersData();
     }, [fetchOrdersData]);
-
-    useEffect(() => {
-        fetchOrdersStatusesData();
-    }, [fetchOrdersStatusesData]);
 
     return (
         <div className="relative">
