@@ -9,13 +9,13 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
                     label="Clear filters"
                     clickable
                     onClick={() => setSelectedStatus({status: null})}
-                    sx={{marginRight: 1, backgroundColor: '#19054D', ":hover": {backgroundColor: '#e68900'}}}
+                    sx={{marginRight: 1, backgroundColor: '#19054D', ":hover": {backgroundColor: '#e68900', color: '#0A0022'}}}
                 />
             )}
             {statuses.map((status) => (
                 <Chip
                     key={status.id}
-                    label={status.name}
+                    label={status.value}
                     clickable
                     onClick={() => setSelectedStatus({status: status.name})}
                     sx={{
@@ -25,7 +25,6 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
                         ...(selectedStatus.status === status.name && {
                             backgroundColor: '#FD980B',
                             color: '#0A0022',
-                            fontWeight: 'bold'
                         })
                     }}
                 />

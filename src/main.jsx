@@ -33,7 +33,7 @@ const root = document.getElementById('root');
 export const App = () => {
     return (
         <BrowserRouter>
-            <ToastContainer position="bottom-right" autoClose={2000}
+            <ToastContainer position="bottom-left" autoClose={2000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"/>
             <Routes>

@@ -25,6 +25,9 @@ const OrderTable = () => {
 
     return (
         <div className="relative">
+            <div className="kanit-bold text-white text-2xl mb-2">
+                Your Orders
+            </div>
             <OrderStatusesFilter statuses={statuses} setSelectedStatus={setSelectedStatus} selectedStatus={selectedStatus} />
             {orders && (
                 <>
