@@ -10,6 +10,7 @@ const OfferPage = () => {
     const {offerId} = useParams();
     const [options, setOptions] = useState([]);
     const [offerData, setOfferData] = useState(null);
+    const [gamePlatforms, setGamePlatforms] = useState([]);
 
     useEffect(() => {
         if (!offerId) return;
@@ -22,6 +23,7 @@ const OfferPage = () => {
                 ]);
                 setOptions(optionsData);
                 setOfferData(offerData);
+                setGamePlatforms(offerData.gamePlatforms)
             } catch (err) {
                 console.error('Ошибка при загрузке данных:', err);
             }
@@ -37,7 +39,7 @@ const OfferPage = () => {
                     <OfferInfo offerData={offerData}/>
                 </Box>
                     <Box className="pl-20">
-                        <OfferPayment offerData={offerData} optionsBlocks={options}/>
+                        <OfferPayment offerData={offerData} optionsBlocks={options} gamePlatforms={gamePlatforms}/>
                     </Box>
                 </>
             )}

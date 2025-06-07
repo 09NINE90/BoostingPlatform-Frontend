@@ -1,8 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {getOffersByCreator} from "src/services/orderApi.js";
+import {getOrdersByCreator} from "src/services/orderApi.js";
 import EmptyResponse from "src/layouts/EmptyResponse.jsx";
 import OrderStatusesFilter from "src/layouts/profile/utils/ui/OrderStatusesFilter.jsx";
 import {statuses} from "src/layouts/profile/utils/data/StatusesData.json.js";
+import {gamePlatforms} from "src/layouts/profile/utils/data/GamePlatforms.js";
 
 const OrderTable = () => {
 
@@ -11,13 +12,13 @@ const OrderTable = () => {
 
     const fetchOrdersData = useCallback(async () => {
         try {
-            const ordersApi = await getOffersByCreator(selectedStatus)
+            const ordersApi = await getOrdersByCreator(selectedStatus)
             setOrders(ordersApi);
         } catch (error) {
             setOrders([]);
             console.log(error);
         }
-    }, [getOffersByCreator, selectedStatus]);
+    }, [getOrdersByCreator, selectedStatus]);
 
     useEffect(() => {
         fetchOrdersData();
@@ -38,7 +39,10 @@ const OrderTable = () => {
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-lg kanit-regular text-[#FFFFFF]">
                                     <span className="text-[#FD980B]">OFFER</span> {order.offerName}
-                                    <span className="text-[#FD980B] ml-2">#{order.orderId}</span>
+                                    <span className="text-[#FD980B] ml-2">#{order.secondId}</span>
+                                    <h3 className="text-lg kanit-regular text-[#FFFFFF]">
+                                        <span className="text-[#FD980B]">Platform:</span> {gamePlatforms.get(order.gamePlatform)}
+                                    </h3>
                                 </h3>
 
                                 <span className={`px-3 py-1 text-xs kanit-light rounded-full ${

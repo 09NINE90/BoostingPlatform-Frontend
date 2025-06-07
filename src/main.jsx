@@ -8,7 +8,7 @@ import {PersistGate} from "redux-persist/integration/react";
 import ProfilePage from "./pages/ProfilePage.jsx"
 import BoosterMainPage from './pages/BoosterMainPage.jsx';
 import {ADMIN_ROLE, CUSTOMER_ROLE, BOOSTER_ROLE} from './utils/constants/roles.js'
-import Dashboard from './layouts/boosters/Dashboard.jsx';
+import Dashboard from './layouts/boosters/dashboard/Dashboard.jsx';
 import Orders from './layouts/boosters/Orders.jsx';
 import OrderDetailPage from './pages/OrderDetailPage.jsx';
 import ProtectedRoute from './utils/routing/ProtectedRoute.jsx';
