@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import {Button} from '@mui/material';
 
 import {useState} from 'react';
-import {getAllOrder, getOrderFilters} from "src/services/orderApi.js";
+import {acceptOrder, getAllOrder, getOrderFilters} from "src/services/orderApi.js";
 import FilterIcon from "src/assets/icons/FilterIcon.jsx";
 import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdown.jsx";
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
@@ -17,14 +17,15 @@ import {GAME_NAME, GAME_PLATFORM, OFFER_NAME, PRICE} from "src/layouts/boosters/
 import SortButton from "src/layouts/boosters/dashboard/utils/ui/SortButton.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import AcceptModal from "src/layouts/boosters/dashboard/utils/ui/AcceptModal.jsx";
+import {toast} from "react-toastify";
 
 
 const Dashboard = () => {
-    const employeesPerPage = 5;
+    const employeesPerPage = 300;
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [openFilter, setOpenFilter] = useState(null);
-    const [selectedUUID, setSelectedUUID] = useState(null);
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const [allOrders, setAllOrders] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -118,18 +119,24 @@ const Dashboard = () => {
         }));
     }, []);
 
-    const openModal = (uuid) => {
-        setSelectedUUID(uuid);
+    const openModal = (order) => {
+        setSelectedOrder(order);
         setModalIsOpen(true);
     };
 
     const closeModal = () => {
         setModalIsOpen(false);
-        setSelectedUUID(null);
+        setSelectedOrder(null);
     };
 
-    const handleAccept = () => {
-        console.log(`get order with uuid: ${selectedUUID} in work `);
+    const handleAccept = async () => {
+        try {
+            await acceptOrder(selectedOrder.orderId);
+            toast.success('The order has been successfully completed')
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+        await fetchAllOrders()
         closeModal();
     }
 
@@ -240,7 +247,6 @@ const Dashboard = () => {
                         <TableBody>
                             {allOrders.map((order) => (
                                 <TableRow
-
                                     key={order.orderId}
                                     sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
                                 >
@@ -261,7 +267,7 @@ const Dashboard = () => {
                                     </TableCell>
                                     <TableCell align="center">
                                         <Button
-                                            onClick={() => openModal(order.orderId)}
+                                            onClick={() => openModal(order)}
                                         >
                                             Accept
                                         </Button>
@@ -271,7 +277,8 @@ const Dashboard = () => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <AcceptModal isOpen={modalIsOpen} onClose={closeModal} onAccept={handleAccept}/>
+                <AcceptModal isOpen={modalIsOpen} onClose={closeModal} onAccept={handleAccept}
+                             selectedOrder={selectedOrder}/>
                 {allOrders.length < recordTotal && (
                     <OrderPagination changePage={changePage} currentPage={pageNumber} totalPages={totalPages}/>
                 )}
