@@ -18,6 +18,7 @@ import SortButton from "src/layouts/boosters/dashboard/utils/ui/SortButton.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import AcceptModal from "src/layouts/boosters/dashboard/utils/ui/AcceptModal.jsx";
 import {toast} from "react-toastify";
+import {ClipLoader} from "react-spinners";
 
 
 const Dashboard = () => {
@@ -30,6 +31,7 @@ const Dashboard = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [recordTotal, setRecordTotal] = useState(employeesPerPage);
+    const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({
         statuses: [],
         gamePlatforms: [],
@@ -54,10 +56,12 @@ const Dashboard = () => {
 
     const fetchAllOrders = useCallback(async () => {
         try {
+            setLoading(true);
             const allOrdersApi = await getAllOrder(selectedFilters)
             setAllOrders(allOrdersApi.orders);
             setTotalPages(allOrdersApi.pageTotal);
-            setRecordTotal(allOrdersApi.recordTotal)
+            setRecordTotal(allOrdersApi.recordTotal);
+            setLoading(false);
         } catch (error) {
             setAllOrders([]);
             console.log(error);
@@ -163,7 +167,7 @@ const Dashboard = () => {
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>
+                                <TableCell sx={{ width: '35%' }}>
                                     <div className='text-[#fff]'>
                                         Available Orders
                                         <SortButton
@@ -173,7 +177,7 @@ const Dashboard = () => {
                                         />
                                     </div>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell sx={{ width: '15%' }}>
                                     <div className='text-[#fff] flex items-center'>
                                         Game
                                         <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
@@ -195,7 +199,7 @@ const Dashboard = () => {
                                         />
                                     )}
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" sx={{ width: '15%' }}>
                                     <div className='text-[#fff] flex justify-center items-center'>
                                         Platform
                                         <button
@@ -218,7 +222,7 @@ const Dashboard = () => {
                                         />
                                     )}
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" sx={{ width: '15%' }}>
                                     <div className='text-[#fff] flex justify-center items-center'>
                                         Price
                                         <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
@@ -239,43 +243,56 @@ const Dashboard = () => {
                                         />
                                     )}
                                 </TableCell>
-                                <TableCell align="center">
+                                <TableCell align="center" sx={{ width: '20%' }}>
                                     <div className='text-[#fff]'>Action</div>
                                 </TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
-                            {allOrders.map((order) => (
-                                <TableRow
-                                    key={order.orderId}
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        <div className='text-[#fff]'>
-                                            {order.offerName} # {order.secondId}
-                                            <OrderOptions order={order}/>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell>
-                                        <div className='text-[#fff]'>{order.gameName}</div>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <div className='text-[#fff]'>{order.gamePlatform}</div>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <div className='text-[#fff]'>${order.totalPrice}</div>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Button
-                                            onClick={() => openModal(order)}
-                                        >
-                                            Accept
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                        {!loading && (
+                            <TableBody>
+                                {allOrders.map((order) => (
+                                    <TableRow
+                                        key={order.orderId}
+                                        sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
+                                    >
+                                        <TableCell component="th" scope="row" sx={{ width: '35%' }}>
+                                            <div className='text-[#fff]'>
+                                                {order.offerName} # {order.secondId}
+                                                <OrderOptions order={order}/>
+                                            </div>
+                                        </TableCell>
+                                        <TableCell sx={{ width: '15%' }}>
+                                            <div className='text-[#fff]'>{order.gameName}</div>
+                                        </TableCell>
+                                        <TableCell align="center" sx={{ width: '15%' }}>
+                                            <div className='text-[#fff]'>{order.gamePlatform}</div>
+                                        </TableCell>
+                                        <TableCell align="center" sx={{ width: '15%' }}>
+                                            <div className='text-[#fff]'>${order.totalPrice}</div>
+                                        </TableCell>
+                                        <TableCell align="center" sx={{ width: '20%' }}>
+                                            <Button
+                                                onClick={() => openModal(order)}
+                                            >
+                                                Accept
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
+                    {loading && (
+                        <div className="flex justify-center items-center min-h-[80vh]">
+                            <div className="mt-[30vh]">
+                                <ClipLoader
+                                    color="#FD980B"
+                                    size={100}
+                                    cssOverride={{display: "block", margin: "auto auto"}}
+                                />
+                            </div>
+                        </div>
+                    )}
                 </TableContainer>
                 <AcceptModal isOpen={modalIsOpen} onClose={closeModal} onAccept={handleAccept}
                              selectedOrder={selectedOrder}/>
