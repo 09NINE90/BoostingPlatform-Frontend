@@ -1,7 +1,12 @@
 import axios from "axios";
 
-export const getOrderFilters = async () => {
-    const response = await axios.get(`/api/order/getFilters`, {withCredentials: true});
+export const getFiltersForCreatedOrders = async () => {
+    const response = await axios.get(`/api/order/getFiltersForCreatedOrders`, {withCredentials: true});
+    return response.data;
+}
+
+export const getFiltersForOrdersByBooster = async () => {
+    const response = await axios.get(`/api/order/getFiltersForOrdersByBooster`, {withCredentials: true});
     return response.data;
 }
 

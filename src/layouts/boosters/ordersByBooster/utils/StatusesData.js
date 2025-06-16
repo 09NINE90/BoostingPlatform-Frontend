@@ -6,6 +6,4 @@ const ordersStatusesMap = new Map([
     ['COMPLETED', 'Completed'],
 ]);
 
-const ordersStatuses = ['IN_PROGRESS', 'COMPLETED'];
-
-export {IN_PROGRESS, COMPLETED, ordersStatusesMap, ordersStatuses};
+export {IN_PROGRESS, COMPLETED, ordersStatusesMap};

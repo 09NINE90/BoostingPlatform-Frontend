@@ -13,10 +13,9 @@ import TableBody from "@mui/material/TableBody";
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
 import {Button} from "@mui/material";
 import {ClipLoader} from "react-spinners";
-import {getOrderFilters, getOrdersByBooster} from "src/services/orderApi.js";
+import {getFiltersForOrdersByBooster, getOrdersByBooster} from "src/services/orderApi.js";
 import {
     IN_PROGRESS,
-    ordersStatuses,
     ordersStatusesMap
 } from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 
@@ -59,12 +58,12 @@ const Orders = () => {
 
     const fetchOrdersFilterData = useCallback(async () => {
         try {
-            const orderFiltersApi = await getOrderFilters()
+            const orderFiltersApi = await getFiltersForOrdersByBooster()
             setFilters(orderFiltersApi);
         } catch (error) {
             console.log(error);
         }
-    }, [getOrderFilters, setFilters]);
+    }, [getFiltersForOrdersByBooster, setFilters]);
 
     const handleSort = (sortKey) => {
         setSelectedFilters(prev => {
@@ -222,7 +221,7 @@ const Orders = () => {
                                 {openFilter === 'status' && (
                                     <FilterDropdown
                                         title="Select platform"
-                                        options={ordersStatuses}
+                                        options={filters.statuses}
                                         selected={selectedFilters.status}
                                         onSelect={handleOrderStatusSelect}
                                         onClose={() => setOpenFilter(null)}

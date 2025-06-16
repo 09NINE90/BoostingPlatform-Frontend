@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import {Button} from '@mui/material';
 
 import {useState} from 'react';
-import {acceptOrder, getAllOrders, getOrderFilters} from "src/services/orderApi.js";
+import {acceptOrder, getAllOrders, getFiltersForCreatedOrders} from "src/services/orderApi.js";
 import FilterIcon from "src/assets/icons/FilterIcon.jsx";
 import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdown.jsx";
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
@@ -70,12 +70,12 @@ const Dashboard = () => {
 
     const fetchOrdersFilterData = useCallback(async () => {
         try {
-            const orderFiltersApi = await getOrderFilters()
+            const orderFiltersApi = await getFiltersForCreatedOrders()
             setFilters(orderFiltersApi);
         } catch (error) {
             console.log(error);
         }
-    }, [getOrderFilters, setFilters]);
+    }, [getFiltersForCreatedOrders, setFilters]);
 
     const handleSort = (sortKey) => {
         setPageNumber(0)
