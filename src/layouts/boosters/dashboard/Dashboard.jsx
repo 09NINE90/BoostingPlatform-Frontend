@@ -182,7 +182,7 @@ const Dashboard = () => {
                                         Game
                                         <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
                                                 className="ml-2">
-                                            <FilterIcon/>
+                                            <FilterIcon isActive={selectedFilters.gameName !== null} />
                                         </button>
                                         <SortButton
                                             sortKey={GAME_NAME}
@@ -205,7 +205,7 @@ const Dashboard = () => {
                                         <button
                                             onClick={() => setOpenFilter(openFilter === 'platform' ? null : 'platform')}
                                             className="ml-2">
-                                            <FilterIcon/>
+                                            <FilterIcon isActive={selectedFilters.gamePlatform !== null} />
                                         </button>
                                         <SortButton
                                             sortKey={GAME_PLATFORM}
@@ -227,7 +227,7 @@ const Dashboard = () => {
                                         Price
                                         <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                                                 className="ml-2">
-                                            <FilterIcon/>
+                                            <FilterIcon isActive={selectedFilters.price.priceFrom !== null && selectedFilters.price.priceTo !== null} />
                                         </button>
                                         <SortButton
                                             sortKey={PRICE}
