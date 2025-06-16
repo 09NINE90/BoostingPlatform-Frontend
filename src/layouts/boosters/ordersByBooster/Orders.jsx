@@ -159,6 +159,7 @@ const Orders = () => {
                                     <FilterDropdown
                                         title="Select Game"
                                         options={filters.gameNames}
+                                        selected={selectedFilters.gameName}
                                         onSelect={handleGameSelect}
                                         onClose={() => setOpenFilter(null)}
                                     />
@@ -182,6 +183,7 @@ const Orders = () => {
                                     <FilterDropdown
                                         title="Select platform"
                                         options={filters.gamePlatforms}
+                                        selected={selectedFilters.gamePlatform}
                                         onSelect={handleGamePlatformSelect}
                                         onClose={() => setOpenFilter(null)}
                                     />
@@ -221,6 +223,7 @@ const Orders = () => {
                                     <FilterDropdown
                                         title="Select platform"
                                         options={ordersStatuses}
+                                        selected={selectedFilters.status}
                                         onSelect={handleOrderStatusSelect}
                                         onClose={() => setOpenFilter(null)}
                                     />

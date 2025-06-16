@@ -1,4 +1,4 @@
-const FilterDropdown = ({title, options = [], onSelect, onClose}) => {
+const FilterDropdown = ({title, options = [], onSelect, onClose, selected}) => {
     return (
         <div className="absolute z-100 bg-[#2A2545] text-white border border-gray-600 p-2 rounded shadow-md mt-2 w-48">
             <div className="font-bold mb-2">{title}</div>
@@ -10,7 +10,9 @@ const FilterDropdown = ({title, options = [], onSelect, onClose}) => {
                             onSelect(opt);
                             onClose();
                         }}
-                        className="cursor-pointer hover:bg-[#3A3455] px-1 py-1.5 border-t-1"
+                        className={`cursor-pointer hover:bg-[#3A3455] px-1 py-1.5 border-t-1 ${
+                            selected === opt ? 'text-[#FD980B] font-medium' : ''
+                        }`}
                     >
                         {opt}
                     </li>
