@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import {Button} from '@mui/material';
 
 import {useState} from 'react';
-import {acceptOrder, getAllOrder, getOrderFilters} from "src/services/orderApi.js";
+import {acceptOrder, getAllOrders, getOrderFilters} from "src/services/orderApi.js";
 import FilterIcon from "src/assets/icons/FilterIcon.jsx";
 import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdown.jsx";
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
@@ -57,7 +57,7 @@ const Dashboard = () => {
     const fetchAllOrders = useCallback(async () => {
         try {
             setLoading(true);
-            const allOrdersApi = await getAllOrder(selectedFilters)
+            const allOrdersApi = await getAllOrders(selectedFilters)
             setAllOrders(allOrdersApi.orders);
             setTotalPages(allOrdersApi.pageTotal);
             setRecordTotal(allOrdersApi.recordTotal);
@@ -66,7 +66,7 @@ const Dashboard = () => {
             setAllOrders([]);
             console.log(error);
         }
-    }, [getAllOrder, setAllOrders, selectedFilters]);
+    }, [getAllOrders, setAllOrders, selectedFilters]);
 
     const fetchOrdersFilterData = useCallback(async () => {
         try {

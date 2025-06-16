@@ -10,8 +10,13 @@ export const getOrdersByCreator = async (request) => {
     return response.data;
 }
 
-export const getAllOrder = async (request) => {
+export const getAllOrders = async (request) => {
     const response = await axios.post(`/api/order/getAll`, request, {withCredentials: true});
+    return response.data;
+}
+
+export const getOrdersByBooster = async (request) => {
+    const response = await axios.post(`/api/order/byBooster`, request, {withCredentials: true});
     return response.data;
 }
 
