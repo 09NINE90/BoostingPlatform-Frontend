@@ -133,7 +133,7 @@ const Orders = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell sx={{width: '35%'}}>
-                                <div className='text-[#fff]'>
+                                <div className='text-[#fff] kanit-regular text-xl'>
                                     Available Orders
                                     <SortButton
                                         sortKey={OFFER_NAME}
@@ -143,7 +143,7 @@ const Orders = () => {
                                 </div>
                             </TableCell>
                             <TableCell sx={{width: '15%'}}>
-                                <div className='text-[#fff] flex items-center'>
+                                <div className='text-[#fff] flex items-center kanit-regular text-xl'>
                                     Game
                                     <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
                                             className="ml-2">
@@ -166,7 +166,7 @@ const Orders = () => {
                                 )}
                             </TableCell>
                             <TableCell align="center" sx={{width: '15%'}}>
-                                <div className='text-[#fff] flex justify-center items-center'>
+                                <div className='text-[#fff] flex justify-center items-center kanit-regular text-xl'>
                                     Platform
                                     <button
                                         onClick={() => setOpenFilter(openFilter === 'platform' ? null : 'platform')}
@@ -190,7 +190,7 @@ const Orders = () => {
                                 )}
                             </TableCell>
                             <TableCell align="center" sx={{width: '15%'}}>
-                                <div className='text-[#fff] flex justify-center items-center'>
+                                <div className='text-[#fff] flex justify-center items-center kanit-regular text-xl'>
                                     Price
                                     <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                                             className="ml-2">
@@ -212,7 +212,7 @@ const Orders = () => {
                                 )}
                             </TableCell>
                             <TableCell align="center" sx={{width: '10%'}}>
-                                <div className='text-[#fff] flex justify-center items-center'>
+                                <div className='text-[#fff] flex justify-center items-center kanit-regular text-xl'>
                                     Status
                                     <button onClick={() => setOpenFilter(openFilter === 'status' ? null : 'status')}
                                             className="ml-2">
@@ -230,7 +230,7 @@ const Orders = () => {
                                 )}
                             </TableCell>
                             <TableCell align="center" sx={{width: '10%'}}>
-                                <div className='text-[#fff]'>Action</div>
+                                <div className='text-[#fff] kanit-regular text-xl'>Action</div>
                             </TableCell>
                         </TableRow>
                     </TableHead>
@@ -242,22 +242,22 @@ const Orders = () => {
                                     sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
                                 >
                                     <TableCell component="th" scope="row" sx={{width: '35%'}}>
-                                        <div className='text-[#fff]'>
+                                        <div className='text-[#fff] kanit-light'>
                                             {order.offerName} # {order.secondId}
                                             <OrderOptions order={order}/>
                                         </div>
                                     </TableCell>
                                     <TableCell sx={{width: '15%'}}>
-                                        <div className='text-[#fff]'>{order.gameName}</div>
+                                        <div className='text-[#fff] kanit-light'>{order.gameName}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '15%'}}>
-                                        <div className='text-[#fff]'>{order.gamePlatform}</div>
+                                        <div className='text-[#fff] kanit-light'>{order.gamePlatform}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '15%'}}>
-                                        <div className='text-[#fff]'>${order.totalPrice}</div>
+                                        <div className='text-[#fff] kanit-light'>${order.totalPrice}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '10%'}}>
-                                        <div className='text-[#fff]'>{ordersStatusesMap.get(order.orderStatus)}</div>
+                                        <div className='text-[#fff] kanit-light'>{ordersStatusesMap.get(order.orderStatus)}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '10%'}}>
                                         <Button>

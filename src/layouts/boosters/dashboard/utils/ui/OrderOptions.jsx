@@ -1,7 +1,7 @@
 const OrderOptions = ({order}) => {
     return (
         <>
-            {order.selectedOptions && (
+            {order.selectedOptions.length > 0 && (
                 <>
                     <h4 className="text-m text-gray-400 mb-1 text-left kanit-light mt-3">Additional options:</h4>
                     <ul className="space-y-2">

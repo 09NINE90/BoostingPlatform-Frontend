@@ -10,7 +10,7 @@ const FilterDropdown = ({title, options = [], onSelect, onClose, selected}) => {
                             onSelect(opt);
                             onClose();
                         }}
-                        className={`cursor-pointer hover:bg-[#3A3455] px-1 py-1.5 border-t-1 ${
+                        className={`cursor-pointer kanit-light hover:bg-[#3A3455] px-1 py-1.5 border-l-1 ${
                             selected === opt ? 'text-[#FD980B] font-medium' : ''
                         }`}
                     >
