@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, { useMemo} from 'react';
 import {Box, Breadcrumbs, Typography, Link} from '@mui/material';
 import {NavLink} from 'react-router-dom';
 import InfoBlockList from '../../components/offer/info/InfoBlockList';
@@ -45,10 +45,10 @@ const OfferInfo = ({offerData}) => {
         <Box className="p-6 space-y-6  m-2 mt-7">
 
             <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-gray-400">
-                <Link color="secondary" component={NavLink} to={`/${offerData.gameId}`} className="hover:underline">
+                <Link color="secondary" component={NavLink} to={`/${offerData.secondGameId}`} className="hover:underline">
                     Home
                 </Link>
-                <Link color="secondary" component={NavLink} to={`/games/${offerData.gameId}`}
+                <Link color="secondary" component={NavLink} to={`/games/${offerData.secondGameId}`}
                       className="hover:underline">
                     {offerData.gameName}
                 </Link>
