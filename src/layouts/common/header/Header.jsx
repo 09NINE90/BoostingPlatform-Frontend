@@ -13,6 +13,7 @@ import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
 import {toast} from "react-toastify";
 import {SIGN_IN_STATE, SIGN_IN_TEXT, SIGN_UP_STATE, SIGN_UP_TEXT} from "src/utils/constants/authForm.js";
+import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
 
 const Header = ({forBoosterPage}) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -38,7 +39,8 @@ const Header = ({forBoosterPage}) => {
     }, [setAnchorEl]);
 
     const handleOpenProfile = useCallback(() => {
-        navigate("/profile");
+        if (!forBoosterPage) navigate("/profile");
+        else navigate("/booster/profile");
     }, [navigate])
 
     const handleLogout = useCallback(() => {
@@ -50,17 +52,6 @@ const Header = ({forBoosterPage}) => {
     const toggleModal = useCallback(() => {
         setModalIsOpen((prev) => !prev);
     }, [setModalIsOpen]);
-
-    const handleBoosterProfileNavigate = useCallback(() => {
-        handleProfileMenuClose();
-        navigate("/booster/profile");
-    }, []);
-
-
-    const handleProfileNavigate = useCallback(() => {
-        handleProfileMenuClose();
-        navigate("/profile");
-    }, [handleProfileMenuClose, navigate]);
 
     const renderModal = useMemo(() => {
         if (modalIsOpen) handleProfileMenuClose()
@@ -108,12 +99,17 @@ const Header = ({forBoosterPage}) => {
             <div className="flex flex-row items-center justify-between px-5 py-2">
                 <div className="flex items-center">
                     <LogoHome/>
-                    <Search/>
+                    {!forBoosterPage && (
+                        <Search/>
+                    )}
                 </div>
-
+                {forBoosterPage && (
+                    <BoosterHeader/>
+                )}
                 <nav className="flex justify-between flex-row text-center">
-                    <Cart cartCount={cartCount} />
-
+                    {!forBoosterPage && (
+                        <Cart cartCount={cartCount}/>
+                    )}
                     <div className="flex justify-center hover:scale-103">
                         <IconButton onClick={handleProfileClick}>
                             <ProfileIcon className="w-[50px]"/>

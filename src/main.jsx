@@ -8,8 +8,8 @@ import {PersistGate} from "redux-persist/integration/react";
 import ProfilePage from "./pages/ProfilePage.jsx"
 import BoosterMainPage from './pages/BoosterMainPage.jsx';
 import {ADMIN_ROLE, CUSTOMER_ROLE, BOOSTER_ROLE} from './utils/constants/roles.js'
-import Dashboard from './layouts/boosters/Dashboard.jsx';
-import Orders from './layouts/boosters/Orders.jsx';
+import Dashboard from './layouts/boosters/dashboard/Dashboard.jsx';
+import Orders from './layouts/boosters/ordersByBooster/Orders.jsx';
 import OrderDetailPage from './pages/OrderDetailPage.jsx';
 import ProtectedRoute from './utils/routing/ProtectedRoute.jsx';
 import {ThemeProvider, CssBaseline} from '@mui/material';
@@ -33,7 +33,7 @@ const root = document.getElementById('root');
 export const App = () => {
     return (
         <BrowserRouter>
-            <ToastContainer position="bottom-right" autoClose={2000}
+            <ToastContainer position="bottom-left" autoClose={2000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"/>
             <Routes>

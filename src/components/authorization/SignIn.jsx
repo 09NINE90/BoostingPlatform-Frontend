@@ -7,17 +7,18 @@ import {
     setAvatar, setCountCartItems,
     setRole,
     setUsername,
-    setToken
+    setToken, selectRole
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.jsx";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
-import {NavLink} from "react-router";
+import {NavLink, useNavigate} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import {getUserProfileData} from "src/services/userApi.jsx";
 import {getCountCartItemsApi} from "src/services/offerApi.jsx";
 import {ClipLoader} from "react-spinners";
+import {BOOSTER_ROLE} from "src/utils/constants/roles.js";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -26,6 +27,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const status = useSelector(selectAuthStatus);
 
     const signIn = async () => {
@@ -55,6 +57,8 @@ const SignIn = ({closeModal, signUpRedirect}) => {
 
             const countCartItems = await getCountCartItemsApi();
             dispatch(setCountCartItems(countCartItems));
+
+            if (role === BOOSTER_ROLE) navigate('/booster/dashboard');
 
             closeModal();
 

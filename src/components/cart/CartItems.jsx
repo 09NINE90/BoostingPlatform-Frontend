@@ -4,6 +4,7 @@ const CartItems = ({item}) => {
             <div className="flex flex-col justify-between items-start">
                 <div>
                     <h3 className="text-xl text-[#00A0FF] kanit-medium text-left">{item.offerName} in {item.gameName}</h3>
+                    <h3 className="text-xl text-[#00A0FF] kanit-medium text-left">{item.gamePlatform}</h3>
                 </div>
                 <div className="mt-0">
                     {item.selectedOptions && (

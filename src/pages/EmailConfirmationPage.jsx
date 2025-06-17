@@ -1,42 +1,60 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router";
+import React, {useEffect, useRef, useState} from "react";
+import {useParams} from "react-router";
 import {confirmEmail} from "src/services/authApi.jsx";
 import {toast} from "react-toastify";
-import {clearAuth, setAuth, setRole, setToken} from "src/store/slice/authSlice.js";
+import {
+    clearAuth,
+    setAuth,
+    setAvatar,
+    setCountCartItems,
+    setRole,
+    setToken,
+    setUsername
+} from "src/store/slice/authSlice.js";
 import {useDispatch} from "react-redux";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
+import {getUserProfileData} from "src/services/userApi.jsx";
+import {getCountCartItemsApi} from "src/services/offerApi.jsx";
+import {Navigate} from "react-router-dom";
 
 const EmailConfirmationPage = () => {
 
-    const { tokenParam } = useParams();
-    const navigate = useNavigate();
+    const {tokenParam} = useParams();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
-
-    console.log(tokenParam);
+    const isConfirmed = useRef(false);
 
     useEffect(() => {
+        if (isConfirmed.current) return;
+        isConfirmed.current = true;
+
         const confirm = async () => {
             try {
                 const confirmationToken = {
                     token: tokenParam,
                 }
-                const { role, token } = await confirmEmail(confirmationToken);
+                const {role, token} = await confirmEmail(confirmationToken);
                 dispatch(setToken(token));
                 dispatch(setRole(role));
                 dispatch(setAuth(true));
+
+                const userProfile = await getUserProfileData();
+                dispatch(setUsername(userProfile.nickname));
+                dispatch(setAvatar(userProfile.imageUrl));
+
+                const countCartItems = await getCountCartItemsApi();
+                dispatch(setCountCartItems(countCartItems));
+
                 setIsLoading(false);
-                navigate('/');
                 toast.success('Email confirmation successfully!');
             } catch (error) {
                 dispatch(clearAuth());
-                navigate('/');
                 toast.error(handleApiError(error).message);
             }
         };
         confirm();
-    }, [tokenParam, navigate]);
+    }, [tokenParam]);
 
     return (
         <>
@@ -44,6 +62,9 @@ const EmailConfirmationPage = () => {
                 <div className="flex justify-center items-center mt-[15vh]">
                     <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
                 </div>
+            )}
+            {!isLoading && (
+                <Navigate to="/LoE" replace/>
             )}
         </>
     )

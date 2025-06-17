@@ -4,9 +4,9 @@ import { getGameByIdApi, getGameCategoriesApi } from "src/services/gamesApi.jsx"
 import { getOffersByRequest } from "src/services/offerApi.jsx";
 import ErrorPage, { handleApiError } from "src/layouts/error/ErrorPage.jsx";
 import EmptyResponse from "src/layouts/EmptyResponse.jsx";
-import OfferCard from "src/layouts/home/OfferCard.jsx";
-import CategoriesFilter from "src/layouts/home/CategoriesFilter.jsx";
-import OfferPagination from "src/layouts/home/OfferPagination.jsx";
+import OfferCard from "src/layouts/home/utils/ui/offers/OfferCard.jsx";
+import CategoriesFilter from "src/layouts/home/utils/ui/offers/CategoriesFilter.jsx";
+import OfferPagination from "src/layouts/home/utils/ui/offers/OfferPagination.jsx";
 import { ClipLoader } from "react-spinners";
 
 const OffersList = memo(({ gameId }) => {

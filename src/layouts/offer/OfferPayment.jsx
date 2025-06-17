@@ -17,10 +17,11 @@ import {useDispatch} from "react-redux";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {store} from "src/store/store.js";
 
-const OfferPayment = ({offerData, optionsBlocks}) => {
+const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
+    const [selectedPlatform, setSelectedPlatform] = useState('PC');
     const dispatch = useDispatch();
 
     const handleChange = (blockId, value, label, optionTitle) => {
@@ -89,6 +90,7 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
             offerId: offerData.offerId,
             basePrice,
             gameName: offerData.gameName,
+            gamePlatform: selectedPlatform,
             selectedOptions: Object.entries(selectedOptions).map(([optionId, optionData]) => ({
                 optionId,
                 value: optionData.value,
@@ -103,7 +105,7 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
         postOffersToCart(cartItem).then(r => console.log('Successfully added to cart!', r));
         const currentCount = selectCountCartItems(store.getState());
         dispatch(setCountCartItems(currentCount + 1));
-    }, [offerData, basePrice, selectedOptions, totalPrice, totalTime]);
+    }, [offerData, basePrice, selectedOptions, totalPrice, totalTime, selectedPlatform]);
 
 
     const renderOption = useCallback((option) => {
@@ -235,6 +237,19 @@ const OfferPayment = ({offerData, optionsBlocks}) => {
             </div>
             <div className="relative -mt-40 z-20 p-5 text-white rounded-xl">
                 {renderOptions}
+                <Box>
+                    Choose platform:
+                    {gamePlatforms.map((item) => (
+                        <Button
+                            sx={{ m: 1 }}
+                            key={item}
+                            variant={selectedPlatform === item ? "contained" : "outlined"}
+                            onClick={() => setSelectedPlatform(item)}
+                        >
+                            {item}
+                        </Button>
+                    ))}
+                </Box>
                 <Divider />
                 <div className="flex flex-col">
                     <div className="my-5">
