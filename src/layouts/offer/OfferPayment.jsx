@@ -16,6 +16,7 @@ import {postOffersToCart} from "src/services/offerApi.jsx";
 import {useDispatch} from "react-redux";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {store} from "src/store/store.js";
+import {toast} from "react-toastify";
 
 const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     const [basePrice] = useState(200);
@@ -85,11 +86,12 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
         return { totalPrice: price, totalTime: time };
     }, [selectedOptions, basePrice, baseTime, optionsBlocks]);
 
-    const handleAddToCart = useCallback(() => {
+    const handleAddToCart = useCallback(async () => {
         const cartItem = {
             offerId: offerData.offerId,
-            basePrice,
+            basePrice: basePrice,
             gameName: offerData.gameName,
+            gameId: offerData.gameId,
             gamePlatform: selectedPlatform,
             selectedOptions: Object.entries(selectedOptions).map(([optionId, optionData]) => ({
                 optionId,
@@ -97,14 +99,18 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
                 label: optionData.label,
                 optionTitle: optionData.optionTitle
             })),
-            totalPrice,
-            totalTime
+            totalPrice: totalPrice,
+            totalTime: totalTime
         };
 
-
-        postOffersToCart(cartItem).then(r => console.log('Successfully added to cart!', r));
-        const currentCount = selectCountCartItems(store.getState());
-        dispatch(setCountCartItems(currentCount + 1));
+        try {
+            await postOffersToCart(cartItem);
+            const currentCount = selectCountCartItems(store.getState());
+            dispatch(setCountCartItems(currentCount + 1));
+        } catch (error) {
+            toast.error(error.message);
+            console.log(error);
+        }
     }, [offerData, basePrice, selectedOptions, totalPrice, totalTime, selectedPlatform]);
 
 

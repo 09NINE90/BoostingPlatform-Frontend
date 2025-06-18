@@ -13,7 +13,12 @@ import FilterIcon from "src/assets/icons/FilterIcon.jsx";
 import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdown.jsx";
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
-import {GAME_NAME, GAME_PLATFORM, OFFER_NAME, PRICE} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
+import {
+    GAME_NAME,
+    GAME_PLATFORM,
+    OFFER_NAME,
+    TOTAL_PRICE
+} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
 import SortButton from "src/layouts/boosters/dashboard/utils/ui/SortButton.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import AcceptModal from "src/layouts/boosters/dashboard/utils/ui/AcceptModal.jsx";
@@ -42,7 +47,7 @@ const Dashboard = () => {
         status: null,
         gameName: null,
         gamePlatform: null,
-        price: {
+        totalPrice: {
             priceFrom: null,
             priceTo: null
         },
@@ -116,7 +121,7 @@ const Dashboard = () => {
     const handlePriceApply = useCallback(({priceFrom, priceTo}) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            price: {
+            totalPrice: {
                 priceFrom: priceFrom,
                 priceTo: priceTo
             }
@@ -229,10 +234,10 @@ const Dashboard = () => {
                                         Price
                                         <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                                                 className="ml-2">
-                                            <FilterIcon isActive={selectedFilters.price.priceFrom !== null && selectedFilters.price.priceTo !== null} />
+                                            <FilterIcon isActive={selectedFilters.totalPrice.priceFrom !== null && selectedFilters.totalPrice.priceTo !== null} />
                                         </button>
                                         <SortButton
-                                            sortKey={PRICE}
+                                            sortKey={TOTAL_PRICE}
                                             currentSort={selectedFilters.sort}
                                             onSort={handleSort}
                                         />
