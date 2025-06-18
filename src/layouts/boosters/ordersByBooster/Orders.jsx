@@ -5,7 +5,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import SortButton from "src/layouts/boosters/dashboard/utils/ui/SortButton.jsx";
-import {GAME_NAME, GAME_PLATFORM, OFFER_NAME, PRICE} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
+import {
+    BOOSTER_PRICE,
+    GAME_NAME,
+    GAME_PLATFORM,
+    OFFER_NAME,
+} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
 import FilterIcon from "src/assets/icons/FilterIcon.jsx";
 import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdown.jsx";
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
@@ -197,7 +202,7 @@ const Orders = () => {
                                             isActive={selectedFilters.price.priceFrom !== null && selectedFilters.price.priceTo !== null}/>
                                     </button>
                                     <SortButton
-                                        sortKey={PRICE}
+                                        sortKey={BOOSTER_PRICE}
                                         currentSort={selectedFilters.sort}
                                         onSort={handleSort}
                                     />
@@ -253,7 +258,7 @@ const Orders = () => {
                                         <div className='text-[#fff] kanit-light'>{order.gamePlatform}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '15%'}}>
-                                        <div className='text-[#fff] kanit-light'>${order.totalPrice}</div>
+                                        <div className='text-[#fff] kanit-light'>${order.boosterSalary}</div>
                                     </TableCell>
                                     <TableCell align="center" sx={{width: '10%'}}>
                                         <div className='text-[#fff] kanit-light'>{ordersStatusesMap.get(order.orderStatus)}</div>
