@@ -3,7 +3,7 @@ import {useParams} from 'react-router';
 import Box from '@mui/material/Box';
 import OfferInfo from '../layouts/offer/OfferInfo';
 import OfferPayment from '../layouts/offer/OfferPayment';
-import {getOfferData, getOptions} from "src/services/option.jsx";
+import {getOfferData, getOptions} from "src/services/optionApi.js";
 import {ClipLoader} from "react-spinners";
 
 const OfferPage = () => {

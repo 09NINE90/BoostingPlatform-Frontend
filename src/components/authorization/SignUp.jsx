@@ -3,7 +3,7 @@ import {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {selectAuthStatus} from "../../store/slice/authSlice.js";
 import {NavLink} from "react-router-dom";
-import {postRegister} from "../../services/authApi.jsx";
+import {postRegister} from "../../services/authApi.js";
 import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';

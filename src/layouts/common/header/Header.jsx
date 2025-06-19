@@ -14,6 +14,7 @@ import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
 import {toast} from "react-toastify";
 import {SIGN_IN_STATE, SIGN_IN_TEXT, SIGN_UP_STATE, SIGN_UP_TEXT} from "src/utils/constants/authForm.js";
 import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
+import {postLogout} from "src/services/authApi.js";
 
 const Header = ({forBoosterPage}) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -43,10 +44,16 @@ const Header = ({forBoosterPage}) => {
         else navigate("/booster/profile");
     }, [navigate])
 
-    const handleLogout = useCallback(() => {
-        handleProfileMenuClose();
-        dispatch(clearAuth());
-        toast.success('Logout successfully');
+    const handleLogout = useCallback(async () => {
+        try {
+            await postLogout();
+            handleProfileMenuClose();
+            dispatch(clearAuth());
+            toast.success('Logout successfully');
+        } catch (error) {
+            toast.error(error.message);
+        }
+
     }, [handleProfileMenuClose, dispatch]);
 
     const toggleModal = useCallback(() => {

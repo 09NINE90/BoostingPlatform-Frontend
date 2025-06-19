@@ -2,7 +2,7 @@ import Badge from "@mui/material/Badge";
 import {IconButton} from "@mui/material";
 import CartIcon from "src/assets/icons/CartIcon.jsx";
 import React, {useCallback, useEffect, useState} from "react";
-import {getCartItemsApi} from "src/services/offerApi.jsx";
+import {getCartItemsApi} from "src/services/offerApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import CartModal from "src/components/cart/CartModal.jsx";
 import {ClipLoader} from "react-spinners";
