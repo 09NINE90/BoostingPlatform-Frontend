@@ -30,6 +30,8 @@ const Cart = ({cartCount}) => {
         } catch (err) {
             setCartItems([])
             setError(handleApiError(err).status)
+        } finally {
+            setLoading(false);
         }
     }, [setAnchorEl, setLoading]);
 
