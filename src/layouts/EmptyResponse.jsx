@@ -4,7 +4,7 @@ const EmptyResponse = ({text}) => {
     return (
         <div className="relative w-full flex flex-col justify-center items-center min-h-[50vh] overflow-hidden">
             <div className="relative z-10 flex flex-col items-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-[#FD980B] mb-6 text-center">
+                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 text-center">
                     {text.toUpperCase()}
                 </h2>
 

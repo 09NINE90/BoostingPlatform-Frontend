@@ -1,12 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-background: #110134;
-  --color-primary: #9C27B0;
-  --color-secondary: #D08D4E;
-  --color-surface: #19054D;
+    --color-primary: #FD980B;
+    --color-secondary: #E28607;
+    --color-third: #00A0FF;
+    --color-background: #110134;
+    --color-background-paper: #19054D;
+    --color-surface: #19054D;
+    --color-text-primary: #FFFFFF;
+    --color-text-secondary: #BDBDBD;
+    --color-divider: #443D54;
 }
-
 
 :root {
   font-family: 'Kanit', sans-serif;

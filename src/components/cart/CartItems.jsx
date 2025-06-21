@@ -3,8 +3,8 @@ const CartItems = ({item}) => {
         <div key={item.offerId} className="flex justify-between mb-2 p-4 bg-[#110134] border-2 border-[#2a206a]">
             <div className="flex flex-col justify-between items-start">
                 <div>
-                    <h3 className="text-xl text-[#00A0FF] kanit-medium text-left">{item.offerName} in {item.gameName}</h3>
-                    <h3 className="text-xl text-[#00A0FF] kanit-medium text-left">{item.gamePlatform}</h3>
+                    <h3 className="text-xl text-third kanit-medium text-left">{item.offerName} in {item.gameName}</h3>
+                    <h3 className="text-xl text-third kanit-medium text-left">{item.gamePlatform}</h3>
                 </div>
                 <div className="mt-0">
                     {item.selectedOptions && (
@@ -14,7 +14,7 @@ const CartItems = ({item}) => {
                                 {item.selectedOptions.map((option, idx) => (
                                     <li key={idx} className="flex items-start">
                                         <span
-                                            className="inline-block w-2 h-2 mt-2 mr-2 bg-[#00A0FF] rounded-full"></span>
+                                            className="inline-block w-2 h-2 mt-2 mr-2 bg-third rounded-full"></span>
                                         <div className="flex">
                                             <div
                                                 className="text-white  text-left  text-sm kanit-light">{option.optionTitle}:

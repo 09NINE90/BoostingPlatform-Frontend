@@ -1,32 +1,50 @@
 import { createTheme } from "@mui/material";
 
-const testPallete = {
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#9C27B0', 
-      contrastText: '#FFFFFF',
-    },
-    secondary: {
-      main: '#D08D4E',
-      contrastText: '#FFFFFF',
-    },
-    background: {
-      default: '#110134',
-      paper: '#19054D',
-    },
-    text: {
-      primary: '#E0E0E0',
-      secondary: '#BDBDBD',
-    },
+const customColors = {
+    primary: '#FD980B',
+    secondary: '#E28607',
+    third: '#00A0FF',
+    background: '#110134',
+    backgroundPaper: '#19054D',
+    textPrimary: '#FFFFFF',
+    textSecondary: '#BDBDBD',
     divider: '#443D54',
-  },
-}
-
+};
 
 const theme = createTheme({
-  ...testPallete,
-  spacing: 4,
+    palette: {
+        mode: 'dark',
+        primary: {
+            main: customColors.primary,
+            contrastText: '#FFFFFF',
+        },
+        secondary: {
+            main: customColors.secondary,
+            contrastText: '#FFFFFF',
+        },
+        background: {
+            default: customColors.background,
+            paper: customColors.backgroundPaper,
+        },
+        third: {
+            main: customColors.third,
+            contrastText: '#FFFFFF',
+        },
+        text: {
+            primary: customColors.textPrimary,
+            secondary: customColors.textSecondary,
+        },
+        divider: customColors.divider,
+    },
+    typography: {
+        fontFamily: `'Kanit', sans-serif`,
+        fontWeightLight: 300,
+        fontWeightRegular: 400,
+        fontWeightMedium: 500,
+        fontWeightBold: 700,
+    },
+    spacing: 4,
 });
-export default theme;
 
+export { customColors };
+export default theme;

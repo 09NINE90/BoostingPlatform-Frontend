@@ -15,7 +15,7 @@ const SortButton = ({ sortKey, currentSort, onSort }) => {
     return (
         <button
             onClick={() => onSort(sortKey)}
-            className="ml-1 text-white hover:text-gray-300 transition-colors"
+            className="ml-1 text-text-primary hover:text-gray-300 transition-colors"
         >
             {getSortIcon()}
         </button>

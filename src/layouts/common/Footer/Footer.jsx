@@ -12,7 +12,7 @@ const Footer = () => {
             bottom={0}
             className="flex flex-col items-center py-4"
         >
-            <div className="w-[80%] max-w-[1200px] border-t-2 border-[#19054D] mb-4 md:mb-15"/>
+            <div className="w-[80%] max-w-[1200px] border-t-2 border-background-paper mb-4 md:mb-15"/>
 
             <PaymentMethods/>
             <Box

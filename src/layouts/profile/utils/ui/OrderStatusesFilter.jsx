@@ -1,5 +1,6 @@
 import {Box, Chip} from "@mui/material";
 import React from "react";
+import theme from "src/theme/theme.jsx";
 
 const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
     return (
@@ -9,7 +10,12 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
                     label="Clear filters"
                     clickable
                     onClick={() => setSelectedStatus({status: null})}
-                    sx={{marginRight: 1, backgroundColor: '#19054D', ":hover": {backgroundColor: '#e68900', color: '#0A0022'}}}
+                    sx={{
+                        marginRight: 1,
+                        backgroundColor: '#19054D',
+                        fontWeight: theme.typography.fontWeightLight,
+                        ":hover": {backgroundColor: '#e68900', color: '#0A0022'}
+                    }}
                 />
             )}
             {statuses.map((status) => (
@@ -20,10 +26,12 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
                     onClick={() => setSelectedStatus({status: status.name})}
                     sx={{
                         marginRight: 1,
+                        fontWeight: theme.typography.fontWeightLight,
                         backgroundColor: '#19054D',
                         color: 'white',
                         ...(selectedStatus.status === status.name && {
-                            backgroundColor: '#FD980B',
+                            backgroundColor: theme.palette.primary.main,
+                            fontWeight: theme.typography.fontWeightMedium,
                             color: '#0A0022',
                         })
                     }}

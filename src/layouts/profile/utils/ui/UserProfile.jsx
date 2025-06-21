@@ -1,44 +1,51 @@
-import {Avatar, Box, Button, IconButton, Typography} from "@mui/material";
-import React, {useRef, useState} from "react";
+import {Box, IconButton} from "@mui/material";
+import React, {useCallback, useEffect, useState} from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import {useDispatch, useSelector} from "react-redux";
-import {selectAvatar, selectUsername, setUsername} from "src/store/slice/authSlice.js";
-import {changeNickname} from "src/services/userApi.js";
+import {
+    selectAvatar, selectCustomerCashbackBalance,
+    selectCustomerDiscountPercentage, selectCustomerStatus,
+    selectEmail,
+    selectSecondId,
+    selectUsername,
+    setUsername
+} from "src/store/slice/authSlice.js";
+import {changeNickname, getCustomerProfileData} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
-import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import ProfileInfoItem from "src/layouts/profile/utils/ui/ProfileInfoItem.jsx";
+import NameEditor from "src/layouts/profile/utils/ui/NameEditor.jsx";
+import SquareAvatar from "src/layouts/profile/utils/ui/SquareAvatar.jsx";
 
 const UserProfile = () => {
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
-
-    const fileInputRef = useRef(null);
+    const emailFromStore = useSelector(selectEmail);
+    const secondIdFromStore = useSelector(selectSecondId);
+    const discountPercentageFromStore = useSelector(selectCustomerDiscountPercentage);
+    const cashbackBalanceFromStore = useSelector(selectCustomerCashbackBalance);
+    const customerStatusFromStore = useSelector(selectCustomerStatus);
 
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
-    const [tempName, setTempName] = useState(usernameFromStore);
+    const [discountPercentage, setDiscountPercentage] = useState(discountPercentageFromStore);
+    const [cashbackBalance, setCashbackBalance] = useState(cashbackBalanceFromStore);
+    const [customerStatus, setCustomerStatus] = useState(customerStatusFromStore);
     const [isEditingName, setIsEditingName] = useState(false);
 
-    const handleNameEdit = () => setIsEditingName(true);
-
-    const handleNameSave = async () => {
-        setUserName(tempName);
-        dispatch(setUsername(tempName));
+    const handleNameSave = async (newName) => {
+        setUserName(newName);
+        dispatch(setUsername(newName));
         setIsEditingName(false);
         try {
-            await changeNickname(tempName); // можно сохранить в переменную, если понадобится
+            await changeNickname(newName);
         } catch (error) {
             console.log(handleApiError(error));
         }
     };
 
     const handleNameCancel = () => {
-        setTempName(userName);
         setIsEditingName(false);
-    };
-
-    const handleAvatarClick = () => {
-        fileInputRef.current?.click();
     };
 
     const handleAvatarChange = (event) => {
@@ -54,87 +61,65 @@ const UserProfile = () => {
         }
     };
 
+    const fetchCustomerProfile = useCallback(async () => {
+        if (cashbackBalanceFromStore === null) {
+            try {
+                const profile = await getCustomerProfileData()
+                setCustomerStatus(profile.status);
+                setCashbackBalance(profile.balance);
+                setDiscountPercentage(profile.discountPercentage)
+            } catch (err) {
+                console.log(handleApiError(err));
+            }
+        }
+    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
+
+
+    useEffect(() => {
+        fetchCustomerProfile();
+    }, [fetchCustomerProfile]);
+
     return (
         <Box sx={{
-            backgroundColor: '#1E1930',
-            borderRadius: 2,
             padding: 3,
-            width: 300,
+            width: '25vw',
             height: 'fit-content'
         }}>
-            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3}}>
-                <Box sx={{position: 'relative'}}>
-                    <Avatar
-                        src={userAvatar}
-                        sx={{
-                            width: 120,
-                            height: 120,
-                            cursor: 'pointer',
-                            '&:hover .MuiBox-root': {
-                                opacity: 1
-                            }
-                        }}
-                        onClick={handleAvatarClick}
-                    />
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            bottom: 0,
-                            right: 0,
-                            backgroundColor: 'rgba(0,0,0,0.6)',
-                            borderRadius: '50%',
-                            padding: 1,
-                            opacity: 0,
-                            transition: 'opacity 0.2s',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        <PhotoCameraIcon sx={{color: 'white'}}/>
-                    </Box>
-                    <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleAvatarChange}
-                        accept="image/*"
-                        style={{display: 'none'}}
-                    />
-                </Box>
-                <Box sx={{mt: 2, display: 'flex', alignItems: 'center', gap: 1}}>
-                    {isEditingName ? (
-                        <Box sx={{display: 'flex', flexDirection: 'column', gap: 1}}>
-                            <input
-                                type="text"
-                                value={tempName}
-                                onChange={(e) => setTempName(e.target.value)}
-                                className="bg-transparent text-white border border-gray-600 rounded px-2 py-1"
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', mb: 3}}>
+                <SquareAvatar
+                    src={userAvatar}
+                    size={200}
+                    onAvatarClick={() => console.log('Avatar clicked')}
+                    onFileChange={handleAvatarChange}
+                />
+                <Box sx={{p: 3}}>
+                    <Box sx={{mt: 2, display: 'flex', alignItems: 'center', gap: 1}}>
+                        {isEditingName ? (
+                            <NameEditor
+                                initialName={userName}
+                                onSave={handleNameSave}
+                                onCancel={handleNameCancel}
                             />
-                            <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
-                                <Button
-                                    variant="contained"
-                                    size="small"
-                                    onClick={handleNameSave}
-                                >
-                                    Save
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    size="small"
-                                    onClick={handleNameCancel}
-                                >
-                                    Cancel
-                                </Button>
-                            </Box>
-                        </Box>
-                    ) : (
-                        <>
-                            <Typography variant="h6" sx={{color: '#fff'}}>
-                                {userName}
-                            </Typography>
-                            <IconButton size="small" onClick={handleNameEdit}>
-                                <EditIcon sx={{color: 'white', fontSize: 16}}/>
-                            </IconButton>
-                        </>
-                    )}
+                        ) : (
+                            <>
+                                <ProfileInfoItem label="Username" value={userName}/>
+                                <IconButton size="small" onClick={() => setIsEditingName(true)}>
+                                    <EditIcon sx={{color: 'white', fontSize: 16}}/>
+                                </IconButton>
+                            </>
+                        )}
+                    </Box>
+
+                    <Box sx={{mt: 3}}>
+                        <ProfileInfoItem label="Email" value={emailFromStore}/>
+                        <ProfileInfoItem label="ID" value={secondIdFromStore}/>
+                        <ProfileInfoItem label="Status" value={customerStatus}/>
+                        <ProfileInfoItem label="Discount" value={`${discountPercentage}%`}/>
+                        <ProfileInfoItem
+                            label="Cashback"
+                            value={`$ ${cashbackBalance?.toFixed(2) || '0.00'}`}
+                        />
+                    </Box>
                 </Box>
             </Box>
         </Box>

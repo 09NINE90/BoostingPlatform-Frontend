@@ -91,7 +91,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                 </div>
             </TableCell>
             <TableCell sx={{width: '15%'}}>
-                <div className='text-[#fff] flex items-center kanit-regular text-xl'>
+                <div className='text-text-primary flex items-center kanit-regular text-xl'>
                     Game
                     <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
                             className="ml-2">
@@ -114,7 +114,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                 )}
             </TableCell>
             <TableCell align="center" sx={{width: '15%'}}>
-                <div className='text-[#fff] flex justify-center items-center kanit-regular text-xl'>
+                <div className='text-text-primary flex justify-center items-center kanit-regular text-xl'>
                     Platform
                     <button
                         onClick={() => setOpenFilter(openFilter === 'platform' ? null : 'platform')}
@@ -138,7 +138,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                 )}
             </TableCell>
             <TableCell align="center" sx={{width: '15%'}}>
-                <div className='text-[#fff] flex justify-center items-center kanit-regular text-xl'>
+                <div className='text-text-primary flex justify-center items-center kanit-regular text-xl'>
                     Price
                     <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                             className="ml-2">
@@ -160,7 +160,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                 )}
             </TableCell>
             <TableCell align="center" sx={{width: '20%'}}>
-                <div className='text-[#fff] kanit-regular text-xl'>Action</div>
+                <div className='text-text-primary kanit-regular text-xl'>Action</div>
             </TableCell>
         </TableHead>
     )

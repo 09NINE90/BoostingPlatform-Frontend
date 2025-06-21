@@ -109,6 +109,7 @@ const OffersList = memo(({ gameId }) => {
                         <>
                             <CategoriesFilter
                                 categories={categories}
+                                currentCategory={currentCategory}
                                 setCurrentCategory={setCurrentCategory}
                             />
                             {offers && (

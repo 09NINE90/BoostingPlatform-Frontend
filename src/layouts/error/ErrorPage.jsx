@@ -16,12 +16,12 @@ export const handleApiError = (error) => {
 const ErrorPage = ({error}) => {
     return (
         <div className="relative w-[100%] flex flex-col justify-center items-center h-screen bg-[#0A0022] overflow-hidden">
-            <div className="absolute text-[300px] font-bold text-[#FD980B] opacity-10 z-0">
+            <div className="absolute text-[300px] font-bold text-primary opacity-10 z-0">
                 {error.status}
             </div>
 
             <div className="relative z-10 text-center p-8 max-w-2xl">
-                <div className="text-[#FD980B] kanit-bold text-4xl mb-6">
+                <div className="text-primary kanit-bold text-4xl mb-6">
                     {error.error}
                 </div>
 
@@ -30,7 +30,7 @@ const ErrorPage = ({error}) => {
                 </div>
 
                 <div className="flex flex-col items-center gap-2">
-                    <div className="text-[#FD980B] kanit-bold text-xl">
+                    <div className="text-primary kanit-bold text-xl">
                         Status: {error.status}
                     </div>
 

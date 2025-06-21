@@ -1,6 +1,6 @@
 import "../../styles/AuthForms.css";
 import {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {selectAuthStatus} from "../../store/slice/authSlice.js";
 import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
@@ -170,7 +170,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                         </div>
                     </div>
                     <div>
-                        <Button className="w-2/3" variant="contained" color="secondary" onClick={signUp}
+                        <Button className="w-2/3" variant="contained" color="primary" onClick={signUp}
                                 loading={status === "loading"}>Sign Up</Button>
                     </div>
                 </div>

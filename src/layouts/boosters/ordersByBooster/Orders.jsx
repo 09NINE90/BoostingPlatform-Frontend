@@ -54,7 +54,7 @@ const Orders = () => {
     return (
         <div className="flex justify-center items-center">
             <TableContainer
-                className={(loading || allOrders.length === 0) ? ('bg-[#1E1930] max-w-[100vw] min-h-[100vh]') : ('bg-[#1E1930] max-w-[100vw]')}>
+                className={(loading || allOrders.length === 0) ? ('bg-background max-w-[100vw] min-h-[100vh]') : ('bg-background max-w-[100vw]')}>
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <OrdersTableHead setSelectedFilters={setSelectedFilters} selectedFilters={selectedFilters}/>
                     {!loading && (

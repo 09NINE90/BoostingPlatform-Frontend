@@ -109,8 +109,8 @@ const Dashboard = () => {
             <div className="flex-grow relative">
                 <TableContainer
                     className={(loading || allOrders.length === 0)
-                        ? 'bg-[#1E1930] max-w-[100vw] min-h-[calc(100vh-64px)]'
-                        : 'bg-[#1E1930] max-w-[100vw] pb-16'
+                        ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
+                        : 'bg-background max-w-[100vw] pb-16'
                     }
                 >
                     <Table sx={{minWidth: 650}} aria-label="simple table">

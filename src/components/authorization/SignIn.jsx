@@ -4,10 +4,21 @@ import {
     clearAuth,
     selectAuthStatus,
     setAuth,
-    setAvatar, setCountCartItems,
+    setAvatar,
+    setCountCartItems,
     setRole,
     setUsername,
-    setToken, selectRole, selectToken
+    setToken,
+    setEmail,
+    setSecondId,
+    setCustomerStatus,
+    setCustomerCashbackBalance,
+    setCustomerDiscountPercentage,
+    setBoosterTotalTips,
+    setBoosterBalance,
+    setBoosterPercentageOfOrder,
+    setBoosterLevel,
+    setBoosterTotalIncome
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
@@ -15,13 +26,10 @@ import Button from "@mui/material/Button";
 import {NavLink, useNavigate} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
-import {getUserProfileData} from "src/services/userApi.js";
+import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
 import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {ClipLoader} from "react-spinners";
-import {BOOSTER_ROLE} from "src/utils/constants/roles.js";
-import axios from "axios";
-import {store} from "src/store/store.js";
-import api from "src/services/api.js";
+import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -51,21 +59,35 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             dispatch(setRole(role));
             dispatch(setAuth(true));
 
-            const userProfile = await getUserProfileData();
-            dispatch(setUsername(userProfile.nickname));
-            dispatch(setAvatar(userProfile.imageUrl));
-
-
-
-            if (role !== BOOSTER_ROLE) {
+            if (role === CUSTOMER_ROLE) {
+                const profile = await getCustomerProfileData();
                 const countCartItems = await getCountCartItemsApi();
+
                 dispatch(setCountCartItems(countCartItems));
+                dispatch(setUsername(profile.nickname));
+                dispatch(setAvatar(profile.imageUrl));
+                dispatch(setEmail(profile.email));
+                dispatch(setSecondId(profile.secondId));
+                dispatch(setCustomerStatus(profile.status));
+                dispatch(setCustomerCashbackBalance(profile.cashbackBalance));
+                dispatch(setCustomerDiscountPercentage(profile.discountPercentage));
+            } else if (role === BOOSTER_ROLE) {
+                const profile = await getBoosterProfileData();
+
+                dispatch(setUsername(profile.nickname));
+                dispatch(setAvatar(profile.imageUrl));
+                dispatch(setEmail(profile.email))
+                dispatch(setBoosterLevel(profile.level));
+                dispatch(setBoosterPercentageOfOrder(profile.percentageOfOrder));
+                dispatch(setBoosterBalance(profile.balance));
+                dispatch(setBoosterTotalIncome(profile.totalIncome));
+                dispatch(setBoosterTotalTips(profile.totalTips));
+
+                navigate('/booster/dashboard')
             }
 
             toast.success('Sign in successfully');
             closeModal();
-
-            if (role === BOOSTER_ROLE) navigate('/booster/dashboard');
 
         } catch (error) {
             dispatch(clearAuth());
@@ -146,7 +168,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                         <Button
                             className="w-2/3"
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             onClick={signIn}
                             loading={status === "loading"}
                         >
