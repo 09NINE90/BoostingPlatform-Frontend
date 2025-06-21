@@ -1,24 +1,36 @@
 import ReactPaginate from "react-paginate";
 import React from "react";
+import {TablePagination} from "@mui/material";
 
-const OrderPagination = ({currentPage, totalPages, changePage}) => {
+const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageChange, handleRowsPerPageChange}) => {
     return (
-        <div className="py-6">
-            <ReactPaginate
-                forcePage={currentPage}
-                previousLabel={null}
-                nextLabel={null}
-                pageCount={totalPages}
-                onPageChange={changePage}
-                containerClassName="flex flex-col ustify-center items-center gap-1 kanit-bold list-none"
-                pageLinkClassName="flex items-center justify-center w-10 h-10 border border-[#004772] text-[#004772] cursor-pointer hover:border-white hover:text-white transition-colors duration-200"
-                activeLinkClassName="border-white text-white"
-                disabledClassName="opacity-50 cursor-not-allowed"
-                breakLabel="..."
-                breakClassName="text-[#004772] px-2"
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={2}
-            />
+        <div className="fixed bottom-0 left-0 right-0 bg-[#1E1930] border-t border-gray-700 shadow-lg">
+            <div className="max-w-[100vw] mx-auto">
+                <TablePagination
+                    rowsPerPageOptions={[50, 100, 300, 500]}
+                    component="div"
+                    count={recordTotal}
+                    rowsPerPage={employeesPerPage}
+                    page={pageNumber}
+                    onPageChange={handlePageChange}
+                    onRowsPerPageChange={handleRowsPerPageChange}
+                    className="bg-[#1E1930] text-white"
+                    classes={{
+                        root: "text-white",
+                        selectIcon: "text-white",
+                        actions: "text-white",
+                    }}
+                    sx={{
+                        color: 'white',
+                        '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
+                            color: 'white'
+                        },
+                        '& .MuiSvgIcon-root': {
+                            color: 'white'
+                        }
+                    }}
+                />
+            </div>
         </div>
     )
 }

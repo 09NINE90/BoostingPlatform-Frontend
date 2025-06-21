@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState, useCallback } from 'react';
 import { Box } from '@mui/material';
-import { getGameByIdApi, getGameCategoriesApi } from "src/services/gamesApi.jsx";
-import { getOffersByRequest } from "src/services/offerApi.jsx";
+import { getGameByIdApi, getGameCategoriesApi } from "src/services/gamesApi.js";
+import { getOffersByRequest } from "src/services/offerApi.js";
 import ErrorPage, { handleApiError } from "src/layouts/error/ErrorPage.jsx";
 import EmptyResponse from "src/layouts/EmptyResponse.jsx";
 import OfferCard from "src/layouts/home/utils/ui/offers/OfferCard.jsx";

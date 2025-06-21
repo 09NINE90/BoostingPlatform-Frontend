@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router";
-import {confirmEmail} from "src/services/authApi.jsx";
+import {confirmEmail} from "src/services/authApi.js";
 import {toast} from "react-toastify";
 import {
     clearAuth,
@@ -14,8 +14,8 @@ import {
 import {useDispatch} from "react-redux";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
-import {getUserProfileData} from "src/services/userApi.jsx";
-import {getCountCartItemsApi} from "src/services/offerApi.jsx";
+import {getUserProfileData} from "src/services/userApi.js";
+import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {Navigate} from "react-router-dom";
 
 const EmailConfirmationPage = () => {

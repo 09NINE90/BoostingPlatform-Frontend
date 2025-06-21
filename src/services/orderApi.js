@@ -1,36 +1,31 @@
-import axios from "axios";
+import api from "src/services/api.js";
 
 export const getFiltersForCreatedOrders = async () => {
-    const response = await axios.get(`/api/order/getFiltersForCreatedOrders`, {withCredentials: true});
+    const response = await api.get(`/order/getFiltersForCreatedOrders`);
     return response.data;
 }
 
 export const getFiltersForOrdersByBooster = async () => {
-    const response = await axios.get(`/api/order/getFiltersForOrdersByBooster`, {withCredentials: true});
+    const response = await api.get(`/order/getFiltersForOrdersByBooster`);
     return response.data;
 }
 
 export const getOrdersByCreator = async (request) => {
-    const response = await axios.post(`/api/order/getByCreator`, request, {withCredentials: true});
+    const response = await api.post(`/order/getByCreator`, request);
     return response.data;
 }
 
 export const getAllOrders = async (request) => {
-    const response = await axios.post(`/api/order/getAll`, request, {withCredentials: true});
+    const response = await api.post(`/order/getAll`, request);
     return response.data;
 }
 
 export const getOrdersByBooster = async (request) => {
-    const response = await axios.post(`/api/order/byBooster`, request, {withCredentials: true});
-    return response.data;
-}
-
-export const getOrderById = async (orderId) => {
-    const response = await axios.get(`/api/order/${orderId}`, {withCredentials: true});
+    const response = await api.post(`/order/byBooster`, request);
     return response.data;
 }
 
 export const acceptOrder = async (orderId) => {
-    const response = await axios.post(`/api/order/accept/${orderId}`, {withCredentials: true});
+    const response = await api.post(`/order/accept/${orderId}`);
     return response.data;
 }

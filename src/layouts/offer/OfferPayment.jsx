@@ -12,7 +12,7 @@ import {
     Button
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import {postOffersToCart} from "src/services/offerApi.jsx";
+import {postOffersToCart} from "src/services/offerApi.js";
 import {useDispatch} from "react-redux";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {store} from "src/store/store.js";
@@ -107,6 +107,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
             await postOffersToCart(cartItem);
             const currentCount = selectCountCartItems(store.getState());
             dispatch(setCountCartItems(currentCount + 1));
+            toast.success('Successfully added to cart')
         } catch (error) {
             toast.error(error.message);
             console.log(error);

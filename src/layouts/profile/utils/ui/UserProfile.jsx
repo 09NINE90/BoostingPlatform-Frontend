@@ -3,7 +3,7 @@ import React, {useRef, useState} from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import {useDispatch, useSelector} from "react-redux";
 import {selectAvatar, selectUsername, setUsername} from "src/store/slice/authSlice.js";
-import {changeNickname} from "src/services/userApi.jsx";
+import {changeNickname} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 

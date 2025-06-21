@@ -7,18 +7,21 @@ import {
     setAvatar, setCountCartItems,
     setRole,
     setUsername,
-    setToken, selectRole
+    setToken, selectRole, selectToken
 } from "../../store/slice/authSlice.js";
-import {postAuthenticated} from "../../services/authApi.jsx";
+import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import {NavLink, useNavigate} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
-import {getUserProfileData} from "src/services/userApi.jsx";
-import {getCountCartItemsApi} from "src/services/offerApi.jsx";
+import {getUserProfileData} from "src/services/userApi.js";
+import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {ClipLoader} from "react-spinners";
 import {BOOSTER_ROLE} from "src/utils/constants/roles.js";
+import axios from "axios";
+import {store} from "src/store/store.js";
+import api from "src/services/api.js";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -44,23 +47,25 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             if (!token) {
                 throw new Error('Токен не был получен');
             }
-
             dispatch(setToken(token));
             dispatch(setRole(role));
             dispatch(setAuth(true));
-
-            toast.success('Sign in successfully');
 
             const userProfile = await getUserProfileData();
             dispatch(setUsername(userProfile.nickname));
             dispatch(setAvatar(userProfile.imageUrl));
 
-            const countCartItems = await getCountCartItemsApi();
-            dispatch(setCountCartItems(countCartItems));
+
+
+            if (role !== BOOSTER_ROLE) {
+                const countCartItems = await getCountCartItemsApi();
+                dispatch(setCountCartItems(countCartItems));
+            }
+
+            toast.success('Sign in successfully');
+            closeModal();
 
             if (role === BOOSTER_ROLE) navigate('/booster/dashboard');
-
-            closeModal();
 
         } catch (error) {
             dispatch(clearAuth());

@@ -7,7 +7,7 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
 
     return (
         <div className="hidden md:flex p-4 flex-col">
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 items-center">
                 <Games/>
                 <div className="kanit-bold text-3xl">
                     GAMES
