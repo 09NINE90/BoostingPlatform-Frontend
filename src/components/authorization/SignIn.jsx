@@ -77,6 +77,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 dispatch(setUsername(profile.nickname));
                 dispatch(setAvatar(profile.imageUrl));
                 dispatch(setEmail(profile.email))
+                dispatch(setSecondId(profile.secondId));
                 dispatch(setBoosterLevel(profile.level));
                 dispatch(setBoosterPercentageOfOrder(profile.percentageOfOrder));
                 dispatch(setBoosterBalance(profile.balance));

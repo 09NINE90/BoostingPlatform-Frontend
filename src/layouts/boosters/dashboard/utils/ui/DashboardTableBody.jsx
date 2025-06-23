@@ -10,7 +10,10 @@ const DashboardTableBody = ({allOrders, openModal}) => {
             {allOrders.map((order) => (
                 <TableRow
                     key={order.orderId}
-                    sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
+                    sx={{
+                        '&:last-child td, &:last-child th': { border: 0 },
+                        p: 2
+                    }}
                 >
                     <TableCell component="th" scope="row" sx={{width: '35%'}}>
                         <div className='text-text-primary kanit-light'>
