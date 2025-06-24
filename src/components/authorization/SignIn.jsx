@@ -11,14 +11,6 @@ import {
     setToken,
     setEmail,
     setSecondId,
-    setCustomerStatus,
-    setCustomerCashbackBalance,
-    setCustomerDiscountPercentage,
-    setBoosterTotalTips,
-    setBoosterBalance,
-    setBoosterPercentageOfOrder,
-    setBoosterLevel,
-    setBoosterTotalIncome
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
@@ -30,6 +22,7 @@ import {getBoosterProfileData, getCustomerProfileData} from "src/services/userAp
 import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {ClipLoader} from "react-spinners";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
+import theme from "src/theme/theme.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -63,14 +56,12 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 const profile = await getCustomerProfileData();
                 const countCartItems = await getCountCartItemsApi();
 
-                dispatch(setCountCartItems(countCartItems));
                 dispatch(setUsername(profile.nickname));
                 dispatch(setAvatar(profile.imageUrl));
                 dispatch(setEmail(profile.email));
                 dispatch(setSecondId(profile.secondId));
-                dispatch(setCustomerStatus(profile.status));
-                dispatch(setCustomerCashbackBalance(profile.cashbackBalance));
-                dispatch(setCustomerDiscountPercentage(profile.discountPercentage));
+                dispatch(setCountCartItems(countCartItems));
+
             } else if (role === BOOSTER_ROLE) {
                 const profile = await getBoosterProfileData();
 
@@ -78,11 +69,6 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 dispatch(setAvatar(profile.imageUrl));
                 dispatch(setEmail(profile.email))
                 dispatch(setSecondId(profile.secondId));
-                dispatch(setBoosterLevel(profile.level));
-                dispatch(setBoosterPercentageOfOrder(profile.percentageOfOrder));
-                dispatch(setBoosterBalance(profile.balance));
-                dispatch(setBoosterTotalIncome(profile.totalIncome));
-                dispatch(setBoosterTotalTips(profile.totalTips));
 
                 navigate('/booster/dashboard')
             }
@@ -107,7 +93,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             {!isLoading && (
                 <div className="flex flex-col justify-between">
                     <div className="h-full p-2">
-                        <p className="mb-5">
+                        <p className="mb-5 kanit-light">
                             By continuing, you agree to our&nbsp;
                             <NavLink to="/" className={linkClass}>
                                 User Agreement
@@ -124,6 +110,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                                 className="my-4"
                                 severity="error"
                                 variant="filled"
+                                sx={{fontWeight: theme.typography.fontWeightLight}}
                             >
                                 {errorMessage}
                             </Alert>
@@ -154,7 +141,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                             />
                         </div>
 
-                        <div className="flex flex-col items-start my-5 gap-2">
+                        <div className="flex flex-col items-start my-5 gap-2 kanit-light">
                             <NavLink className={linkClass}>Forgot password?</NavLink>
                             <div>
                                 New in V-Boosting?
@@ -172,6 +159,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                             color="primary"
                             onClick={signIn}
                             loading={status === "loading"}
+                            sx={{fontWeight: theme.typography.fontWeightLight}}
                         >
                             Log In
                         </Button>

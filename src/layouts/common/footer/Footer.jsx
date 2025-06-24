@@ -1,9 +1,9 @@
 import React from 'react'
 import {Box} from '@mui/material'
-import LeftFooter from "src/layouts/common/Footer/utils/ui/LeftFooter.jsx";
-import CenterFooter from "src/layouts/common/Footer/utils/ui/CenterFooter.jsx";
-import RightFooter from "src/layouts/common/Footer/utils/ui/RightFooter.jsx";
-import PaymentMethods from "src/layouts/common/Footer/utils/ui/PaymentMethods.jsx";
+import LeftFooter from "src/layouts/common/footer/utils/ui/LeftFooter.jsx";
+import CenterFooter from "src/layouts/common/footer/utils/ui/CenterFooter.jsx";
+import RightFooter from "src/layouts/common/footer/utils/ui/RightFooter.jsx";
+import PaymentMethods from "src/layouts/common/footer/utils/ui/PaymentMethods.jsx";
 
 const Footer = () => {
     return (

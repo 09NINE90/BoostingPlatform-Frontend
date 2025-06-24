@@ -9,6 +9,7 @@ import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import {ClipLoader} from "react-spinners";
+import theme from "src/theme/theme.jsx";
 
 const SignUp = ({closeModal, signInRedirect}) => {
 
@@ -85,8 +86,9 @@ const SignUp = ({closeModal, signInRedirect}) => {
     return (
         <>
             {!isLoading && (
-                <div className="items-center justify-center p-2">
-                    <div className="mb-4">By continuing, you agree to our&nbsp;
+                <div className="flex flex-col justify-between">
+                    <div className="h-full p-2 kanit-light">
+                        By continuing, you agree to our&nbsp;
                         <NavLink
                             className={"text-sky-400 hover:text-sky-700"}
                             to="/"
@@ -112,7 +114,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                             {errorMessage}
                         </Alert>
                     }
-                    <div>
+                    <div className="mb-2 flex flex-col gap-2">
                         <TextField
                             error={requredFieldEmpty}
                             required
@@ -141,9 +143,12 @@ const SignUp = ({closeModal, signInRedirect}) => {
                             label="Password"
                         />
                         {!passwordFieldIsValid ?
-                            <div className="text-[#f44336] text-sm">The minimum password length is 6. Must contain the
+                            <div className="text-[#f44336] text-sm kanit-light">
+                                The minimum password length is 6. Must contain the
                                 letters digits and at least one special character.
-                            </div> : null}
+                            </div>
+                            : null
+                        }
                         <TextField
                             error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
                             required
@@ -158,7 +163,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                             }}
                         />
                     </div>
-                    <div className="flex flex-col items-start my-5">
+                    <div className="flex flex-col items-start my-5 gap-2 kanit-light">
                         <div>
                             Already have account?
                             <NavLink
@@ -170,8 +175,16 @@ const SignUp = ({closeModal, signInRedirect}) => {
                         </div>
                     </div>
                     <div>
-                        <Button className="w-2/3" variant="contained" color="primary" onClick={signUp}
-                                loading={status === "loading"}>Sign Up</Button>
+                        <Button
+                            className="w-2/3"
+                                variant="contained"
+                                color="primary"
+                                onClick={signUp}
+                                loading={status === "loading"}
+                                sx={{fontWeight: theme.typography.fontWeightLight}}
+                        >
+                            Sign Up
+                        </Button>
                     </div>
                 </div>
             )}

@@ -1,16 +1,25 @@
 import {useState} from "react";
-import {Box, Button} from "@mui/material";
+import {Box, Button, TextField} from "@mui/material";
 
-const BoosterNameEditor = ({ initialName, onSave, onCancel }) => {
+const NameEditor = ({ initialName, onSave, onCancel }) => {
     const [tempName, setTempName] = useState(initialName);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-            <input
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1}}>
+            <TextField
                 type="text"
                 value={tempName}
                 onChange={(e) => setTempName(e.target.value)}
-                className="bg-transparent text-text-primary border border-gray-600 rounded px-2 py-1"
+                className="bg-transparent text-text-primary border border-gray-600 rounded"
+                sx={{
+                    '& .MuiInputBase-root': {
+                        height: 40,
+                    },
+                    '& .MuiInputBase-input': {
+                        py: 0.5,
+                    },
+                    flexGrow: 1
+                }}
             />
             <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
                 <Button variant="contained" size="small" onClick={() => onSave(tempName)}>
@@ -24,4 +33,4 @@ const BoosterNameEditor = ({ initialName, onSave, onCancel }) => {
     );
 }
 
-export default BoosterNameEditor;
+export default NameEditor;

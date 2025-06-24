@@ -1,20 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {confirmEmail} from "src/services/authApi.js";
 import {toast} from "react-toastify";
 import {
     clearAuth,
     setAuth,
     setAvatar,
-    setBoosterBalance,
-    setBoosterLevel,
-    setBoosterPercentageOfOrder,
-    setBoosterTotalIncome,
-    setBoosterTotalTips,
     setCountCartItems,
-    setCustomerCashbackBalance,
-    setCustomerDiscountPercentage,
-    setCustomerStatus,
     setEmail,
     setRole,
     setSecondId,
@@ -30,11 +22,18 @@ import {Navigate} from "react-router-dom";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 
 const EmailConfirmationPage = () => {
-
+    const navigate = useNavigate();
     const {tokenParam} = useParams();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const isConfirmed = useRef(false);
+
+    const setProfile = (profile) => {
+        dispatch(setUsername(profile.nickname));
+        dispatch(setAvatar(profile.imageUrl));
+        dispatch(setEmail(profile.email))
+        dispatch(setSecondId(profile.secondId));
+    }
 
     useEffect(() => {
         if (isConfirmed.current) return;
@@ -51,30 +50,23 @@ const EmailConfirmationPage = () => {
                 dispatch(setAuth(true));
 
                 if (role === CUSTOMER_ROLE) {
-                    const profile = await getCustomerProfileData();
-                    const countCartItems = await getCountCartItemsApi();
+                    try {
+                        const profile = await getCustomerProfileData();
+                        const countCartItems = await getCountCartItemsApi();
+                        dispatch(setCountCartItems(countCartItems));
+                        setProfile(profile);
+                    } catch (err) {
+                        toast.error(handleApiError(err).message);
+                    }
 
-                    dispatch(setCountCartItems(countCartItems));
-                    dispatch(setUsername(profile.nickname));
-                    dispatch(setAvatar(profile.imageUrl));
-                    dispatch(setEmail(profile.email));
-                    dispatch(setSecondId(profile.secondId));
-                    dispatch(setCustomerStatus(profile.status));
-                    dispatch(setCustomerCashbackBalance(profile.cashbackBalance));
-                    dispatch(setCustomerDiscountPercentage(profile.discountPercentage));
                 } else if (role === BOOSTER_ROLE) {
-                    const profile = await getBoosterProfileData();
-
-                    dispatch(setUsername(profile.nickname));
-                    dispatch(setAvatar(profile.imageUrl));
-                    dispatch(setEmail(profile.email))
-                    dispatch(setBoosterLevel(profile.level));
-                    dispatch(setBoosterPercentageOfOrder(profile.percentageOfOrder));
-                    dispatch(setBoosterBalance(profile.balance));
-                    dispatch(setBoosterTotalIncome(profile.totalIncome));
-                    dispatch(setBoosterTotalTips(profile.totalTips));
-
-                    navigate('/booster/dashboard')
+                    try {
+                        const profile = await getBoosterProfileData();
+                        setProfile(profile);
+                        navigate('/booster/dashboard')
+                    } catch (err) {
+                        toast.error(handleApiError(err).message);
+                    }
                 }
 
                 setIsLoading(false);

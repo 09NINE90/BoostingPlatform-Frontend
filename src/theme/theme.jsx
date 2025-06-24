@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import {createTheme} from "@mui/material";
 
 const customColors = {
     primary: '#FD980B',
@@ -43,8 +43,50 @@ const theme = createTheme({
         fontWeightMedium: 500,
         fontWeightBold: 700,
     },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    '& .MuiInputBase-input': {
+                        fontFamily: `'Kanit', sans-serif`,
+                        fontWeight: 300,
+                    },
+                    '& .MuiInputLabel-root': {
+                        fontFamily: `'Kanit', sans-serif`,
+                        fontWeight: 300,
+                    },
+                    '& .MuiFormHelperText-root': {
+                        fontFamily: `'Kanit', sans-serif`,
+                        fontWeight: 300,
+                    },
+                },
+            },
+        },
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip: {
+                    fontFamily: `'Kanit', sans-serif`,
+                    fontWeight: 300,
+                    fontSize: '0.8rem',
+                    backgroundColor: customColors.divider,
+                    padding: '6px 8px',
+                    borderRadius: '4px',
+                    maxWidth: '300px',
+                },
+                arrow: {
+                    color: customColors.divider,
+                },
+            },
+            defaultProps: {
+                placement: 'top-end',
+                arrow: true,
+                enterDelay: 500,
+                leaveDelay: 200,
+            },
+        }
+    },
     spacing: 4,
 });
 
-export { customColors };
+export {customColors};
 export default theme;

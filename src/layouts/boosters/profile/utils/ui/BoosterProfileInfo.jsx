@@ -1,4 +1,4 @@
-import {Box, IconButton} from "@mui/material";
+import {Box, IconButton, Tooltip} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,8 +6,8 @@ import {selectAvatar, selectEmail, selectSecondId, selectUsername, setUsername} 
 import {changeNickname} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import BoosterAvatar from "src/layouts/boosters/profile/utils/ui/BoosterAvatar.jsx";
-import BoosterNameEditor from "src/layouts/boosters/profile/utils/ui/BoosterNameEditor.jsx";
-import BoosterProfileInfoItem from "src/layouts/boosters/profile/utils/ui/BoosterProfileInfoItem.jsx";
+import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
+import NameEditor from "src/layouts/utils/ui/NameEditor.jsx";
 
 const BoosterProfileInfo = ({balance, totalIncome, totalTips}) => {
 
@@ -66,26 +66,28 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips}) => {
                 <Box sx={{p: 3}}>
                     <Box sx={{mt: 2, display: 'flex', alignItems: 'center', gap: 1}}>
                         {isEditingName ? (
-                            <BoosterNameEditor
+                            <NameEditor
                                 initialName={userName}
                                 onSave={handleNameSave}
                                 onCancel={handleNameCancel}
                             />
                         ) : (
                             <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
-                                <BoosterProfileInfoItem label='Username' value={userName}/>
-                                <IconButton size="small" onClick={() => setIsEditingName(true)}>
-                                    <EditIcon sx={{color: 'white', fontSize: 16}}/>
-                                </IconButton>
+                                <ProfileInfoItem label='Username' value={userName} copyable={true}/>
+                                <Tooltip title="Edit username">
+                                    <IconButton size="small" onClick={() => setIsEditingName(true)}>
+                                        <EditIcon color='third' fontSize='small'/>
+                                    </IconButton>
+                                </Tooltip>
                             </Box>
                         )}
                     </Box>
                     <Box sx={{mt: 3}}>
-                        <BoosterProfileInfoItem label='Email' value={emailFromStore}/>
-                        <BoosterProfileInfoItem label="ID" value={secondIdFromStore}/>
-                        <BoosterProfileInfoItem label='Balance' value={`$ ${balance}`}/>
-                        <BoosterProfileInfoItem label='Total income' value={`$ ${totalIncome}`}/>
-                        <BoosterProfileInfoItem label='Total tips' value={`$ ${totalTips}`}/>
+                        <ProfileInfoItem label='Email' value={emailFromStore} copyable={true}/>
+                        <ProfileInfoItem label="ID" value={secondIdFromStore} copyable={true}/>
+                        <ProfileInfoItem label='Balance' value={`$ ${balance}`}/>
+                        <ProfileInfoItem label='Total income' value={`$ ${totalIncome}`}/>
+                        <ProfileInfoItem label='Total tips' value={`$ ${totalTips}`}/>
                     </Box>
                 </Box>
             </Box>

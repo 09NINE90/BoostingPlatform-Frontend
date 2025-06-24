@@ -3,8 +3,7 @@ import React, {useCallback, useEffect, useState} from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    selectAvatar, selectCustomerCashbackBalance,
-    selectCustomerDiscountPercentage, selectCustomerStatus,
+    selectAvatar,
     selectEmail,
     selectSecondId,
     selectUsername,
@@ -12,9 +11,9 @@ import {
 } from "src/store/slice/authSlice.js";
 import {changeNickname, getCustomerProfileData} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
-import ProfileInfoItem from "src/layouts/profile/utils/ui/ProfileInfoItem.jsx";
-import NameEditor from "src/layouts/profile/utils/ui/NameEditor.jsx";
+import NameEditor from "src/layouts/utils/ui/NameEditor.jsx";
 import SquareAvatar from "src/layouts/profile/utils/ui/SquareAvatar.jsx";
+import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
 
 const UserProfile = () => {
     const dispatch = useDispatch();
@@ -22,15 +21,12 @@ const UserProfile = () => {
     const usernameFromStore = useSelector(selectUsername);
     const emailFromStore = useSelector(selectEmail);
     const secondIdFromStore = useSelector(selectSecondId);
-    const discountPercentageFromStore = useSelector(selectCustomerDiscountPercentage);
-    const cashbackBalanceFromStore = useSelector(selectCustomerCashbackBalance);
-    const customerStatusFromStore = useSelector(selectCustomerStatus);
 
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
-    const [discountPercentage, setDiscountPercentage] = useState(discountPercentageFromStore);
-    const [cashbackBalance, setCashbackBalance] = useState(cashbackBalanceFromStore);
-    const [customerStatus, setCustomerStatus] = useState(customerStatusFromStore);
+    const [discountPercentage, setDiscountPercentage] = useState(null);
+    const [cashbackBalance, setCashbackBalance] = useState(null);
+    const [customerStatus, setCustomerStatus] = useState(null);
     const [isEditingName, setIsEditingName] = useState(false);
 
     const handleNameSave = async (newName) => {
@@ -62,7 +58,7 @@ const UserProfile = () => {
     };
 
     const fetchCustomerProfile = useCallback(async () => {
-        if (cashbackBalanceFromStore === null) {
+        if (discountPercentage === null) {
             try {
                 const profile = await getCustomerProfileData()
                 setCustomerStatus(profile.status);
@@ -111,8 +107,8 @@ const UserProfile = () => {
                     </Box>
 
                     <Box sx={{mt: 3}}>
-                        <ProfileInfoItem label="Email" value={emailFromStore}/>
-                        <ProfileInfoItem label="ID" value={secondIdFromStore}/>
+                        <ProfileInfoItem label="Email" value={emailFromStore} copyable={true}/>
+                        <ProfileInfoItem label="ID" value={secondIdFromStore} copyable={true}/>
                         <ProfileInfoItem label="Status" value={customerStatus}/>
                         <ProfileInfoItem label="Discount" value={`${discountPercentage}%`}/>
                         <ProfileInfoItem
