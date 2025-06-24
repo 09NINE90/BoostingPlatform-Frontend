@@ -7,9 +7,9 @@ const CartPayment = ({cartItems}) => {
             <ul className="space-y-2 overflow-y-auto max-h-[30vh] mt-4]">
                 {cartItems.map((item, idx) => (
                     <li key={idx} className="flex items-start">
-                        <span className="inline-block w-2 h-2 mt-2 mr-2 bg-[#00A0FF] rounded-full"></span>
+                        <span className="inline-block w-2 h-2 mt-2 mr-2 bg-third rounded-full"></span>
                         <div className="flex">
-                            <div className="text-white kanit-light">{item.offerName}:</div>
+                            <div className="text-text-primary kanit-light">{item.offerName}:</div>
                             <div className="text-gray-300 ml-2 kanit-light">$ {item.totalPrice}</div>
                         </div>
                     </li>
@@ -23,7 +23,7 @@ const CartPayment = ({cartItems}) => {
                 <span>Total time:</span>
                 <span>{cartItems.reduce((sum, item) => sum + item.totalTime, 0)} hours</span>
             </div>
-            <button className="w-full bg-[#004772] hover:bg-[#00A0FF] text-white py-3 kanit-light transition-colors p-2">
+            <button className="w-full bg-[#004772] hover:bg-third text-text-primary py-3 kanit-light transition-colors p-2">
                 Proceed to payment
             </button>
         </div>

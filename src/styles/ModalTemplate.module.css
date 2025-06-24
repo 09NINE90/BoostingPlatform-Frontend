@@ -18,7 +18,7 @@
     min-width: 400px;
     max-width: 85vw;
     min-height: 50%;
-    max-height: 85vw;
+    max-height: 80vh;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;

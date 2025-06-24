@@ -3,7 +3,7 @@ import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 
 import {useState} from 'react';
-import {acceptOrder, getAllOrders} from "src/services/orderApi.js";
+import {acceptOrder, getDashboardOrders} from "src/services/orderApi.js";
 import AcceptModal from "src/layouts/boosters/dashboard/utils/ui/AcceptModal.jsx";
 import {toast} from "react-toastify";
 import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
@@ -42,7 +42,7 @@ const Dashboard = () => {
     const fetchAllOrders = useCallback(async () => {
         try {
             setLoading(true);
-            const allOrdersApi = await getAllOrders(selectedFilters)
+            const allOrdersApi = await getDashboardOrders(selectedFilters)
             setAllOrders(allOrdersApi.orders);
             setTotalPages(allOrdersApi.pageTotal);
             setRecordTotal(allOrdersApi.recordTotal);
@@ -52,7 +52,7 @@ const Dashboard = () => {
         } finally {
             setLoading(false);
         }
-    }, [getAllOrders, setAllOrders, selectedFilters]);
+    }, [getDashboardOrders, setAllOrders, selectedFilters]);
 
     const openModal = (order) => {
         setSelectedOrder(order);
@@ -109,8 +109,8 @@ const Dashboard = () => {
             <div className="flex-grow relative">
                 <TableContainer
                     className={(loading || allOrders.length === 0)
-                        ? 'bg-[#1E1930] max-w-[100vw] min-h-[calc(100vh-64px)]'
-                        : 'bg-[#1E1930] max-w-[100vw] pb-16'
+                        ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
+                        : 'bg-background max-w-[100vw] pb-16'
                     }
                 >
                     <Table sx={{minWidth: 650}} aria-label="simple table">

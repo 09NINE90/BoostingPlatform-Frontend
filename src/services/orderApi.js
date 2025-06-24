@@ -15,8 +15,8 @@ export const getOrdersByCreator = async (request) => {
     return response.data;
 }
 
-export const getAllOrders = async (request) => {
-    const response = await api.post(`/order/getAll`, request);
+export const getDashboardOrders = async (request) => {
+    const response = await api.post(`/order/getDashboard`, request);
     return response.data;
 }
 

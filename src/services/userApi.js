@@ -1,7 +1,12 @@
 import api from "src/services/api.js";
 
-export const getUserProfileData = async () => {
-    const response = await api.get(`/user/getUserProfileData`);
+export const getCustomerProfileData = async () => {
+    const response = await api.get(`/user/getCustomerProfileData`);
+    return response.data;
+}
+
+export const getBoosterProfileData = async () => {
+    const response = await api.get(`/user/getBoosterProfileData`);
     return response.data;
 }
 

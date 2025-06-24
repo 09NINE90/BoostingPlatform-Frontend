@@ -9,7 +9,16 @@ const SECRET_KEY = import.meta.env.VITE_SECRET_KEY;
 const persistConfig = {
     key: 'auth',
     storage,
-    whitelist: ['isAuthenticated', 'role', 'username', 'avatar','token', "countCartItems"],
+    whitelist: [
+        'isAuthenticated',
+        'role',
+        'username',
+        'avatar',
+        'token',
+        'countCartItems',
+        'email',
+        'secondId'
+    ],
     transforms: [
         encryptTransform({
             secretKey: SECRET_KEY,

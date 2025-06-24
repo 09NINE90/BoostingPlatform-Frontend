@@ -63,7 +63,7 @@ const HomeMain = () => {
             <div className='flex flex-col'>
                 <>
                     <Carousel carouselItems={carouselItems}/>
-                    <div className="w-[100%] max-w-[1200px] border-t-2 border-[#19054D] my-8 mx-auto"/>
+                    <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
                     <div className='flex flex-row gap-5]'>
                         <GameSideBar gameList={games} currentGame={currentGameId} onGameSelect={setCurrentGameId}/>
                         <OffersList gameId={currentGameId}/>

@@ -4,10 +4,13 @@ import {
     clearAuth,
     selectAuthStatus,
     setAuth,
-    setAvatar, setCountCartItems,
+    setAvatar,
+    setCountCartItems,
     setRole,
     setUsername,
-    setToken, selectRole, selectToken
+    setToken,
+    setEmail,
+    setSecondId,
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
@@ -15,13 +18,11 @@ import Button from "@mui/material/Button";
 import {NavLink, useNavigate} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
-import {getUserProfileData} from "src/services/userApi.js";
+import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
 import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {ClipLoader} from "react-spinners";
-import {BOOSTER_ROLE} from "src/utils/constants/roles.js";
-import axios from "axios";
-import {store} from "src/store/store.js";
-import api from "src/services/api.js";
+import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
+import theme from "src/theme/theme.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -51,21 +52,29 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             dispatch(setRole(role));
             dispatch(setAuth(true));
 
-            const userProfile = await getUserProfileData();
-            dispatch(setUsername(userProfile.nickname));
-            dispatch(setAvatar(userProfile.imageUrl));
-
-
-
-            if (role !== BOOSTER_ROLE) {
+            if (role === CUSTOMER_ROLE) {
+                const profile = await getCustomerProfileData();
                 const countCartItems = await getCountCartItemsApi();
+
+                dispatch(setUsername(profile.nickname));
+                dispatch(setAvatar(profile.imageUrl));
+                dispatch(setEmail(profile.email));
+                dispatch(setSecondId(profile.secondId));
                 dispatch(setCountCartItems(countCartItems));
+
+            } else if (role === BOOSTER_ROLE) {
+                const profile = await getBoosterProfileData();
+
+                dispatch(setUsername(profile.nickname));
+                dispatch(setAvatar(profile.imageUrl));
+                dispatch(setEmail(profile.email))
+                dispatch(setSecondId(profile.secondId));
+
+                navigate('/booster/dashboard')
             }
 
             toast.success('Sign in successfully');
             closeModal();
-
-            if (role === BOOSTER_ROLE) navigate('/booster/dashboard');
 
         } catch (error) {
             dispatch(clearAuth());
@@ -84,7 +93,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
             {!isLoading && (
                 <div className="flex flex-col justify-between">
                     <div className="h-full p-2">
-                        <p className="mb-5">
+                        <p className="mb-5 kanit-light">
                             By continuing, you agree to our&nbsp;
                             <NavLink to="/" className={linkClass}>
                                 User Agreement
@@ -101,6 +110,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                                 className="my-4"
                                 severity="error"
                                 variant="filled"
+                                sx={{fontWeight: theme.typography.fontWeightLight}}
                             >
                                 {errorMessage}
                             </Alert>
@@ -131,7 +141,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                             />
                         </div>
 
-                        <div className="flex flex-col items-start my-5 gap-2">
+                        <div className="flex flex-col items-start my-5 gap-2 kanit-light">
                             <NavLink className={linkClass}>Forgot password?</NavLink>
                             <div>
                                 New in V-Boosting?
@@ -146,9 +156,10 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                         <Button
                             className="w-2/3"
                             variant="contained"
-                            color="secondary"
+                            color="primary"
                             onClick={signIn}
                             loading={status === "loading"}
+                            sx={{fontWeight: theme.typography.fontWeightLight}}
                         >
                             Log In
                         </Button>

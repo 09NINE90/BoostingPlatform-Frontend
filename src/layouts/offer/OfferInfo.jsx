@@ -14,7 +14,7 @@ const OfferInfo = ({offerData}) => {
             <Box key={blockInfo.id || blockInfo.title}>
                 {blockInfo.type === "BLOCK" && (
                     <>
-                        <Typography variant="h4" className="text-white font-bold !mb-4">
+                        <Typography variant="h4" className="text-text-primary font-bold !mb-4">
                             {blockInfo.title}
                         </Typography>
                         <Typography variant="body1" className="text-gray-300">
@@ -45,17 +45,17 @@ const OfferInfo = ({offerData}) => {
         <Box className="p-6 space-y-6  m-2 mt-7">
 
             <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-gray-400">
-                <Link color="secondary" component={NavLink} to={`/${offerData.secondGameId}`} className="hover:underline">
+                <Link color="primary" component={NavLink} to={`/${offerData.secondGameId}`} className="hover:underline">
                     Home
                 </Link>
-                <Link color="secondary" component={NavLink} to={`/games/${offerData.secondGameId}`}
+                <Link color="primary" component={NavLink} to={`/games/${offerData.secondGameId}`}
                       className="hover:underline">
                     {offerData.gameName}
                 </Link>
                 <Typography color="text.primary">{offerData.title}</Typography>
             </Breadcrumbs>
 
-            <Typography variant="h3" className="text-white font-bold !mb-5">
+            <Typography variant="h3" className="text-text-primary font-bold !mb-5">
                 {offerData.title}
             </Typography>
 

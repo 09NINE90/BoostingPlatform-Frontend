@@ -14,19 +14,19 @@ const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageC
                     page={pageNumber}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleRowsPerPageChange}
-                    className="bg-[#1E1930] text-white"
+                    className="bg-[#1E1930] text-text-primary"
                     classes={{
-                        root: "text-white",
-                        selectIcon: "text-white",
-                        actions: "text-white",
+                        root: "text-text-primary",
+                        selectIcon: "text-text-primary",
+                        actions: "text-text-primary",
                     }}
                     sx={{
-                        color: 'white',
+                        color: 'text-primary',
                         '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
-                            color: 'white'
+                            color: 'text-primary'
                         },
                         '& .MuiSvgIcon-root': {
-                            color: 'white'
+                            color: 'text-primary'
                         }
                     }}
                 />

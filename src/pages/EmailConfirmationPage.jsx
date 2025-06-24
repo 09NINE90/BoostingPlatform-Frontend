@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {confirmEmail} from "src/services/authApi.js";
 import {toast} from "react-toastify";
 import {
@@ -7,23 +7,33 @@ import {
     setAuth,
     setAvatar,
     setCountCartItems,
+    setEmail,
     setRole,
+    setSecondId,
     setToken,
     setUsername
 } from "src/store/slice/authSlice.js";
 import {useDispatch} from "react-redux";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
-import {getUserProfileData} from "src/services/userApi.js";
+import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
 import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {Navigate} from "react-router-dom";
+import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 
 const EmailConfirmationPage = () => {
-
+    const navigate = useNavigate();
     const {tokenParam} = useParams();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true);
     const isConfirmed = useRef(false);
+
+    const setProfile = (profile) => {
+        dispatch(setUsername(profile.nickname));
+        dispatch(setAvatar(profile.imageUrl));
+        dispatch(setEmail(profile.email))
+        dispatch(setSecondId(profile.secondId));
+    }
 
     useEffect(() => {
         if (isConfirmed.current) return;
@@ -39,12 +49,25 @@ const EmailConfirmationPage = () => {
                 dispatch(setRole(role));
                 dispatch(setAuth(true));
 
-                const userProfile = await getUserProfileData();
-                dispatch(setUsername(userProfile.nickname));
-                dispatch(setAvatar(userProfile.imageUrl));
+                if (role === CUSTOMER_ROLE) {
+                    try {
+                        const profile = await getCustomerProfileData();
+                        const countCartItems = await getCountCartItemsApi();
+                        dispatch(setCountCartItems(countCartItems));
+                        setProfile(profile);
+                    } catch (err) {
+                        toast.error(handleApiError(err).message);
+                    }
 
-                const countCartItems = await getCountCartItemsApi();
-                dispatch(setCountCartItems(countCartItems));
+                } else if (role === BOOSTER_ROLE) {
+                    try {
+                        const profile = await getBoosterProfileData();
+                        setProfile(profile);
+                        navigate('/booster/dashboard')
+                    } catch (err) {
+                        toast.error(handleApiError(err).message);
+                    }
+                }
 
                 setIsLoading(false);
                 toast.success('Email confirmation successfully!');

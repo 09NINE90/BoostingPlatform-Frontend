@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import { customColors } from './src/theme/theme.jsx';
+
 module.exports = {
     content: [
         "./index.html",
@@ -7,8 +9,13 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                primary: "#6a59ff",
-                bg: "#f5f5f5",
+                primary: customColors.primary,
+                secondary: customColors.secondary,
+                background: customColors.background,
+                'background-paper': customColors.backgroundPaper,
+                text: customColors.textPrimary,
+                'text-secondary': customColors.textSecondary,
+                divider: customColors.divider,
                 dark: "#222224",
             },
             screens: {
@@ -19,7 +26,15 @@ module.exports = {
             animation: {
                 'spin-slow': 'spin 20s linear infinite',
             },
+            spacing: {
+                px: '1px',
+                ...Array.from({ length: 40 }).reduce((acc, _, i) => {
+                    acc[i] = `${i * 0.25}rem`;
+                    return acc;
+                }, {}),
+            },
         },
     },
     plugins: [],
-}
+    darkMode: 'class',
+};

@@ -15,31 +15,31 @@ const PriceFilter = ({onApply, currentPrice, onClose}) => {
     }, [min, max, onApply, onClose]);
 
     return (
-        <div className="absolute z-100 bg-[#2A2545] text-white border border-gray-600 p-2 rounded shadow-md mt-2">
+        <div className="absolute z-100 bg-background text-text-primary border border-gray-600 p-2 shadow-md mt-2 max-w-[200px]">
             <div className="font-bold mb-2">Price Range</div>
             <input
                 type="number"
                 placeholder="Min"
                 value={min}
                 onChange={(e) => setMin(e.target.value)}
-                className="bg-[#1E1930] border border-gray-600 px-2 py-1 rounded mb-2 w-full"
+                className="bg-background border border-gray-600 px-2 py-1 rounded mb-2 w-full"
             />
             <input
                 type="number"
                 placeholder="Max"
                 value={max}
                 onChange={(e) => setMax(e.target.value)}
-                className="bg-[#1E1930] border border-gray-600 px-2 py-1 rounded mb-2 w-full"
+                className="bg-background border border-gray-600 px-2 py-1 rounded mb-2 w-full"
             />
             <button
                 onClick={handleApply}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded w-full mb-2"
+                className="bg-blue-600 hover:bg-blue-700 text-text-primary px-3 py-1 rounded w-full mb-2"
             >
                 Apply
             </button>
             <button
                 onClick={handleClear}
-                className="bg-gray-500 hover:bg-blue-700 text-white px-3 py-1 rounded w-full"
+                className="bg-gray-500 hover:bg-blue-700 text-text-primary px-3 py-1 rounded w-full"
             >
                 Clear
             </button>

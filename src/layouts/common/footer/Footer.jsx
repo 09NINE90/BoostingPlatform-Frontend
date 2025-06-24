@@ -1,9 +1,9 @@
 import React from 'react'
 import {Box} from '@mui/material'
-import LeftFooter from "src/layouts/common/Footer/utils/ui/LeftFooter.jsx";
-import CenterFooter from "src/layouts/common/Footer/utils/ui/CenterFooter.jsx";
-import RightFooter from "src/layouts/common/Footer/utils/ui/RightFooter.jsx";
-import PaymentMethods from "src/layouts/common/Footer/utils/ui/PaymentMethods.jsx";
+import LeftFooter from "src/layouts/common/footer/utils/ui/LeftFooter.jsx";
+import CenterFooter from "src/layouts/common/footer/utils/ui/CenterFooter.jsx";
+import RightFooter from "src/layouts/common/footer/utils/ui/RightFooter.jsx";
+import PaymentMethods from "src/layouts/common/footer/utils/ui/PaymentMethods.jsx";
 
 const Footer = () => {
     return (
@@ -12,7 +12,7 @@ const Footer = () => {
             bottom={0}
             className="flex flex-col items-center py-4"
         >
-            <div className="w-[80%] max-w-[1200px] border-t-2 border-[#19054D] mb-4 md:mb-15"/>
+            <div className="w-[80%] max-w-[1200px] border-t-2 border-background-paper mb-4 md:mb-15"/>
 
             <PaymentMethods/>
             <Box

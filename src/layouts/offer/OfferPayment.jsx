@@ -153,7 +153,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
                                 control={
                                     <Checkbox
                                         checked={selected?.value?.includes(item.value) || false}
-                                        color="secondary"
+                                        color="primary"
                                         onChange={(e) => {
                                             const currentValues = selected?.value || [];
                                             const currentLabels = selected?.label || [];
@@ -200,7 +200,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
                         step={option.step}
                         onChange={handleSliderChange}
                         aria-labelledby="slider"
-                        color="secondary"
+                        color="primary"
                     />
                 )}
             </div>

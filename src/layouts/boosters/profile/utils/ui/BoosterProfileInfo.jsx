@@ -1,21 +1,16 @@
-import {Box, IconButton} from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
+import {Box, IconButton, Tooltip} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    selectAvatar,
-    selectEmail,
-    selectSecondId,
-    selectUsername,
-    setUsername
-} from "src/store/slice/authSlice.js";
-import {changeNickname, getCustomerProfileData} from "src/services/userApi.js";
+import {selectAvatar, selectEmail, selectSecondId, selectUsername, setUsername} from "src/store/slice/authSlice.js";
+import {changeNickname} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
-import NameEditor from "src/layouts/utils/ui/NameEditor.jsx";
-import SquareAvatar from "src/layouts/profile/utils/ui/SquareAvatar.jsx";
+import BoosterAvatar from "src/layouts/boosters/profile/utils/ui/BoosterAvatar.jsx";
 import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
+import NameEditor from "src/layouts/utils/ui/NameEditor.jsx";
 
-const UserProfile = () => {
+const BoosterProfileInfo = ({balance, totalIncome, totalTips}) => {
+
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
@@ -24,9 +19,7 @@ const UserProfile = () => {
 
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
-    const [discountPercentage, setDiscountPercentage] = useState(null);
-    const [cashbackBalance, setCashbackBalance] = useState(null);
-    const [customerStatus, setCustomerStatus] = useState(null);
+
     const [isEditingName, setIsEditingName] = useState(false);
 
     const handleNameSave = async (newName) => {
@@ -57,24 +50,6 @@ const UserProfile = () => {
         }
     };
 
-    const fetchCustomerProfile = useCallback(async () => {
-        if (discountPercentage === null) {
-            try {
-                const profile = await getCustomerProfileData()
-                setCustomerStatus(profile.status);
-                setCashbackBalance(profile.balance);
-                setDiscountPercentage(profile.discountPercentage)
-            } catch (err) {
-                console.log(handleApiError(err));
-            }
-        }
-    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
-
-
-    useEffect(() => {
-        fetchCustomerProfile();
-    }, [fetchCustomerProfile]);
-
     return (
         <Box sx={{
             padding: 3,
@@ -82,7 +57,7 @@ const UserProfile = () => {
             height: 'fit-content'
         }}>
             <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'start', mb: 3}}>
-                <SquareAvatar
+                <BoosterAvatar
                     src={userAvatar}
                     size={200}
                     onAvatarClick={() => console.log('Avatar clicked')}
@@ -97,30 +72,27 @@ const UserProfile = () => {
                                 onCancel={handleNameCancel}
                             />
                         ) : (
-                            <>
-                                <ProfileInfoItem label="Username" value={userName}/>
-                                <IconButton size="small" onClick={() => setIsEditingName(true)}>
-                                    <EditIcon sx={{color: 'white', fontSize: 16}}/>
-                                </IconButton>
-                            </>
+                            <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                                <ProfileInfoItem label='Username' value={userName} copyable={true}/>
+                                <Tooltip title="Edit username">
+                                    <IconButton size="small" onClick={() => setIsEditingName(true)}>
+                                        <EditIcon color='third' fontSize='small'/>
+                                    </IconButton>
+                                </Tooltip>
+                            </Box>
                         )}
                     </Box>
-
                     <Box sx={{mt: 3}}>
-                        <ProfileInfoItem label="Email" value={emailFromStore} copyable={true}/>
+                        <ProfileInfoItem label='Email' value={emailFromStore} copyable={true}/>
                         <ProfileInfoItem label="ID" value={secondIdFromStore} copyable={true}/>
-                        <ProfileInfoItem label="Status" value={customerStatus}/>
-                        <ProfileInfoItem label="Discount" value={`${discountPercentage}%`}/>
-                        <ProfileInfoItem
-                            label="Cashback"
-                            value={`$ ${cashbackBalance?.toFixed(2) || '0.00'}`}
-                        />
+                        <ProfileInfoItem label='Balance' value={`$ ${balance}`}/>
+                        <ProfileInfoItem label='Total income' value={`$ ${totalIncome}`}/>
+                        <ProfileInfoItem label='Total tips' value={`$ ${totalTips}`}/>
                     </Box>
                 </Box>
             </Box>
         </Box>
-
     )
 }
 
-export default UserProfile;
+export default BoosterProfileInfo;

@@ -8,10 +8,10 @@ const BoosterHeader = () => {
         return (
             <NavLink to={path}
                      className={({ isActive }) =>
-                         `px-5 ${isActive ? 'text-[#FD980B]' : 'hover:text-[#FD980B]'}`
+                         `px-5 ${isActive ? 'text-primary' : 'hover:text-primary'}`
                      }
             >
-                <p className="text-xl kanit-regular uppercase hover:text-[#FD980B]">
+                <p className="text-xl kanit-regular uppercase hover:text-primary">
                     {title}
                 </p>
             </NavLink>
