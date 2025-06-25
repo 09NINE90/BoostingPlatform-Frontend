@@ -1,7 +1,7 @@
 import api from "src/services/api.js";
 
-export const getFiltersForCreatedOrders = async () => {
-    const response = await api.get(`/order/getFiltersForCreatedOrders`);
+export const getFiltersDashboard = async () => {
+    const response = await api.get(`/order/getFiltersDashboard`);
     return response.data;
 }
 

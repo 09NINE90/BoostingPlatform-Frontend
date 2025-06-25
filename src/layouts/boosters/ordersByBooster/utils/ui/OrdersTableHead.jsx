@@ -54,14 +54,14 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
     const handleGameSelect = useCallback((value) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            gameName: value
+            gameNames: value
         }));
     }, []);
 
     const handleGamePlatformSelect = useCallback((value) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            gamePlatform: value
+            gamePlatforms: value
         }));
     }, []);
 
@@ -103,7 +103,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     Game
                     <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
                             className="ml-2">
-                        <FilterIcon isActive={selectedFilters.gameName !== null}/>
+                        <FilterIcon isActive={selectedFilters.gameNames.length > 0}/>
                     </button>
                     <SortButton
                         sortKey={GAME_NAME}
@@ -115,7 +115,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     <FilterDropdown
                         title="Select Game"
                         options={filters.gameNames}
-                        selected={selectedFilters.gameName}
+                        selected={selectedFilters.gameNames}
                         onSelect={handleGameSelect}
                         onClose={() => setOpenFilter(null)}
                     />
@@ -127,7 +127,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     <button
                         onClick={() => setOpenFilter(openFilter === 'platform' ? null : 'platform')}
                         className="ml-2">
-                        <FilterIcon isActive={selectedFilters.gamePlatform !== null}/>
+                        <FilterIcon isActive={selectedFilters.gamePlatforms.length > 0}/>
                     </button>
                     <SortButton
                         sortKey={GAME_PLATFORM}
@@ -139,7 +139,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     <FilterDropdown
                         title="Select platform"
                         options={filters.gamePlatforms}
-                        selected={selectedFilters.gamePlatform}
+                        selected={selectedFilters.gamePlatforms}
                         onSelect={handleGamePlatformSelect}
                         onClose={() => setOpenFilter(null)}
                     />
@@ -163,6 +163,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     <PriceFilter
                         onApply={handlePriceApply}
                         currentPrice={selectedFilters.price}
+                        priceByFilter={filters.price}
                         onClose={() => setOpenFilter(null)}
                     />
                 )}

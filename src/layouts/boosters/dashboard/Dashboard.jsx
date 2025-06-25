@@ -24,9 +24,8 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
-        status: null,
-        gameName: null,
-        gamePlatform: null,
+        gameNames: [],
+        gamePlatforms: [],
         totalPrice: {
             priceFrom: null,
             priceTo: null
@@ -52,6 +51,7 @@ const Dashboard = () => {
         } finally {
             setLoading(false);
         }
+
     }, [getDashboardOrders, setAllOrders, selectedFilters]);
 
     const openModal = (order) => {
