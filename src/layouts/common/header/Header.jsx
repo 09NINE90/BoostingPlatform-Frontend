@@ -42,7 +42,8 @@ const Header = ({forBoosterPage}) => {
     const handleOpenProfile = useCallback(() => {
         if (!forBoosterPage) navigate("/profile");
         else navigate("/booster/profile");
-    }, [navigate])
+        handleProfileMenuClose();
+    }, [navigate, handleProfileMenuClose])
 
     const handleLogout = useCallback(async () => {
         try {
@@ -105,7 +106,7 @@ const Header = ({forBoosterPage}) => {
         >
             <div className="flex flex-row items-center justify-between px-5 py-2">
                 <div className="flex items-center">
-                    <LogoHome/>
+                    <LogoHome forBoosterPage={forBoosterPage}/>
                     {!forBoosterPage && (
                         <Search/>
                     )}

@@ -12,7 +12,7 @@ const ProfileInfoItem = ({label, value, copyable = false}) => {
         setTimeout(() => setCopied(false), 1500);
     };
     return (
-        <Box sx={{display: 'flex', gap: 1, alignItems: 'center', mt: 1}}>
+        <Box sx={{display: 'flex', gap: 1, alignItems: 'center', mt: 2, minHeight: '40px'}}>
             <Typography variant="body2"
                         sx={{
                             color: theme.palette.text.secondary,

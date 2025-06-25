@@ -8,8 +8,9 @@ import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import BoosterAvatar from "src/layouts/boosters/profile/utils/ui/BoosterAvatar.jsx";
 import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
 import NameEditor from "src/layouts/utils/ui/NameEditor.jsx";
+import BoosterGameTags from "src/layouts/boosters/profile/utils/ui/BoosterGameTags.jsx";
 
-const BoosterProfileInfo = ({balance, totalIncome, totalTips}) => {
+const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags}) => {
 
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
@@ -88,6 +89,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips}) => {
                         <ProfileInfoItem label='Balance' value={`$ ${balance}`}/>
                         <ProfileInfoItem label='Total income' value={`$ ${totalIncome}`}/>
                         <ProfileInfoItem label='Total tips' value={`$ ${totalTips}`}/>
+                        <BoosterGameTags gameTags={gameTags}/>
                     </Box>
                 </Box>
             </Box>

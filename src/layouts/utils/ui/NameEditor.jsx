@@ -5,7 +5,7 @@ const NameEditor = ({ initialName, onSave, onCancel }) => {
     const [tempName, setTempName] = useState(initialName);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1}}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px' }}>
             <TextField
                 type="text"
                 value={tempName}
