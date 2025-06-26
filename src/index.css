@@ -14,32 +14,33 @@
 }
 
 :root {
-  font-family: 'Kanit', sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: 'Kanit', sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: color(var(--color-background));
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: color(var(--color-background));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Kanit', sans-serif;
-  background-color: #1B1A27;
-  color: #fff;
-  line-height: 1.6;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: #1B1A27;
+    color: #fff;
+    line-height: 1.6;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 input[type='number']::-webkit-outer-spin-button,
@@ -53,16 +54,16 @@ input[type='number'] {
 }
 
 .auth-container {
-  display: none;
+    display: none;
 }
 
 .auth-container-active {
-  display: flex;
-  width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .custom-toast {
-    background-color: #19054D;
+    background-color: #443D54;
     color: #ffffff;
     font-size: 14px;
     font-weight: 300;
@@ -73,46 +74,47 @@ input[type='number'] {
 }
 
 .dashboard-active {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
+
 .main-container-active {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  height: calc(100vh - 64px);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    height: calc(100vh - 64px);
 }
 
 ::-webkit-scrollbar {
-  width: 0;
+    width: 0;
 }
 
 .kanit-thin {
-  font-family: 'Kanit';
-  font-weight: 100;
+    font-family: 'Kanit';
+    font-weight: 100;
 }
 
 .kanit-extralight {
-  font-family: 'Kanit';
-  font-weight: 200;
+    font-family: 'Kanit';
+    font-weight: 200;
 }
 
 .kanit-light {
-  font-family: 'Kanit';
-  font-weight: 300;
+    font-family: 'Kanit';
+    font-weight: 300;
 }
 
 .kanit-regular {
-  font-family: 'Kanit';
-  font-weight: 400;
+    font-family: 'Kanit';
+    font-weight: 400;
 }
 
 .kanit-medium {
-  font-family: 'Kanit';
-  font-weight: 500;
+    font-family: 'Kanit';
+    font-weight: 500;
 }
 
 .kanit-bold {
-  font-family: 'Kanit';
-  font-weight: 700;
+    font-family: 'Kanit';
+    font-weight: 700;
 }

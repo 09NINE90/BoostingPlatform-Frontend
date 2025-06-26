@@ -9,14 +9,15 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
     return (
         <Box sx={{
             flex: 1,
-            borderRadius: 2,
-            padding: 3,
-            marginBottom: 3,
+            padding: 10,
+            mt: 3,
+            mb: 3,
+            backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{
                 color: '#fff',
                 marginBottom: 2,
-                fontWeight: theme.typography.fontWeightLight,
+                fontWeight: theme.typography.fontWeightMedium,
             }}>
                 Account Status
             </Typography>

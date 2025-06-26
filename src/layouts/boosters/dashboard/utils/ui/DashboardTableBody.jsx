@@ -1,8 +1,9 @@
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {Button} from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
+import theme from "src/theme/theme.jsx";
 
 const DashboardTableBody = ({allOrders, openModal}) => {
     return (
@@ -11,15 +12,29 @@ const DashboardTableBody = ({allOrders, openModal}) => {
                 <TableRow
                     key={order.orderId}
                     sx={{
-                        '&:last-child td, &:last-child th': { border: 0 },
+                        '&:last-child td, &:last-child th': {border: 0},
                         p: 2
                     }}
                 >
                     <TableCell component="th" scope="row" sx={{width: '35%'}}>
-                        <div className='text-text-primary kanit-light'>
-                            {order.offerName} # {order.secondId}
+                        <Box sx={{display: 'flex', flexDirection: 'column'}}>
+                            <Typography variant="body2"
+                                        sx={{
+                                            color: theme.palette.text.primary,
+                                            fontWeight: theme.typography.fontWeightLight
+                                        }}>
+                                {order.offerName}
+                            </Typography>
+                            <Typography variant="body2"
+                                        sx={{
+                                            mt: 2,
+                                            color: theme.palette.primary.main,
+                                            fontWeight: theme.typography.fontWeightLight
+                                        }}>
+                                ID: {order.secondId}
+                            </Typography>
                             <OrderOptions order={order}/>
-                        </div>
+                        </Box>
                     </TableCell>
                     <TableCell sx={{width: '15%'}}>
                         <div className='text-text-primary kanit-light'>{order.gameName}</div>

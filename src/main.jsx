@@ -33,10 +33,10 @@ const root = document.getElementById('root');
 export const App = () => {
     return (
         <BrowserRouter>
-            <ToastContainer position="top-left" autoClose={2000}
+            <ToastContainer position="top-right" autoClose={2000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"
-                            className="mt-20"/>
+                            className="mt-20 mr-4"/>
             <Routes>
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>

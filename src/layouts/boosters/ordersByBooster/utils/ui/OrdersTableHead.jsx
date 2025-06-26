@@ -68,7 +68,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
     const handleOrderStatusSelect = useCallback((value) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            status: value
+            statuses: value
         }));
     }, []);
 
@@ -180,7 +180,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                     <FilterDropdown
                         title="Select platform"
                         options={filters.statuses}
-                        selected={selectedFilters.status}
+                        selected={selectedFilters.statuses}
                         onSelect={handleOrderStatusSelect}
                         onClose={() => setOpenFilter(null)}
                     />

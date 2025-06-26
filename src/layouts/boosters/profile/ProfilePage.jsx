@@ -11,6 +11,7 @@ const ProfileMain = () => {
     const [boosterNextLevel, setBoosterNextLevel] = useState(null);
     const [percentageOfOrder, setPercentageOfOrder] = useState(null);
     const [balance, setBalance] = useState(null);
+    const [numberOfCompletedOrders, setNumberOfCompletedOrders] = useState(null);
     const [totalIncome, setTotalIncome] = useState(null);
     const [totalTips, setTotalTips] = useState(null);
     const [progressAccountStatus, setProgressAccountStatus] = useState(null);
@@ -30,6 +31,7 @@ const ProfileMain = () => {
                 setProgressAccountStatus(profile.progressAccountStatus);
                 setBoosterNextLevel(profile.nextLevel);
                 setGameTags(profile.gameTags);
+                setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
             } catch (err) {
                 console.log(handleApiError(err));
             } finally {
@@ -54,12 +56,13 @@ const ProfileMain = () => {
     }
 
     return (
-        <Box sx={{height: '100%', padding: 3, display: 'flex', gap: 3}}>
+        <Box sx={{height: '100%', padding: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
             <BoosterProfileInfo
                 balance={balance}
                 totalIncome={totalIncome}
                 totalTips={totalTips}
                 gameTags={gameTags}
+                numberOfCompletedOrders={numberOfCompletedOrders}
             />
             <BoosterAccountStatus
                 boosterNextLevel={boosterNextLevel}

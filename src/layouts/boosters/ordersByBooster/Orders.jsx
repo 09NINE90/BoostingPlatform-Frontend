@@ -15,7 +15,7 @@ const Orders = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
-        status: [IN_PROGRESS],
+        statuses: [IN_PROGRESS],
         gameNames: [],
         gamePlatforms: [],
         price: {

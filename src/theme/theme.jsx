@@ -78,7 +78,7 @@ const theme = createTheme({
                 },
             },
             defaultProps: {
-                placement: 'top',
+                placement: 'top-start',
                 arrow: true,
                 enterDelay: 500,
                 leaveDelay: 200,

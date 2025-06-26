@@ -10,7 +10,7 @@ import {
     setUsername,
     setToken,
     setEmail,
-    setSecondId,
+    setSecondId, setDescription,
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
@@ -34,6 +34,14 @@ const SignIn = ({closeModal, signUpRedirect}) => {
     const navigate = useNavigate();
     const status = useSelector(selectAuthStatus);
 
+    const setProfile = (profile) => {
+        dispatch(setUsername(profile.nickname));
+        dispatch(setAvatar(profile.imageUrl));
+        dispatch(setEmail(profile.email))
+        dispatch(setSecondId(profile.secondId));
+        dispatch(setDescription(profile.description));
+    }
+
     const signIn = async () => {
         try {
             setIsLoading(true);
@@ -56,20 +64,13 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 const profile = await getCustomerProfileData();
                 const countCartItems = await getCountCartItemsApi();
 
-                dispatch(setUsername(profile.nickname));
-                dispatch(setAvatar(profile.imageUrl));
-                dispatch(setEmail(profile.email));
-                dispatch(setSecondId(profile.secondId));
+                setProfile(profile)
                 dispatch(setCountCartItems(countCartItems));
 
             } else if (role === BOOSTER_ROLE) {
                 const profile = await getBoosterProfileData();
 
-                dispatch(setUsername(profile.nickname));
-                dispatch(setAvatar(profile.imageUrl));
-                dispatch(setEmail(profile.email))
-                dispatch(setSecondId(profile.secondId));
-
+                setProfile(profile)
                 navigate('/booster/dashboard')
             }
 

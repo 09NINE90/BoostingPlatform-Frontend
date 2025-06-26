@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Box, LinearProgress, Typography} from "@mui/material";
+import theme from "src/theme/theme.jsx";
 
 const CashbackProgress = () => {
 
@@ -29,10 +30,11 @@ const CashbackProgress = () => {
 
     return (
         <Box sx={{
-            backgroundColor: '#1E1930',
-            borderRadius: 2,
-            padding: 3,
-            marginBottom: 3,
+            flex: 1,
+            height: 'fit-content',
+            backgroundColor: theme.palette.background.paper,
+            padding: 10,
+            mt: 3,
         }}>
             <Typography variant="h5" sx={{color: '#fff', marginBottom: 2}}>
                 Unlock higher cashback rewards as you level up!

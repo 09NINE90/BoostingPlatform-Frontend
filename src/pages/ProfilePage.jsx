@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProfileMain from "../layouts/profile/ProfileMain.jsx";
+import ProfileMain from "../layouts/customer/profile/ProfileMain.jsx";
 import Header from "../layouts/common/header/Header.jsx";
 import Footer from "../layouts/common/footer/Footer.jsx"
 

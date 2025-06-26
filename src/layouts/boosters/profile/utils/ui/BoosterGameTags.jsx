@@ -7,22 +7,24 @@ import {GAME_TAGS_TOOLTIP} from "src/utils/constants/TooltipsTexts.js";
 const BoosterGameTags = ({gameTags}) => {
     if (gameTags) {
         return (
-            <Box sx={{display: 'flex', gap: 1, mt: 2}}>
-                <HelpIconWithTooltip
-                    tooltipTitle={GAME_TAGS_TOOLTIP}/>
-                <Typography
-                    variant="body2"
-                    sx={{
-                        color: theme.palette.text.secondary,
-                        fontWeight: theme.typography.fontWeightLight,
-                        minWidth: 120,
-                        alignSelf: 'flex-start',
-                    }}
-                >
-                    Game tags:
-                </Typography>
+            <Box sx={{display: 'flex', flexDirection: 'column', gap: 1, mt: 3}}>
+                <Box sx={{display: 'flex', alignItems: 'center', gap: 1}}>
+                    <HelpIconWithTooltip
+                        tooltipTitle={GAME_TAGS_TOOLTIP}/>
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            color: theme.palette.third.main,
+                            fontWeight: theme.typography.fontWeightLight,
+                            fontSize: 14,
+                            alignSelf: 'flex-start',
+                        }}
+                    >
+                        Game tags:
+                    </Typography>
+                </Box>
 
-                <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1}}>
+                <Box sx={{display: 'flex', flexWrap: 'wrap', mt: 2, gap: 1}}>
                     {gameTags?.map((tag) => (
                         <Chip
                             key={tag.id}
