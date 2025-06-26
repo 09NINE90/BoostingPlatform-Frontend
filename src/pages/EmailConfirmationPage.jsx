@@ -6,7 +6,7 @@ import {
     clearAuth,
     setAuth,
     setAvatar,
-    setCountCartItems,
+    setCountCartItems, setDescription,
     setEmail,
     setRole,
     setSecondId,
@@ -33,6 +33,7 @@ const EmailConfirmationPage = () => {
         dispatch(setAvatar(profile.imageUrl));
         dispatch(setEmail(profile.email))
         dispatch(setSecondId(profile.secondId));
+        dispatch(setDescription(profile.description));
     }
 
     useEffect(() => {

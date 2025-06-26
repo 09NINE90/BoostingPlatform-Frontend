@@ -11,6 +11,7 @@ const initialState = {
     email: null,
     secondId: null,
     username: null,
+    description: null,
     avatar: "https://mos.gallery/upload/iblock/73a/73aa1e03826e05eafea7ec1da14d4b4e.jpg",
     status: "idle",
     error: null,
@@ -39,6 +40,9 @@ const authSlice = createSlice({
         setSecondId: (state, action) => {
             state.secondId = action.payload;
         },
+        setDescription: (state, action) => {
+            state.description = action.payload;
+        },
         setAvatar: (state, action) => {
             state.avatar = action.payload;
         },
@@ -65,6 +69,7 @@ export const selectAuthError = (state) => state.auth.error;
 export const selectAuthStatus = (state) => state.auth.status;
 export const selectToken = (state) => state.auth.token;
 export const selectCountCartItems = (state) => state.auth.countCartItems;
+export const selectDescription = (state) => state.auth.description;
 
 export const {
     setCountCartItems,
@@ -75,7 +80,8 @@ export const {
     setUsername,
     setAvatar,
     setEmail,
-    setSecondId
+    setSecondId,
+    setDescription
 } = authSlice.actions;
 
 export default authSlice.reducer;

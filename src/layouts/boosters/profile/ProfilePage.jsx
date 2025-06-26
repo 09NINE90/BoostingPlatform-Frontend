@@ -4,19 +4,24 @@ import BoosterProfileInfo from "src/layouts/boosters/profile/utils/ui/BoosterPro
 import {getBoosterProfileData} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
+import {ClipLoader} from "react-spinners";
 
 const ProfileMain = () => {
     const [boosterLevel, setBoosterLevel] = useState(null);
     const [boosterNextLevel, setBoosterNextLevel] = useState(null);
     const [percentageOfOrder, setPercentageOfOrder] = useState(null);
     const [balance, setBalance] = useState(null);
+    const [numberOfCompletedOrders, setNumberOfCompletedOrders] = useState(null);
     const [totalIncome, setTotalIncome] = useState(null);
     const [totalTips, setTotalTips] = useState(null);
     const [progressAccountStatus, setProgressAccountStatus] = useState(null);
+    const [gameTags, setGameTags] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const fetchBoosterProfile = useCallback(async () => {
         if (boosterLevel === null) {
             try {
+                setLoading(true);
                 const profile = await getBoosterProfileData()
                 setBoosterLevel(profile.level);
                 setBalance(profile.balance);
@@ -25,8 +30,12 @@ const ProfileMain = () => {
                 setTotalTips(profile.totalTips);
                 setProgressAccountStatus(profile.progressAccountStatus);
                 setBoosterNextLevel(profile.nextLevel);
+                setGameTags(profile.gameTags);
+                setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
             } catch (err) {
                 console.log(handleApiError(err));
+            } finally {
+                setLoading(false);
             }
         }
     }, [getBoosterProfileData, setBoosterLevel, setBalance, setPercentageOfOrder, setTotalIncome, setTotalTips]);
@@ -35,14 +44,28 @@ const ProfileMain = () => {
         fetchBoosterProfile();
     }, [fetchBoosterProfile]);
 
+    if (loading) {
+        return (
+            <div className="fixed inset-0 flex items-center justify-center">
+                <ClipLoader
+                    color="#FD980B"
+                    size={100}
+                />
+            </div>
+        )
+    }
+
     return (
-        <Box sx={{height: '100%', padding: 3, display: 'flex', gap: 3}}>
+        <Box sx={{height: '100%', padding: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
             <BoosterProfileInfo
                 balance={balance}
                 totalIncome={totalIncome}
                 totalTips={totalTips}
+                gameTags={gameTags}
+                numberOfCompletedOrders={numberOfCompletedOrders}
             />
             <BoosterAccountStatus
+                boosterNextLevel={boosterNextLevel}
                 boosterLevel={boosterLevel}
                 percentageOfOrder={percentageOfOrder}
                 progressAccountStatus={progressAccountStatus}

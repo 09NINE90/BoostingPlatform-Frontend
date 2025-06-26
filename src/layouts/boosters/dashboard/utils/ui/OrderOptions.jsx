@@ -14,7 +14,7 @@ const OrderOptions = ({order}) => {
                                         className="text-text-primary  text-left  text-sm kanit-light">{option.optionTitle}:
                                     </div>
                                     <div
-                                        className="text-text-primary text-left text-sm ml-2 kanit-light">{option.label}</div>
+                                        className="text-text-secondary text-left text-sm ml-2 kanit-light">{option.label}</div>
                                 </div>
                             </li>
                         ))}

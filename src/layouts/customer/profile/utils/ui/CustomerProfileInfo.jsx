@@ -1,48 +1,49 @@
 import {Box} from "@mui/material";
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    selectAvatar,
-    selectDescription,
+    selectAvatar, selectDescription,
     selectEmail,
     selectSecondId,
     selectUsername, setDescription,
     setUsername
 } from "src/store/slice/authSlice.js";
-import {changeDescriptionProfile, changeNickname} from "src/services/userApi.js";
+import {changeDescriptionProfile, changeNickname, getCustomerProfileData} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
-import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
 import UsernameEditor from "src/layouts/utils/ui/UsernameEditor.jsx";
-import BoosterGameTags from "src/layouts/boosters/profile/utils/ui/BoosterGameTags.jsx";
-import ProfileDescriptionItem from "src/layouts/utils/ui/ProfileDescriptionItem.jsx";
+import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
+import theme from "src/theme/theme.jsx";
 import UsernameInfoItem from "src/layouts/utils/ui/UsernameInfoItem.jsx";
 import InfoCardItem from "src/layouts/utils/ui/InfoCardItem.jsx";
 import DescriptionEditor from "src/layouts/utils/ui/DescriptionEditor.jsx";
-import theme from "src/theme/theme.jsx";
+import ProfileDescriptionItem from "src/layouts/utils/ui/ProfileDescriptionItem.jsx";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
 
-const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOfCompletedOrders}) => {
-
+const CustomerProfileInfo = () => {
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
-    const descriptionProfileFromStore = useSelector(selectDescription);
     const emailFromStore = useSelector(selectEmail);
     const secondIdFromStore = useSelector(selectSecondId);
+    const descriptionProfileFromStore = useSelector(selectDescription);
 
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
     const [descriptionProfile, setDescriptionProfile] = useState(descriptionProfileFromStore);
+    const [discountPercentage, setDiscountPercentage] = useState(null);
+    const [cashbackBalance, setCashbackBalance] = useState(null);
+    const [customerStatus, setCustomerStatus] = useState(null);
+    const [totalOrders, setTotalOrders] = useState(null);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
     const handleNameSave = async (newName) => {
+        setUserName(newName);
+        dispatch(setUsername(newName));
+        setIsEditingName(false);
         try {
             await changeNickname(newName);
-            setUserName(newName);
-            dispatch(setUsername(newName));
-            setIsEditingName(false);
         } catch (error) {
             console.log(handleApiError(error));
         }
@@ -80,6 +81,25 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
         }
     };
 
+    const fetchCustomerProfile = useCallback(async () => {
+        if (discountPercentage === null) {
+            try {
+                const profile = await getCustomerProfileData()
+                setTotalOrders(profile.totalOrders);
+                setCustomerStatus(profile.status);
+                setCashbackBalance(profile.cashbackBalance);
+                setDiscountPercentage(profile.discountPercentage)
+            } catch (err) {
+                console.log(handleApiError(err));
+            }
+        }
+    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
+
+
+    useEffect(() => {
+        fetchCustomerProfile();
+    }, [fetchCustomerProfile]);
+
     return (
         <Box sx={{
             padding: 3,
@@ -87,15 +107,14 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
             backgroundColor: theme.palette.background.paper,
         }}>
             <Box sx={{display: 'flex', alignItems: 'start', mb: 3}}>
-
                 <UserAvatar
                     src={userAvatar}
                     size={200}
                     onAvatarClick={() => console.log('Avatar clicked')}
                     onFileChange={handleAvatarChange}
                 />
-
                 <Box sx={{paddingInline: 10, display: 'flex', flex: 1, flexDirection: 'column', gap: 1}}>
+
                     <Box sx={{mt: 2, gap: 1}}>
                         {isEditingName ? (
                             <UsernameEditor
@@ -124,13 +143,11 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
-                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
-                        <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
-                        <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
+                        <InfoCardItem label='Total orders' value={totalOrders}/>
+                        <InfoCardItem label='Status' value={customerStatus}/>
+                        <InfoCardItem label='Current discount' value={`${discountPercentage}%`}/>
+                        <InfoCardItem label='Cashback balance' value={cashbackBalance}/>
                     </Box>
-
-                    <BoosterGameTags gameTags={gameTags}/>
 
                     <Box sx={{mt: 2, width: '100%'}}>
                         {isEditingDescription ? (
@@ -148,9 +165,11 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                         )}
                     </Box>
                 </Box>
+
             </Box>
         </Box>
+
     )
 }
 
-export default BoosterProfileInfo;
+export default CustomerProfileInfo;

@@ -15,6 +15,7 @@ const persistConfig = {
         'username',
         'avatar',
         'token',
+        'description',
         'countCartItems',
         'email',
         'secondId'

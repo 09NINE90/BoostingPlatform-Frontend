@@ -1,8 +1,8 @@
-import React, {useRef} from 'react';
-import {Box} from '@mui/material';
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import React, {useRef} from "react";
+import {Box} from "@mui/material";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
-const SquareAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
+const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
     const fileInputRef = useRef(null);
 
     const handleAvatarClick = () => {
@@ -11,19 +11,22 @@ const SquareAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
     };
 
     return (
-        <Box sx={{position: 'relative', display: 'inline-block', ml: 2}}>
+        <Box sx={{position: 'relative', display: 'inline-block', mt: 6, ml: 6}}>
             <Box
                 component="img"
                 src={src}
                 sx={{
                     width: size,
                     height: size,
+                    border: '1px solid rgba(0, 255, 255, 0.3)',
+                    boxShadow: '0 0 10px #0ff, 0 0 20px rgba(0, 255, 255, 0.5)',
                     cursor: 'pointer',
                     objectFit: 'cover',
                     borderRadius: 0,
                     '&:hover .hover-edit-icon': {
                         opacity: 1
-                    }
+                    },
+                    transition: 'box-shadow 0.3s ease'
                 }}
                 onClick={handleAvatarClick}
             />
@@ -56,6 +59,6 @@ const SquareAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
             />
         </Box>
     );
-};
+}
 
-export default SquareAvatar;
+export default UserAvatar;

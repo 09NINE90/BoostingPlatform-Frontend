@@ -6,13 +6,12 @@ import FilterDropdown from "src/layouts/boosters/dashboard/utils/ui/FilterDropdo
 import PriceFilter from "src/layouts/boosters/dashboard/utils/ui/PriceFilter.jsx";
 import TableHead from "@mui/material/TableHead";
 import React, {useCallback, useEffect, useState} from "react";
-import {getFiltersForCreatedOrders} from "src/services/orderApi.js";
+import {getFiltersDashboard} from "src/services/orderApi.js";
 
 const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}) => {
 
     const [openFilter, setOpenFilter] = useState(null);
     const [filters, setFilters] = useState({
-        statuses: [],
         gamePlatforms: [],
         gameNames: [],
         price: {priceMin: 0, priceMax: 10000}
@@ -20,12 +19,12 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
 
     const fetchOrdersFilterData = useCallback(async () => {
         try {
-            const orderFiltersApi = await getFiltersForCreatedOrders()
+            const orderFiltersApi = await getFiltersDashboard()
             setFilters(orderFiltersApi);
         } catch (error) {
             console.log(error);
         }
-    }, [getFiltersForCreatedOrders, setFilters]);
+    }, [getFiltersDashboard, setFilters]);
 
     const handleSort = (sortKey) => {
         setPageNumber(0)
@@ -52,14 +51,14 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
     const handleGameSelect = useCallback((value) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            gameName: value
+            gameNames: value
         }));
     }, []);
 
     const handleGamePlatformSelect = useCallback((value) => {
         setSelectedFilters((prev) => ({
             ...prev,
-            gamePlatform: value
+            gamePlatforms: value
         }));
     }, []);
 
@@ -81,7 +80,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
     return (
         <TableHead>
             <TableCell sx={{width: '35%'}}>
-                <div className='text-[#fff] kanit-regular text-xl'>
+                <div className='text-text-primary kanit-regular text-xl'>
                     Available Orders
                     <SortButton
                         sortKey={OFFER_NAME}
@@ -95,7 +94,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                     Game
                     <button onClick={() => setOpenFilter(openFilter === 'game' ? null : 'game')}
                             className="ml-2">
-                        <FilterIcon isActive={selectedFilters.gameName !== null}/>
+                        <FilterIcon isActive={selectedFilters.gameNames.length > 0}/>
                     </button>
                     <SortButton
                         sortKey={GAME_NAME}
@@ -107,7 +106,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                     <FilterDropdown
                         title="Select Game"
                         options={filters.gameNames}
-                        selected={selectedFilters.gameName}
+                        selected={selectedFilters.gameNames}
                         onSelect={handleGameSelect}
                         onClose={() => setOpenFilter(null)}
                     />
@@ -119,7 +118,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                     <button
                         onClick={() => setOpenFilter(openFilter === 'platform' ? null : 'platform')}
                         className="ml-2">
-                        <FilterIcon isActive={selectedFilters.gamePlatform !== null}/>
+                        <FilterIcon isActive={selectedFilters.gamePlatforms.length > 0}/>
                     </button>
                     <SortButton
                         sortKey={GAME_PLATFORM}
@@ -131,7 +130,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                     <FilterDropdown
                         title="Select platform"
                         options={filters.gamePlatforms}
-                        selected={selectedFilters.gamePlatform}
+                        selected={selectedFilters.gamePlatforms}
                         onSelect={handleGamePlatformSelect}
                         onClose={() => setOpenFilter(null)}
                     />
@@ -143,7 +142,7 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                     <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                             className="ml-2">
                         <FilterIcon
-                            isActive={selectedFilters.totalPrice.priceFrom !== null && selectedFilters.totalPrice.priceTo !== null}/>
+                            isActive={selectedFilters.totalPrice.priceFrom !== null || selectedFilters.totalPrice.priceTo !== null}/>
                     </button>
                     <SortButton
                         sortKey={TOTAL_PRICE}
@@ -154,7 +153,8 @@ const DashboardTableHead = ({setPageNumber, setSelectedFilters, selectedFilters}
                 {openFilter === 'price' && (
                     <PriceFilter
                         onApply={handlePriceApply}
-                        currentPrice={selectedFilters.price}
+                        currentPrice={selectedFilters.totalPrice}
+                        priceByFilter={filters.price}
                         onClose={() => setOpenFilter(null)}
                     />
                 )}
