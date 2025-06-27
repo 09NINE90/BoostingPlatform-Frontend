@@ -4,6 +4,8 @@ const customColors = {
     primary: '#FD980B',
     secondary: '#E28607',
     third: '#00A0FF',
+    thirdHover: '#0178bc',
+    completed: '#CBF45A',
     background: '#110134',
     backgroundPaper: '#19054D',
     textPrimary: '#FFFFFF',
@@ -18,6 +20,9 @@ const theme = createTheme({
             main: customColors.primary,
             contrastText: '#FFFFFF',
         },
+        statuses: {
+            completed: customColors.completed
+        },
         secondary: {
             main: customColors.secondary,
             contrastText: '#FFFFFF',
@@ -28,6 +33,7 @@ const theme = createTheme({
         },
         third: {
             main: customColors.third,
+            hover: customColors.thirdHover,
             contrastText: '#FFFFFF',
         },
         text: {

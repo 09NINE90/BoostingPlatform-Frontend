@@ -124,10 +124,10 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                         justifyContent: 'space-between',
                         alignItems: 'center',
                     }}>
-                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
-                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
                         <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
                         <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
+                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
+                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
                     </Box>
 
                     <BoosterGameTags gameTags={gameTags}/>

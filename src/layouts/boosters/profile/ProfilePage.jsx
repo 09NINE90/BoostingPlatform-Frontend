@@ -5,8 +5,11 @@ import {getBoosterProfileData} from "src/services/userApi.js";
 import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
 import {ClipLoader} from "react-spinners";
+import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";
+import WithdrawModal from "src/layouts/boosters/profile/utils/ui/WithdrawModal.jsx";
 
 const ProfileMain = () => {
+    const [modalWithdrawIsOpen, setModalWithdrawIsOpen] = useState(false);
     const [boosterLevel, setBoosterLevel] = useState(null);
     const [boosterNextLevel, setBoosterNextLevel] = useState(null);
     const [percentageOfOrder, setPercentageOfOrder] = useState(null);
@@ -17,6 +20,14 @@ const ProfileMain = () => {
     const [progressAccountStatus, setProgressAccountStatus] = useState(null);
     const [gameTags, setGameTags] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    const openWithdrawModal = () => {
+        setModalWithdrawIsOpen(true);
+    };
+
+    const closeWithdrawModal = () => {
+        setModalWithdrawIsOpen(false);
+    };
 
     const fetchBoosterProfile = useCallback(async () => {
         if (boosterLevel === null) {
@@ -70,6 +81,28 @@ const ProfileMain = () => {
                 percentageOfOrder={percentageOfOrder}
                 progressAccountStatus={progressAccountStatus}
             />
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 3
+            }}>
+                <Box sx={
+                    {
+                        display: 'flex',
+                        minWidth: '70%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                    ТУТ БУДЕТ ИСТОРИЯ ЗАКАЗОВ
+                </Box>
+                <BoosterBalanceInfo
+                    balance={balance}
+                    openModal={openWithdrawModal}
+                />
+            </Box>
+            {modalWithdrawIsOpen && (
+                <WithdrawModal isOpen={modalWithdrawIsOpen} onClose={closeWithdrawModal} balance={balance}/>
+            )}
         </Box>
     );
 }

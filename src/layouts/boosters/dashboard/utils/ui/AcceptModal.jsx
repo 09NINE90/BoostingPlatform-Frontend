@@ -10,11 +10,7 @@ const AcceptModal = ({isOpen, onClose, onAccept, selectedOrder}) => {
             <ModalTemplate
                 isOpen={isOpen}
                 onClose={onClose}
-                title={
-                    <p className='kanit-bold'>
-                        Accept order
-                    </p>
-                }
+                title='Accept order'
                 content={
                     <>
                         <div className="flex flex-col text-xl">

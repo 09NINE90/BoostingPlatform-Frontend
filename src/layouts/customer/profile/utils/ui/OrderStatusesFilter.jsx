@@ -1,41 +1,57 @@
-import {Box, Chip} from "@mui/material";
+import {Box, Button, Chip} from "@mui/material";
 import React from "react";
 import theme from "src/theme/theme.jsx";
 
 const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
     return (
-        <Box sx={{display: 'flex', overflowX: 'auto', marginBottom: 3}}>
+        <Box sx={{display: 'flex', overflowX: 'auto', mb: 5}}>
             {statuses.length > 0 && (
-                <Chip
-                    label="Clear filters"
-                    clickable
+                <Button
                     onClick={() => setSelectedStatus({status: null})}
                     sx={{
-                        marginRight: 1,
-                        backgroundColor: '#19054D',
+                        mr: 2,
+                        border: 0,
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.third.main,
                         fontWeight: theme.typography.fontWeightLight,
-                        ":hover": {backgroundColor: '#e68900', color: '#0A0022'}
-                    }}
-                />
-            )}
-            {statuses.map((status) => (
-                <Chip
-                    key={status.id}
-                    label={status.value}
-                    clickable
-                    onClick={() => setSelectedStatus({status: status.name})}
-                    sx={{
-                        marginRight: 1,
-                        fontWeight: theme.typography.fontWeightLight,
-                        backgroundColor: '#19054D',
-                        color: 'white',
-                        ...(selectedStatus.status === status.name && {
-                            backgroundColor: theme.palette.primary.main,
-                            fontWeight: theme.typography.fontWeightMedium,
-                            color: '#0A0022',
+                        '&:hover': {
+                            ...(selectedStatus.status !== null && {
+                                backgroundColor: theme.palette.third.hover,
+                            })
+                        },
+                        ...(selectedStatus.status === null && {
+                            backgroundColor: theme.palette.background.default,
+                            borderColor: theme.palette.third.main,
+                            border: 1,
                         })
                     }}
-                />
+                >
+                    Clear filters
+                </Button>
+            )}
+            {statuses.map((status) => (
+                <Button
+                    key={status.id}
+                    onClick={() => setSelectedStatus({status: status.name})}
+                    sx={{
+                        mr: 2,
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.background.default,
+                        fontWeight: theme.typography.fontWeightLight,
+                        border: 1,
+                        borderColor: theme.palette.text.primary,
+                        '&:hover': {
+                            backgroundColor: theme.palette.background.paper,
+                            borderColor: theme.palette.third.main,
+                        },
+                        ...(selectedStatus.status === status.name && {
+                            backgroundColor: theme.palette.background.paper,
+                            borderColor: theme.palette.third.main,
+                        })
+                    }}
+                >
+                    {status.value}
+                </Button>
             ))}
         </Box>
     )

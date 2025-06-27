@@ -11,6 +11,11 @@ export const statuses = [
     },
     {
         "id": "3",
+        "value": "On pending",
+        "name": "ON_PENDING"
+    },
+    {
+        "id": "4",
         "value": "Completed",
         "name": "COMPLETED"
     }
