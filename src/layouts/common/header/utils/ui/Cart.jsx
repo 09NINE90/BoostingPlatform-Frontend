@@ -3,13 +3,13 @@ import {IconButton} from "@mui/material";
 import CartIcon from "src/assets/icons/CartIcon.jsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {getCartItemsApi} from "src/services/offerApi.js";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import CartModal from "src/components/cart/CartModal.jsx";
 import {ClipLoader} from "react-spinners";
 import {selectCountCartItems} from "src/store/slice/authSlice.js";
 import {useSelector} from "react-redux";
 import DropCart from "src/components/cart/DropCart.jsx";
-import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import EmptyResponse from "src/components/EmptyResponse.jsx";
 
 
 const Cart = ({cartCount}) => {

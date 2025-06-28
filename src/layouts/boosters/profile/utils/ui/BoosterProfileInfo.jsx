@@ -10,7 +10,7 @@ import {
     setUsername
 } from "src/store/slice/authSlice.js";
 import {changeDescriptionProfile, changeNickname} from "src/services/userApi.js";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
 import UsernameEditor from "src/layouts/utils/ui/UsernameEditor.jsx";
 import BoosterGameTags from "src/layouts/boosters/profile/utils/ui/BoosterGameTags.jsx";

@@ -9,7 +9,7 @@ import {
     setUsername
 } from "src/store/slice/authSlice.js";
 import {changeDescriptionProfile, changeNickname, getCustomerProfileData} from "src/services/userApi.js";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import UsernameEditor from "src/layouts/utils/ui/UsernameEditor.jsx";
 import ProfileInfoItem from "src/layouts/utils/ui/ProfileInfoItem.jsx";
 import theme from "src/theme/theme.jsx";

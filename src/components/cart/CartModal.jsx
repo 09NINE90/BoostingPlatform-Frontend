@@ -1,6 +1,6 @@
 import CartItems from "src/components/cart/CartItems.jsx";
 import CartPayment from "src/components/cart/CartPayment.jsx";
-import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import EmptyResponse from "src/components/EmptyResponse.jsx";
 import React from "react";
 
 const CartModal = ({cartItems}) => {

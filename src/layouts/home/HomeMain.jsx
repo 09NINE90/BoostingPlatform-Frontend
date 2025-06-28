@@ -5,7 +5,7 @@ import {useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.js";
 import Carousel from "./utils/ui/Carousel.jsx";
 import {getCarouselItemsApi} from "src/services/offerApi.js";
-import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
 
 const HomeMain = () => {

@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {Box} from '@mui/material';
 import BoosterProfileInfo from "src/layouts/boosters/profile/utils/ui/BoosterProfileInfo.jsx";
 import {getBoosterProfileData} from "src/services/userApi.js";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
 import {ClipLoader} from "react-spinners";
 import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";

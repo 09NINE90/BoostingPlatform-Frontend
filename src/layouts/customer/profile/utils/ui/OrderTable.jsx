@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {getOrdersByCreator} from "src/services/orderApi.js";
-import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderStatusesFilter from "src/layouts/customer/profile/utils/ui/OrderStatusesFilter.jsx";
 import {statuses} from "src/layouts/customer/profile/utils/data/StatusesData.json.js";
 import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";

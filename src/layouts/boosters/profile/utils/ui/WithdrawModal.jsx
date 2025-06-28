@@ -5,7 +5,7 @@ import theme from "src/theme/theme.jsx";
 import AmountTextField from "src/layouts/boosters/profile/utils/ui/AmountTextField.jsx";
 import AlertMessage from "src/layouts/utils/ui/AlertMessage.jsx";
 import ProcessingInfo from "src/layouts/boosters/profile/utils/ui/ProcessingInfo.jsx";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {postHandleWithdrawal} from "src/services/financeApi.js";
 import {ClipLoader} from "react-spinners";
 import {toast} from "react-toastify";
