@@ -30,24 +30,22 @@ const ProfileMain = () => {
     };
 
     const fetchBoosterProfile = useCallback(async () => {
-        if (boosterLevel === null) {
-            try {
-                setLoading(true);
-                const profile = await getBoosterProfileData()
-                setBoosterLevel(profile.level);
-                setBalance(profile.balance);
-                setPercentageOfOrder(profile.percentageOfOrder);
-                setTotalIncome(profile.totalIncome);
-                setTotalTips(profile.totalTips);
-                setProgressAccountStatus(profile.progressAccountStatus);
-                setBoosterNextLevel(profile.nextLevel);
-                setGameTags(profile.gameTags);
-                setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
-            } catch (err) {
-                console.log(handleApiError(err));
-            } finally {
-                setLoading(false);
-            }
+        try {
+            setLoading(true);
+            const profile = await getBoosterProfileData()
+            setBoosterLevel(profile.level);
+            setBalance(profile.balance);
+            setPercentageOfOrder(profile.percentageOfOrder);
+            setTotalIncome(profile.totalIncome);
+            setTotalTips(profile.totalTips);
+            setProgressAccountStatus(profile.progressAccountStatus);
+            setBoosterNextLevel(profile.nextLevel);
+            setGameTags(profile.gameTags);
+            setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
+        } catch (err) {
+            console.log(handleApiError(err));
+        } finally {
+            setLoading(false);
         }
     }, [getBoosterProfileData, setBoosterLevel, setBalance, setPercentageOfOrder, setTotalIncome, setTotalTips]);
 
@@ -101,7 +99,8 @@ const ProfileMain = () => {
                 />
             </Box>
             {modalWithdrawIsOpen && (
-                <WithdrawModal isOpen={modalWithdrawIsOpen} onClose={closeWithdrawModal} balance={balance}/>
+                <WithdrawModal isOpen={modalWithdrawIsOpen} onClose={closeWithdrawModal}
+                               balance={balance} updateProfile={fetchBoosterProfile}/>
             )}
         </Box>
     );

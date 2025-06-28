@@ -3,6 +3,30 @@ import theme from "src/theme/theme.jsx";
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
 
 const OrderInfoCell = ({orderByRow}) => {
+
+    const OrderTime = ({text, time}) => {
+        return (
+            <Typography variant="body2"
+                        sx={{
+                            mt: 2,
+                            fontSize: 14,
+                            display: 'flex',
+                            color: theme.palette.text.secondary,
+                            fontWeight: theme.typography.fontWeightLight,
+                        }}>
+                <Typography sx={{
+                    mr: 2,
+                    fontSize: 14,
+                    color: theme.palette.text.primary,
+                    fontWeight: theme.typography.fontWeightLight,
+                }}>
+                    {text}:
+                </Typography>
+                {time}
+            </Typography>
+        )
+    }
+
     return (
         <Box sx={{display: 'flex', flexDirection: 'column'}}>
             <Typography variant="body2"
@@ -22,37 +46,13 @@ const OrderInfoCell = ({orderByRow}) => {
             </Typography>
             <OrderOptions order={orderByRow}/>
             {orderByRow.startTimeExecution && (
-                <Typography variant="body2"
-                            sx={{
-                                mt: 2,
-                                color: theme.palette.text.secondary,
-                                fontWeight: theme.typography.fontWeightLight,
-                                fontSize: 14
-                            }}>
-                    Start time execution (UTC): {orderByRow.startTimeExecution}
-                </Typography>
+                <OrderTime text='Start time execution (UTC)' time={orderByRow.startTimeExecution}/>
             )}
             {orderByRow.endTimeExecution && (
-                <Typography variant="body2"
-                            sx={{
-                                mt: 2,
-                                color: theme.palette.text.secondary,
-                                fontWeight: theme.typography.fontWeightLight,
-                                fontSize: 14
-                            }}>
-                    End time execution (UTC): {orderByRow.endTimeExecution}
-                </Typography>
+                <OrderTime text='End time execution (UTC)' time={orderByRow.endTimeExecution}/>
             )}
             {orderByRow.completedAt && (
-                <Typography variant="body2"
-                            sx={{
-                                mt: 2,
-                                color: theme.palette.text.secondary,
-                                fontWeight: theme.typography.fontWeightLight,
-                                fontSize: 14
-                            }}>
-                    Order status changed to completed (UTC): {orderByRow.completedAt}
-                </Typography>
+                <OrderTime text='Order status changed to completed (UTC)' time={orderByRow.completedAt}/>
             )}
         </Box>
     )

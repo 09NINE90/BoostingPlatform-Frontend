@@ -39,7 +39,7 @@ const ProcessingInfo = ({minAmount}) => {
             </Typography>
             <Item text='PayPal: instant transfer (3,5% fee)'/>
             <Item text='Cryptocurrency: 1-2 hours (1% fee)'/>
-            <Item text={`Minimum withdrawal: ${minAmount}%`}/>
+            <Item text={`Minimum withdrawal: ${minAmount}$`}/>
         </Box>
     )
 }
