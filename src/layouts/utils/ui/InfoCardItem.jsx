@@ -5,13 +5,14 @@ const InfoCardItem = ({label, value}) => {
 
     return (
         <Box sx={{
+            mr: 5,
             mt: 2,
+            gap: 5,
+            flex: 1,
             padding: 4,
+            minHeight: '120px',
             paddingInline: 5,
             display: 'flex',
-            flex: 1,
-            gap: 5,
-            mr: 5,
             flexDirection: 'column',
             backgroundColor: theme.palette.background.default,
         }}>

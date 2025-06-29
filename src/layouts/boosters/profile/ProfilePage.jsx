@@ -55,11 +55,13 @@ const ProfileMain = () => {
 
     if (loading) {
         return (
-            <div className="fixed inset-0 flex items-center justify-center">
-                <ClipLoader
-                    color="#FD980B"
-                    size={100}
-                />
+            <div className="min-h-[100vh]">
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <ClipLoader
+                        color="#FD980B"
+                        size={100}
+                    />
+                </div>
             </div>
         )
     }

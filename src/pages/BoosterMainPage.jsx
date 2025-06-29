@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../layouts/common/header/Header.jsx"
-import { Outlet } from "react-router";
+import {Outlet} from "react-router";
 
 
 const BoosterMainPage = () => {

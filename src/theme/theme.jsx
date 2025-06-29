@@ -6,6 +6,7 @@ const customColors = {
     third: '#00A0FF',
     thirdHover: '#0178bc',
     completed: '#CBF45A',
+    customRed: '#e64949',
     background: '#110134',
     backgroundPaper: '#19054D',
     textPrimary: '#FFFFFF',
@@ -21,7 +22,8 @@ const theme = createTheme({
             contrastText: '#FFFFFF',
         },
         statuses: {
-            completed: customColors.completed
+            completed: customColors.completed,
+            red: customColors.customRed
         },
         secondary: {
             main: customColors.secondary,

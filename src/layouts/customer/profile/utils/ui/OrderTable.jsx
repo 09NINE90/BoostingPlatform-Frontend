@@ -48,9 +48,14 @@ const OrderTable = () => {
             {orders && (
                 <>
                     {orders.map((order) => (
-                        <div key={order.orderId}
-                             className="relative bg-[#110134] p-4 mb-4   hover:shadow-lg transition-all hover:scale-[1.01]">
-
+                        <Box
+                            key={order.orderId}
+                            sx={{
+                                p: 4,
+                                mb: 4,
+                                position: "relative",
+                                backgroundColor: theme.palette.background.default,
+                            }}>
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-lg kanit-regular text-text-primary">
                                     <span className="text-third">OFFER</span> {order.offerName}
@@ -67,6 +72,7 @@ const OrderTable = () => {
                                             order.orderStatus === 'ON_PENDING' ? 'bg-[#0A0022] text-third border border-third' :
                                                 'bg-[#0A0022] text-completed border border-completed'
                                 }`}>{order.orderStatus.replace('_', ' ')}</span>
+
                             </div>
 
                             <div className="mb-4">
@@ -77,7 +83,7 @@ const OrderTable = () => {
                             <div className="flex justify-between items-center pt-2 border-t border-background-paper">
                                 <span className="text-xl font-bold text-third">$ {order.totalPrice}</span>
                             </div>
-                        </div>
+                        </Box>
                     ))}
                 </>
             )}

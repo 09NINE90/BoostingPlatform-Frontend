@@ -1,9 +1,11 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Button, Typography} from "@mui/material";
 import HistoryIcon from '@mui/icons-material/History';
+import { Link } from 'react-router-dom';
 import React from "react";
 
 const BoosterBalanceInfo = ({balance, openModal}) => {
+
     return (
         <Box sx={{
             minWidth: '25%',
@@ -60,18 +62,22 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                         }}>
                         Withdraw
                     </Button>
-                    <Button sx={{
-                        padding: 3,
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.background.default,
-                        fontWeight: theme.typography.fontWeightLight,
-                        border: 1,
-                        borderColor: theme.palette.text.primary,
-                        '&:hover': {
-                            backgroundColor: theme.palette.background.paper,
-                            borderColor: theme.palette.third.main,
-                        }
-                    }}>
+                    <Button
+                        to={'/booster/balanceHistory'}
+                        component={Link}
+                        sx={{
+                            padding: 3,
+                            color: theme.palette.text.primary,
+                            backgroundColor: theme.palette.background.default,
+                            fontWeight: theme.typography.fontWeightLight,
+                            border: 1,
+                            borderColor: theme.palette.text.primary,
+                            textDecoration: 'none',
+                            '&:hover': {
+                                backgroundColor: theme.palette.background.paper,
+                                borderColor: theme.palette.third.main,
+                            }
+                        }}>
                         <HistoryIcon fontSize="small" sx={{mr: 2}}/>
                         Balance history
                     </Button>
