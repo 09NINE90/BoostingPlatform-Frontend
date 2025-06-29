@@ -11,10 +11,15 @@ const AccountProgressbar = ({progress}) => {
                 sx={{
                     height: 10,
                     borderRadius: 5,
-                    backgroundColor: theme.palette.secondary,
+                    transition: 'transform 0.4s linear',
                     '& .MuiLinearProgress-bar': {
-                        backgroundColor: theme.palette.primary
-                    }
+                        backgroundColor: theme.palette.third.main,
+                        borderRadius: 5
+                    },
+                    '& .MuiLinearProgress-bar2Buffer': {
+                        backgroundColor: theme.palette.third.hover
+                    },
+
                 }}
             />
         </Tooltip>

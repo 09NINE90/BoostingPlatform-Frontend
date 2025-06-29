@@ -27,6 +27,8 @@ import '@fontsource/kanit/500.css';
 import '@fontsource/kanit/700.css';
 import {ToastContainer} from "react-toastify";
 import EmailConfirmationPage from "src/pages/EmailConfirmationPage.jsx";
+import BalanceHistory from "src/layouts/boosters/balance/BalanceHistory.jsx";
+import BalanceHistoryPage from "src/pages/BalanceHistoryPage.jsx";
 
 const root = document.getElementById('root');
 
@@ -48,13 +50,14 @@ export const App = () => {
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>
-                    <Route exact path="/profile" element={<ProfilePage/>}></Route>
+                    <Route path="/profile" element={<ProfilePage/>}></Route>
                 </Route>
                 <Route element={<ProtectedRoute allowedRoles={BOOSTER_ROLE}/>}>
-                    <Route exact path="/booster" element={<BoosterMainPage/>}>
+                    <Route path="/booster" element={<BoosterMainPage/>}>
                         <Route index path="dashboard" element={<Dashboard/>}/>
-                        <Route exact path="orders" element={<Orders/>}></Route>
-                        <Route exact path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
+                        <Route path="orders" element={<Orders/>}></Route>
+                        <Route path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
+                        <Route path="balanceHistory" element={<BalanceHistoryPage/>}></Route>
                         <Route path="profile" element={<ProfileBoosterPage/>}></Route>
                     </Route>
                 </Route>

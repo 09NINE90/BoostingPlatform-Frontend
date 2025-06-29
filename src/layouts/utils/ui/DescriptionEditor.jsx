@@ -2,7 +2,7 @@ import {useState} from "react";
 import {Box, Button, TextareaAutosize} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 
-const DescriptionEditor = ({ initialDescription, onSave, onCancel }) => {
+const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
     const [tempDescription, setTempDescription] = useState(initialDescription);
 
     return (
@@ -17,27 +17,59 @@ const DescriptionEditor = ({ initialDescription, onSave, onCancel }) => {
                 onChange={(e) => setTempDescription(e.target.value)}
                 style={{
                     width: '100%',
-                    minHeight: '100px',
+                    height: '80px',
+                    minHeight: '80px',
                     padding: '8px',
-                    backgroundColor: 'transparent',
-                    border: theme.palette.primary.main,
-                    borderRadius: '4px',
+                    border: '1px solid',
+                    borderColor: theme.palette.third.hover,
                     color: theme.palette.text.primary,
                     fontWeight: theme.typography.fontWeightLight,
-                    fontSize: 16,
-                    resize: 'vertical'
+                    fontSize: 14,
+                    resize: 'vertical',
+                    outline: 'none',
+                    transition: 'border-color 0.2s ease',
+
+                    '&:focus': {
+                        borderColor: theme.palette.third.main,
+                    },
                 }}
             />
             <Box sx={{
+                mt: 1,
+                gap: 2,
                 display: 'flex',
-                gap: 1,
                 justifyContent: 'flex-end',
-                mt: 1
             }}>
-                <Button variant="outlined" size="small" onClick={onCancel}>
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={onCancel}
+                    sx={{
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.background.default,
+                        fontWeight: theme.typography.fontWeightLight,
+                        border: 1,
+                        borderColor: theme.palette.text.primary,
+                        textDecoration: 'none',
+                        '&:hover': {
+                            backgroundColor: theme.palette.background.paper,
+                            borderColor: theme.palette.third.main,
+                        }
+                    }}>
                     Cancel
                 </Button>
-                <Button variant="contained" size="small" onClick={() => onSave(tempDescription)}>
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => onSave(tempDescription)}
+                    sx={{
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightLight,
+                        '&:hover': {
+                            backgroundColor: theme.palette.third.hover,
+                        }
+                    }}>
                     Save
                 </Button>
             </Box>

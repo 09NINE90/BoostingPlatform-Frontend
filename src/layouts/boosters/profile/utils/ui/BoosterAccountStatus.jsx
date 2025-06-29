@@ -11,7 +11,6 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
             flex: 1,
             padding: 10,
             mt: 3,
-            mb: 3,
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{

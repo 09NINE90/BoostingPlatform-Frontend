@@ -2,11 +2,14 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {Box} from '@mui/material';
 import BoosterProfileInfo from "src/layouts/boosters/profile/utils/ui/BoosterProfileInfo.jsx";
 import {getBoosterProfileData} from "src/services/userApi.js";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
 import {ClipLoader} from "react-spinners";
+import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";
+import WithdrawModal from "src/layouts/boosters/profile/utils/ui/WithdrawModal.jsx";
 
 const ProfileMain = () => {
+    const [modalWithdrawIsOpen, setModalWithdrawIsOpen] = useState(false);
     const [boosterLevel, setBoosterLevel] = useState(null);
     const [boosterNextLevel, setBoosterNextLevel] = useState(null);
     const [percentageOfOrder, setPercentageOfOrder] = useState(null);
@@ -18,25 +21,31 @@ const ProfileMain = () => {
     const [gameTags, setGameTags] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const openWithdrawModal = () => {
+        setModalWithdrawIsOpen(true);
+    };
+
+    const closeWithdrawModal = () => {
+        setModalWithdrawIsOpen(false);
+    };
+
     const fetchBoosterProfile = useCallback(async () => {
-        if (boosterLevel === null) {
-            try {
-                setLoading(true);
-                const profile = await getBoosterProfileData()
-                setBoosterLevel(profile.level);
-                setBalance(profile.balance);
-                setPercentageOfOrder(profile.percentageOfOrder);
-                setTotalIncome(profile.totalIncome);
-                setTotalTips(profile.totalTips);
-                setProgressAccountStatus(profile.progressAccountStatus);
-                setBoosterNextLevel(profile.nextLevel);
-                setGameTags(profile.gameTags);
-                setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
-            } catch (err) {
-                console.log(handleApiError(err));
-            } finally {
-                setLoading(false);
-            }
+        try {
+            setLoading(true);
+            const profile = await getBoosterProfileData()
+            setBoosterLevel(profile.level);
+            setBalance(profile.balance);
+            setPercentageOfOrder(profile.percentageOfOrder);
+            setTotalIncome(profile.totalIncome);
+            setTotalTips(profile.totalTips);
+            setProgressAccountStatus(profile.progressAccountStatus);
+            setBoosterNextLevel(profile.nextLevel);
+            setGameTags(profile.gameTags);
+            setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
+        } catch (err) {
+            console.log(handleApiError(err));
+        } finally {
+            setLoading(false);
         }
     }, [getBoosterProfileData, setBoosterLevel, setBalance, setPercentageOfOrder, setTotalIncome, setTotalTips]);
 
@@ -46,11 +55,13 @@ const ProfileMain = () => {
 
     if (loading) {
         return (
-            <div className="fixed inset-0 flex items-center justify-center">
-                <ClipLoader
-                    color="#FD980B"
-                    size={100}
-                />
+            <div className="min-h-[100vh]">
+                <div className="fixed inset-0 flex items-center justify-center">
+                    <ClipLoader
+                        color="#FD980B"
+                        size={100}
+                    />
+                </div>
             </div>
         )
     }
@@ -70,6 +81,29 @@ const ProfileMain = () => {
                 percentageOfOrder={percentageOfOrder}
                 progressAccountStatus={progressAccountStatus}
             />
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                gap: 3
+            }}>
+                <Box sx={
+                    {
+                        display: 'flex',
+                        minWidth: '70%',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}>
+                    ТУТ БУДЕТ ИСТОРИЯ ЗАКАЗОВ
+                </Box>
+                <BoosterBalanceInfo
+                    balance={balance}
+                    openModal={openWithdrawModal}
+                />
+            </Box>
+            {modalWithdrawIsOpen && (
+                <WithdrawModal isOpen={modalWithdrawIsOpen} onClose={closeWithdrawModal}
+                               balance={balance} updateProfile={fetchBoosterProfile}/>
+            )}
         </Box>
     );
 }

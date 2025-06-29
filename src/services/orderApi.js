@@ -29,3 +29,8 @@ export const acceptOrder = async (orderId) => {
     const response = await api.post(`/order/accept/${orderId}`);
     return response.data;
 }
+
+export const completeExecutionOrder = async (orderId) => {
+    const response = await api.post(`/order/complete/${orderId}`);
+    return response.data;
+}

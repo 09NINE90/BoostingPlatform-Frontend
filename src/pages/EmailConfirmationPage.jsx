@@ -14,7 +14,7 @@ import {
     setUsername
 } from "src/store/slice/authSlice.js";
 import {useDispatch} from "react-redux";
-import {handleApiError} from "src/layouts/error/ErrorPage.jsx";
+import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
 import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
 import {getCountCartItemsApi} from "src/services/offerApi.js";

@@ -1,15 +1,18 @@
 import React, {useCallback, useEffect, useState} from 'react'
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
-import {getOrdersByBooster} from "src/services/orderApi.js";
+import {acceptOrder, completeExecutionOrder, getOrdersByBooster} from "src/services/orderApi.js";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
-import ErrorPage, {handleApiError} from "src/layouts/error/ErrorPage.jsx";
-import EmptyResponse from "src/layouts/EmptyResponse.jsx";
+import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
+import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrdersTableBody from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableBody.jsx";
 import OrdersTableHead from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableHead.jsx";
 import OrdersLoader from "src/layouts/boosters/utils/ui/OrdersLoader.jsx";
+import {toast} from "react-toastify";
+import OrderInfoModal from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoModal.jsx";
 
 const Orders = () => {
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [allOrders, setAllOrders] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -27,6 +30,27 @@ const Orders = () => {
             asc: false
         }
     });
+
+    const openModal = (order) => {
+        setSelectedOrder(order);
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+        setSelectedOrder(null);
+    };
+
+    const handleCompleteExecution = async () => {
+        try {
+            await completeExecutionOrder(selectedOrder.orderId);
+            toast.success('The order has been successfully submitted for verification')
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+        await fetchAllOrders()
+        closeModal();
+    }
 
     const fetchAllOrders = useCallback(async () => {
         try {
@@ -58,7 +82,7 @@ const Orders = () => {
                 <Table sx={{minWidth: 650}} aria-label="simple table">
                     <OrdersTableHead setSelectedFilters={setSelectedFilters} selectedFilters={selectedFilters}/>
                     {!loading && (
-                        <OrdersTableBody allOrders={allOrders}/>
+                        <OrdersTableBody allOrders={allOrders} openModal={openModal}/>
                     )}
                 </Table>
                 {loading && (
@@ -68,6 +92,11 @@ const Orders = () => {
                     <EmptyResponse text={'no orders by filter'}/>
                 )}
             </TableContainer>
+            {modalIsOpen && (
+                <OrderInfoModal isOpen={modalIsOpen} onClose={closeModal}
+                                onComplete={handleCompleteExecution} selectedOrder={selectedOrder}
+                />
+            )}
         </div>
     );
 
