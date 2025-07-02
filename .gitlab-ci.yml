@@ -60,7 +60,7 @@ deploy-develop:
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 5173:3000 $DOCKER_IMAGE"
+    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 3000:3000 --env-file /root/env/front.env $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: on_success
