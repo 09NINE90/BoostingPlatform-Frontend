@@ -27,7 +27,6 @@ import '@fontsource/kanit/500.css';
 import '@fontsource/kanit/700.css';
 import {ToastContainer} from "react-toastify";
 import EmailConfirmationPage from "src/pages/EmailConfirmationPage.jsx";
-import BalanceHistory from "src/layouts/boosters/balance/BalanceHistory.jsx";
 import BalanceHistoryPage from "src/pages/BalanceHistoryPage.jsx";
 
 const root = document.getElementById('root');
@@ -35,7 +34,7 @@ const root = document.getElementById('root');
 export const App = () => {
     return (
         <BrowserRouter>
-            <ToastContainer position="top-right" autoClose={2000}
+            <ToastContainer position="top-right" autoClose={1000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"
                             className="mt-20 mr-4"/>
