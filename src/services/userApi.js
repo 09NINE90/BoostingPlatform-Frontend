@@ -10,6 +10,11 @@ export const getBoosterProfileData = async () => {
     return response.data;
 }
 
+export const getMiniBoosterProfileData = async (boosterId) => {
+    const response = await api.get(`/user/getBoosterMiniProfile/${boosterId}`);
+    return response.data;
+}
+
 export const changeNickname = async (nickname) => {
     const response = await api.post(`/user/changeNickname`, null, {params: {nickname: nickname}});
     return response.data;

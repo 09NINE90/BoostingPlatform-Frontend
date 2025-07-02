@@ -11,7 +11,7 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
     };
 
     return (
-        <Box sx={{position: 'relative', display: 'inline-block', mt: 6, ml: 6}}>
+        <Box sx={{position: 'relative', display: 'inline-block'}}>
             <Box
                 component="img"
                 src={src}

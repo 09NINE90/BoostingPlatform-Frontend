@@ -5,8 +5,6 @@ import {handleApiError} from 'src/components/error/ErrorPage.jsx';
 import {getBoosterOrdersHistory} from 'src/services/orderApi.js';
 import theme from 'src/theme/theme.jsx';
 import OrderHistoryCard from 'src/layouts/boosters/profile/utils/ui/OrderHistoryCard.jsx';
-import {UTC_TIME} from "src/utils/constants/TooltipsTexts.js";
-import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
 
 const BoosterOrderHistory = () => {
 
