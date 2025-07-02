@@ -107,12 +107,15 @@ const CustomerProfileInfo = () => {
             backgroundColor: theme.palette.background.paper,
         }}>
             <Box sx={{display: 'flex', alignItems: 'start', mb: 3}}>
-                <UserAvatar
-                    src={userAvatar}
-                    size={200}
-                    onAvatarClick={() => console.log('Avatar clicked')}
-                    onFileChange={handleAvatarChange}
-                />
+                <Box mt={6} ml={6}>
+                    <UserAvatar
+                        src={userAvatar}
+                        size={200}
+                        onAvatarClick={() => console.log('Avatar clicked')}
+                        onFileChange={handleAvatarChange}
+                    />
+                </Box>
+
                 <Box sx={{paddingInline: 10, display: 'flex', flex: 1, flexDirection: 'column', gap: 1}}>
 
                     <Box sx={{mt: 2, gap: 1}}>

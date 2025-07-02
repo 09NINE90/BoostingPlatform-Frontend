@@ -74,6 +74,7 @@ const ModalTemplate = ({
                            content,
                            actions,
                            onClose,
+                           viewCloseIcon = true,
                            modalClassName,
                            modalContentClassName,
                            additionalStyles,
@@ -107,9 +108,12 @@ const ModalTemplate = ({
                 className={modalClassName}
             >
                 <StyledModalContent className={modalContentClassName}>
-                    <StyledCloseButton onClick={onClose}>
-                        <CloseIcon/>
-                    </StyledCloseButton>
+                    {viewCloseIcon && (
+                        <StyledCloseButton onClick={onClose}>
+                            <CloseIcon/>
+                        </StyledCloseButton>
+                    )}
+
 
                     {title && (
                         <Typography variant="h4" sx={{
@@ -157,6 +161,7 @@ ModalTemplate.propTypes = {
     minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     backgroundColor: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    viewCloseIcon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default ModalTemplate;
