@@ -7,7 +7,6 @@ import AlertMessage from "src/layouts/utils/ui/AlertMessage.jsx";
 import ProcessingInfo from "src/layouts/boosters/profile/utils/ui/ProcessingInfo.jsx";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {postHandleWithdrawal} from "src/services/financeApi.js";
-import {ClipLoader} from "react-spinners";
 import {toast} from "react-toastify";
 
 const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
@@ -67,59 +66,53 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
             onClose={onClose}
             title='Withdrawal of funds'
             backgroundColor={theme.palette.background.paper}
-            content={isLoading ? (
-                    <div className="flex justify-center items-center mt-[15vh]">
-                        <ClipLoader color="#FD980B" size={50}
-                                    cssOverride={{display: "block", margin: "auto auto"}}/>
-                    </div>
-                )
-                : (
-                    <Box
+            content={
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "start",
+                        flexDirection: "column"
+                    }}>
+                    <AlertMessage
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
+                    />
+                    <LabelText text='Available for balance'/>
+                    <Typography
                         sx={{
-                            m: 3,
-                            display: "flex",
-                            alignItems: "start",
-                            flexDirection: "column"
+                            fontSize: 22,
+                            marginBottom: 2,
+                            color: theme.palette.statuses.completed,
+                            fontWeight: theme.typography.fontWeightMedium,
                         }}>
-                        <AlertMessage
-                            errorMessage={errorMessage}
-                            setErrorMessage={setErrorMessage}
-                        />
-                        <LabelText text='Available for balance'/>
-                        <Typography
-                            sx={{
-                                fontSize: 22,
-                                marginBottom: 2,
-                                color: theme.palette.statuses.completed,
-                                fontWeight: theme.typography.fontWeightMedium,
-                            }}>
-                            $ {balance}
-                        </Typography>
-                        <LabelText text='Amount'/>
-                        <AmountTextField
-                            inputValue={inputValue}
-                            onChange={handleMaxInputChange}
-                            placeholder={minAmount}
-                        />
-                        <ProcessingInfo minAmount={minAmount}/>
-
-                        <Button
-                            fullWidth
-                            onClick={handleWithdrawal}
-                            sx={{
-                                mt: 5,
-                                padding: 3,
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.third.hover,
-                                }
-                            }}>
-                            send a withdrawal request
-                        </Button>
-                    </Box>
-                )
+                        $ {balance}
+                    </Typography>
+                    <LabelText text='Amount'/>
+                    <AmountTextField
+                        inputValue={inputValue}
+                        onChange={handleMaxInputChange}
+                        placeholder={minAmount}
+                    />
+                    <ProcessingInfo minAmount={minAmount}/>
+                </Box>
+            }
+            actions={
+                <Button
+                    loading={isLoading}
+                    fullWidth
+                    onClick={handleWithdrawal}
+                    sx={{
+                        mt: 5,
+                        padding: 3,
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightLight,
+                        '&:hover': {
+                            backgroundColor: theme.palette.third.hover,
+                        }
+                    }}>
+                    send a withdrawal request
+                </Button>
             }
         />
     )

@@ -46,7 +46,20 @@ const DashboardTableBody = ({allOrders, openModal}) => {
                         <div className='text-text-primary kanit-light'>${order.totalPrice}</div>
                     </TableCell>
                     <TableCell align="center" sx={{width: '20%'}}>
-                        <Button onClick={() => openModal(order)}>
+                        <Button
+                            onClick={() => openModal(order)}
+                            sx={{
+                                color: theme.palette.text.primary,
+                                backgroundColor: theme.palette.background.default,
+                                fontWeight: theme.typography.fontWeightLight,
+                                border: 1,
+                                borderColor: theme.palette.text.primary,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.background.paper,
+                                    borderColor: theme.palette.primary.main,
+                                }
+                            }}
+                        >
                             Accept
                         </Button>
                     </TableCell>

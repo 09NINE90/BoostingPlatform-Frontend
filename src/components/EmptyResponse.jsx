@@ -1,22 +1,36 @@
 import {FaBoxOpen} from 'react-icons/fa';
+import {Box, Typography} from "@mui/material";
+import theme from "src/theme/theme.jsx";
 
 const EmptyResponse = ({text}) => {
     return (
-        <div className="relative w-full flex flex-col justify-center items-center min-h-[50vh] overflow-hidden">
-            <div className="relative z-10 flex flex-col items-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary mb-6 text-center">
-                    {text.toUpperCase()}
-                </h2>
+        <Box
+            sx={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                overflow: 'hidden',
+                alignItems: 'center',
+                flexDirection: 'column',
+                justifyContent: 'center',
+            }}>
+            <Typography variant="body2"
+                        fontSize={30}
+                        color={theme.palette.third.main}
+                        fontWeight={theme.typography.fontWeightMedium}
+            >
+                {text.toUpperCase()}
+            </Typography>
+            <FaBoxOpen className="text-8xl text-gray-400 opacity-90 w-100"/>
+            <Typography variant="body2"
+                        fontSize={16}
+                        color={theme.palette.text.secondary}
+                        fontWeight={theme.typography.fontWeightLight}
+            >
+                Nothing was found for your search.
+            </Typography>
+        </Box>
 
-                <div className="relative">
-                    <FaBoxOpen className="text-8xl text-gray-400 opacity-90 w-100"/>
-                </div>
-
-                <p className="mt-6 text-gray-400 text-center max-w-md px-4">
-                    <p> Nothing was found for your search.</p>
-                </p>
-            </div>
-        </div>
     );
 };
 

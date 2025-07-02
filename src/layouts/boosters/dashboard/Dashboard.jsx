@@ -21,6 +21,7 @@ const Dashboard = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [employeesPerPage, setEmployeesPerPage] = useState(500);
     const [recordTotal, setRecordTotal] = useState(0);
+    const [acceptLoading, setAcceptLoading] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
@@ -65,14 +66,17 @@ const Dashboard = () => {
     };
 
     const handleAccept = async () => {
+        setAcceptLoading(true);
         try {
             await acceptOrder(selectedOrder.orderId);
+            await fetchAllOrders()
             toast.success('The order has been successfully completed')
+            closeModal();
         } catch (error) {
             toast.error(error.response.data.message);
+        } finally {
+            setAcceptLoading(false);
         }
-        await fetchAllOrders()
-        closeModal();
     }
 
     const handlePageChange = (event, newPage) => {
@@ -138,7 +142,7 @@ const Dashboard = () => {
             />
             {modalIsOpen && (
                 <AcceptModal isOpen={modalIsOpen} onClose={closeModal} onAccept={handleAccept}
-                             selectedOrder={selectedOrder}/>
+                             selectedOrder={selectedOrder} isLoading={acceptLoading}/>
             )}
         </div>
     );

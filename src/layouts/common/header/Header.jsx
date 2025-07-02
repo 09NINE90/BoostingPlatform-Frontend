@@ -118,10 +118,22 @@ const Header = ({forBoosterPage}) => {
                     {!forBoosterPage && (
                         <Cart cartCount={cartCount}/>
                     )}
-                    <div className="flex justify-center hover:scale-103">
-                        <IconButton onClick={handleProfileClick}>
+                    <div className="flex justify-center hover:scale-101">
+                        <IconButton onClick={handleProfileClick}
+                                    sx={{
+                                        transition: 'box-shadow 0.3s ease',
+                                        borderRadius: 0,
+                                        '&:hover': {
+                                            backgroundColor: 'transparent',
+                                            boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
+                                        }
+                                    }}>
                             <ProfileIcon className="w-[50px]"/>
-
+                            {username && (
+                                <div className="kanit-light text-xl ml-6">
+                                    {username}
+                                </div>
+                            )}
                         </IconButton>
 
                         <DropMenu anchorEl={anchorEl}
@@ -130,13 +142,7 @@ const Header = ({forBoosterPage}) => {
                                   handleOpenProfile={handleOpenProfile}
                                   handleLogout={handleLogout}
                                   onOpen={toggleModal}/>
-
                     </div>
-                    {username && (
-                        <div className="kanit-light py-5 text-xl ml-2">
-                            {username}
-                        </div>
-                    )}
                 </nav>
             </div>
             {renderModal}

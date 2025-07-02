@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {getBalanceHistory} from "src/services/financeApi.js";
-import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {ClipLoader} from "react-spinners";
 import Table from "@mui/material/Table";
 import BalanceHistoryTableHead from "src/layouts/boosters/balance/utils/ui/BalanceHistoryTableHead.jsx";
@@ -20,7 +20,7 @@ const BalanceHistory = () => {
             const balanceHistoryApi = await getBalanceHistory();
             setBalanceHistoryList(balanceHistoryApi);
         } catch (err) {
-            setError(handleApiError(error));
+            setError(handleApiError(err));
         } finally {
             setIsLoading(false);
         }
@@ -39,6 +39,14 @@ const BalanceHistory = () => {
                         size={100}
                     />
                 </div>
+            </div>
+        )
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-[100vh]">
+                <ErrorPage error={error}/>
             </div>
         )
     }

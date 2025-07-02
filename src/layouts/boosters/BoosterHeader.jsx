@@ -22,6 +22,7 @@ const BoosterHeader = () => {
         <div className="flex items-center justify-between">
             {navButton("/booster/dashboard", "Dashboard")}
             {navButton("/booster/orders", "My Orders")}
+            {navButton("/booster/balanceHistory", "Balance history")}
         </div>
     );
 }

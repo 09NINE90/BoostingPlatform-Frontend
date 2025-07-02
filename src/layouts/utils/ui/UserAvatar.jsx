@@ -18,8 +18,6 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
                 sx={{
                     width: size,
                     height: size,
-                    border: '1px solid rgba(0, 255, 255, 0.3)',
-                    boxShadow: '0 0 10px #0ff, 0 0 20px rgba(0, 255, 255, 0.5)',
                     cursor: 'pointer',
                     objectFit: 'cover',
                     borderRadius: 0,

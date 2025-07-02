@@ -18,11 +18,11 @@ const StyledModalOverlay = styled(Box)(({theme}) => ({
 }));
 
 const StyledModal = styled(Box)(({theme}) => ({
-    backgroundColor: '#110134',
+    backgroundColor: theme.palette.background.default,
     width: 400,
     minWidth: 400,
     maxWidth: '85vw',
-    minHeight: '50%',
+    height: 'auto',
     maxHeight: '80vh',
     boxShadow: '0 10px 30px rgba(0, 0, 0, 0.5)',
     display: 'flex',
@@ -35,6 +35,7 @@ const StyledModal = styled(Box)(({theme}) => ({
 const StyledModalContent = styled(Box)({
     padding: '20px',
     display: 'flex',
+    flex: 1,
     flexDirection: 'column',
     width: '100%',
     height: '100%',
@@ -121,15 +122,17 @@ const ModalTemplate = ({
                         </Typography>
                     )}
 
-                    <Box sx={{display: 'flex', flexDirection: 'column', gap: '15px'}}>
+                    <Box sx={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}>
                         {content}
                     </Box>
 
                     <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        gap: '10px',
-                        mt: 2
+                        mt: 'auto',
+                        pt: 2,
                     }}>
                         {actions}
                     </Box>

@@ -233,12 +233,12 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     }, [optionsBlocks, selectedOptions, renderOption]);
 
     return (
-        <div className="m-2 mt-7 min-w-[300px] max-w-[400px] rounded-xl bg-surface">
+        <div className="m-2 mt-7 min-w-[300px] max-w-[400px] bg-surface">
             <div className="relative z-0">
                 <img
                     src={offerData.imageUrl}
                     alt="background"
-                    className="w-full h-full object-cover opacity-100 rounded-xl"
+                    className="w-full h-full object-cover opacity-100"
                 />
                 <div className="absolute inset-0 h-[calc(100%)] bg-gradient-to-t from-surface to-transparent z-10 pointer-events-none" />
             </div>
