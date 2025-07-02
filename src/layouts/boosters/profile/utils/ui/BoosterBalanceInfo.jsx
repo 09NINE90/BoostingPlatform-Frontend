@@ -8,9 +8,10 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
 
     return (
         <Box sx={{
-            minWidth: '25%',
-            padding: 5,
             mt: 3,
+            padding: 5,
+            maxWidth: '25%',
+            minWidth: '25%',
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{

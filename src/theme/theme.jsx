@@ -2,9 +2,9 @@ import {createTheme} from "@mui/material";
 
 const customColors = {
     primary: '#FD980B',
-    secondary: '#E28607',
+    secondary: '#ca7807',
     third: '#00A0FF',
-    thirdHover: '#0178bc',
+    thirdHover: '#006095',
     completed: '#CBF45A',
     customRed: '#e64949',
     background: '#110134',
@@ -91,6 +91,16 @@ const theme = createTheme({
                 enterDelay: 500,
                 leaveDelay: 200,
             },
+        },
+        MuiButtonBase: {
+            defaultProps: {
+                disableRipple: true,
+            }
+        },
+        MuiIconButton:{
+            defaultProps: {
+                disableRipple: true,
+            }
         }
     },
     spacing: 4,

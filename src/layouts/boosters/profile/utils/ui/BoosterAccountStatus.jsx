@@ -14,8 +14,8 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{
-                color: '#fff',
-                marginBottom: 2,
+                mb: 2,
+                color: theme.palette.text.primary,
                 fontWeight: theme.typography.fontWeightMedium,
             }}>
                 Account Status

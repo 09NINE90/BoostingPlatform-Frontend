@@ -7,6 +7,7 @@ import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterA
 import {ClipLoader} from "react-spinners";
 import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";
 import WithdrawModal from "src/layouts/boosters/profile/utils/ui/WithdrawModal.jsx";
+import BoosterOrderHistory from "src/layouts/boosters/profile/utils/ui/BoosterOrderHistory.jsx";
 
 const ProfileMain = () => {
     const [modalWithdrawIsOpen, setModalWithdrawIsOpen] = useState(false);
@@ -30,8 +31,8 @@ const ProfileMain = () => {
     };
 
     const fetchBoosterProfile = useCallback(async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const profile = await getBoosterProfileData()
             setBoosterLevel(profile.level);
             setBalance(profile.balance);
@@ -82,19 +83,11 @@ const ProfileMain = () => {
                 progressAccountStatus={progressAccountStatus}
             />
             <Box sx={{
+                gap: 3,
                 display: 'flex',
                 justifyContent: 'space-between',
-                gap: 3
             }}>
-                <Box sx={
-                    {
-                        display: 'flex',
-                        minWidth: '70%',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}>
-                    ТУТ БУДЕТ ИСТОРИЯ ЗАКАЗОВ
-                </Box>
+                <BoosterOrderHistory/>
                 <BoosterBalanceInfo
                     balance={balance}
                     openModal={openWithdrawModal}

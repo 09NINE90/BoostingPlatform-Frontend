@@ -1,29 +1,40 @@
 import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
+import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
+import React from "react";
+import {UTC_TIME} from "src/utils/constants/TooltipsTexts.js";
 
 const OrderInfoCell = ({orderByRow}) => {
 
     const OrderTime = ({text, time}) => {
         return (
-            <Typography variant="body2"
-                        sx={{
-                            mt: 2,
-                            fontSize: 14,
-                            display: 'flex',
-                            color: theme.palette.text.secondary,
-                            fontWeight: theme.typography.fontWeightLight,
-                        }}>
-                <Typography sx={{
-                    mr: 2,
-                    fontSize: 14,
-                    color: theme.palette.text.primary,
-                    fontWeight: theme.typography.fontWeightLight,
+            <Box
+                sx={{
+                    mt: 2,
+                    display: "flex",
+                    alignItems: "center",
                 }}>
-                    {text}:
+                <HelpIconWithTooltip tooltipTitle={UTC_TIME}/>
+                <Typography variant="body2"
+                            sx={{
+                                fontSize: 14,
+                                display: 'flex',
+                                color: theme.palette.text.secondary,
+                                fontWeight: theme.typography.fontWeightLight,
+                            }}>
+                    <Typography sx={{
+                        mr: 2,
+                        fontSize: 14,
+                        color: theme.palette.text.primary,
+                        fontWeight: theme.typography.fontWeightLight,
+                    }}>
+                        {text}:
+                    </Typography>
+                    {time}
                 </Typography>
-                {time}
-            </Typography>
+            </Box>
+
         )
     }
 
@@ -46,13 +57,13 @@ const OrderInfoCell = ({orderByRow}) => {
             </Typography>
             <OrderOptions order={orderByRow}/>
             {orderByRow.startTimeExecution && (
-                <OrderTime text='Start time execution (UTC)' time={orderByRow.startTimeExecution}/>
+                <OrderTime text='Start time execution' time={orderByRow.startTimeExecution}/>
             )}
             {orderByRow.endTimeExecution && (
-                <OrderTime text='End time execution (UTC)' time={orderByRow.endTimeExecution}/>
+                <OrderTime text='End time execution' time={orderByRow.endTimeExecution}/>
             )}
             {orderByRow.completedAt && (
-                <OrderTime text='Order status changed to completed (UTC)' time={orderByRow.completedAt}/>
+                <OrderTime text='Order status changed to completed' time={orderByRow.completedAt}/>
             )}
         </Box>
     )

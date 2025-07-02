@@ -25,6 +25,11 @@ export const getOrdersByBooster = async (request) => {
     return response.data;
 }
 
+export const getBoosterOrdersHistory = async () => {
+    const response = await api.get(`/order/boosterOrdersHistory`);
+    return response.data;
+}
+
 export const acceptOrder = async (orderId) => {
     const response = await api.post(`/order/accept/${orderId}`);
     return response.data;

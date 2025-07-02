@@ -51,6 +51,8 @@ const SignUp = ({closeModal, signInRedirect}) => {
             } catch (error) {
                 const serverError = error.response?.data?.message
                 setErrorMessage(serverError || "An error occurred, please contact the administrator!");
+            } finally {
+                setIsLoading(false);
             }
         } else {
             setRequredFieldEmpty(true);
@@ -84,116 +86,116 @@ const SignUp = ({closeModal, signInRedirect}) => {
     }
 
     return (
-        <>
-            {!isLoading && (
-                <div className="flex flex-col justify-between">
-                    <div className="h-full p-2 kanit-light">
-                        By continuing, you agree to our&nbsp;
-                        <NavLink
-                            className={"text-sky-400 hover:text-sky-700"}
-                            to="/"
-                        >
-                            User Agreement
-                        </NavLink>
-                        &nbsp;and acknowledge that you understand the&nbsp;
-                        <NavLink
-                            className={"text-sky-400 hover:text-sky-700"}
-                            to="/"
-                        >
-                            Privacy Policy
-                        </NavLink>.
+        <div className="flex flex-col justify-between">
+            <div className="h-full p-2 kanit-light">
+                By continuing, you agree to our&nbsp;
+                <NavLink
+                    className={"text-sky-400 hover:text-sky-700"}
+                    to="/"
+                >
+                    User Agreement
+                </NavLink>
+                &nbsp;and acknowledge that you understand the&nbsp;
+                <NavLink
+                    className={"text-sky-400 hover:text-sky-700"}
+                    to="/"
+                >
+                    Privacy Policy
+                </NavLink>.
+            </div>
+            {
+                errorMessage &&
+                <Alert
+                    onClick={() => setErrorMessage(null)}
+                    className="my-4"
+                    severity="error"
+                    variant="filled"
+                >
+                    {errorMessage}
+                </Alert>
+            }
+            <div className="mb-2 flex flex-col gap-2">
+                <TextField
+                    error={requredFieldEmpty}
+                    required
+                    sx={{my: 1}}
+                    type="text"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    label="Nickname"
+                />
+                <TextField
+                    error={!emailFieldIsValid || requredFieldEmpty}
+                    required
+                    sx={{my: 1}}
+                    type="email"
+                    value={email}
+                    onChange={(e) => onChangeEmail(e.target.value)}
+                    label="Email"
+                />
+                <TextField
+                    error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requredFieldEmpty}
+                    required
+                    sx={{my: 1}}
+                    type="password"
+                    value={password}
+                    onChange={(e) => onChangePassword(e.target.value)}
+                    label="Password"
+                />
+                {!passwordFieldIsValid ?
+                    <div className="text-[#f44336] text-sm kanit-light">
+                        The minimum password length is 6. Must contain the
+                        letters digits and at least one special character.
                     </div>
-                    {
-                        errorMessage &&
-                        <Alert
-                            onClick={() => setErrorMessage(null)}
-                            className="my-4"
-                            severity="error"
-                            variant="filled"
-                        >
-                            {errorMessage}
-                        </Alert>
-                    }
-                    <div className="mb-2 flex flex-col gap-2">
-                        <TextField
-                            error={requredFieldEmpty}
-                            required
-                            sx={{my: 1}}
-                            type="text"
-                            value={nickname}
-                            onChange={(e) => setNickname(e.target.value)}
-                            label="Nickname"
-                        />
-                        <TextField
-                            error={!emailFieldIsValid || requredFieldEmpty}
-                            required
-                            sx={{my: 1}}
-                            type="email"
-                            value={email}
-                            onChange={(e) => onChangeEmail(e.target.value)}
-                            label="Email"
-                        />
-                        <TextField
-                            error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requredFieldEmpty}
-                            required
-                            sx={{my: 1}}
-                            type="password"
-                            value={password}
-                            onChange={(e) => onChangePassword(e.target.value)}
-                            label="Password"
-                        />
-                        {!passwordFieldIsValid ?
-                            <div className="text-[#f44336] text-sm kanit-light">
-                                The minimum password length is 6. Must contain the
-                                letters digits and at least one special character.
-                            </div>
-                            : null
+                    : null
+                }
+                <TextField
+                    error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
+                    required
+                    sx={{mt: 1}}
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    label="Confirm Password"
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter')
+                            signUp();
+                    }}
+                />
+            </div>
+            <div className="flex flex-col items-start my-5 gap-2 kanit-light">
+                <div>
+                    Already have account?
+                    <NavLink
+                        className={"text-sky-400 hover:text-sky-700"}
+                        onClick={signInRedirect}
+                    >
+                        &nbsp;Sign In
+                    </NavLink>
+                </div>
+            </div>
+            <div>
+                <Button
+                    loading={isLoading}
+                    className="w-2/3"
+                    variant="contained"
+                    color="primary"
+                    onClick={signUp}
+                    sx={{
+                        py: 2,
+                        width: '100%',
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightLight,
+                        '&:hover': {
+                            backgroundColor: theme.palette.third.hover,
                         }
-                        <TextField
-                            error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
-                            required
-                            sx={{mt: 1}}
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            label="Confirm Password"
-                            onKeyDown={(event) => {
-                                if (event.key === 'Enter')
-                                    signUp();
-                            }}
-                        />
-                    </div>
-                    <div className="flex flex-col items-start my-5 gap-2 kanit-light">
-                        <div>
-                            Already have account?
-                            <NavLink
-                                className={"text-sky-400 hover:text-sky-700"}
-                                onClick={signInRedirect}
-                            >
-                                &nbsp;Sign In
-                            </NavLink>
-                        </div>
-                    </div>
-                    <div>
-                        <Button
-                            className="w-2/3"
-                                variant="contained"
-                                color="primary"
-                                onClick={signUp}
-                                loading={status === "loading"}
-                                sx={{fontWeight: theme.typography.fontWeightLight}}
-                        >
-                            Sign Up
-                        </Button>
-                    </div>
-                </div>
-            )}
-            {isLoading && (
-                <div className="flex justify-center items-center mt-[15vh]">
-                    <ClipLoader color="#FD980B" size={50} cssOverride={{display: "block", margin: "auto auto"}}/>
-                </div>
-            )}
-        </>
+                    }}
+                >
+                    Sign Up
+                </Button>
+            </div>
+        </div>
     );
 };
 

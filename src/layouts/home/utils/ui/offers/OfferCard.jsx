@@ -23,7 +23,7 @@ const OfferCard = ({offer}) => {
                     <div className="flex justify-between items-end">
                         <span className="text-text-primary kanit-light text-lg">$ {offer.price}</span>
                         <button
-                            className="bg-primary hover:bg-secondary text-text-primary font-medium px-4 py-2 rounded">
+                            className="bg-primary hover:bg-secondary text-text-primary kanit-regular px-4 py-2">
                             Buy Now
                         </button>
                     </div>
