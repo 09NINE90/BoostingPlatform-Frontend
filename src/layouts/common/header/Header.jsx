@@ -15,16 +15,18 @@ import {toast} from "react-toastify";
 import {SIGN_IN_STATE, SIGN_IN_TEXT, SIGN_UP_STATE, SIGN_UP_TEXT} from "src/utils/constants/authForm.js";
 import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
 import {postLogout} from "src/services/authApi.js";
+import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 
-const Header = ({forBoosterPage}) => {
+const Header = () => {
+    const role = useSelector(selectRole);
+    const userAvatar = useSelector(selectAvatar);
+    const forBoosterPage = role === BOOSTER_ROLE;
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [cartCount, setCartCount] = useState(0);
     const profileRef = useRef(null);
     const [modelType, setModalType] = useState(SIGN_IN_STATE);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-
-    const role = useSelector(selectRole);
-    const userAvatar = useSelector(selectAvatar);
 
     const username = useSelector(selectUsername);
     const isAuthenticated = useSelector(selectAuth);
@@ -40,7 +42,7 @@ const Header = ({forBoosterPage}) => {
     }, [setAnchorEl]);
 
     const handleOpenProfile = useCallback(() => {
-        if (!forBoosterPage) navigate("/profile");
+        if (role === CUSTOMER_ROLE) navigate("/profile");
         else navigate("/booster/profile");
         handleProfileMenuClose();
     }, [navigate, handleProfileMenuClose])
