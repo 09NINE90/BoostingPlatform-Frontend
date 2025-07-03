@@ -24,8 +24,6 @@ install:
 build:
   stage: build
   script:
-    - echo "VITE_SECRET_KEY=$VITE_SECRET_KEY" > .env.production
-    - cat .env.production
     - npm run build
   artifacts:
     paths:
@@ -45,6 +43,7 @@ docker-build-develop:
     - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD http://$CI_REGISTRY
   script:
+    - echo "VITE_SECRET_KEY=$VITE_SECRET_KEY" > .env.production
     - docker build -t $DOCKER_IMAGE .
     - docker push $DOCKER_IMAGE
   rules:
@@ -77,6 +76,7 @@ docker-build-main:
   variables:
     DOCKER_TLS_CERTDIR: ""
   before_script:
+    - echo "VITE_SECRET_KEY=$VITE_SECRET_KEY" > .env.production
     - docker info
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD http://$CI_REGISTRY
   script:
