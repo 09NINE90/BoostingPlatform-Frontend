@@ -25,6 +25,7 @@ build:
   stage: build
   script:
     - echo "VITE_SECRET_KEY=$VITE_SECRET_KEY" > .env.production
+    - cat .env.production
     - npm run build
   artifacts:
     paths:
