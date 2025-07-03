@@ -9,10 +9,10 @@ const ProtectedRoute = ({allowedRoles, isAuthCheck}) => {
     const role = useSelector(selectRole);
 
     if (isAuthCheck && !isAuthenticated) {
-        return <Navigate to="/"/>;
+        return <Navigate to='/'/>;
     }
     if (!isAuthCheck && role !== allowedRoles) {
-        return <Navigate to="/" replace/>;
+        return <Navigate to='/' replace/>;
     }
 
     return <Outlet/>;

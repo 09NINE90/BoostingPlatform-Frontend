@@ -6,7 +6,7 @@ import {Outlet} from "react-router";
 const BoosterMainPage = () => {
     return (
         <div className="flex flex-col h-full">
-            <Header forBoosterPage={true}/>
+            <Header/>
             <Outlet />
         </div>
     );
