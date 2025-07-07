@@ -5,8 +5,10 @@ import {Button} from "@mui/material";
 import OrderInfoCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoCell.jsx";
 import OrderStatusCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderStatusCell.jsx";
 import theme from "src/theme/theme.jsx";
+import {Link} from "react-router-dom";
 
-const OrdersTableBody = ({allOrders, openModal}) => {
+const OrdersTableBody = ({allOrders}) => {
+
     return (
         <TableBody>
             {allOrders.map((order) => (
@@ -30,22 +32,27 @@ const OrdersTableBody = ({allOrders, openModal}) => {
                         <OrderStatusCell orderStatus={order.orderStatus}/>
                     </TableCell>
                     <TableCell align="center" sx={{width: '10%'}}>
-                        <Button
-                            onClick={() => openModal(order)}
-                            sx={{
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.background.default,
-                                fontWeight: theme.typography.fontWeightLight,
-                                border: 1,
-                                borderColor: theme.palette.text.primary,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.background.paper,
-                                    borderColor: theme.palette.primary.main,
-                                }
-                            }}
-                        >
-                            GET INFO
-                        </Button>
+                        {order.chatId && (
+                            <Button
+                                to={`/booster/chat/${order.chatId}/${order.orderId}`}
+                                component={Link}
+                                sx={{
+                                    mt: 2,
+                                    color: theme.palette.text.primary,
+                                    backgroundColor: theme.palette.background.default,
+                                    fontWeight: theme.typography.fontWeightLight,
+                                    border: 1,
+                                    borderColor: theme.palette.text.primary,
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.background.paper,
+                                        borderColor: theme.palette.primary.main,
+                                    }
+                                }}
+                            >
+                                GET INFO
+                            </Button>
+                        )}
+
                     </TableCell>
                 </TableRow>
             ))}

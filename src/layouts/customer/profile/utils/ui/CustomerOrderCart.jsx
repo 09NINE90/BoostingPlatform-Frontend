@@ -3,6 +3,7 @@ import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatfor
 import {Box, Button, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import {useIsTextOverflowed} from "src/layouts/utils/data/functions.js";
+import {Link} from "react-router-dom";
 
 const CustomerOrderCart = ({order, onOpen}) => {
 
@@ -80,6 +81,27 @@ const CustomerOrderCart = ({order, onOpen}) => {
                                 }
                             }}>
                             View booster
+                        </Button>
+                    )}
+                    {order.chatId && (
+                        <Button
+                            to={`/chat/${order.chatId}/${order.orderId}`}
+                            component={Link}
+                            sx={{
+                                mt: 2,
+                                width: '100%',
+                                color: theme.palette.text.primary,
+                                backgroundColor: theme.palette.background.default,
+                                fontWeight: theme.typography.fontWeightLight,
+                                border: 1,
+                                borderColor: theme.palette.text.primary,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.background.paper,
+                                    borderColor: theme.palette.primary.main,
+                                }
+                            }}
+                        >
+                            GET CHAT
                         </Button>
                     )}
 

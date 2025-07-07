@@ -39,3 +39,13 @@ export const completeExecutionOrder = async (orderId) => {
     const response = await api.post(`/order/complete/${orderId}`);
     return response.data;
 }
+
+export const getBoosterOrderById = async (orderId) => {
+    const response = await api.get(`/order/booster/${orderId}`);
+    return response.data;
+}
+
+export const getCustomerOrderById = async (orderId) => {
+    const response = await api.get(`/order/${orderId}`);
+    return response.data;
+}
