@@ -1,33 +1,112 @@
-const CartPayment = ({cartItems}) => {
+import {
+    Box,
+    Typography,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    Button,
+    Divider
+} from '@mui/material';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import theme from 'src/theme/theme.jsx';
+
+const CartPayment = ({ cartItems, onProceed  }) => {
+    const totalPrice = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
+    const totalTime = cartItems.reduce((sum, item) => sum + item.totalTime, 0);
+
     return (
-        <div className="border-l border-gray-700 pl-3 min-w-[15vw]">
-            <h3 className="kanit-medium text-xl">
-                Total: {cartItems.length}
-            </h3>
-            <ul className="space-y-2 overflow-y-auto max-h-[30vh] mt-4]">
-                {cartItems.map((item, idx) => (
-                    <li key={idx} className="flex items-start">
-                        <span className="inline-block w-2 h-2 mt-2 mr-2 bg-third rounded-full"></span>
-                        <div className="flex">
-                            <div className="text-text-primary kanit-light">{item.offerName}:</div>
-                            <div className="text-gray-300 ml-2 kanit-light">$ {item.totalPrice}</div>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-            <div className="flex justify-between text-xl kanit-light mb-4 mt-4">
-                <span>Total price:</span>
-                <span>$ {cartItems.reduce((sum, item) => sum + item.totalPrice, 0)}</span>
-            </div>
-            <div className="flex justify-between text-sm text-gray-400 mb-4">
-                <span>Total time:</span>
-                <span>{cartItems.reduce((sum, item) => sum + item.totalTime, 0)} hours</span>
-            </div>
-            <button className="w-full bg-[#004772] hover:bg-third text-text-primary py-3 kanit-light transition-colors p-2">
+        <Box
+            sx={{
+                borderLeft: '1px solid ' + theme.palette.divider,
+                pl: 2,
+                minWidth: '15vw',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+            }}
+        >
+            <Box>
+                <Typography variant="h6" sx={{ mb: 2 }}>
+                    Total: {cartItems.length}
+                </Typography>
+
+                <List
+                    dense
+                    sx={{
+                        maxHeight: '30vh',
+                        overflowY: 'auto',
+                        pr: 1,
+                        mb: 2,
+                    }}
+                >
+                    {cartItems.map((item, idx) => (
+                        <ListItem key={idx} disableGutters sx={{ alignItems: 'center', py: 0.5 }}>
+                            <ListItemIcon sx={{ minWidth: 20, mt: 0.5 }}>
+                                <FiberManualRecordIcon
+                                    sx={{ fontSize: 10, color: theme.palette.third.main }}
+                                />
+                            </ListItemIcon>
+                            <ListItemText
+                                primary={
+                                    <Box display="flex" gap={1}>
+                                        <Typography
+                                            sx={{ color: theme.palette.text.primary, fontSize: 14 }}
+                                        >
+                                            {item.offerName}:
+                                        </Typography>
+                                        <Typography
+                                            sx={{ color: theme.palette.text.secondary, fontSize: 14 }}
+                                        >
+                                            ${item.totalPrice}
+                                        </Typography>
+                                    </Box>
+                                }
+                            />
+                        </ListItem>
+                    ))}
+                </List>
+
+                <Divider sx={{ mb: 2 }} />
+
+                <Box display="flex" justifyContent="space-between" sx={{ mb: 1 }}>
+                    <Typography variant="h6">
+                        Total price:
+                    </Typography>
+                    <Typography variant="h6">
+                        ${totalPrice}
+                    </Typography>
+                </Box>
+
+                <Box display="flex" justifyContent="space-between" sx={{ mb: 3 }}>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, }}>
+                        Total time:
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, }}>
+                        {totalTime} hours
+                    </Typography>
+                </Box>
+            </Box>
+
+            <Button
+                onClick={onProceed}
+                fullWidth
+                sx={{
+                    py: 1.5,
+                    borderRadius: 0,
+                    backgroundColor: theme.palette.third.main,
+                    color: theme.palette.text.primary,
+                    fontWeight: theme.typography.fontWeightLight,
+                    '&:hover': {
+                        backgroundColor: theme.palette.third.hover,
+                    },
+                }}
+            >
                 Proceed to payment
-            </button>
-        </div>
-    )
-}
+            </Button>
+        </Box>
+    );
+};
 
 export default CartPayment;
