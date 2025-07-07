@@ -7,6 +7,11 @@ export const getOffersByGameId = async (gameId) => {
     }
 }
 
+export const deleteCartItem = async (itemId) => {
+    const response = await api.post(`/offer/deleteCartItem/${itemId}`);
+    return response.data;
+}
+
 export const getOffersByRequest = async (request) => {
     const response = await api.post(`/offer/public/getOffersByRequest`, request);
     return response.data;

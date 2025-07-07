@@ -37,7 +37,7 @@ const ChatMessages = ({ messages, username }) => {
                                 {msg.sender}
                             </Typography>
                         )}
-                        <Typography variant="body2">{msg.text}</Typography>
+                        <Typography variant="body2" sx={{whiteSpace: 'pre-line'}}>{msg.text}</Typography>
                         <Typography
                             variant="caption"
                             sx={{ display: "block", mt: 1, textAlign: "right", opacity: 0.7 }}
@@ -47,6 +47,7 @@ const ChatMessages = ({ messages, username }) => {
                                 minute: "2-digit",
                             })}
                         </Typography>
+
                     </Box>
                 );
             })}

@@ -1,4 +1,4 @@
-import {Box, Button, TextField} from "@mui/material";
+import {Box, Button, TextField, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React from "react";
 
@@ -8,14 +8,18 @@ const ChatInput = ({inputMessage, setInputMessage, handleSendMessage, isConnecte
             <Box sx={{display: "flex", gap: 2, alignItems: "center"}}>
                 <TextField
                     fullWidth
+                    multiline
                     variant="outlined"
                     size="small"
                     value={inputMessage}
                     onChange={(e) => setInputMessage(e.target.value)}
                     placeholder="Type your message..."
-                    onKeyDown={(e) =>
-                        e.key === "Enter" && handleSendMessage()
-                    }
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            handleSendMessage();
+                        }
+                    }}
                     sx={{
                         '& .MuiOutlinedInput-root': {
                             '& fieldset': {
@@ -45,6 +49,13 @@ const ChatInput = ({inputMessage, setInputMessage, handleSendMessage, isConnecte
                     Send
                 </Button>
             </Box>
+            <Typography
+                variant="caption"
+                color="text.secondary"
+                sx={{ mt: 1, ml: 0.5 }}
+            >
+                Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> to add a new line
+            </Typography>
         </Box>
     )
 }

@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {Box, Button, TextField} from "@mui/material";
+import theme from "src/theme/theme.jsx";
 
 const UsernameEditor = ({initialName, onSave, onCancel}) => {
     const [tempName, setTempName] = useState(initialName);
@@ -14,6 +15,17 @@ const UsernameEditor = ({initialName, onSave, onCancel}) => {
                 onChange={(e) => setTempName(e.target.value)}
                 className="bg-transparent text-text-primary border border-gray-600 rounded"
                 sx={{
+                    '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                            borderColor: theme.palette.divider,
+                        },
+                        '&:hover fieldset': {
+                            borderColor: theme.palette.third.main,
+                        },
+                        '&.Mui-focused fieldset': {
+                            borderColor: theme.palette.third.main,
+                        },
+                    },
                     '& .MuiInputBase-root': {
                         height: 40,
                         width: '260px',
@@ -27,10 +39,40 @@ const UsernameEditor = ({initialName, onSave, onCancel}) => {
                 }}
             />
             <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
-                <Button variant="contained" size="small" onClick={() => onSave(tempName)}>
+                <Button
+                    variant="contained"
+                    size="small"
+                    onClick={() => onSave(tempName)}
+                    sx={{
+                        p: 2,
+                        width: "100%",
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightLight,
+                        '&:hover': {
+                            backgroundColor: theme.palette.third.hover,
+                        }
+                    }}>
                     Save
                 </Button>
-                <Button variant="outlined" size="small" onClick={onCancel}>
+                <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={onCancel}
+                    sx={{
+                        p: 2,
+                        width: "100%",
+                        color: theme.palette.text.primary,
+                        backgroundColor: theme.palette.background.default,
+                        fontWeight: theme.typography.fontWeightLight,
+                        border: 1,
+                        borderColor: theme.palette.text.primary,
+                        textDecoration: 'none',
+                        '&:hover': {
+                            backgroundColor: theme.palette.background.paper,
+                            borderColor: theme.palette.third.main,
+                        }
+                    }}>
                     Cancel
                 </Button>
             </Box>

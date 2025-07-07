@@ -19,7 +19,7 @@ import DescriptionEditor from "src/layouts/utils/ui/DescriptionEditor.jsx";
 import ProfileDescriptionItem from "src/layouts/utils/ui/ProfileDescriptionItem.jsx";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
 
-const CustomerProfileInfo = () => {
+const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatus, totalOrders}) => {
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
@@ -30,10 +30,6 @@ const CustomerProfileInfo = () => {
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
     const [descriptionProfile, setDescriptionProfile] = useState(descriptionProfileFromStore);
-    const [discountPercentage, setDiscountPercentage] = useState(null);
-    const [cashbackBalance, setCashbackBalance] = useState(null);
-    const [customerStatus, setCustomerStatus] = useState(null);
-    const [totalOrders, setTotalOrders] = useState(null);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -80,25 +76,6 @@ const CustomerProfileInfo = () => {
             reader.readAsDataURL(file);
         }
     };
-
-    const fetchCustomerProfile = useCallback(async () => {
-        if (discountPercentage === null) {
-            try {
-                const profile = await getCustomerProfileData()
-                setTotalOrders(profile.totalOrders);
-                setCustomerStatus(profile.status);
-                setCashbackBalance(profile.cashbackBalance);
-                setDiscountPercentage(profile.discountPercentage)
-            } catch (err) {
-                console.log(handleApiError(err));
-            }
-        }
-    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
-
-
-    useEffect(() => {
-        fetchCustomerProfile();
-    }, [fetchCustomerProfile]);
 
     return (
         <Box sx={{

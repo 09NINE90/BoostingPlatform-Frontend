@@ -1,5 +1,10 @@
 import api from "src/services/api.js";
 
+export const postCreateOrders = async (request) => {
+    const response = await api.post(`/order/create`, request);
+    return response.data;
+}
+
 export const getFiltersDashboard = async () => {
     const response = await api.get(`/order/getFiltersDashboard`);
     return response.data;

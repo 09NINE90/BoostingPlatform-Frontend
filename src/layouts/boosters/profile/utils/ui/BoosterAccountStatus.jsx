@@ -2,7 +2,7 @@ import {Box, Chip, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React from "react";
 import BoosterLevelsDescription from "src/layouts/boosters/profile/utils/ui/BoosterLevelsDescription.jsx";
-import AccountProgressbar from "src/layouts/boosters/profile/utils/ui/AccountProgressbar.jsx";
+import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
 import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
 
 const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder, progressAccountStatus}) => {
