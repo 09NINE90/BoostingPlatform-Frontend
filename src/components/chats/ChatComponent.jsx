@@ -8,7 +8,6 @@ import theme from "src/theme/theme.jsx";
 import ChatMessages from "src/components/chats/utils/ChatMessages.jsx";
 import ChatInput from "src/components/chats/utils/ChatInput.jsx";
 
-
 const ChatComponent = ({chatId}) => {
 
     const messagesEndRef = useRef(null);
@@ -25,8 +24,6 @@ const ChatComponent = ({chatId}) => {
         {
             onConnect: () => {
                 console.log('Chat connected!');
-                // Сохрани subscription куда-нибудь, чтобы можно было отписаться потом
-                // Например, в реф:
                 subscriptionRef.current = subscribe(`/topic/chat/${chatId}`, (message) => {
                     try {
                         const newMessage = JSON.parse(message.body);

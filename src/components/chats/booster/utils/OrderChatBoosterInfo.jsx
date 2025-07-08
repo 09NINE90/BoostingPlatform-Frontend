@@ -4,8 +4,11 @@ import React from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
+import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
+import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
+import {UTC_ALL_TIME} from "src/utils/constants/TooltipsTexts.js";
 
-const OrderChatBoosterInfo = ({order, openModal}) => {
+const OrderChatBoosterInfo = ({order, openModal, tipOrderHistory}) => {
     if (order) {
         return (
             <Box
@@ -27,6 +30,7 @@ const OrderChatBoosterInfo = ({order, openModal}) => {
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
                         Order information
+                        <HelpIconWithTooltip tooltipTitle={UTC_ALL_TIME} marginLeft={2} sizeIcon='medium'/>
                     </Typography>
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
@@ -35,6 +39,9 @@ const OrderChatBoosterInfo = ({order, openModal}) => {
                     <CustomTextItem text='Start order at' item={order.startTimeExecution}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    {tipOrderHistory && (
+                        <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
+                    )}
                 </Box>
                 {order.orderStatus === IN_PROGRESS && (
                     <Box>

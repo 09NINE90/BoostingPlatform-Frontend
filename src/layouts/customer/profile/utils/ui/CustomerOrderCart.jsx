@@ -68,7 +68,7 @@ const CustomerOrderCart = ({order, onOpen}) => {
                                         order.orderStatus === 'ON_PENDING' ? 'bg-[#0A0022] text-third border border-third' :
                                             'bg-[#0A0022] text-completed border border-completed'
                             }`}
-                            style={{width: '100%', display: 'block'}} // важно
+                            style={{width: '100%', display: 'block'}}
                         >
                             {order.orderStatus.replace('_', ' ')}
                         </span>

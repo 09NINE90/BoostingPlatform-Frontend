@@ -7,6 +7,7 @@ import {completeExecutionOrder, getBoosterOrderById} from "src/services/orderApi
 import {toast} from "react-toastify";
 import OrderFinishModal from "src/components/chats/booster/utils/OrderFinishModal.jsx";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import {getOrderTipHistory} from "src/services/financeApi.js";
 
 const BoosterChat = () => {
 
@@ -14,9 +15,19 @@ const BoosterChat = () => {
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [order, setOrder] = useState(null);
+    const [tipOrderHistory, setTipOrderHistory] = useState(null);
 
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
+
+    const fetchTipOrderHistory = useCallback(async () => {
+        try {
+            const tipOrderHistoryApi = await getOrderTipHistory(orderId);
+            setTipOrderHistory(tipOrderHistoryApi)
+        } catch (err) {
+            console.error(handleApiError(err))
+        }
+    }, [getOrderTipHistory, orderId])
 
     const fetchBoosterOrders = useCallback(async () => {
         try {
@@ -31,6 +42,10 @@ const BoosterChat = () => {
         window.scrollTo(0, 0);
         fetchBoosterOrders();
     }, [fetchBoosterOrders]);
+
+    useEffect(() => {
+        fetchTipOrderHistory()
+    }, [fetchTipOrderHistory])
 
     const handleCompleteExecution = async () => {
         try {
@@ -54,7 +69,7 @@ const BoosterChat = () => {
                 padding: 3,
                 paddingInline: 25,
             }}>
-            <OrderChatBoosterInfo order={order} openModal={openModal}/>
+            <OrderChatBoosterInfo order={order} openModal={openModal} tipOrderHistory={tipOrderHistory}/>
             <ChatComponent chatId={chatId}/>
             {modalIsOpen && (
                 <OrderFinishModal isOpen={modalIsOpen} onClose={closeModal}

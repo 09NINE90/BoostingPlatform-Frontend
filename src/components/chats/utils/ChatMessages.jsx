@@ -1,11 +1,16 @@
 import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
+import DOMPurify from 'dompurify';
 import React from "react";
+import {marked} from "marked";
 
 const ChatMessages = ({ messages, username }) => {
+
     return (
         <>
             {messages.map((msg) => {
+                const rawHtml = marked(msg.text);
+                const cleanHtml = DOMPurify.sanitize(rawHtml);
                 const isMine = msg.sender === username;
 
                 return (
@@ -13,8 +18,9 @@ const ChatMessages = ({ messages, username }) => {
                         key={msg.id}
                         sx={{
                             mb: 2,
-                            p: 2,
-                            maxWidth: "70%",
+                            p: 3,
+                            width: 'fit-content',
+                            maxWidth: "50%",
                             borderRadius: 2,
                             ml: isMine ? "auto" : 0,
                             mr: isMine ? 0 : "auto",
@@ -37,7 +43,9 @@ const ChatMessages = ({ messages, username }) => {
                                 {msg.sender}
                             </Typography>
                         )}
-                        <Typography variant="body2" sx={{whiteSpace: 'pre-line'}}>{msg.text}</Typography>
+                        <Typography variant="body2" sx={{whiteSpace: 'pre-line'}}>
+                            <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />
+                        </Typography>
                         <Typography
                             variant="caption"
                             sx={{ display: "block", mt: 1, textAlign: "right", opacity: 0.7 }}

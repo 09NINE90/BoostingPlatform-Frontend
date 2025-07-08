@@ -3,6 +3,7 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import theme from "src/theme/theme.jsx";
+import {Box, Typography} from "@mui/material";
 
 const BalanceHistoryTableBody = ({balanceHistoryList}) => {
 
@@ -22,24 +23,59 @@ const BalanceHistoryTableBody = ({balanceHistoryList}) => {
     const RecordTypeCell = ({type}) => {
         return (
             <TableCell align="center" sx={{width: '15%'}}>
-                <span className={`px-3 py-1 text-xs kanit-light ${
-                    type === 'TIP' ? 'bg-background-default text-primary border border-primary' :
-                        type === 'SALARY' ? 'bg-background-default text-third border border-third' :
-                            'bg-background-default text-custom-red border border-custom-red'
-                }`}>{type}</span>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <span
+                        className={`px-3 py-1 text-xs kanit-light ${
+                            type === 'TIP'
+                                ? 'bg-background-default text-primary border border-primary'
+                                : type === 'SALARY'
+                                    ? 'bg-background-default text-third border border-third'
+                                    : 'bg-background-default text-custom-red border border-custom-red'
+                        }`}
+                        style={{
+                            display: 'inline-block',
+                            textAlign: 'center',
+                            minWidth: '60%',
+                        }}
+                    >
+                      {type}
+                    </span>
+                </Box>
             </TableCell>
+
+
         )
     }
 
     const PaymentStatusCell = ({paymentStatus}) => {
         return (
             <TableCell align="center" sx={{width: '15%'}}>
-                <span className={`px-3 py-1 text-xs kanit-light ${
-                    paymentStatus === 'ON_PENDING'
-                        ? 'bg-background-default text-primary border border-primary'
-                        : 'bg-background-default text-completed border border-completed'}`}>
-                    {paymentStatus}
-                </span>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        width: '100%',
+                    }}
+                >
+                    <span className={`px-3 py-1 text-xs kanit-light ${
+                        paymentStatus === 'ON_PENDING'
+                            ? 'bg-background-default text-primary border border-primary'
+                            : 'bg-background-default text-completed border border-completed'}`}
+                          style={{
+                              display: 'inline-block',
+                              textAlign: 'center',
+                              minWidth: '60%',
+                          }}
+                    >
+                        {paymentStatus}
+                    </span>
+                </Box>
             </TableCell>
         )
     }

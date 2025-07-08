@@ -42,6 +42,7 @@ const Orders = () => {
     }, [getOrdersByBooster, setAllOrders, selectedFilters]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchAllOrders();
     }, [fetchAllOrders]);
 

@@ -54,7 +54,7 @@ const ChatInput = ({inputMessage, setInputMessage, handleSendMessage, isConnecte
                 color="text.secondary"
                 sx={{ mt: 1, ml: 0.5 }}
             >
-                Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> to add a new line
+                Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> to add a new line. The chat also supports markdown
             </Typography>
         </Box>
     )

@@ -8,8 +8,11 @@ import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import BoosterInfo from "src/components/chats/customer/utils/BoosterInfo.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
+import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
+import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
+import {UTC_ALL_TIME} from "src/utils/constants/TooltipsTexts.js";
 
-const OrderChatCustomerInfo = ({orderId}) => {
+const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
     const [order, setOrder] = useState(null);
     const [boosterId, setBoosterId] = useState(null);
@@ -23,7 +26,7 @@ const OrderChatCustomerInfo = ({orderId}) => {
         } catch (err) {
             console.error(handleApiError(err))
         }
-    }, [getBoosterOrderById, setOrder])
+    }, [getBoosterOrderById, orderId])
 
     const fetchBoosterInfo = useCallback(async () => {
         if (!boosterId) return;
@@ -64,6 +67,7 @@ const OrderChatCustomerInfo = ({orderId}) => {
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
                         Order information
+                        <HelpIconWithTooltip tooltipTitle={UTC_ALL_TIME} marginLeft={2} sizeIcon='medium'/>
                     </Typography>
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
@@ -77,6 +81,9 @@ const OrderChatCustomerInfo = ({orderId}) => {
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>
                     {boosterInfo && (
                         <BoosterInfo boosterInfo={boosterInfo}/>
+                    )}
+                    {tipOrderHistory && (
+                        <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
                     )}
                 </Box>
                 {order.orderStatus !== IN_PROGRESS && (

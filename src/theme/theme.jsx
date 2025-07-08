@@ -52,6 +52,33 @@ const theme = createTheme({
         fontWeightBold: 700,
     },
     components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                },
+                notchedOutline: {
+                    borderRadius: 0,
+                },
+            },
+        },
+        MuiSelect: {
+            styleOverrides: {
+                outlined: {
+                    borderRadius: 0,
+                },
+            },
+        },
+        MuiCheckbox: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0, // на всякий случай
+                },
+                icon: {
+                    borderRadius: 0,
+                },
+            },
+        },
         MuiTextField: {
             styleOverrides: {
                 root: {
