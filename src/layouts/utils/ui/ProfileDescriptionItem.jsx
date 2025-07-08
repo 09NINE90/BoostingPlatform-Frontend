@@ -18,13 +18,13 @@ const ProfileDescriptionItem = ({label, value, setIsEditingDescription}) => {
                 mt: 2,
                 position: 'relative'
             }}>
-                <Typography variant="body2"
-                            sx={{
-                                color: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                fontSize: 14,
-                                alignSelf: 'flex-start',
-                            }}>
+                <Typography
+                    variant="body2"
+                    sx={{
+                        color: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightLight,
+                        alignSelf: 'flex-start',
+                    }}>
                     {label}:
                 </Typography>
                 <Typography variant="body2"

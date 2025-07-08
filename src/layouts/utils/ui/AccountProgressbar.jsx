@@ -6,20 +6,17 @@ const AccountProgressbar = ({progress}) => {
     return (
         <Tooltip title={progress + '%'}>
             <LinearProgress
-                variant="buffer"
+                variant="determinate"
                 value={progress}
                 sx={{
                     height: 10,
                     borderRadius: 5,
                     transition: 'transform 0.4s linear',
+                    backgroundColor: theme.palette.third.hover,
                     '& .MuiLinearProgress-bar': {
                         backgroundColor: theme.palette.third.main,
                         borderRadius: 5
                     },
-                    '& .MuiLinearProgress-bar2Buffer': {
-                        backgroundColor: theme.palette.third.hover
-                    },
-
                 }}
             />
         </Tooltip>

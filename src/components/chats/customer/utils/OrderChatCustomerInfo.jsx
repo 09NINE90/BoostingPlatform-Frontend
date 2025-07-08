@@ -2,12 +2,12 @@ import {Box, Button, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React, {useCallback, useEffect, useState} from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
-import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import {getBoosterOrderById, getCustomerOrderById} from "src/services/orderApi.js";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import BoosterInfo from "src/components/chats/customer/utils/BoosterInfo.jsx";
+import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 
 const OrderChatCustomerInfo = ({orderId}) => {
 
@@ -50,6 +50,7 @@ const OrderChatCustomerInfo = ({orderId}) => {
                     display: 'flex',
                     padding: 5,
                     width: '29%',
+                    minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
@@ -59,7 +60,6 @@ const OrderChatCustomerInfo = ({orderId}) => {
                         variant="h4"
                         sx={{
                             mb: 3,
-                            fontSize: 26,
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
@@ -79,6 +79,26 @@ const OrderChatCustomerInfo = ({orderId}) => {
                         <BoosterInfo boosterInfo={boosterInfo}/>
                     )}
                 </Box>
+                {order.orderStatus !== IN_PROGRESS && (
+                    <Box>
+                        <Button
+                            onClick={() => openModal(order)}
+                            sx={{
+                                mt: 2,
+                                p: 2,
+                                width: "100%",
+                                color: theme.palette.text.primary,
+                                backgroundColor: theme.palette.third.main,
+                                fontWeight: theme.typography.fontWeightLight,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.third.hover,
+                                }
+                            }}
+                        >
+                            send tip
+                        </Button>
+                    </Box>
+                )}
             </Box>
         )
     }

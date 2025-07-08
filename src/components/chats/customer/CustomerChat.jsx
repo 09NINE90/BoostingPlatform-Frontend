@@ -2,11 +2,15 @@ import {useParams} from "react-router";
 import ChatComponent from "src/components/chats/ChatComponent.jsx";
 import {Box} from "@mui/material";
 import OrderChatCustomerInfo from "src/components/chats/customer/utils/OrderChatCustomerInfo.jsx";
+import React, {useLayoutEffect} from "react";
 
 const CustomerChat = () => {
 
-    const {chatId} = useParams();
-    const {orderId} = useParams();
+    const { chatId, orderId } = useParams();
+
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     return (
         <Box

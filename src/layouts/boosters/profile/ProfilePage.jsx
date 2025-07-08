@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {Box} from '@mui/material';
 import BoosterProfileInfo from "src/layouts/boosters/profile/utils/ui/BoosterProfileInfo.jsx";
 import {getBoosterProfileData} from "src/services/userApi.js";
-import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
 import {ClipLoader} from "react-spinners";
 import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";
@@ -21,6 +21,7 @@ const ProfileMain = () => {
     const [progressAccountStatus, setProgressAccountStatus] = useState(null);
     const [gameTags, setGameTags] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const openWithdrawModal = () => {
         setModalWithdrawIsOpen(true);
@@ -44,7 +45,7 @@ const ProfileMain = () => {
             setGameTags(profile.gameTags);
             setNumberOfCompletedOrders(profile.numberOfCompletedOrders);
         } catch (err) {
-            console.log(handleApiError(err));
+            setError(handleApiError(err));
         } finally {
             setLoading(false);
         }
@@ -53,6 +54,12 @@ const ProfileMain = () => {
     useEffect(() => {
         fetchBoosterProfile();
     }, [fetchBoosterProfile]);
+
+    if (error) {
+        return (
+            <ErrorPage error={error} />
+        )
+    }
 
     if (loading) {
         return (

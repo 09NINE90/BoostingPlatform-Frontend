@@ -16,19 +16,17 @@ const InfoCardItem = ({label, value}) => {
             flexDirection: 'column',
             backgroundColor: theme.palette.background.default,
         }}>
-            <Typography variant="body2"
+            <Typography variant="h6"
                         sx={{
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightMedium,
-                            fontSize: 20
                         }}>
                 {label}
             </Typography>
-            <Typography variant="body1"
+            <Typography variant="h5"
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
-                            fontSize: 26
                         }}>
                 {value}
             </Typography>

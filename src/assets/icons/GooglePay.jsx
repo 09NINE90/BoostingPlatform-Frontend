@@ -1,4 +1,4 @@
-const GogglePay = () => {
+const GooglePay = () => {
     return (
         <svg width="77" height="60" viewBox="0 0 77 60" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="77" height="60" rx="5" fill="#004772"/>
@@ -9,5 +9,5 @@ const GogglePay = () => {
     )
 }
 
-export default GogglePay;
+export default GooglePay;
 

@@ -101,7 +101,14 @@ const theme = createTheme({
             defaultProps: {
                 disableRipple: true,
             }
-        }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                },
+            },
+        },
     },
     spacing: 4,
 });

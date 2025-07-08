@@ -16,7 +16,6 @@ const BoosterGameTags = ({gameTags}) => {
                         sx={{
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightLight,
-                            fontSize: 14,
                             alignSelf: 'flex-start',
                         }}
                     >

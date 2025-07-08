@@ -22,8 +22,8 @@ const OrderHistoryCard = ({order}) => {
             backgroundColor: theme.palette.background.default
         }}>
             <Typography
+                variant="body1"
                 sx={{
-                    fontSize: 16,
                     color: theme.palette.third.hover,
                     fontWeight: theme.typography.fontWeightRegular,
                     position: 'absolute',
@@ -35,7 +35,7 @@ const OrderHistoryCard = ({order}) => {
 
             <Box sx={{mt: 2}}>
                 <Typography
-                    fontSize={18}
+                    variant="body1"
                     color={theme.palette.text.primary}
                     fontWeight={theme.typography.fontWeightRegular}
                 >
@@ -47,9 +47,9 @@ const OrderHistoryCard = ({order}) => {
                 >
                     <Typography
                         ref={textRef}
+                        variant="body1"
                         sx={{
                             width: '90%',
-                            fontSize: 16,
                             overflow: 'hidden',
                             whiteSpace: 'nowrap',
                             textOverflow: 'ellipsis',
@@ -80,13 +80,14 @@ const OrderHistoryCard = ({order}) => {
                     }}>
                     <HelpIconWithTooltip tooltipTitle={UTC_TIME}/>
                     <Typography
+                        variant="body2"
                         sx={{
-                            fontSize: 14,
                             color: theme.palette.text.secondary,
                             fontWeight: theme.typography.fontWeightLight,
                         }}>
                         Completed: {order.completedAt}
                     </Typography>
+
                 </Box>
 
 
@@ -96,16 +97,16 @@ const OrderHistoryCard = ({order}) => {
                     alignItems: 'flex-end'
                 }}>
                     <Typography
+                        variant="body2"
                         sx={{
-                            fontSize: 14,
                             color: theme.palette.statuses.completed,
                             fontWeight: theme.typography.fontWeightRegular,
                         }}>
                         {order.orderStatus}
                     </Typography>
                     <Typography
+                        variant="body1"
                         sx={{
-                            fontSize: 16,
                             color: theme.palette.statuses.completed,
                             fontWeight: theme.typography.fontWeightRegular,
                             mt: 0.5

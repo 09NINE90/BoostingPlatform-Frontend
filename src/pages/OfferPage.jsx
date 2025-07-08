@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import {useParams} from 'react-router';
 import Box from '@mui/material/Box';
 import OfferInfo from '../layouts/offer/OfferInfo';
@@ -32,14 +32,44 @@ const OfferPage = () => {
         fetchData();
     }, [offerId]);
 
+    useLayoutEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     return (
-        <Box className="flex items-center justify-center flex-col lg:items-start lg:flex-row" sx={{mx: 2}}>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: {xs: 'column', lg: 'row'},
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+                width: '100%',
+                maxWidth: '1200px',
+                mx: 'auto',
+                gap: 4,
+                px: 2,
+                mt: 8,
+            }}
+        >
             {offerData && (
-                <><Box sx={{pl: 20}}>
-                    <OfferInfo offerData={offerData}/>
-                </Box>
-                    <Box className="pl-20">
-                        <OfferPayment offerData={offerData} optionsBlocks={options} gamePlatforms={gamePlatforms}/>
+                <>
+                    <Box
+                        sx={{
+                            flex: 1,
+                            minWidth: 0,
+                        }}>
+                        <OfferInfo offerData={offerData}/>
+                    </Box>
+                    <Box
+                        sx={{
+                            width: {xs: '100%', lg: 400},
+                            flexShrink: 0,
+                        }}>
+                        <OfferPayment
+                            offerData={offerData}
+                            optionsBlocks={options}
+                            gamePlatforms={gamePlatforms}
+                        />
                     </Box>
                 </>
             )}

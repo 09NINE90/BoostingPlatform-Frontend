@@ -20,14 +20,14 @@ const UsernameInfoItem = ({value, setIsEditingName, copyable = false}) => {
                 gap: 1,
                 height: '100%'
             }}>
-                <Typography variant="body1"
-                            sx={{
-                                color: theme.palette.text.primary,
-                                fontWeight: theme.typography.fontWeightBold,
-                                lineHeight: '1',
-                                alignItems: 'center',
-                                fontSize: 26
-                            }}>
+                <Typography
+                    variant="h4"
+                    sx={{
+                        color: theme.palette.text.primary,
+                        fontWeight: theme.typography.fontWeightBold,
+                        lineHeight: '1',
+                        alignItems: 'center',
+                    }}>
                     {value}
                 </Typography>
                 {copyable && (

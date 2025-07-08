@@ -9,7 +9,7 @@ const BalanceHistoryTableBody = ({balanceHistoryList}) => {
     const CustomCell = ({text, center = true, width}) => {
         return (
             <TableCell
-                align={center ? "center" : "start"}
+                align={center ? "center" : "left"}
                 sx={{
                     fontWeight: theme.typography.fontWeightLight,
                     width: {width}

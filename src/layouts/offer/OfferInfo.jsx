@@ -42,8 +42,7 @@ const OfferInfo = ({offerData}) => {
     }, [offerData]);
 
     return (
-        <Box className="p-6 space-y-6  m-2 mt-7">
-
+        <Box className="space-y-6">
             <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-gray-400">
                 <Link color="primary" component={NavLink} to={`/${offerData.secondGameId}`} className="hover:underline">
                     Home

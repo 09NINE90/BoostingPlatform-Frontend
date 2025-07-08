@@ -18,23 +18,25 @@ const OrderInfoCell = ({orderByRow}) => {
                 <HelpIconWithTooltip tooltipTitle={UTC_TIME}/>
                 <Typography variant="body2"
                             sx={{
-                                fontSize: 14,
                                 display: 'flex',
                                 color: theme.palette.text.secondary,
                                 fontWeight: theme.typography.fontWeightLight,
                             }}>
-                    <Typography sx={{
-                        mr: 2,
-                        fontSize: 14,
-                        color: theme.palette.text.primary,
-                        fontWeight: theme.typography.fontWeightLight,
-                    }}>
-                        {text}:
-                    </Typography>
+                    <Box
+                        component="span"
+                        sx={{
+                            mr: 2,
+                            color: theme.palette.text.primary,
+                            fontWeight: theme.typography.fontWeightLight,
+                        }}
+                    >
+                        <Typography variant="body2" component="span">
+                            {text}:
+                        </Typography>
+                    </Box>
                     {time}
                 </Typography>
             </Box>
-
         )
     }
 

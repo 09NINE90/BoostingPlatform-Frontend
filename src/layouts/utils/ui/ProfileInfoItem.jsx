@@ -18,18 +18,16 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
                             sx={{
                                 color: theme.palette.third.main,
                                 fontWeight: theme.typography.fontWeightLight,
-                                fontSize: 14,
                                 mr: 2,
                                 lineHeight: '24px'
                             }}>
                     {label}:
                 </Typography>
             )}
-            <Typography variant="body1"
+            <Typography variant="body2"
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightLight,
-                            fontSize: 14,
                             lineHeight: '24px',
                             display: 'flex',
                             alignItems: 'center'

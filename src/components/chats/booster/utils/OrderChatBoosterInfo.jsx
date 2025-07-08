@@ -1,30 +1,11 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Button, Typography} from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
-import {getBoosterOrderById} from "src/services/orderApi.js";
-import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import React from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 
-const OrderChatBoosterInfo = ({orderId, openModal}) => {
-
-    const [order, setOrder] = useState(null);
-
-    const fetchBoosterOrders = useCallback(async () => {
-        try {
-            const orderApi = await getBoosterOrderById(orderId);
-            setOrder(orderApi);
-        } catch (err) {
-            console.error(handleApiError(err))
-        }
-    }, [getBoosterOrderById, setOrder])
-
-    useEffect(() => {
-        fetchBoosterOrders()
-    }, [fetchBoosterOrders])
-
-
+const OrderChatBoosterInfo = ({order, openModal}) => {
     if (order) {
         return (
             <Box
@@ -32,6 +13,7 @@ const OrderChatBoosterInfo = ({orderId, openModal}) => {
                     display: 'flex',
                     padding: 5,
                     width: '29%',
+                    minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
@@ -41,7 +23,6 @@ const OrderChatBoosterInfo = ({orderId, openModal}) => {
                         variant="h4"
                         sx={{
                             mb: 3,
-                            fontSize: 26,
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>

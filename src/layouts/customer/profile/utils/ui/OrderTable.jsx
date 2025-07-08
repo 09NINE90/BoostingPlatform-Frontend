@@ -68,7 +68,7 @@ const OrderTable = () => {
             {orders && (
                 <>
                     {orders.map((order) => (
-                        <CustomerOrderCart order={order} onOpen={openBoosterProfile}/>
+                        <CustomerOrderCart key={order.orderId} order={order} onOpen={openBoosterProfile}/>
                     ))}
                 </>
             )}

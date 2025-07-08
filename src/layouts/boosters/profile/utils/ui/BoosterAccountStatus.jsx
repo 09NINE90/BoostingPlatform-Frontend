@@ -20,14 +20,16 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
             }}>
                 Account Status
             </Typography>
-            <Typography variant="body1"
-                        sx={{
-                            color: '#fff',
-                            marginBottom: 5,
-                            display: 'flex',
-                            alignItems: 'center',
-                            fontWeight: theme.typography.fontWeightLight,
-                        }}>
+            <Typography
+                variant="body1"
+                component="div"
+                sx={{
+                    color: '#fff',
+                    marginBottom: 5,
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: theme.typography.fontWeightLight,
+                }}>
                 <HelpIconWithTooltip
                     tooltipTitle={<BoosterLevelsDescription boosterNextLevel={boosterNextLevel}/>}/>
                 Current Level:

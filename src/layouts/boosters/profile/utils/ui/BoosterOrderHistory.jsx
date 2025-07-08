@@ -59,8 +59,8 @@ const BoosterOrderHistory = () => {
                         justifyContent: 'center',
                     }}>
                     <Typography
+                        variant="body1"
                         sx={{
-                            fontSize: 18,
                             padding: 1/2,
                             position: 'absolute',
                             color: theme.palette.third.main,

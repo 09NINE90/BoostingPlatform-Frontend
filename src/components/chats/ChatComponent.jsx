@@ -118,6 +118,7 @@ const ChatComponent = ({chatId}) => {
                 flexDirection: "column",
                 height: "85vh",
                 width: "70%",
+                minWidth: "70%",
                 px: 5,
                 py: 3,
                 backgroundColor: theme.palette.background.paper,

@@ -49,8 +49,8 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
     const LabelText = ({text}) => {
         return (
             <Typography
+                variant='body1'
                 sx={{
-                    fontSize: 18,
                     marginBottom: 2,
                     color: theme.palette.text.secondary,
                     fontWeight: theme.typography.fontWeightLight,
@@ -79,8 +79,8 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
                     />
                     <LabelText text='Available for balance'/>
                     <Typography
+                        variant="h5"
                         sx={{
-                            fontSize: 22,
                             marginBottom: 2,
                             color: theme.palette.statuses.completed,
                             fontWeight: theme.typography.fontWeightMedium,
