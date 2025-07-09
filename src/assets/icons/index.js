@@ -1,7 +1,7 @@
 export {default as ApplePay} from './ApplePay.jsx';
 export {default as PayPal} from './PayPal.jsx';
 export {default as Bitcoin} from './Bitcoin.jsx';
-export {default as GogglePay} from './GogglePay.jsx';
+export {default as GooglePay} from './GooglePay.jsx';
 export {default as Visa} from './Visa.jsx';
 export {default as Mastercard} from './Mastercard.jsx';
 export {default as YouTube} from './YouTube.jsx';

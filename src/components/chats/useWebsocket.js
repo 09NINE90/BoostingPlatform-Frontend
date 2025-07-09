@@ -28,7 +28,7 @@ const useWebSocket = (url, options = {}) => {
             toast.warn('Session expired. Please log in again.');
             throw error;
         }
-    }, []);
+    }, [store, refreshAccessToken]);
 
     const disconnect = useCallback(() => {
         // Очистка пинга

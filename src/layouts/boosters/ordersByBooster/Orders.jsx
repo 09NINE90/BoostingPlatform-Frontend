@@ -7,7 +7,7 @@ import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrdersTableBody from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableBody.jsx";
 import OrdersTableHead from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableHead.jsx";
-import OrdersLoader from "src/layouts/boosters/utils/ui/OrdersLoader.jsx";
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
 const Orders = () => {
     const [allOrders, setAllOrders] = useState([]);
@@ -42,6 +42,7 @@ const Orders = () => {
     }, [getOrdersByBooster, setAllOrders, selectedFilters]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchAllOrders();
     }, [fetchAllOrders]);
 
@@ -61,11 +62,11 @@ const Orders = () => {
                         <OrdersTableBody allOrders={allOrders}/>
                     )}
                 </Table>
-                {loading && (
-                    <OrdersLoader/>
-                )}
                 {!loading && allOrders.length === 0 && (
                     <EmptyResponse text={'no orders by filter'}/>
+                )}
+                {loading && (
+                    <CenterLoader/>
                 )}
             </TableContainer>
         </div>

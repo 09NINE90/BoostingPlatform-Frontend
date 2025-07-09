@@ -11,6 +11,17 @@ const AmountTextField = ({inputValue, onChange, placeholder}) => {
             onChange={onChange}
             placeholder={placeholder}
             sx={{
+                '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: theme.palette.divider,
+                    },
+                    '&:hover fieldset': {
+                        borderColor: theme.palette.third.main,
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: theme.palette.third.main,
+                    },
+                },
                 '& .MuiInputBase-root': {
                     height: 40,
                     backgroundColor: theme.palette.background.default,

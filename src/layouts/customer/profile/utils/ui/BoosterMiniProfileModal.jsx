@@ -9,16 +9,16 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
         return (
             <Box padding={3} width={'100%'} bgcolor={theme.palette.background.default}>
                 <Typography
+                    variant="h6"
                     sx={{
-                        fontSize: 20,
                         color: theme.palette.third.main,
                         fontWeight: theme.typography.fontWeightLight,
                     }}>
                     {param}
                 </Typography>
                 <Typography
+                    variant='body2'
                     sx={{
-                        fontSize: 14,
                         color: theme.palette.text.secondary,
                         fontWeight: theme.typography.fontWeightRegular,
                     }}>
@@ -49,16 +49,16 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
                         size={'150px'}
                     />
                     <Typography
+                        variant="h6"
                         sx={{
-                            fontSize: 20,
                             fontWeight: theme.typography.fontWeightBold,
                         }}>
                         {boosterInfo.boosterName}
                     </Typography>
                     <Typography
+                        variant='body2'
                         sx={{
                             padding: 3,
-                            fontSize: 14,
                             width: '100%',
                             color: theme.palette.text.primary,
                             backgroundColor: theme.palette.background.default,

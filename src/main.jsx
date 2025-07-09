@@ -32,7 +32,6 @@ import ChatComponent from "src/components/chats/ChatComponent.jsx";
 import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
 import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
 
-
 const root = document.getElementById('root');
 
 export const App = () => {

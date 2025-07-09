@@ -116,12 +116,13 @@ const ModalTemplate = ({
 
 
                     {title && (
-                        <Typography variant="h4" sx={{
-                            fontWeight: theme.typography.fontWeightBold,
-                            color: theme.palette.text.primary,
-                            fontSize: 30,
-                            mb: 3,
-                        }}>
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                fontWeight: theme.typography.fontWeightBold,
+                                color: theme.palette.text.primary,
+                                mb: 3,
+                            }}>
                             {title}
                         </Typography>
                     )}

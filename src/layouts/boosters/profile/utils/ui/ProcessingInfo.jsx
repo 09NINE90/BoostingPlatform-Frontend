@@ -7,9 +7,9 @@ const ProcessingInfo = ({minAmount}) => {
     const Item = ({text}) => {
         return (
             <Typography
+                variant='body2'
                 sx={{
                     mt: 2,
-                    fontSize: 14,
                     color: theme.palette.text.secondary,
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
@@ -30,8 +30,8 @@ const ProcessingInfo = ({minAmount}) => {
                 backgroundColor: theme.palette.background.default,
             }}>
             <Typography
+                variant='body2'
                 sx={{
-                    fontSize: 14,
                     color: theme.palette.text.primary,
                     fontWeight: theme.typography.fontWeightRegular,
                 }}>

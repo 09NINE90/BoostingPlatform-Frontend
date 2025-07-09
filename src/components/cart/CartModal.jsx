@@ -32,8 +32,8 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
     };
 
     return (
-        <div className="flex h-full">
-            <div className="flex-1 overflow-y-auto max-h-[60vh] pr-3 custom-scrollbar">
+        <div className="flex h-[40vh]">
+            <div className="flex-1 overflow-y-auto pr-3 custom-scrollbar">
                 {cartItems.length > 0 ? (
                     cartItems.map((item) => (
                         <CartItems
@@ -45,7 +45,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
                         />
                     ))
                 ) : (
-                    <EmptyResponse text={'Your cart is empty.'}/>
+                    <EmptyResponse text={'Your cart is empty.'} minHeight={'100%'}/>
                 )}
             </div>
 

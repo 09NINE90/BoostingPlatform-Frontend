@@ -13,7 +13,7 @@ import {deleteCartItem} from "src/services/offerApi.js";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
 
-const CartItems = ({item, isSelected, onToggle, onRemoveItem  }) => {
+const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
 
     const dispatch = useDispatch();
     const countCartItems = useSelector(selectCountCartItems);
@@ -43,7 +43,10 @@ const CartItems = ({item, isSelected, onToggle, onRemoveItem  }) => {
             <Box display="flex" flexDirection="column" justifyContent="space-between">
                 <Box>
                     <Box display="flex" alignItems="center" mb={1}>
-                        <Typography variant="h6" sx={{ color: theme.palette.third.main, fontWeight: theme.typography.fontWeightMedium }}>
+                        <Typography variant="h6" sx={{
+                            color: theme.palette.third.main,
+                            fontWeight: theme.typography.fontWeightMedium
+                        }}>
                             {item.offerName} in {item.gameName}
                         </Typography>
                     </Box>
@@ -87,12 +90,11 @@ const CartItems = ({item, isSelected, onToggle, onRemoveItem  }) => {
                                         <ListItemText
                                             primary={
                                                 <Typography
+                                                    variant="body2"
                                                     sx={{
-                                                        fontSize: 14,
                                                         fontWeight: theme.typography.fontWeightRegular,
                                                         color: theme.palette.text.primary,
-                                                    }}
-                                                >
+                                                    }}>
                                                     {option.optionTitle}:
                                                     <Typography
                                                         component="span"

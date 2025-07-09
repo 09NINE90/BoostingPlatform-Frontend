@@ -18,7 +18,6 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                 color: theme.palette.text.primary,
                 marginBottom: 2,
                 fontWeight: theme.typography.fontWeightMedium,
-                fontSize: 30
             }}>
                 My balance
             </Typography>
@@ -27,11 +26,10 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                 padding: 5,
                 backgroundColor: theme.palette.background.default,
             }}>
-                <Typography variant="h4" sx={{
+                <Typography variant="h5" sx={{
                     color: theme.palette.third.main,
                     marginBottom: 2,
                     fontWeight: theme.typography.fontWeightMedium,
-                    fontSize: 22
                 }}>
                     Available for withdrawal
                 </Typography>
@@ -39,7 +37,6 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                     color: theme.palette.text.primary,
                     marginBottom: 2,
                     fontWeight: theme.typography.fontWeightMedium,
-                    fontSize: 30
                 }}>
                     $ {balance}
                 </Typography>

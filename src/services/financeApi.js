@@ -5,8 +5,18 @@ export const postHandleWithdrawal = async (request) => {
     return response.data;
 }
 
+export const postHandleSendTip = async (request) => {
+    const response = await api.post(`/finance/postHandleSendTip`, request);
+    return response.data;
+}
+
 export const getBalanceHistory = async () => {
     const response = await api.get(`/finance/balanceHistory`);
+    return response.data;
+}
+
+export const getOrderTipHistory = async (orderId) => {
+    const response = await api.get(`/finance/orderTipHistory/${orderId}`);
     return response.data;
 }
 

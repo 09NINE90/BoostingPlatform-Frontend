@@ -1,30 +1,13 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Button, Typography} from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
-import {getBoosterOrderById} from "src/services/orderApi.js";
-import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import React from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
+import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
-const OrderChatBoosterInfo = ({orderId, openModal}) => {
-
-    const [order, setOrder] = useState(null);
-
-    const fetchBoosterOrders = useCallback(async () => {
-        try {
-            const orderApi = await getBoosterOrderById(orderId);
-            setOrder(orderApi);
-        } catch (err) {
-            console.error(handleApiError(err))
-        }
-    }, [getBoosterOrderById, setOrder])
-
-    useEffect(() => {
-        fetchBoosterOrders()
-    }, [fetchBoosterOrders])
-
-
+const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrderHistory}) => {
     if (order) {
         return (
             <Box
@@ -32,6 +15,7 @@ const OrderChatBoosterInfo = ({orderId, openModal}) => {
                     display: 'flex',
                     padding: 5,
                     width: '29%',
+                    minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
@@ -41,7 +25,6 @@ const OrderChatBoosterInfo = ({orderId, openModal}) => {
                         variant="h4"
                         sx={{
                             mb: 3,
-                            fontSize: 26,
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
@@ -51,14 +34,17 @@ const OrderChatBoosterInfo = ({orderId, openModal}) => {
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
                     <CustomTextItem text='Platform' item={order.gamePlatform}/>
-                    <CustomTextItem text='Start order at' item={order.startTimeExecution}/>
+                    <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    {tipOrderHistory && (
+                        <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
+                    )}
                 </Box>
                 {order.orderStatus === IN_PROGRESS && (
                     <Box>
                         <Button
-                            onClick={() => openModal(order)}
+                            onClick={() => openStartSessionModal()}
                             sx={{
                                 mt: 2,
                                 p: 2,

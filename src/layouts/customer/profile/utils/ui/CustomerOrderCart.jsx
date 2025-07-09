@@ -2,7 +2,7 @@ import theme from "src/theme/theme.jsx";
 import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
 import {Box, Button, Tooltip, Typography} from "@mui/material";
 import React from "react";
-import {useIsTextOverflowed} from "src/layouts/utils/data/functions.js";
+import {useIsTextOverflowed} from "src/utils/functions.js";
 import {Link} from "react-router-dom";
 
 const CustomerOrderCart = ({order, onOpen}) => {
@@ -55,23 +55,32 @@ const CustomerOrderCart = ({order, onOpen}) => {
                 <Box
                     sx={{
                         gap: 3,
+                        width: '150px',
                         display: "flex",
                         alignItems: "center",
                         flexDirection: "column",
                     }}>
-                    <span className={`px-3 py-1 text-xs kanit-light ${
-                        order.orderStatus === 'CREATED' ? 'bg-[#0A0022] text-text-primary border border-text-primary' :
-                            order.orderStatus === 'IN_PROGRESS' ? 'bg-[#0A0022] text-primary border border-primary' :
-                                order.orderStatus === 'ON_PENDING' ? 'bg-[#0A0022] text-third border border-third' :
-                                    'bg-[#0A0022] text-completed border border-completed'
-                    }`}>{order.orderStatus.replace('_', ' ')}</span>
+                    <Box sx={{width: '100%'}}>
+                        <span
+                            className={`block px-3 py-1 text-xs kanit-light text-center ${
+                                order.orderStatus === 'CREATED' ? 'bg-[#0A0022] text-text-primary border border-text-primary' :
+                                    order.orderStatus === 'IN_PROGRESS' ? 'bg-[#0A0022] text-primary border border-primary' :
+                                        order.orderStatus === 'ON_PENDING' ? 'bg-[#0A0022] text-third border border-third' :
+                                            'bg-[#0A0022] text-completed border border-completed'
+                            }`}
+                            style={{width: '100%', display: 'block'}}
+                        >
+                            {order.orderStatus.replace('_', ' ')}
+                        </span>
+                    </Box>
                     {order.boosterId && (
                         <Button
                             onClick={() => {
                                 onOpen(order.boosterId)
                             }}
                             sx={{
-                                mt: 'auto',
+                                mt: 2,
+                                height: 40,
                                 width: '100%',
                                 color: theme.palette.text.primary,
                                 backgroundColor: theme.palette.third.main,
@@ -89,6 +98,7 @@ const CustomerOrderCart = ({order, onOpen}) => {
                             component={Link}
                             sx={{
                                 mt: 2,
+                                height: 40,
                                 width: '100%',
                                 color: theme.palette.text.primary,
                                 backgroundColor: theme.palette.background.default,
@@ -101,7 +111,7 @@ const CustomerOrderCart = ({order, onOpen}) => {
                                 }
                             }}
                         >
-                            GET CHAT
+                            OPEN CHAT
                         </Button>
                     )}
 

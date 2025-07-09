@@ -2,14 +2,16 @@ import {Box, Button, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React, {useCallback, useEffect, useState} from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
-import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import {getBoosterOrderById, getCustomerOrderById} from "src/services/orderApi.js";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import BoosterInfo from "src/components/chats/customer/utils/BoosterInfo.jsx";
+import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
+import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
-const OrderChatCustomerInfo = ({orderId}) => {
+const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
     const [order, setOrder] = useState(null);
     const [boosterId, setBoosterId] = useState(null);
@@ -23,7 +25,7 @@ const OrderChatCustomerInfo = ({orderId}) => {
         } catch (err) {
             console.error(handleApiError(err))
         }
-    }, [getBoosterOrderById, setOrder])
+    }, [getBoosterOrderById, orderId])
 
     const fetchBoosterInfo = useCallback(async () => {
         if (!boosterId) return;
@@ -50,6 +52,7 @@ const OrderChatCustomerInfo = ({orderId}) => {
                     display: 'flex',
                     padding: 5,
                     width: '29%',
+                    minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
@@ -59,7 +62,6 @@ const OrderChatCustomerInfo = ({orderId}) => {
                         variant="h4"
                         sx={{
                             mb: 3,
-                            fontSize: 26,
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
@@ -69,16 +71,39 @@ const OrderChatCustomerInfo = ({orderId}) => {
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
                     <CustomTextItem text='Platform' item={order.gamePlatform}/>
-                    <CustomTextItem text='Start order at' item={order.startTimeExecution}/>
+                    <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     {order.endTimeExecution && (
-                        <CustomTextItem text='End order at' item={order.endTimeExecution}/>
+                        <CustomTextItem text='End order at' item={toLocaleDateTime(order.endTimeExecution)}/>
                     )}
                     <CustomTextItem text='Price' item={`$ ${order.totalPrice}`}/>
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>
                     {boosterInfo && (
                         <BoosterInfo boosterInfo={boosterInfo}/>
                     )}
+                    {tipOrderHistory && (
+                        <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
+                    )}
                 </Box>
+                {order.orderStatus !== IN_PROGRESS && (
+                    <Box>
+                        <Button
+                            onClick={() => openModal(order)}
+                            sx={{
+                                mt: 2,
+                                p: 2,
+                                width: "100%",
+                                color: theme.palette.text.primary,
+                                backgroundColor: theme.palette.third.main,
+                                fontWeight: theme.typography.fontWeightLight,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.third.hover,
+                                }
+                            }}
+                        >
+                            send tip
+                        </Button>
+                    </Box>
+                )}
             </Box>
         )
     }

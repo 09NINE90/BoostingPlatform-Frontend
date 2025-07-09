@@ -11,7 +11,7 @@ import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import DashboardTableBody from "src/layouts/boosters/dashboard/utils/ui/DashboardTableBody.jsx";
 import DashboardTableHead from "src/layouts/boosters/dashboard/utils/ui/DashboardTableHead.jsx";
-import OrdersLoader from "src/layouts/boosters/utils/ui/OrdersLoader.jsx";
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
 const Dashboard = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -40,8 +40,8 @@ const Dashboard = () => {
     });
 
     const fetchAllOrders = useCallback(async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const allOrdersApi = await getDashboardOrders(selectedFilters)
             setAllOrders(allOrdersApi.orders);
             setTotalPages(allOrdersApi.pageTotal);
@@ -99,6 +99,7 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchAllOrders();
     }, [fetchAllOrders]);
 
@@ -127,7 +128,7 @@ const Dashboard = () => {
                         )}
                     </Table>
                     {loading && (
-                        <OrdersLoader/>
+                        <CenterLoader/>
                     )}
                     {!loading && allOrders.length === 0 && (
                         <EmptyResponse text={'no orders by filter'}/>
