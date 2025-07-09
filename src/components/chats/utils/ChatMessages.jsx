@@ -43,7 +43,7 @@ const ChatMessages = ({messages, username}) => {
                                 mb: 2,
                                 p: 2,
                                 width: 'fit-content',
-                                maxWidth: "50%",
+                                maxWidth: "60%",
                                 borderRadius: 2,
                                 ml: isMine ? "auto" : 0,
                                 mr: isMine ? 0 : "auto",
@@ -67,14 +67,14 @@ const ChatMessages = ({messages, username}) => {
                                     {msg.sender}
                                 </Typography>
                             )}
-                            <Typography variant="body2"
-                                        sx={{
-                                            whiteSpace: 'pre-line',
-                                            lineHeight: 1,
-                                            fontWeight: theme.typography.fontWeightLight,
-                                        }}>
-                                <div dangerouslySetInnerHTML={{__html: cleanHtml}}/>
-                            </Typography>
+                            <Box
+                                sx={{
+                                    whiteSpace: 'pre-line',
+                                    lineHeight: 1,
+                                    fontWeight: theme.typography.fontWeightLight,
+                                }}
+                                dangerouslySetInnerHTML={{__html: cleanHtml}}
+                            />
                             <Typography
                                 variant="caption"
                                 sx={{

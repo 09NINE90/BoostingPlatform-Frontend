@@ -10,11 +10,21 @@ const UsernameEditor = ({initialName, onSave, onCancel}) => {
             display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: '400px',
         }}>
             <TextField
+                label="Change nickname"
                 type="text"
                 value={tempName}
                 onChange={(e) => setTempName(e.target.value)}
                 className="bg-transparent text-text-primary border border-gray-600 rounded"
                 sx={{
+                    '& .MuiInputLabel-root': {
+                        color: theme.palette.divider,
+                    },
+                    '&:hover .MuiInputLabel-root': {
+                        color: theme.palette.third.main,
+                    },
+                    '& .MuiInputLabel-root.Mui-focused': {
+                        color: theme.palette.third.main,
+                    },
                     '& .MuiOutlinedInput-root': {
                         '& fieldset': {
                             borderColor: theme.palette.divider,

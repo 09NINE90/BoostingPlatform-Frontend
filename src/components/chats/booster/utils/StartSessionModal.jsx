@@ -9,8 +9,10 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
     const [streamLink, setStreamLink] = useState('');
 
     const handleStartSession = () => {
-        startSession(duration, streamLink);
-        onClose();
+        if (duration) {
+            startSession(duration, streamLink);
+            onClose();
+        }
     };
 
     return (
@@ -22,6 +24,7 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
                 <Box sx={{display: 'flex', flexDirection: 'column', gap: 3, mt: 2}}>
                     <TextField
                         required
+                        error={!duration}
                         type='number'
                         label="Duration time (hours)"
                         variant="outlined"
@@ -29,6 +32,28 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                         fullWidth
+                        sx={{
+                            '& .MuiInputLabel-root': {
+                                color: theme.palette.divider,
+                            },
+                            '&:hover .MuiInputLabel-root': {
+                                color: theme.palette.third.main,
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': {
+                                color: theme.palette.third.main,
+                            },
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.divider,
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: theme.palette.third.main,
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.third.main,
+                                },
+                            },
+                        }}
                     />
                     <TextField
                         label="Stream link (optional)"
@@ -36,6 +61,28 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
                         value={streamLink}
                         onChange={(e) => setStreamLink(e.target.value)}
                         fullWidth
+                        sx={{
+                            '& .MuiInputLabel-root': {
+                                color: theme.palette.divider,
+                            },
+                            '&:hover .MuiInputLabel-root': {
+                                color: theme.palette.third.main,
+                            },
+                            '& .MuiInputLabel-root.Mui-focused': {
+                                color: theme.palette.third.main,
+                            },
+                            '& .MuiOutlinedInput-root': {
+                                '& fieldset': {
+                                    borderColor: theme.palette.divider,
+                                },
+                                '&:hover fieldset': {
+                                    borderColor: theme.palette.third.main,
+                                },
+                                '&.Mui-focused fieldset': {
+                                    borderColor: theme.palette.third.main,
+                                },
+                            },
+                        }}
                     />
                 </Box>
             }
