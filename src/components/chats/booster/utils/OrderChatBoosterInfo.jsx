@@ -5,10 +5,9 @@ import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
-import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
-import {UTC_ALL_TIME} from "src/utils/constants/TooltipsTexts.js";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
-const OrderChatBoosterInfo = ({order, openModal, tipOrderHistory}) => {
+const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrderHistory}) => {
     if (order) {
         return (
             <Box
@@ -30,13 +29,12 @@ const OrderChatBoosterInfo = ({order, openModal, tipOrderHistory}) => {
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
                         Order information
-                        <HelpIconWithTooltip tooltipTitle={UTC_ALL_TIME} marginLeft={2} sizeIcon='medium'/>
                     </Typography>
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
                     <CustomTextItem text='Platform' item={order.gamePlatform}/>
-                    <CustomTextItem text='Start order at' item={order.startTimeExecution}/>
+                    <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>
                     {tipOrderHistory && (
@@ -46,7 +44,7 @@ const OrderChatBoosterInfo = ({order, openModal, tipOrderHistory}) => {
                 {order.orderStatus === IN_PROGRESS && (
                     <Box>
                         <Button
-                            onClick={() => openModal(order)}
+                            onClick={() => openStartSessionModal()}
                             sx={{
                                 mt: 2,
                                 p: 2,

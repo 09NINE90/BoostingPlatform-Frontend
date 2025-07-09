@@ -8,15 +8,22 @@ import {toast} from "react-toastify";
 import OrderFinishModal from "src/components/chats/booster/utils/OrderFinishModal.jsx";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getOrderTipHistory} from "src/services/financeApi.js";
+import StartSessionModal from "src/components/chats/booster/utils/StartSessionModal.jsx";
+import {getSessionStartMessage} from "src/components/chats/booster/utils/SessionStartMessage.jsx";
+import {formatUTCDateTime} from "src/utils/functions.js";
 
 const BoosterChat = () => {
 
-    const { chatId, orderId } = useParams();
+    const {chatId, orderId} = useParams();
 
+    const [sendMessageFn, setSendMessageFn] = useState(null);
+    const [startSessionModalIsOpen, setStartSessionModalIsOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [order, setOrder] = useState(null);
     const [tipOrderHistory, setTipOrderHistory] = useState(null);
 
+    const openStartSessionModal = () => setStartSessionModalIsOpen(true);
+    const closeStartSessionModal = () => setStartSessionModalIsOpen(false);
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
@@ -38,14 +45,16 @@ const BoosterChat = () => {
         }
     }, [getBoosterOrderById, setOrder])
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        fetchBoosterOrders();
-    }, [fetchBoosterOrders]);
+    const startSession = (duration, streamLink) => {
+        if (!sendMessageFn) return;
 
-    useEffect(() => {
-        fetchTipOrderHistory()
-    }, [fetchTipOrderHistory])
+        console.log(duration, streamLink);
+
+        sendMessageFn(`/app/chat/${chatId}`, {
+            text: getSessionStartMessage(duration, streamLink, formatUTCDateTime(new Date())),
+            timestamp: new Date().toISOString(),
+        });
+    };
 
     const handleCompleteExecution = async () => {
         try {
@@ -58,6 +67,15 @@ const BoosterChat = () => {
         closeModal();
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        fetchBoosterOrders();
+    }, [fetchBoosterOrders]);
+
+    useEffect(() => {
+        fetchTipOrderHistory()
+    }, [fetchTipOrderHistory])
+
     return (
         <Box
             sx={{
@@ -69,11 +87,25 @@ const BoosterChat = () => {
                 padding: 3,
                 paddingInline: 25,
             }}>
-            <OrderChatBoosterInfo order={order} openModal={openModal} tipOrderHistory={tipOrderHistory}/>
-            <ChatComponent chatId={chatId}/>
+            <OrderChatBoosterInfo order={order}
+                                  openModal={openModal}
+                                  openStartSessionModal={openStartSessionModal}
+                                  tipOrderHistory={tipOrderHistory}
+            />
+            <ChatComponent
+                chatId={chatId}
+                onReady={(sendMessage) => setSendMessageFn(() => sendMessage)}
+            />
             {modalIsOpen && (
                 <OrderFinishModal isOpen={modalIsOpen} onClose={closeModal}
                                   onComplete={handleCompleteExecution}
+                />
+            )}
+            {startSessionModalIsOpen && (
+                <StartSessionModal
+                    isOpen={startSessionModalIsOpen}
+                    onClose={closeStartSessionModal}
+                    startSession={startSession}
                 />
             )}
         </Box>

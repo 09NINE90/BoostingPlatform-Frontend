@@ -3,7 +3,8 @@ import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import theme from "src/theme/theme.jsx";
-import {Box, Typography} from "@mui/material";
+import {Box} from "@mui/material";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
 const BalanceHistoryTableBody = ({balanceHistoryList}) => {
 
@@ -88,8 +89,8 @@ const BalanceHistoryTableBody = ({balanceHistoryList}) => {
                 >
                     <CustomCell text={item.orderId ? `#${item.orderId}` : '-'} center={false} width='10%'/>
                     <RecordTypeCell type={item.recordType}/>
-                    <CustomCell text={item.createdAt ? item.createdAt : '-'} width='25%'/>
-                    <CustomCell text={item.completedAt ? item.completedAt : '-'} width='25%'/>
+                    <CustomCell text={item.createdAt ? toLocaleDateTime(item.createdAt) : '-'} width='25%'/>
+                    <CustomCell text={item.completedAt ? toLocaleDateTime(item.completedAt) : '-'} width='25%'/>
                     <TableCell align="center" sx={{
                         width: '10%',
                         fontWeight: theme.typography.fontWeightLight,

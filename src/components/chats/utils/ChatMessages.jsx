@@ -1,62 +1,95 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Chip, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import DOMPurify from 'dompurify';
 import React from "react";
 import {marked} from "marked";
+import {formatDividerDate, isSameDay, toLocaleTime} from "src/utils/functions.js";
 
-const ChatMessages = ({ messages, username }) => {
+const ChatMessages = ({messages, username}) => {
+    let lastDate = null;
 
     return (
         <>
             {messages.map((msg) => {
+                const currentDate = new Date(msg.createdAt);
+                const showDateDivider = !lastDate || !isSameDay(lastDate, currentDate);
+                lastDate = currentDate;
+
                 const rawHtml = marked(msg.text);
                 const cleanHtml = DOMPurify.sanitize(rawHtml);
                 const isMine = msg.sender === username;
 
                 return (
-                    <Box
-                        key={msg.id}
-                        sx={{
-                            mb: 2,
-                            p: 3,
-                            width: 'fit-content',
-                            maxWidth: "50%",
-                            borderRadius: 2,
-                            ml: isMine ? "auto" : 0,
-                            mr: isMine ? 0 : "auto",
-                            bgcolor: isMine
-                                ? theme.palette.third.hover
-                                : theme.palette.background.default,
-                            color: isMine
-                                ? theme.palette.primary.contrastText
-                                : theme.palette.text.primary,
-                            borderBottomRightRadius: isMine ? 0 : 8,
-                            borderBottomLeftRadius: isMine ? 8 : 0,
-                        }}
-                    >
-                        {!isMine && (
-                            <Typography
-                                variant="subtitle2"
-                                color={theme.palette.text.secondary}
-                                sx={{ mb: 0.5 }}
+                    <React.Fragment key={msg.id}>
+                        {showDateDivider && (
+                            <Box
+                                sx={{
+                                    textAlign: 'center',
+                                    my: 2,
+                                    position: 'relative',
+                                    color: theme.palette.text.secondary,
+                                }}
                             >
-                                {msg.sender}
-                            </Typography>
+                                <Chip
+                                    label={formatDividerDate(currentDate)}
+                                    sx={{
+                                        fontWeight: theme.typography.fontWeightLight,
+                                    }}
+                                />
+                            </Box>
                         )}
-                        <Typography variant="body2" sx={{whiteSpace: 'pre-line'}}>
-                            <div dangerouslySetInnerHTML={{ __html: cleanHtml }} />
-                        </Typography>
-                        <Typography
-                            variant="caption"
-                            sx={{ display: "block", mt: 1, textAlign: "right", opacity: 0.7 }}
+                        <Box
+                            sx={{
+                                mb: 2,
+                                p: 2,
+                                width: 'fit-content',
+                                maxWidth: "50%",
+                                borderRadius: 2,
+                                ml: isMine ? "auto" : 0,
+                                mr: isMine ? 0 : "auto",
+                                bgcolor: isMine
+                                    ? theme.palette.third.hover
+                                    : theme.palette.background.default,
+                                color: isMine
+                                    ? theme.palette.primary.contrastText
+                                    : theme.palette.text.primary,
+                                borderBottomRightRadius: isMine ? 0 : 8,
+                                borderBottomLeftRadius: isMine ? 8 : 0,
+                            }}
                         >
-                            {new Date(msg.createdAt).toLocaleTimeString([], {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                            })}
-                        </Typography>
+                            {!isMine && (
+                                <Typography
+                                    variant="subtitle2"
+                                    color={theme.palette.text.secondary}
+                                    fontWeight={theme.typography.fontWeightMedium}
+                                    sx={{mb: 0.5}}
+                                >
+                                    {msg.sender}
+                                </Typography>
+                            )}
+                            <Typography variant="body2"
+                                        sx={{
+                                            whiteSpace: 'pre-line',
+                                            lineHeight: 1,
+                                            fontWeight: theme.typography.fontWeightLight,
+                                        }}>
+                                <div dangerouslySetInnerHTML={{__html: cleanHtml}}/>
+                            </Typography>
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    display: "block",
+                                    mt: 1,
+                                    textAlign: "right",
+                                    color: theme.palette.text.secondary,
+                                    fontWeight: theme.typography.fontWeightLight,
+                                }}
+                            >
+                                {toLocaleTime(msg.createdAt)}
+                            </Typography>
 
-                    </Box>
+                        </Box>
+                    </React.Fragment>
                 );
             })}
         </>

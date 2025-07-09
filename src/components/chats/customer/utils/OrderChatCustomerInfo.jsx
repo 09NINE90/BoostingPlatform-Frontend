@@ -9,8 +9,7 @@ import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import BoosterInfo from "src/components/chats/customer/utils/BoosterInfo.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
-import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
-import {UTC_ALL_TIME} from "src/utils/constants/TooltipsTexts.js";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
 const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
@@ -67,15 +66,14 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
                         Order information
-                        <HelpIconWithTooltip tooltipTitle={UTC_ALL_TIME} marginLeft={2} sizeIcon='medium'/>
                     </Typography>
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
                     <CustomTextItem text='Platform' item={order.gamePlatform}/>
-                    <CustomTextItem text='Start order at' item={order.startTimeExecution}/>
+                    <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     {order.endTimeExecution && (
-                        <CustomTextItem text='End order at' item={order.endTimeExecution}/>
+                        <CustomTextItem text='End order at' item={toLocaleDateTime(order.endTimeExecution)}/>
                     )}
                     <CustomTextItem text='Price' item={`$ ${order.totalPrice}`}/>
                     <OrderChatOptions selectedOptions={order.selectedOptions}/>

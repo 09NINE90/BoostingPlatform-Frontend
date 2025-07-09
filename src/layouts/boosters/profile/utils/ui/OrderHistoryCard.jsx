@@ -1,9 +1,7 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Tooltip, Typography} from "@mui/material";
 import React from "react";
-import {useIsTextOverflowed} from "src/layouts/utils/data/functions.js";
-import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
-import {UTC_TIME} from "src/utils/constants/TooltipsTexts.js";
+import {toLocaleDateTime, useIsTextOverflowed} from "src/utils/functions.js";
 
 const OrderHistoryCard = ({order}) => {
 
@@ -78,14 +76,13 @@ const OrderHistoryCard = ({order}) => {
                         display: "flex",
                         alignItems: 'flex-end'
                     }}>
-                    <HelpIconWithTooltip tooltipTitle={UTC_TIME}/>
                     <Typography
                         variant="body2"
                         sx={{
                             color: theme.palette.text.secondary,
                             fontWeight: theme.typography.fontWeightLight,
                         }}>
-                        Completed: {order.completedAt}
+                        Completed: {toLocaleDateTime(order.completedAt)}
                     </Typography>
 
                 </Box>

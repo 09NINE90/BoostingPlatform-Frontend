@@ -1,6 +1,7 @@
 import theme from "src/theme/theme.jsx";
 import {Accordion, AccordionDetails, AccordionSummary, Box, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {toLocaleDateTime} from "src/utils/functions.js";
 
 const TipOrderHistory = ({tipOrderHistory}) => {
 
@@ -37,7 +38,7 @@ const TipOrderHistory = ({tipOrderHistory}) => {
                     </Typography>
                     <Typography variant='body2'
                                 color="text.secondary" fontWeight={theme.typography.fontWeightLight}>
-                        {createdAt}
+                        {toLocaleDateTime(createdAt)}
                     </Typography>
                 </Box>
 

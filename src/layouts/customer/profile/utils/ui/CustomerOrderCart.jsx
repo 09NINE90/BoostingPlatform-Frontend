@@ -2,7 +2,7 @@ import theme from "src/theme/theme.jsx";
 import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
 import {Box, Button, Tooltip, Typography} from "@mui/material";
 import React from "react";
-import {useIsTextOverflowed} from "src/layouts/utils/data/functions.js";
+import {useIsTextOverflowed} from "src/utils/functions.js";
 import {Link} from "react-router-dom";
 
 const CustomerOrderCart = ({order, onOpen}) => {

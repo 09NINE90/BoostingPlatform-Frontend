@@ -8,7 +8,7 @@ import theme from "src/theme/theme.jsx";
 import ChatMessages from "src/components/chats/utils/ChatMessages.jsx";
 import ChatInput from "src/components/chats/utils/ChatInput.jsx";
 
-const ChatComponent = ({chatId}) => {
+const ChatComponent = ({chatId, onReady }) => {
 
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
@@ -49,6 +49,13 @@ const ChatComponent = ({chatId}) => {
             disconnect();
         };
     }, [userToken]);
+
+    useEffect(() => {
+        if (isConnected && onReady) {
+            onReady(sendMessage);
+            setTimeout(() => scrollToBottom(), 100);
+        }
+    }, [isConnected, onReady]);
 
     useEffect(() => {
         const fetchMessages = async () => {
