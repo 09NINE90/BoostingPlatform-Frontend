@@ -8,7 +8,7 @@ const BalanceHistoryPage = () => {
 
             <Box sx={{
                 gap: 3,
-                padding: 3,
+                p: 3,
                 display: 'flex',
                 paddingInline: 25,
                 height: 'fit-content',

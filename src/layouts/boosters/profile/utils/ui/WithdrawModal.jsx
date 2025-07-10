@@ -1,5 +1,5 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import React, {useCallback, useState} from "react";
 import theme from "src/theme/theme.jsx";
 import AmountTextField from "src/layouts/boosters/profile/utils/ui/AmountTextField.jsx";
@@ -8,6 +8,7 @@ import ProcessingInfo from "src/layouts/boosters/profile/utils/ui/ProcessingInfo
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {postHandleWithdrawal} from "src/services/financeApi.js";
 import {toast} from "react-toastify";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
 
@@ -51,7 +52,7 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
             <Typography
                 variant='body1'
                 sx={{
-                    marginBottom: 2,
+                    mb: 2,
                     color: theme.palette.text.secondary,
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
@@ -81,7 +82,7 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
                     <Typography
                         variant="h5"
                         sx={{
-                            marginBottom: 2,
+                            mb: 2,
                             color: theme.palette.statuses.completed,
                             fontWeight: theme.typography.fontWeightMedium,
                         }}>
@@ -97,22 +98,14 @@ const WithdrawModal = ({isOpen, onClose, balance, updateProfile}) => {
                 </Box>
             }
             actions={
-                <Button
+                <ContainedBlueButton
                     loading={isLoading}
                     fullWidth
                     onClick={handleWithdrawal}
-                    sx={{
-                        mt: 5,
-                        padding: 3,
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                    sx={{mt: 5, p: 3,}}
+                >
                     send a withdrawal request
-                </Button>
+                </ContainedBlueButton>
             }
         />
     )

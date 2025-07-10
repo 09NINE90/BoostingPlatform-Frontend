@@ -10,6 +10,7 @@ import BoosterInfo from "src/components/chats/customer/utils/BoosterInfo.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
 import {toLocaleDateTime} from "src/utils/functions.js";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
@@ -50,7 +51,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
             <Box
                 sx={{
                     display: 'flex',
-                    padding: 5,
+                    p: 5,
                     width: '29%',
                     minWidth: '29%',
                     height: "85vh",
@@ -86,22 +87,12 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                 </Box>
                 {order.orderStatus !== IN_PROGRESS && (
                     <Box>
-                        <Button
+                        <ContainedBlueButton
                             onClick={() => openModal(order)}
-                            sx={{
-                                mt: 2,
-                                p: 2,
-                                width: "100%",
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.third.hover,
-                                }
-                            }}
+                            sx={{mt: 2, p: 2, width: '100%',}}
                         >
                             send tip
-                        </Button>
+                        </ContainedBlueButton>
                     </Box>
                 )}
             </Box>

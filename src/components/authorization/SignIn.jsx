@@ -14,15 +14,14 @@ import {
 } from "../../store/slice/authSlice.js";
 import {postAuthenticated} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
-import Button from "@mui/material/Button";
 import {NavLink, useNavigate} from "react-router";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
 import {getCountCartItemsApi} from "src/services/offerApi.js";
-import {ClipLoader} from "react-spinners";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const SignIn = ({closeModal, signUpRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -153,25 +152,16 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                 </div>
 
                 <div className="relative">
-                    <Button
+                    <ContainedBlueButton
                         loading={isLoading}
                         className="w-2/3"
                         variant="contained"
                         color="primary"
                         onClick={signIn}
-                        sx={{
-                            py: 2,
-                            width: '100%',
-                            color: theme.palette.text.primary,
-                            backgroundColor: theme.palette.third.main,
-                            fontWeight: theme.typography.fontWeightLight,
-                            '&:hover': {
-                                backgroundColor: theme.palette.third.hover,
-                            }
-                        }}
+                        sx={{py: 2, width: '100%',}}
                     >
                         Log In
-                    </Button>
+                    </ContainedBlueButton>
                 </div>
             </div>
         </>

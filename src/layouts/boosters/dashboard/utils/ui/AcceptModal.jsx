@@ -1,8 +1,9 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import React from "react";
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
 import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const AcceptModal = ({isOpen, onClose, onAccept, selectedOrder, isLoading}) => {
 
@@ -42,22 +43,13 @@ const AcceptModal = ({isOpen, onClose, onAccept, selectedOrder, isLoading}) => {
                     </Box>
                 }
                 actions={
-                    <Button
+                    <ContainedBlueButton
                         loading={isLoading}
                         onClick={onAccept}
-                        sx={{
-                            mt: 'auto',
-                            width: '100%',
-                            color: theme.palette.text.primary,
-                            backgroundColor: theme.palette.primary.main,
-                            fontWeight: theme.typography.fontWeightLight,
-                            '&:hover': {
-                                backgroundColor: theme.palette.secondary.main,
-                            }
-                        }}
+                        sx={{mt: 'auto', width: '100%',}}
                     >
                         Accept
-                    </Button>
+                    </ContainedBlueButton>
                 }
             />
         )

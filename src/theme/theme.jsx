@@ -72,12 +72,21 @@ const theme = createTheme({
         MuiCheckbox: {
             styleOverrides: {
                 root: {
-                    borderRadius: 0, // на всякий случай
+                    borderRadius: 0,
                 },
                 icon: {
                     borderRadius: 0,
                 },
             },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+              root: {
+                  '& .Mui-error': {
+                      color: customColors.customRed
+                  }
+              }
+          }
         },
         MuiTextField: {
             styleOverrides: {
@@ -124,7 +133,7 @@ const theme = createTheme({
                 disableRipple: true,
             }
         },
-        MuiIconButton:{
+        MuiIconButton: {
             defaultProps: {
                 disableRipple: true,
             }

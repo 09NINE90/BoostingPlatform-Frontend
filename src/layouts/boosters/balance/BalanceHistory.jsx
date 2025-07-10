@@ -53,7 +53,7 @@ const BalanceHistory = () => {
 
     return (
         <Box sx={{
-            padding: 3,
+            p: 3,
             backgroundColor: theme.palette.background.paper,
         }}>
             <Table>

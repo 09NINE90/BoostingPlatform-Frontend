@@ -1,11 +1,13 @@
 import theme from "src/theme/theme.jsx";
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import React from "react";
 import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
 import {toLocaleDateTime} from "src/utils/functions.js";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 
 const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrderHistory}) => {
     if (order) {
@@ -13,7 +15,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
             <Box
                 sx={{
                     display: 'flex',
-                    padding: 5,
+                    p: 5,
                     width: '29%',
                     minWidth: '29%',
                     height: "85vh",
@@ -43,42 +45,18 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 </Box>
                 {order.orderStatus === IN_PROGRESS && (
                     <Box>
-                        <Button
+                        <OutlinedBlueButton
                             onClick={() => openStartSessionModal()}
-                            sx={{
-                                mt: 2,
-                                p: 2,
-                                width: "100%",
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.background.default,
-                                fontWeight: theme.typography.fontWeightLight,
-                                border: 1,
-                                borderColor: theme.palette.text.primary,
-                                textDecoration: 'none',
-                                '&:hover': {
-                                    backgroundColor: theme.palette.background.paper,
-                                    borderColor: theme.palette.third.main,
-                                }
-                            }}
+                            sx={{mt: 2, p: 2, width: '100%',}}
                         >
                             Start session
-                        </Button>
-                        <Button
+                        </OutlinedBlueButton>
+                        <ContainedBlueButton
                             onClick={() => openModal()}
-                            sx={{
-                                mt: 2,
-                                p: 2,
-                                width: "100%",
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.third.hover,
-                                }
-                            }}
+                            sx={{mt: 2, p: 2, width: '100%',}}
                         >
                             Finish order
-                        </Button>
+                        </ContainedBlueButton>
                     </Box>
                 )}
             </Box>

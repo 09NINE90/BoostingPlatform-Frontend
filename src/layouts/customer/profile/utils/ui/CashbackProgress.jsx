@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {Box, Chip, LinearProgress, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
-import BoosterLevelsDescription from "src/layouts/boosters/profile/utils/ui/BoosterLevelsDescription.jsx";
 import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
 import CustomerStatusDescription from "src/layouts/customer/profile/utils/ui/CustomerStatusDescription.jsx";
 
@@ -11,7 +10,7 @@ const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountSt
     return (
         <Box sx={{
             flex: 1,
-            padding: 10,
+            p: 10,
             mt: 3,
             backgroundColor: theme.palette.background.paper
         }}>
@@ -27,7 +26,7 @@ const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountSt
                 component="div"
                 sx={{
                     color: '#fff',
-                    marginBottom: 5,
+                    mb: 5,
                     display: 'flex',
                     alignItems: 'center',
                     fontWeight: theme.typography.fontWeightLight,

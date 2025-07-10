@@ -59,7 +59,7 @@ function ProfileMain() {
     }
 
     return (
-        <Box sx={{padding: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
+        <Box sx={{p: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
             <CustomerProfileInfo
                 discountPercentage={discountPercentage}
                 cashbackBalance={cashbackBalance}

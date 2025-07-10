@@ -1,5 +1,5 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
-import {Box, Chip, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
 import theme from "src/theme/theme.jsx";
 
@@ -58,7 +58,7 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
                     <Typography
                         variant='body2'
                         sx={{
-                            padding: 3,
+                            p: 3,
                             width: '100%',
                             color: theme.palette.text.primary,
                             backgroundColor: theme.palette.background.default,

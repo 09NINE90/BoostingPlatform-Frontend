@@ -1,9 +1,10 @@
 import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const DashboardTableBody = ({allOrders, openModal}) => {
 
@@ -58,20 +59,12 @@ const DashboardTableBody = ({allOrders, openModal}) => {
                     <CustomCell width='15%' item={order.gamePlatform}/>
                     <CustomCell width='15%' item={`${order.totalPrice} $`}/>
                     <CustomCell width='20%' item={
-                        <Button
+                        <ContainedBlueButton
                             onClick={() => openModal(order)}
-                            sx={{
-                                width: '40%',
-                                height: '30px',
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.third.hover,
-                                }
-                            }}>
+                            sx={{width: '40%', height: '30px',}}
+                        >
                             Accept
-                        </Button>
+                        </ContainedBlueButton>
                     }/>
                 </TableRow>
             ))}

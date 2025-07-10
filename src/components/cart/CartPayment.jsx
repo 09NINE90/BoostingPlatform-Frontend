@@ -5,13 +5,13 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Button,
     Divider
 } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import theme from 'src/theme/theme.jsx';
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const CartPayment = ({ cartItems, onProceed  }) => {
+const CartPayment = ({cartItems, onProceed}) => {
     const totalPrice = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
     const totalTime = cartItems.reduce((sum, item) => sum + item.totalTime, 0);
 
@@ -28,7 +28,7 @@ const CartPayment = ({ cartItems, onProceed  }) => {
             }}
         >
             <Box>
-                <Typography variant="h6" sx={{ mb: 2 }}>
+                <Typography variant="h6" sx={{mb: 2}}>
                     Total: {cartItems.length}
                 </Typography>
 
@@ -42,22 +42,22 @@ const CartPayment = ({ cartItems, onProceed  }) => {
                     }}
                 >
                     {cartItems.map((item, idx) => (
-                        <ListItem key={idx} disableGutters sx={{ alignItems: 'center', py: 0.5 }}>
-                            <ListItemIcon sx={{ minWidth: 20, mt: 0.5 }}>
+                        <ListItem key={idx} disableGutters sx={{alignItems: 'center', py: 0.5}}>
+                            <ListItemIcon sx={{minWidth: 20, mt: 0.5}}>
                                 <FiberManualRecordIcon
-                                    sx={{ fontSize: 10, color: theme.palette.third.main }}
+                                    sx={{fontSize: 10, color: theme.palette.third.main}}
                                 />
                             </ListItemIcon>
                             <ListItemText
                                 primary={
                                     <Box display="flex" gap={1}>
                                         <Typography
-                                            sx={{ color: theme.palette.text.primary, fontSize: 14 }}
+                                            sx={{color: theme.palette.text.primary, fontSize: 14}}
                                         >
                                             {item.offerName}:
                                         </Typography>
                                         <Typography
-                                            sx={{ color: theme.palette.text.secondary, fontSize: 14 }}
+                                            sx={{color: theme.palette.text.secondary, fontSize: 14}}
                                         >
                                             ${item.totalPrice}
                                         </Typography>
@@ -68,9 +68,9 @@ const CartPayment = ({ cartItems, onProceed  }) => {
                     ))}
                 </List>
 
-                <Divider sx={{ mb: 2 }} />
+                <Divider sx={{mb: 2}}/>
 
-                <Box display="flex" justifyContent="space-between" sx={{ mb: 1 }}>
+                <Box display="flex" justifyContent="space-between" sx={{mb: 1}}>
                     <Typography variant="h6">
                         Total price:
                     </Typography>
@@ -79,32 +79,23 @@ const CartPayment = ({ cartItems, onProceed  }) => {
                     </Typography>
                 </Box>
 
-                <Box display="flex" justifyContent="space-between" sx={{ mb: 3 }}>
-                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, }}>
+                <Box display="flex" justifyContent="space-between" sx={{mb: 3}}>
+                    <Typography variant="body2" sx={{color: theme.palette.text.secondary,}}>
                         Total time:
                     </Typography>
-                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary, }}>
+                    <Typography variant="body2" sx={{color: theme.palette.text.secondary,}}>
                         {totalTime} hours
                     </Typography>
                 </Box>
             </Box>
 
-            <Button
+            <ContainedBlueButton
                 onClick={onProceed}
                 fullWidth
-                sx={{
-                    py: 1.5,
-                    borderRadius: 0,
-                    backgroundColor: theme.palette.third.main,
-                    color: theme.palette.text.primary,
-                    fontWeight: theme.typography.fontWeightLight,
-                    '&:hover': {
-                        backgroundColor: theme.palette.third.hover,
-                    },
-                }}
+                sx={{py: 1.5}}
             >
                 Proceed to payment
-            </Button>
+            </ContainedBlueButton>
         </Box>
     );
 };

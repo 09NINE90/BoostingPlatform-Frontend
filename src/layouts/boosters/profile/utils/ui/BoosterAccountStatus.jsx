@@ -9,7 +9,7 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
     return (
         <Box sx={{
             flex: 1,
-            padding: 10,
+            p: 10,
             mt: 3,
             backgroundColor: theme.palette.background.paper
         }}>
@@ -24,8 +24,8 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
                 variant="body1"
                 component="div"
                 sx={{
-                    color: '#fff',
-                    marginBottom: 5,
+                    color: theme.palette.text.primary,
+                    mb: 5,
                     display: 'flex',
                     alignItems: 'center',
                     fontWeight: theme.typography.fontWeightLight,

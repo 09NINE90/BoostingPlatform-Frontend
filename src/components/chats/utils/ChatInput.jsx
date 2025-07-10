@@ -1,6 +1,7 @@
-import {Box, Button, TextField, Typography} from "@mui/material";
+import {Box, TextField, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React from "react";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const ChatInput = ({inputMessage, setInputMessage, handleSendMessage, isConnected}) => {
     return (
@@ -34,27 +35,21 @@ const ChatInput = ({inputMessage, setInputMessage, handleSendMessage, isConnecte
                         },
                     }}
                 />
-                <Button
+                <ContainedBlueButton
                     variant="contained"
                     disabled={!isConnected() || inputMessage === ''}
                     onClick={handleSendMessage}
-                    sx={{
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                >
                     Send
-                </Button>
+                </ContainedBlueButton>
             </Box>
             <Typography
                 variant="caption"
                 color="text.secondary"
-                sx={{ mt: 1, ml: 0.5 }}
+                sx={{mt: 1, ml: 0.5}}
             >
-                Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> to add a new line. The chat also supports markdown
+                Press <strong>Enter</strong> to send, <strong>Shift + Enter</strong> to add a new line. The chat also
+                supports markdown
             </Typography>
         </Box>
     )

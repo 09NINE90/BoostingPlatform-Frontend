@@ -10,7 +10,7 @@ const OrderHistoryCard = ({order}) => {
     return (
         <Box sx={{
             border: 1,
-            padding: 5,
+            p: 5,
             height: 200,
             width: '100%',
             display: "flex",

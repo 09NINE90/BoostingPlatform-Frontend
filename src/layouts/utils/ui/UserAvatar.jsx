@@ -53,7 +53,7 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
                     bottom: 0,
                     right: 0,
                     backgroundColor: 'rgba(0,0,0,0.6)',
-                    padding: 1,
+                    p: 1,
                     opacity: 0,
                     transition: 'opacity 0.2s',
                     cursor: 'pointer',

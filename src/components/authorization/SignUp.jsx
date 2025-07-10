@@ -4,12 +4,10 @@ import {useSelector} from "react-redux";
 import {selectAuthStatus} from "../../store/slice/authSlice.js";
 import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
-import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
-import {ClipLoader} from "react-spinners";
-import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const SignUp = ({closeModal, signInRedirect}) => {
 
@@ -175,25 +173,16 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 </div>
             </div>
             <div>
-                <Button
+                <ContainedBlueButton
                     loading={isLoading}
                     className="w-2/3"
                     variant="contained"
                     color="primary"
                     onClick={signUp}
-                    sx={{
-                        py: 2,
-                        width: '100%',
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}
+                    sx={{py: 2, width: '100%'}}
                 >
                     Sign Up
-                </Button>
+                </ContainedBlueButton>
             </div>
         </div>
     );

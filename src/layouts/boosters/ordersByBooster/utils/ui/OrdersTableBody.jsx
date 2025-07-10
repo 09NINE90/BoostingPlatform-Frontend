@@ -1,11 +1,11 @@
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {Button} from "@mui/material";
 import OrderInfoCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoCell.jsx";
 import OrderStatusCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderStatusCell.jsx";
 import theme from "src/theme/theme.jsx";
 import {Link} from "react-router-dom";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const OrdersTableBody = ({allOrders}) => {
 
@@ -38,19 +38,13 @@ const OrdersTableBody = ({allOrders}) => {
                     <CustomCell width='10%' item={<OrderStatusCell orderStatus={order.orderStatus}/>}/>
                     <CustomCell width='10%' item=
                         {order.chatId && (
-                            <Button
+                            <ContainedBlueButton
                                 to={`/booster/chat/${order.chatId}/${order.orderId}`}
                                 component={Link}
-                                sx={{
-                                    color: theme.palette.text.primary,
-                                    backgroundColor: theme.palette.third.main,
-                                    fontWeight: theme.typography.fontWeightLight,
-                                    '&:hover': {
-                                        backgroundColor: theme.palette.third.hover,
-                                    }
-                                }}>
+                                sx={{width:'70%'}}
+                            >
                                 GET INFO
-                            </Button>
+                            </ContainedBlueButton>
                         )}/>
                 </TableRow>
             ))}
