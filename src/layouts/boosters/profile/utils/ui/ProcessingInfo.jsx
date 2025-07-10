@@ -22,7 +22,7 @@ const ProcessingInfo = ({minAmount}) => {
         <Box
             sx={{
                 mt: 5,
-                padding: 4,
+                p: 4,
                 display: "flex",
                 minWidth: '100%',
                 alignItems: "start",

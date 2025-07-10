@@ -3,7 +3,7 @@ import React from "react";
 
 const CategoriesFilter = ({categories, currentCategory, setCurrentCategory}) => {
     return (
-        <Box sx={{display: 'flex', overflowX: 'auto', marginBottom: 3}}>
+        <Box sx={{display: 'flex', overflowX: 'auto', mb: 3}}>
             {categories.length > 0 && (
                 <Chip
                     label="Clear filters"

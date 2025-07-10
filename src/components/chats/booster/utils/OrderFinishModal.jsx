@@ -1,7 +1,6 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
-import {Button} from "@mui/material";
 import React from "react";
-import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const OrderFinishModal = ({isOpen, onClose, onComplete}) => {
     return (
@@ -10,20 +9,12 @@ const OrderFinishModal = ({isOpen, onClose, onComplete}) => {
             onClose={onClose}
             title='Complete the order'
             actions={
-                <Button
+                <ContainedBlueButton
                     onClick={onComplete}
-                    sx={{
-                        mt: 5,
-                        width: '100%',
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                    sx={{mt: 5, width: '100%',}}
+                >
                     Complete
-                </Button>
+                </ContainedBlueButton>
             }
         />
     );

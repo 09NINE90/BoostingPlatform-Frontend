@@ -9,7 +9,7 @@ const InfoCardItem = ({label, value}) => {
             mt: 2,
             gap: 5,
             flex: 1,
-            padding: 4,
+            p: 4,
             minHeight: '120px',
             paddingInline: 5,
             display: 'flex',

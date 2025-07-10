@@ -7,7 +7,7 @@ const CustomTextItem = ({text, item, fontSize = 18}) => {
         <Box
             sx={{
                 mb: 3,
-                width: "100%",
+                width: '100%',
                 display: "flex",
                 justifyContent: "space-between",
             }}>

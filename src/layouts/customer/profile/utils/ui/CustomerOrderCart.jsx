@@ -1,9 +1,11 @@
 import theme from "src/theme/theme.jsx";
 import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
-import {Box, Button, Tooltip, Typography} from "@mui/material";
+import {Box, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import {useIsTextOverflowed} from "src/utils/functions.js";
 import {Link} from "react-router-dom";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 
 const CustomerOrderCart = ({order, onOpen}) => {
 
@@ -74,45 +76,23 @@ const CustomerOrderCart = ({order, onOpen}) => {
                         </span>
                     </Box>
                     {order.boosterId && (
-                        <Button
+                        <ContainedBlueButton
                             onClick={() => {
                                 onOpen(order.boosterId)
                             }}
-                            sx={{
-                                mt: 2,
-                                height: 40,
-                                width: '100%',
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.third.main,
-                                fontWeight: theme.typography.fontWeightLight,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.third.hover,
-                                }
-                            }}>
+                            sx={{mt: 2, height: 40, width: '100%',}}
+                        >
                             View booster
-                        </Button>
+                        </ContainedBlueButton>
                     )}
                     {order.chatId && (
-                        <Button
+                        <OutlinedBlueButton
                             to={`/chat/${order.chatId}/${order.orderId}`}
                             component={Link}
-                            sx={{
-                                mt: 2,
-                                height: 40,
-                                width: '100%',
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.background.default,
-                                fontWeight: theme.typography.fontWeightLight,
-                                border: 1,
-                                borderColor: theme.palette.text.primary,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.background.paper,
-                                    borderColor: theme.palette.primary.main,
-                                }
-                            }}
+                            sx={{mt: 2, height: 40, width: '100%',}}
                         >
                             OPEN CHAT
-                        </Button>
+                        </OutlinedBlueButton>
                     )}
 
                 </Box>

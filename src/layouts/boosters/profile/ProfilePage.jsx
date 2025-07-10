@@ -75,7 +75,7 @@ const ProfileMain = () => {
     }
 
     return (
-        <Box sx={{height: '100%', padding: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
+        <Box sx={{height: '100%', p: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
             <BoosterProfileInfo
                 balance={balance}
                 totalIncome={totalIncome}

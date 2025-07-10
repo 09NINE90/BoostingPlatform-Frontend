@@ -33,7 +33,7 @@ const BoosterOrderHistory = () => {
             {
                 mt: 3,
                 mr: 3,
-                padding: 10,
+                p: 10,
                 width: '73%',
                 maxWidth: '100%',
                 display: 'flex',
@@ -61,7 +61,7 @@ const BoosterOrderHistory = () => {
                     <Typography
                         variant="body1"
                         sx={{
-                            padding: 1/2,
+                            p: 1/2,
                             position: 'absolute',
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightRegular,

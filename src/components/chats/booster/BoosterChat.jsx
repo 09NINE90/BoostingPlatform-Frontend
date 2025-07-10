@@ -84,7 +84,7 @@ const BoosterChat = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: '100%',
-                padding: 3,
+                p: 3,
                 paddingInline: 25,
             }}>
             <OrderChatBoosterInfo order={order}

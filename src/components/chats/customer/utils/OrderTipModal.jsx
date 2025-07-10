@@ -1,4 +1,4 @@
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import React, {useCallback, useState} from "react";
@@ -8,6 +8,7 @@ import ProcessingInfo from "src/layouts/boosters/profile/utils/ui/ProcessingInfo
 import {postHandleSendTip} from "src/services/financeApi.js";
 import {toast} from "react-toastify";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const OrderTipModal = ({isOpen, onClose, selectedOrder, refreshTipHistory}) => {
 
@@ -49,7 +50,7 @@ const OrderTipModal = ({isOpen, onClose, selectedOrder, refreshTipHistory}) => {
             <Typography
                 variant='body1'
                 sx={{
-                    marginBottom: 2,
+                    mb: 2,
                     color: theme.palette.text.secondary,
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
@@ -85,21 +86,13 @@ const OrderTipModal = ({isOpen, onClose, selectedOrder, refreshTipHistory}) => {
                 </Box>
             }
             actions={
-                <Button
+                <ContainedBlueButton
                     loading={isLoading}
                     onClick={handleSendTip}
-                    sx={{
-                        mt: 5,
-                        width: '100%',
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                    sx={{mt: 5, width: '100%'}}
+                >
                     Send
-                </Button>
+                </ContainedBlueButton>
             }
         />
     )

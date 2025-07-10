@@ -79,7 +79,7 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
 
     return (
         <Box sx={{
-            padding: 3,
+            p: 3,
             height: 'fit-content',
             backgroundColor: theme.palette.background.paper,
         }}>

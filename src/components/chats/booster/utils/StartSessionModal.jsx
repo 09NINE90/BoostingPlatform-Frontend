@@ -1,7 +1,8 @@
-import {Box, Button, TextField} from "@mui/material";
-import theme from "src/theme/theme.jsx";
+import {Box} from "@mui/material";
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import React, {useState} from "react";
+import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const StartSessionModal = ({isOpen, onClose, startSession}) => {
 
@@ -22,7 +23,7 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
             title='Start session'
             content={
                 <Box sx={{display: 'flex', flexDirection: 'column', gap: 3, mt: 2}}>
-                    <TextField
+                    <BlueTextField
                         required
                         error={!duration}
                         type='number'
@@ -32,75 +33,23 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                         fullWidth
-                        sx={{
-                            '& .MuiInputLabel-root': {
-                                color: theme.palette.divider,
-                            },
-                            '&:hover .MuiInputLabel-root': {
-                                color: theme.palette.third.main,
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: theme.palette.third.main,
-                            },
-                            '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                    borderColor: theme.palette.divider,
-                                },
-                                '&:hover fieldset': {
-                                    borderColor: theme.palette.third.main,
-                                },
-                                '&.Mui-focused fieldset': {
-                                    borderColor: theme.palette.third.main,
-                                },
-                            },
-                        }}
                     />
-                    <TextField
+                    <BlueTextField
                         label="Stream link (optional)"
                         variant="outlined"
                         value={streamLink}
                         onChange={(e) => setStreamLink(e.target.value)}
                         fullWidth
-                        sx={{
-                            '& .MuiInputLabel-root': {
-                                color: theme.palette.divider,
-                            },
-                            '&:hover .MuiInputLabel-root': {
-                                color: theme.palette.third.main,
-                            },
-                            '& .MuiInputLabel-root.Mui-focused': {
-                                color: theme.palette.third.main,
-                            },
-                            '& .MuiOutlinedInput-root': {
-                                '& fieldset': {
-                                    borderColor: theme.palette.divider,
-                                },
-                                '&:hover fieldset': {
-                                    borderColor: theme.palette.third.main,
-                                },
-                                '&.Mui-focused fieldset': {
-                                    borderColor: theme.palette.third.main,
-                                },
-                            },
-                        }}
                     />
                 </Box>
             }
             actions={
-                <Button
+                <ContainedBlueButton
                     onClick={handleStartSession}
-                    sx={{
-                        mt: 5,
-                        width: '100%',
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                    sx={{mt: 5, width: '100%',}}
+                >
                     start session
-                </Button>
+                </ContainedBlueButton>
             }
         />
     )

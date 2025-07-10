@@ -49,7 +49,7 @@ const CustomerChat = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: '100%',
-                padding: 3,
+                p: 3,
                 paddingInline: 25,
             }}>
             <OrderChatCustomerInfo orderId={orderId} openModal={openModal} tipOrderHistory={tipOrderHistory}/>

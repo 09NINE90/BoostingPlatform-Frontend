@@ -50,7 +50,7 @@ const OrderTable = () => {
     return (
         <Box sx={{
             maxWidth: '100%',
-            padding: 5,
+            p: 5,
             mt: 3,
             backgroundColor: theme.palette.background.paper
         }}>
