@@ -1,16 +1,31 @@
-import "../../styles/AuthForms.css";
-import {useState} from "react";
-import {NavLink} from "react-router-dom";
-import {postRegister} from "../../services/authApi.js";
+import React, {useState} from "react";
+import Alert from "@mui/material/Alert";
 import {TextField} from "@mui/material";
-import Alert from '@mui/material/Alert';
-import {toast} from "react-toastify";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import {
+    clearAuth,
+    setAuth,
+    setAvatar,
+    setCountCartItems, setDescription,
+    setEmail,
+    setRole, setSecondId,
+    setToken,
+    setUsername
+} from "src/store/slice/authSlice.js";
+import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
+import {getBoosterProfileData, getCustomerProfileData} from "src/services/userApi.js";
+import {getCountCartItemsApi} from "src/services/offerApi.js";
+import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
+import {NavLink, useNavigate} from "react-router";
+import {changePassword} from "src/services/authApi.js";
 
-const SignUp = ({closeModal, signInRedirect}) => {
+const NewPassword = ({closeModal, signInRedirect}) => {
 
-    const [nickname, setNickname] = useState("");
-    const [email, setEmail] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [fieldEmail, setFieldEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
@@ -19,42 +34,58 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const [emailFieldIsValid, setEmailFieldIsValid] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+    const setProfile = (profile) => {
+        dispatch(setUsername(profile.nickname));
+        dispatch(setAvatar(profile.imageUrl));
+        dispatch(setEmail(profile.email))
+        dispatch(setSecondId(profile.secondId));
+        dispatch(setDescription(profile.description));
+    }
 
-    const signUp = async () => {
-        if (nickname !== "" && confirmPassword !== "") {
-            try {
-                setIsLoading(true);
-
-                if (password !== confirmPassword) {
-                    setErrorMessage("Passwords do not match!");
-                    return;
-                }
-
-                const credentials = {
-                    nickname: nickname,
-                    email: email,
-                    password: password
-                }
-
-                const message = await postRegister(credentials);
-
-                closeModal();
-
-                toast.success(message.confirmation + message.username);
-
-            } catch (error) {
-                const serverError = error.response?.data?.message
-                setErrorMessage(serverError || "An error occurred, please contact the administrator!");
-            } finally {
-                setIsLoading(false);
-            }
-        } else {
-            setRequiredFieldEmpty(true);
+    const handleChangePassword = async () => {
+        if (fieldEmail === '' || password === '' || confirmPassword === '') {
+            setRequiredFieldEmpty(true)
         }
-    };
+        setIsLoading(true)
+        try {
+            const request = {
+                email: fieldEmail,
+                password: password
+            }
+            const {role, token} = await changePassword(request);
 
-    const onChangeEmail = (email) => {
-        const isEmailValid = String(email)
+            dispatch(setToken(token));
+            dispatch(setRole(role));
+            dispatch(setAuth(true));
+
+            if (role === CUSTOMER_ROLE) {
+                const profile = await getCustomerProfileData();
+                const countCartItems = await getCountCartItemsApi();
+
+                setProfile(profile)
+                dispatch(setCountCartItems(countCartItems));
+
+            } else if (role === BOOSTER_ROLE) {
+                const profile = await getBoosterProfileData();
+
+                setProfile(profile)
+                navigate('/booster/dashboard')
+            }
+
+            toast.success('Sign in successfully');
+            closeModal();
+        } catch (err) {
+            dispatch(clearAuth());
+            const serverError = err.response?.data?.message
+
+            setErrorMessage(serverError)
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    const onChangeEmail = (fieldEmail) => {
+        const isEmailValid = String(fieldEmail)
             .toLowerCase()
             .match(
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -64,7 +95,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
         } else {
             setEmailFieldIsValid(true);
         }
-        setEmail(email);
+        setFieldEmail(fieldEmail);
     }
 
     const onChangePassword = (password) => {
@@ -83,22 +114,6 @@ const SignUp = ({closeModal, signInRedirect}) => {
 
     return (
         <div className="flex flex-col justify-between">
-            <div className="h-full p-2 kanit-light">
-                By continuing, you agree to our&nbsp;
-                <NavLink
-                    className={"linkClass"}
-                    to="/"
-                >
-                    User Agreement
-                </NavLink>
-                &nbsp;and acknowledge that you understand the&nbsp;
-                <NavLink
-                    className={"linkClass"}
-                    to="/"
-                >
-                    Privacy Policy
-                </NavLink>.
-            </div>
             {
                 errorMessage &&
                 <Alert
@@ -112,20 +127,11 @@ const SignUp = ({closeModal, signInRedirect}) => {
             }
             <div className="mb-2 flex flex-col gap-2">
                 <TextField
-                    error={requiredFieldEmpty}
-                    required
-                    sx={{my: 1}}
-                    type="text"
-                    value={nickname}
-                    onChange={(e) => setNickname(e.target.value)}
-                    label="Nickname"
-                />
-                <TextField
                     error={!emailFieldIsValid || requiredFieldEmpty}
                     required
                     sx={{my: 1}}
                     type="email"
-                    value={email}
+                    value={fieldEmail}
                     onChange={(e) => onChangeEmail(e.target.value)}
                     label="Email"
                 />
@@ -136,7 +142,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     type="password"
                     value={password}
                     onChange={(e) => onChangePassword(e.target.value)}
-                    label="Password"
+                    label="New password"
                 />
                 {!passwordFieldIsValid ?
                     <div className="text-[#f44336] text-sm kanit-light">
@@ -152,38 +158,28 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    label="Confirm password"
+                    label="Confirm new password"
                     onKeyDown={(event) => {
                         if (event.key === 'Enter')
-                            signUp();
+                            handleChangePassword();
                     }}
                 />
             </div>
             <div className="flex flex-col items-start my-5 gap-2 kanit-light">
-                <div>
-                    Already have account?
-                    <NavLink
-                        className={linkClass}
-                        onClick={signInRedirect}
-                    >
-                        &nbsp;Sign In
-                    </NavLink>
-                </div>
+                <NavLink className={linkClass} onClick={signInRedirect}>Sign in</NavLink>
             </div>
             <div>
                 <ContainedBlueButton
                     loading={isLoading}
-                    className="w-2/3"
                     variant="contained"
-                    color="primary"
-                    onClick={signUp}
+                    onClick={() => handleChangePassword()}
                     sx={{py: 2, width: '100%'}}
                 >
-                    Sign Up
+                    Change password
                 </ContainedBlueButton>
             </div>
         </div>
     );
-};
+}
 
-export default SignUp;
+export default NewPassword;

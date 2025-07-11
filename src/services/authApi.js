@@ -55,3 +55,32 @@ export const confirmEmail = async (confirmationToken) => {
         token: accessToken
     };
 }
+
+
+export const resetPassword = async (request) => {
+    const response = await api.post(`/auth/password-reset/request`, request);
+    return response.data;
+}
+
+export const resetPasswordValidate = async (request) => {
+    const response = await api.post(`/auth/password-reset/validate`, request);
+    return response.data;
+}
+
+export const changePassword = async (request) => {
+    const response = await api.post(`/auth/password-change`, request);
+    if (!response.data) {
+        throw new Error('Сервер не вернул данные');
+    }
+
+    const {role, accessToken } = response.data;
+
+    if (!accessToken ) {
+        throw new Error('Access token not received');
+    }
+
+    return {
+        role: Array.isArray(role) ? role[0] : role,
+        token: accessToken
+    };
+}

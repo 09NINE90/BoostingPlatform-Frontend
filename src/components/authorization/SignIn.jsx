@@ -23,7 +23,7 @@ import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const SignIn = ({closeModal, signUpRedirect}) => {
+const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
     const [errorMessage, setErrorMessage] = useState(null);
     const [requiredFieldEmpty, setRequiredFieldEmpty] = useState(false);
@@ -141,7 +141,7 @@ const SignIn = ({closeModal, signUpRedirect}) => {
                     </div>
 
                     <div className="flex flex-col items-start my-5 gap-2 kanit-light">
-                        <NavLink className={linkClass}>Forgot password?</NavLink>
+                        <NavLink className={linkClass} onClick={forgotPasswordRedirect}>Forgot password?</NavLink>
                         <div>
                             New in V-Boosting?
                             <NavLink className={linkClass} onClick={signUpRedirect}>
