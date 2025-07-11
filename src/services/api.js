@@ -25,8 +25,8 @@ const processQueue = (error, newToken = null) => {
 
 api.interceptors.request.use(
     config => {
-        if (config.url?.includes('/auth/refresh') ||
-            config.url?.includes('/auth/signIn')) {
+        if (config.url?.includes('/auth/refresh-token') ||
+            config.url?.includes('/auth/login')) {
             return config;
         }
 
@@ -44,8 +44,8 @@ api.interceptors.response.use(
     async error => {
         const originalRequest = error.config;
 
-        if (originalRequest.url?.includes('/auth/refresh') ||
-            originalRequest.url?.includes('/auth/signIn')) {
+        if (originalRequest.url?.includes('/auth/refresh-token') ||
+            originalRequest.url?.includes('/auth/login')) {
             return Promise.reject(error);
         }
 
