@@ -9,7 +9,7 @@ const AmountTextField = ({inputValue, onChange, placeholder}) => {
             type="number"
             value={inputValue}
             onChange={onChange}
-            placeholder={placeholder}
+            placeholder={placeholder?.toString() ?? ""}
             sx={{
                 '& .MuiOutlinedInput-root': {
                     '& fieldset': {
