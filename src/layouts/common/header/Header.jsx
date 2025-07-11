@@ -1,9 +1,6 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import SignIn from "../../../components/authorization/SignIn.jsx";
-import SignUp from "../../../components/authorization/SignUp.jsx";
-import ModalTemplate from "../../../utils/modalTemplate/ModalTemplate.jsx";
 import {AppBar, IconButton} from '@mui/material';
 import ProfileIcon from "../../../assets/icons/ProfileIcon.jsx";
 import DropMenu from "src/layouts/common/header/utils/ui/DropMenu.jsx";
@@ -12,10 +9,11 @@ import Search from "src/layouts/common/header/utils/ui/Search.jsx";
 import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
 import {toast} from "react-toastify";
-import {SIGN_IN_STATE, SIGN_IN_TEXT, SIGN_UP_STATE, SIGN_UP_TEXT} from "src/utils/constants/authForm.js";
+import {SIGN_IN_STATE,} from "src/utils/constants/authForm.js";
 import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
 import {postLogout} from "src/services/authApi.js";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
+import {AuthModal} from "src/components/authorization/AuthModal.jsx";
 
 const Header = () => {
     const role = useSelector(selectRole);
@@ -66,22 +64,12 @@ const Header = () => {
     const renderModal = useMemo(() => {
         if (modalIsOpen) handleProfileMenuClose()
         return (
-            <ModalTemplate
-                isOpen={modalIsOpen}
-                onClose={toggleModal}
-                title={modelType === SIGN_IN_STATE ? SIGN_IN_TEXT : SIGN_UP_TEXT}
-                content={
-                    modelType === SIGN_IN_STATE ?
-                        <SignIn
-                            closeModal={toggleModal}
-                            signUpRedirect={() => setModalType(SIGN_UP_STATE)}
-                        />
-                        :
-                        <SignUp
-                            closeModal={toggleModal}
-                            signInRedirect={() => setModalType(SIGN_IN_STATE)}
-                        />
-                }
+            <AuthModal
+                modalIsOpen={modalIsOpen}
+                toggleModal={toggleModal}
+                modelType={modelType}
+                setModalType={setModalType}
+                handleProfileMenuClose={handleProfileMenuClose}
             />
         )
     }, [modalIsOpen, toggleModal, modelType, setModalType])
