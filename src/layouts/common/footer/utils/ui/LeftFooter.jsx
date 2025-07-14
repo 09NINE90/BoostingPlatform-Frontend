@@ -11,8 +11,8 @@ const LeftFooter = () => {
                     Social media:
                 </div>
                 <div className="flex flex-row mt-2 space-x-3">
-                    <a href="#"><YouTube className="w-10 h-7 md:w-[48px] md:h-[34px] hover:scale-105"/></a>
-                    <a href="#"><Telegram className="w-8 h-8 md:w-[35px] md:h-[35px] hover:scale-105"/></a>
+                    <a href="#"><YouTube/></a>
+                    <a href="#"><Telegram/></a>
                 </div>
             </div>
         </div>

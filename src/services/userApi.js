@@ -21,6 +21,11 @@ export const getMiniBoosterProfileData = async (boosterId) => {
     return response.data;
 }
 
+export const becomeBooster = async (request) => {
+    const response = await api.post(`/boosters/become/request`, request);
+    return response.data;
+}
+
 /**
  * Общее
  */

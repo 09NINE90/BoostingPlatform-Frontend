@@ -31,6 +31,7 @@ import BalanceHistoryPage from "src/pages/BalanceHistoryPage.jsx";
 import ChatComponent from "src/components/chats/ChatComponent.jsx";
 import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
 import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
+import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
 
 const root = document.getElementById('root');
 
@@ -51,6 +52,7 @@ export const App = () => {
                     <Route path=":id" element={<HomeMain/>}></Route>
                     <Route path="/games/:id" element={<HomeMain/>}></Route>
                     <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
+                    <Route path="/become/booster" element={<BecomeBoosterPage/>}></Route>
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>
