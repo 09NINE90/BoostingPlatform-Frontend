@@ -8,6 +8,7 @@ import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrdersTableBody from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableBody.jsx";
 import OrdersTableHead from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableHead.jsx";
 import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
+import {Box} from "@mui/material";
 
 const Orders = () => {
     const [allOrders, setAllOrders] = useState([]);
@@ -66,7 +67,9 @@ const Orders = () => {
                     <EmptyResponse text={'no orders by filter'}/>
                 )}
                 {loading && (
-                    <CenterLoader/>
+                    <Box sx={{pt: '10%'}}>
+                        <CenterLoader minHeight='100%'/>
+                    </Box>
                 )}
             </TableContainer>
         </div>

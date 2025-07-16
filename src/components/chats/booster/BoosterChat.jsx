@@ -21,6 +21,7 @@ const BoosterChat = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [order, setOrder] = useState(null);
     const [tipOrderHistory, setTipOrderHistory] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const openStartSessionModal = () => setStartSessionModalIsOpen(true);
     const closeStartSessionModal = () => setStartSessionModalIsOpen(false);
@@ -68,6 +69,13 @@ const BoosterChat = () => {
     }
 
     useEffect(() => {
+        if (order && tipOrderHistory) {
+            setIsLoading(false);
+        }
+    }, [order, tipOrderHistory]);
+
+    useEffect(() => {
+        setIsLoading(true);
         window.scrollTo(0, 0);
         fetchBoosterOrders();
     }, [fetchBoosterOrders]);
@@ -88,6 +96,7 @@ const BoosterChat = () => {
                 paddingInline: 25,
             }}>
             <OrderChatBoosterInfo order={order}
+                                  isLoading={isLoading}
                                   openModal={openModal}
                                   openStartSessionModal={openStartSessionModal}
                                   tipOrderHistory={tipOrderHistory}

@@ -12,6 +12,7 @@ import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagina
 import DashboardTableBody from "src/layouts/boosters/dashboard/utils/ui/DashboardTableBody.jsx";
 import DashboardTableHead from "src/layouts/boosters/dashboard/utils/ui/DashboardTableHead.jsx";
 import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
+import {Box} from "@mui/material";
 
 const Dashboard = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -128,7 +129,9 @@ const Dashboard = () => {
                         )}
                     </Table>
                     {loading && (
-                        <CenterLoader/>
+                        <Box sx={{pt: '10%'}}>
+                            <CenterLoader minHeight='100%'/>
+                        </Box>
                     )}
                     {!loading && allOrders.length === 0 && (
                         <EmptyResponse text={'no orders by filter'}/>
