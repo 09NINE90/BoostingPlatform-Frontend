@@ -4,7 +4,7 @@ import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 
-const UsernameEditor = ({initialName, onSave, onCancel}) => {
+const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
     const [tempName, setTempName] = useState(initialName);
 
     return (
@@ -32,6 +32,7 @@ const UsernameEditor = ({initialName, onSave, onCancel}) => {
             />
             <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
                 <ContainedBlueButton
+                    loading={loading}
                     variant="contained"
                     size="small"
                     onClick={() => onSave(tempName)}

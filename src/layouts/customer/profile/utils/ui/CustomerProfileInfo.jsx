@@ -34,14 +34,20 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
+    const [isLoadingNameSave, setIsLoadingNameSave] = useState(false)
+    const [isLoadingDescriptionSave, setIsLoadingDescriptionSave] = useState(false)
+
     const handleNameSave = async (newName) => {
-        setUserName(newName);
-        dispatch(setUsername(newName));
-        setIsEditingName(false);
+        setIsLoadingNameSave(true)
         try {
             await changeNickname(newName);
+            setUserName(newName);
+            dispatch(setUsername(newName));
+            setIsEditingName(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingNameSave(false)
         }
     };
 
@@ -50,6 +56,7 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
     };
 
     const handleDescriptionSave = async (newDescription) => {
+        setIsLoadingDescriptionSave(true)
         try {
             await changeDescriptionProfile(newDescription);
             setDescriptionProfile(newDescription);
@@ -57,6 +64,8 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
             setIsEditingDescription(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingDescriptionSave(false)
         }
     };
 
@@ -101,6 +110,7 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
                                 initialName={userName}
                                 onSave={handleNameSave}
                                 onCancel={handleNameCancel}
+                                loading={isLoadingNameSave}
                             />
                         ) : (
                             <UsernameInfoItem
@@ -135,6 +145,7 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
                                 initialDescription={descriptionProfile}
                                 onSave={handleDescriptionSave}
                                 onCancel={handleDescriptionCancel}
+                                loading={isLoadingDescriptionSave}
                             />
                         ) : (
                             <ProfileDescriptionItem

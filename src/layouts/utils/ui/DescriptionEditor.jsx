@@ -4,7 +4,7 @@ import theme from "src/theme/theme.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
+const DescriptionEditor = ({initialDescription, onSave, onCancel, loading}) => {
     const [tempDescription, setTempDescription] = useState(initialDescription);
 
     return (
@@ -50,6 +50,7 @@ const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
                     Cancel
                 </OutlinedBlueButton>
                 <ContainedBlueButton
+                    loading={loading}
                     variant="contained"
                     size="small"
                     onClick={() => onSave(tempDescription)}

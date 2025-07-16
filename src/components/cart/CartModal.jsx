@@ -11,6 +11,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
     const dispatch = useDispatch();
     const countCartItems = useSelector(selectCountCartItems);
     const [selectedIds, setSelectedIds] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleToggleItem = (item) => {
         setSelectedIds((prev) =>
@@ -21,6 +22,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
     };
 
     const handleProceed = async () => {
+        setIsLoading(true)
         try {
             await postCreateOrders(selectedIds);
             dispatch(setCountCartItems(countCartItems - selectedIds.length));
@@ -28,6 +30,8 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
             setSelectedIds([]);
         } catch (err) {
             console.log(err);
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -53,6 +57,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
                 <CartPayment
                     cartItems={cartItems.filter((item) => selectedIds.includes(item.id))}
                     onProceed={handleProceed}
+                    loading={isLoading}
                 />
             )}
         </div>

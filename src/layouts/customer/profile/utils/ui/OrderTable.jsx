@@ -10,10 +10,12 @@ import theme from "src/theme/theme.jsx";
 import CustomerOrderCart from "src/layouts/customer/profile/utils/ui/CustomerOrderCart.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import BoosterMiniProfileModal from "src/layouts/customer/profile/utils/ui/BoosterMiniProfileModal.jsx";
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
 const OrderTable = () => {
 
     const [orders, setOrders] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState({status: "CREATED"});
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [boosterProfile, setBoosterProfile] = useState(null);
@@ -34,12 +36,16 @@ const OrderTable = () => {
     };
 
     const fetchOrdersData = useCallback(async () => {
+        setOrders([])
+        setIsLoading(true)
         try {
             const ordersApi = await getOrdersByCreator(selectedStatus)
             setOrders(ordersApi);
         } catch (error) {
             setOrders([]);
             console.log(error);
+        } finally {
+            setIsLoading(false)
         }
     }, [getOrdersByCreator, selectedStatus]);
 
@@ -72,11 +78,20 @@ const OrderTable = () => {
                     ))}
                 </>
             )}
-            {orders.length === 0 && selectedStatus.status !== null && (
-                <EmptyResponse text={'no orders by filter'}/>
+            {!isLoading && orders.length === 0 && selectedStatus.status !== null && (
+                <Box sx={{py: '10%'}}>
+                    <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
+                </Box>
             )}
-            {orders.length === 0 && selectedStatus.status === null && (
-                <EmptyResponse text={'you have not orders'}/>
+            {!isLoading && orders.length === 0 && selectedStatus.status === null && (
+                <Box sx={{py: '10%'}}>
+                    <EmptyResponse text={'you have not orders'} minHeight='100%'/>
+                </Box>
+            )}
+            {isLoading && (
+                <Box sx={{py: '10%'}}>
+                    <CenterLoader minHeight='100%'/>
+                </Box>
             )}
             {modalIsOpen && (
                 <BoosterMiniProfileModal onClose={closeModal} isOpen={modalIsOpen} boosterInfo={boosterProfile}/>

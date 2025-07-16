@@ -52,14 +52,16 @@ const BalanceHistory = () => {
     }
 
     return (
-        <Box sx={{
-            p: 3,
-            backgroundColor: theme.palette.background.paper,
-        }}>
-            <Table>
-                <BalanceHistoryTableHead/>
-                <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
-            </Table>
+        <Box sx={{minHeight: '80vh',}}>
+            <Box sx={{
+                p: 3,
+                backgroundColor: theme.palette.background.paper,
+            }}>
+                <Table>
+                    <BalanceHistoryTableHead/>
+                    <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
+                </Table>
+            </Box>
         </Box>
     )
 }

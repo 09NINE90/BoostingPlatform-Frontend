@@ -11,12 +11,14 @@ import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesDa
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
 import {toLocaleDateTime} from "src/utils/functions.js";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
 const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
     const [order, setOrder] = useState(null);
     const [boosterId, setBoosterId] = useState(null);
     const [boosterInfo, setBoosterInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchBoosterOrders = useCallback(async () => {
         try {
@@ -39,12 +41,44 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
     }, [getMiniBoosterProfileData, boosterId]);
 
     useEffect(() => {
+        if (order && (boosterId === null || boosterInfo) && tipOrderHistory !== null) {
+            setIsLoading(false);
+        }
+    }, [order, boosterId, boosterInfo, tipOrderHistory]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetchBoosterOrders();
+    }, [fetchBoosterOrders])
+
+    useEffect(() => {
         fetchBoosterOrders()
     }, [fetchBoosterOrders])
 
     useEffect(() => {
-        fetchBoosterInfo()
+        if (boosterId) {
+            fetchBoosterInfo();
+        }
     }, [fetchBoosterInfo])
+
+    if (isLoading) {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    p: 5,
+                    width: '29%',
+                    minWidth: '29%',
+                    height: "85vh",
+                    flexDirection: 'column',
+                    backgroundColor: theme.palette.background.paper,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                <CenterLoader minHeight='100%'/>
+            </Box>
+        );
+    }
 
     if (order) {
         return (

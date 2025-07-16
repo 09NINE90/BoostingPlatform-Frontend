@@ -5,6 +5,7 @@ import {handleApiError} from 'src/components/error/ErrorPage.jsx';
 import {getBoosterOrdersHistory} from 'src/services/orderApi.js';
 import theme from 'src/theme/theme.jsx';
 import OrderHistoryCard from 'src/layouts/boosters/profile/utils/ui/OrderHistoryCard.jsx';
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
 const BoosterOrderHistory = () => {
 
@@ -49,7 +50,10 @@ const BoosterOrderHistory = () => {
                 }}>
                 Order History
             </Typography>
-            {orderHistory.length === 0 && (
+            {loading && (
+                <CenterLoader minHeight='100%'/>
+            )}
+            {!loading && orderHistory.length === 0 && (
                 <Box
                     sx={{
                         height: '100%',

@@ -14,6 +14,7 @@ import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
 import {postLogout} from "src/services/authApi.js";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import {AuthModal} from "src/components/authorization/AuthModal.jsx";
+import {store} from "src/store/store.js";
 
 const Header = () => {
     const role = useSelector(selectRole);
