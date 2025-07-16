@@ -7,13 +7,15 @@ import {Box, Divider} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import ChatMessages from "src/components/chats/utils/ChatMessages.jsx";
 import ChatInput from "src/components/chats/utils/ChatInput.jsx";
+import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 
-const ChatComponent = ({chatId, onReady }) => {
+const ChatComponent = ({chatId, onReady}) => {
 
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const [messages, setMessages] = useState([]);
     const [inputMessage, setInputMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     const userToken = useSelector(selectToken);
     const username = useSelector(selectUsername);
 
@@ -23,7 +25,6 @@ const ChatComponent = ({chatId, onReady }) => {
         'ws://localhost:6969/ws',
         {
             onConnect: () => {
-                console.log('Chat connected!');
                 subscriptionRef.current = subscribe(`/topic/chat/${chatId}`, (message) => {
                     try {
                         const newMessage = JSON.parse(message.body);
@@ -60,6 +61,7 @@ const ChatComponent = ({chatId, onReady }) => {
     useEffect(() => {
         const fetchMessages = async () => {
             if (!userToken) return;
+            setIsLoading(true)
             try {
                 const roomData = await getChatRoom(chatId);
                 if (roomData.messages) {
@@ -70,6 +72,8 @@ const ChatComponent = ({chatId, onReady }) => {
                 }
             } catch (e) {
                 console.error("Failed to load chat room messages:", e);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -129,6 +133,9 @@ const ChatComponent = ({chatId, onReady }) => {
                 boxShadow: 1,
             }}
         >
+            {isLoading && (
+                <CenterLoader minHeight='100%'/>
+            )}
             <Box
                 sx={{
                     flex: 1,

@@ -2,11 +2,11 @@ import {ClipLoader} from "react-spinners";
 import React from "react";
 import {Box} from "@mui/material";
 
-const CenterLoader = ({size = 100}) => {
+const CenterLoader = ({size = 100, minHeight = '100vh'}) => {
     return(
         <Box
             sx={{
-                minHeight: '100vh',
+                minHeight: minHeight,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

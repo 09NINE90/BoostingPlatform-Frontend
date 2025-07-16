@@ -11,7 +11,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import theme from 'src/theme/theme.jsx';
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const CartPayment = ({cartItems, onProceed}) => {
+const CartPayment = ({cartItems, onProceed, loading}) => {
     const totalPrice = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
     const totalTime = cartItems.reduce((sum, item) => sum + item.totalTime, 0);
 
@@ -90,6 +90,7 @@ const CartPayment = ({cartItems, onProceed}) => {
             </Box>
 
             <ContainedBlueButton
+                loading={loading}
                 onClick={onProceed}
                 fullWidth
                 sx={{py: 1.5}}

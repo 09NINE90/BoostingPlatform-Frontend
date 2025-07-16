@@ -7,6 +7,7 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
         <Box sx={{display: 'flex', overflowX: 'auto', mb: 5}}>
             {statuses.length > 0 && (
                 <Button
+                    disabled={selectedStatus.status === null}
                     onClick={() => setSelectedStatus({status: null})}
                     sx={{
                         mr: 2,
@@ -32,6 +33,7 @@ const OrderStatusesFilter = ({statuses, selectedStatus, setSelectedStatus}) => {
             {statuses.map((status) => (
                 <Button
                     key={status.id}
+                    disabled={selectedStatus.status === status.name}
                     onClick={() => setSelectedStatus({status: status.name})}
                     sx={{
                         mr: 2,
