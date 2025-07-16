@@ -2,10 +2,11 @@ import {FaBoxOpen} from 'react-icons/fa';
 import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 
-const EmptyResponse = ({text, minHeight = '100vh'}) => {
+const EmptyResponse = ({text, minHeight = '100%'}) => {
     return (
         <Box
             sx={{
+                pt: '5%',
                 width: '100%',
                 minHeight: minHeight,
                 display: 'flex',
