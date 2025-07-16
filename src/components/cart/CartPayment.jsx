@@ -20,25 +20,38 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
             sx={{
                 borderLeft: '1px solid ' + theme.palette.divider,
                 pl: 2,
-                minWidth: '15vw',
+                width: '17vw',
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
             }}
         >
-            <Box>
-                <Typography variant="h6" sx={{mb: 2}}>
-                    Total: {cartItems.length}
-                </Typography>
+            <Typography variant="h6" sx={{mb: 2}}>
+                Total: {cartItems.length}
+            </Typography>
 
+            <Box sx={{flex: 1, overflowY: 'auto', mb: 2}}>
                 <List
                     dense
                     sx={{
-                        maxHeight: '30vh',
+                        maxHeight: '100%',
                         overflowY: 'auto',
                         pr: 1,
                         mb: 2,
+                        '&::-webkit-scrollbar': {
+                            width: '6px',
+                        },
+                        '&::-webkit-scrollbar-track': {
+                            background: theme.palette.divider,
+                            borderRadius: '3px',
+                        },
+                        '&::-webkit-scrollbar-thumb': {
+                            background: theme.palette.primary.main,
+                            borderRadius: '3px',
+                            '&:hover': {
+                                background: theme.palette.primary.main,
+                            }
+                        }
                     }}
                 >
                     {cartItems.map((item, idx) => (
@@ -67,36 +80,57 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
                         </ListItem>
                     ))}
                 </List>
+            </Box>
 
+            <Box sx={{flexShrink: 0}}>
                 <Divider sx={{mb: 2}}/>
 
                 <Box display="flex" justifyContent="space-between" sx={{mb: 1}}>
-                    <Typography variant="h6">
+                    <Typography variant="h6" sx={{fontWeight: theme.typography.fontWeightRegular}}>
                         Total price:
                     </Typography>
-                    <Typography variant="h6">
+                    <Typography variant="h6" sx={{fontWeight: theme.typography.fontWeightRegular}}>
                         ${totalPrice}
                     </Typography>
                 </Box>
 
                 <Box display="flex" justifyContent="space-between" sx={{mb: 3}}>
-                    <Typography variant="body2" sx={{color: theme.palette.text.secondary,}}>
+                    <Typography variant="body2" sx={{
+                        color: theme.palette.text.secondary,
+                        fontWeight: theme.typography.fontWeightRegular
+                    }}>
                         Total time:
                     </Typography>
-                    <Typography variant="body2" sx={{color: theme.palette.text.secondary,}}>
+                    <Typography variant="body2" sx={{
+                        color: theme.palette.text.secondary,
+                        fontWeight: theme.typography.fontWeightRegular
+                    }}>
                         {totalTime} hours
                     </Typography>
                 </Box>
-            </Box>
 
-            <ContainedBlueButton
-                loading={loading}
-                onClick={onProceed}
-                fullWidth
-                sx={{py: 1.5}}
-            >
-                Proceed to payment
-            </ContainedBlueButton>
+                <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
+                    {cartItems.length === 0 && (
+                        <Typography variant="caption"
+                                    sx={{
+                                        mb: 1,
+                                        color: theme.palette.third.main,
+                                        fontWeight: theme.typography.fontWeightLight
+                                    }}
+                        >
+                            Select one of the items in the shopping cart to proceed to payment.
+                        </Typography>
+                    )}
+                    <ContainedBlueButton
+                        disabled={cartItems.length === 0}
+                        loading={loading}
+                        onClick={onProceed}
+                        sx={{py: 1.5, width: '100%'}}
+                    >
+                        Proceed to payment
+                    </ContainedBlueButton>
+                </Box>
+            </Box>
         </Box>
     );
 };

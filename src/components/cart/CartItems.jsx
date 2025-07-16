@@ -12,19 +12,24 @@ import theme from 'src/theme/theme.jsx';
 import {deleteCartItem} from "src/services/offerApi.js";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 
 const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
 
+    const [isDeleteLoading, setIsDeleteLoading] = useState(false);
     const dispatch = useDispatch();
     const countCartItems = useSelector(selectCountCartItems);
 
     const deleteItem = async (item) => {
+        setIsDeleteLoading(true)
         try {
             await deleteCartItem(item.id);
             dispatch(setCountCartItems(countCartItems - 1));
             onRemoveItem(item.id);
         } catch (err) {
             console.error(err);
+        } finally {
+            setIsDeleteLoading(false)
         }
     }
 
@@ -155,6 +160,7 @@ const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
                 />
                 <Button
                     variant="contained"
+                    loading={isDeleteLoading}
                     onClick={() => deleteItem(item)}
                     sx={{
                         mt: 2,
