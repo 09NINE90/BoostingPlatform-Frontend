@@ -53,8 +53,8 @@ const ChatMessages = ({messages, username}) => {
                                 color: isMine
                                     ? theme.palette.primary.contrastText
                                     : theme.palette.text.primary,
-                                borderBottomRightRadius: isMine ? 0 : 8,
-                                borderBottomLeftRadius: isMine ? 8 : 0,
+                                borderTopRightRadius: isMine ? 0 : 8,
+                                borderTopLeftRadius: isMine ? 8 : 0,
                             }}
                         >
                             {!isMine && (

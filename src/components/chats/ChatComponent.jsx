@@ -54,7 +54,7 @@ const ChatComponent = ({chatId, onReady}) => {
     useEffect(() => {
         if (isConnected && onReady) {
             onReady(sendMessage);
-            setTimeout(() => scrollToBottom(), 100);
+            setTimeout(() => scrollToBottom(), 400);
         }
     }, [isConnected, onReady]);
 
@@ -66,7 +66,7 @@ const ChatComponent = ({chatId, onReady}) => {
                 const roomData = await getChatRoom(chatId);
                 if (roomData.messages) {
                     setMessages(roomData.messages);
-                    setTimeout(() => scrollToBottom("auto"), 100);
+                    setTimeout(() => scrollToBottom("auto"), 400);
                 } else {
                     console.warn("No messages found in room data");
                 }
@@ -90,10 +90,9 @@ const ChatComponent = ({chatId, onReady}) => {
 
         setInputMessage('');
 
-        setTimeout(() => scrollToBottom(), 100);
+        setTimeout(() => scrollToBottom(), 400);
     };
 
-    // Улучшенная функция прокрутки
     const scrollToBottom = (behavior = "smooth") => {
         requestAnimationFrame(() => {
             messagesEndRef.current?.scrollIntoView({
@@ -103,13 +102,11 @@ const ChatComponent = ({chatId, onReady}) => {
         });
     };
 
-    // Прокрутка при первом монтировании и при изменении сообщений
     useEffect(() => {
-        scrollToBottom("auto"); // При загрузке - мгновенная прокрутка
+        setTimeout(() => scrollToBottom(), 200);
     }, []);
 
     useEffect(() => {
-        // Прокручиваем только если пользователь уже близко к низу
         const container = messagesContainerRef.current;
         if (container) {
             const isNearBottom = container.scrollHeight - container.scrollTop <= container.clientHeight + 100;
@@ -136,21 +133,25 @@ const ChatComponent = ({chatId, onReady}) => {
             {isLoading && (
                 <CenterLoader minHeight='100%'/>
             )}
-            <Box
-                sx={{
-                    flex: 1,
-                    overflowY: "auto",
-                    pr: 1,
-                }}
-            >
-                <ChatMessages messages={messages} username={username}/>
-                <div ref={messagesEndRef}/>
-            </Box>
+            {!isLoading && (
+                <>
+                    <Box
+                        sx={{
+                            flex: 1,
+                            overflowY: "auto",
+                            pr: 1,
+                        }}
+                    >
+                        <ChatMessages messages={messages} username={username}/>
+                        <div ref={messagesEndRef}/>
+                    </Box>
 
-            <Divider sx={{my: 2}}/>
+                    <Divider sx={{my: 2}}/>
 
-            <ChatInput inputMessage={inputMessage} setInputMessage={setInputMessage}
-                       handleSendMessage={handleSendMessage} isConnected={isConnected}/>
+                    <ChatInput inputMessage={inputMessage} setInputMessage={setInputMessage}
+                               handleSendMessage={handleSendMessage} isConnected={isConnected}/>
+                </>
+            )}
         </Box>
     );
 };

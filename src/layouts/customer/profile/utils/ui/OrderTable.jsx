@@ -79,9 +79,7 @@ const OrderTable = () => {
                 </>
             )}
             {!isLoading && orders.length === 0 && selectedStatus.status !== null && (
-                <Box sx={{py: '10%'}}>
-                    <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
-                </Box>
+                <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
             )}
             {!isLoading && orders.length === 0 && selectedStatus.status === null && (
                 <Box sx={{py: '10%'}}>
@@ -89,8 +87,8 @@ const OrderTable = () => {
                 </Box>
             )}
             {isLoading && (
-                <Box sx={{py: '10%'}}>
-                    <CenterLoader minHeight='100%'/>
+                <Box sx={{py: '5%'}}>
+                    <CenterLoader size={80} minHeight='100%'/>
                 </Box>
             )}
             {modalIsOpen && (
