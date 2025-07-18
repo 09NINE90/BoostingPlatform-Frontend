@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import OfferInfo from '../layouts/offer/OfferInfo';
 import OfferPayment from '../layouts/offer/OfferPayment';
 import {getOfferData, getOptions} from "src/services/optionApi.js";
-import {ClipLoader} from "react-spinners";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const OfferPage = () => {
     const {offerId} = useParams();
@@ -74,11 +74,9 @@ const OfferPage = () => {
                 </>
             )}
             {!offerData && (
-                <div className="min-h-[100vh]">
-                    <div className="flex justify-center items-center mt-[50vh]">
-                        <ClipLoader color="#FD980B" size={100} cssOverride={{display: "block", margin: "auto auto"}}/>
-                    </div>
-                </div>
+                <Box sx={{minHeight: '100vh', pt: '20%'}}>
+                    <CustomLoader height='100%'/>
+                </Box>
             )}
         </Box>
     );

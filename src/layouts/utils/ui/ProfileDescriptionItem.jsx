@@ -30,6 +30,7 @@ const ProfileDescriptionItem = ({label, value, setIsEditingDescription}) => {
                 <Typography variant="body2"
                             sx={{
                                 mt: 2,
+                                whiteSpace: 'pre-line',
                                 color: theme.palette.text.primary,
                                 fontWeight: theme.typography.fontWeightLight,
                                 maxWidth: '100%'

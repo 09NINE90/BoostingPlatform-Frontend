@@ -2,11 +2,11 @@ import {Box} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {getBalanceHistory} from "src/services/financeApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
-import {ClipLoader} from "react-spinners";
 import Table from "@mui/material/Table";
 import BalanceHistoryTableHead from "src/layouts/boosters/balance/utils/ui/BalanceHistoryTableHead.jsx";
 import BalanceHistoryTableBody from "src/layouts/boosters/balance/utils/ui/BalanceHistoryTableBody.jsx";
 import theme from "src/theme/theme.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const BalanceHistory = () => {
 
@@ -34,10 +34,7 @@ const BalanceHistory = () => {
         return (
             <div className="min-h-[100vh]">
                 <div className="fixed inset-0 flex items-center justify-center">
-                    <ClipLoader
-                        color="#FD980B"
-                        size={100}
-                    />
+                    <CustomLoader height='100%'/>
                 </div>
             </div>
         )

@@ -5,7 +5,7 @@ import CustomerProfileInfo from "src/layouts/customer/profile/utils/ui/CustomerP
 import React, {useCallback, useEffect, useState} from "react";
 import {getCustomerProfileData} from "src/services/userApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
-import {ClipLoader} from "react-spinners";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 function ProfileMain() {
     const [discountPercentage, setDiscountPercentage] = useState(null);
@@ -36,6 +36,7 @@ function ProfileMain() {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchCustomerProfile();
     }, [fetchCustomerProfile]);
 
@@ -49,10 +50,7 @@ function ProfileMain() {
         return (
             <div className="min-h-[100vh]">
                 <div className="fixed inset-0 flex items-center justify-center">
-                    <ClipLoader
-                        color="#FD980B"
-                        size={100}
-                    />
+                    <CustomLoader height='100%'/>
                 </div>
             </div>
         )

@@ -3,14 +3,12 @@ import {getOrdersByCreator} from "src/services/orderApi.js";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderStatusesFilter from "src/layouts/customer/profile/utils/ui/OrderStatusesFilter.jsx";
 import {statuses} from "src/layouts/customer/profile/utils/data/StatusesData.json.js";
-import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
-import {ON_PENDING} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import CustomerOrderCart from "src/layouts/customer/profile/utils/ui/CustomerOrderCart.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import BoosterMiniProfileModal from "src/layouts/customer/profile/utils/ui/BoosterMiniProfileModal.jsx";
-import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const OrderTable = () => {
 
@@ -55,9 +53,10 @@ const OrderTable = () => {
 
     return (
         <Box sx={{
-            maxWidth: '100%',
             p: 5,
             mt: 3,
+            minHeight: '450px',
+            maxWidth: '100%',
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4"
@@ -82,13 +81,11 @@ const OrderTable = () => {
                 <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
             )}
             {!isLoading && orders.length === 0 && selectedStatus.status === null && (
-                <Box sx={{py: '10%'}}>
-                    <EmptyResponse text={'you have not orders'} minHeight='100%'/>
-                </Box>
+                <EmptyResponse text={'you have not orders'} minHeight='100%'/>
             )}
             {isLoading && (
-                <Box sx={{py: '5%'}}>
-                    <CenterLoader size={80} minHeight='100%'/>
+                <Box sx={{py: '7%'}}>
+                    <CustomLoader size={0.7} height='100%'/>
                 </Box>
             )}
             {modalIsOpen && (

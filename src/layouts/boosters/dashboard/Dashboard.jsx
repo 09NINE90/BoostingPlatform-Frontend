@@ -11,8 +11,8 @@ import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import DashboardTableBody from "src/layouts/boosters/dashboard/utils/ui/DashboardTableBody.jsx";
 import DashboardTableHead from "src/layouts/boosters/dashboard/utils/ui/DashboardTableHead.jsx";
-import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 import {Box} from "@mui/material";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const Dashboard = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -129,8 +129,8 @@ const Dashboard = () => {
                         )}
                     </Table>
                     {loading && (
-                        <Box sx={{pt: '10%'}}>
-                            <CenterLoader minHeight='100%'/>
+                        <Box sx={{pt: '7%'}}>
+                            <CustomLoader height='100%'/>
                         </Box>
                     )}
                     {!loading && allOrders.length === 0 && (

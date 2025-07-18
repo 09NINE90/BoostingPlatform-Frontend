@@ -60,9 +60,18 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
                         sx={{
                             p: 3,
                             width: '100%',
+                            whiteSpace: 'pre-line',
                             color: theme.palette.text.primary,
                             backgroundColor: theme.palette.background.default,
                             fontWeight: theme.typography.fontWeightLight,
+                            maxHeight: '150px',
+                            overflow: 'hidden',
+                            transition: 'max-height 0.3s ease',
+                            '&:hover': {
+                                maxHeight: 'none',
+                                overflow: 'visible'
+                            },
+                            cursor: 'pointer'
                         }}>
                         {boosterInfo.boosterDescription}
                     </Typography>
