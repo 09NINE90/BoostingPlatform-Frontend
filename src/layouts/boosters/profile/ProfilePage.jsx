@@ -1,13 +1,13 @@
-import React, {useState, useCallback, useEffect} from 'react';
+import React, {useState, useCallback, useEffect, useLayoutEffect} from 'react';
 import {Box} from '@mui/material';
 import BoosterProfileInfo from "src/layouts/boosters/profile/utils/ui/BoosterProfileInfo.jsx";
 import {getBoosterProfileData} from "src/services/userApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import BoosterAccountStatus from "src/layouts/boosters/profile/utils/ui/BoosterAccountStatus.jsx";
-import {ClipLoader} from "react-spinners";
 import BoosterBalanceInfo from "src/layouts/boosters/profile/utils/ui/BoosterBalanceInfo.jsx";
 import WithdrawModal from "src/layouts/boosters/profile/utils/ui/WithdrawModal.jsx";
 import BoosterOrderHistory from "src/layouts/boosters/profile/utils/ui/BoosterOrderHistory.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const ProfileMain = () => {
     const [modalWithdrawIsOpen, setModalWithdrawIsOpen] = useState(false);
@@ -52,6 +52,7 @@ const ProfileMain = () => {
     }, [getBoosterProfileData, setBoosterLevel, setBalance, setPercentageOfOrder, setTotalIncome, setTotalTips]);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         fetchBoosterProfile();
     }, [fetchBoosterProfile]);
 
@@ -65,10 +66,7 @@ const ProfileMain = () => {
         return (
             <div className="min-h-[100vh]">
                 <div className="fixed inset-0 flex items-center justify-center">
-                    <ClipLoader
-                        color="#FD980B"
-                        size={100}
-                    />
+                    <CustomLoader height='100%'/>
                 </div>
             </div>
         )

@@ -7,8 +7,8 @@ import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrdersTableBody from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableBody.jsx";
 import OrdersTableHead from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableHead.jsx";
-import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
 import {Box} from "@mui/material";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const Orders = () => {
     const [allOrders, setAllOrders] = useState([]);
@@ -67,8 +67,8 @@ const Orders = () => {
                     <EmptyResponse text={'no orders by filter'}/>
                 )}
                 {loading && (
-                    <Box sx={{pt: '10%'}}>
-                        <CenterLoader minHeight='100%'/>
+                    <Box sx={{pt: '7%'}}>
+                        <CustomLoader height='100%'/>
                     </Box>
                 )}
             </TableContainer>

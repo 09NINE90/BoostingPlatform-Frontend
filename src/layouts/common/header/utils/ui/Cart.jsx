@@ -1,15 +1,15 @@
 import Badge from "@mui/material/Badge";
-import {IconButton} from "@mui/material";
+import {Box, IconButton} from "@mui/material";
 import CartIcon from "src/assets/icons/CartIcon.jsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {getCartItemsApi} from "src/services/offerApi.js";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import CartModal from "src/components/cart/CartModal.jsx";
-import {ClipLoader} from "react-spinners";
 import {selectAuth, selectCountCartItems} from "src/store/slice/authSlice.js";
 import {useSelector} from "react-redux";
 import DropCart from "src/components/cart/DropCart.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 
 const Cart = ({cartCount}) => {
@@ -80,11 +80,10 @@ const Cart = ({cartCount}) => {
                                     <EmptyResponse text={'Log in to view the shopping cart'}/>
                                 )}
                                 {loading && !error && (
-                                    <div
-                                        className="flex justify-center items-center mx-auto mt-[12vh] min-h-[20vw] min-w-[40vw]">
-                                        <ClipLoader color="#FD980B" size={50}
-                                                    cssOverride={{display: "block", margin: "auto auto"}}/>
-                                    </div>)}
+                                    <Box sx={{minHeight: '100%', pt: '10%'}}>
+                                        <CustomLoader size={0.5} height='100%'/>
+                                    </Box>
+                                )}
                                 {!loading && !error && (
                                     <CartModal
                                         cartItems={cartItems}

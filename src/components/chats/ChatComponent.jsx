@@ -7,7 +7,7 @@ import {Box, Divider} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import ChatMessages from "src/components/chats/utils/ChatMessages.jsx";
 import ChatInput from "src/components/chats/utils/ChatInput.jsx";
-import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const ChatComponent = ({chatId, onReady}) => {
 
@@ -131,7 +131,7 @@ const ChatComponent = ({chatId, onReady}) => {
             }}
         >
             {isLoading && (
-                <CenterLoader minHeight='100%'/>
+                <CustomLoader size={0.8} height='100%'/>
             )}
             {!isLoading && (
                 <>

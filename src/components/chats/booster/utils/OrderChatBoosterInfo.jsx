@@ -8,7 +8,7 @@ import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.j
 import {toLocaleDateTime} from "src/utils/functions.js";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
-import CenterLoader from "src/layouts/boosters/utils/ui/CenterLoader.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrderHistory, isLoading}) => {
     if (isLoading) {
@@ -25,7 +25,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                <CenterLoader minHeight='100%'/>
+                <CustomLoader size={0.7} height='100%'/>
             </Box>
         )
     }
