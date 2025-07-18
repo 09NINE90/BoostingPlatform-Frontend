@@ -7,9 +7,9 @@ const ProcessingInfo = ({minAmount}) => {
     const Item = ({text}) => {
         return (
             <Typography
+                variant='body2'
                 sx={{
                     mt: 2,
-                    fontSize: 14,
                     color: theme.palette.text.secondary,
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
@@ -22,7 +22,7 @@ const ProcessingInfo = ({minAmount}) => {
         <Box
             sx={{
                 mt: 5,
-                padding: 4,
+                p: 4,
                 display: "flex",
                 minWidth: '100%',
                 alignItems: "start",
@@ -30,8 +30,8 @@ const ProcessingInfo = ({minAmount}) => {
                 backgroundColor: theme.palette.background.default,
             }}>
             <Typography
+                variant='body2'
                 sx={{
-                    fontSize: 14,
                     color: theme.palette.text.primary,
                     fontWeight: theme.typography.fontWeightRegular,
                 }}>

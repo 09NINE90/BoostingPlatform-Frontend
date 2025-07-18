@@ -3,17 +3,17 @@ import {getOrdersByCreator} from "src/services/orderApi.js";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderStatusesFilter from "src/layouts/customer/profile/utils/ui/OrderStatusesFilter.jsx";
 import {statuses} from "src/layouts/customer/profile/utils/data/StatusesData.json.js";
-import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
-import {ON_PENDING} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import CustomerOrderCart from "src/layouts/customer/profile/utils/ui/CustomerOrderCart.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import BoosterMiniProfileModal from "src/layouts/customer/profile/utils/ui/BoosterMiniProfileModal.jsx";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const OrderTable = () => {
 
     const [orders, setOrders] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState({status: "CREATED"});
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [boosterProfile, setBoosterProfile] = useState(null);
@@ -34,12 +34,16 @@ const OrderTable = () => {
     };
 
     const fetchOrdersData = useCallback(async () => {
+        setOrders([])
+        setIsLoading(true)
         try {
             const ordersApi = await getOrdersByCreator(selectedStatus)
             setOrders(ordersApi);
         } catch (error) {
             setOrders([]);
             console.log(error);
+        } finally {
+            setIsLoading(false)
         }
     }, [getOrdersByCreator, selectedStatus]);
 
@@ -49,9 +53,10 @@ const OrderTable = () => {
 
     return (
         <Box sx={{
-            maxWidth: '100%',
-            padding: 5,
+            p: 5,
             mt: 3,
+            minHeight: '450px',
+            maxWidth: '100%',
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4"
@@ -68,15 +73,20 @@ const OrderTable = () => {
             {orders && (
                 <>
                     {orders.map((order) => (
-                        <CustomerOrderCart order={order} onOpen={openBoosterProfile}/>
+                        <CustomerOrderCart key={order.orderId} order={order} onOpen={openBoosterProfile}/>
                     ))}
                 </>
             )}
-            {orders.length === 0 && selectedStatus.status !== null && (
-                <EmptyResponse text={'no orders by filter'}/>
+            {!isLoading && orders.length === 0 && selectedStatus.status !== null && (
+                <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
             )}
-            {orders.length === 0 && selectedStatus.status === null && (
-                <EmptyResponse text={'you have not orders'}/>
+            {!isLoading && orders.length === 0 && selectedStatus.status === null && (
+                <EmptyResponse text={'you have not orders'} minHeight='100%'/>
+            )}
+            {isLoading && (
+                <Box sx={{py: '7%'}}>
+                    <CustomLoader size={0.7} height='100%'/>
+                </Box>
             )}
             {modalIsOpen && (
                 <BoosterMiniProfileModal onClose={closeModal} isOpen={modalIsOpen} boosterInfo={boosterProfile}/>

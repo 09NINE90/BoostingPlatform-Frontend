@@ -9,26 +9,24 @@ const InfoCardItem = ({label, value}) => {
             mt: 2,
             gap: 5,
             flex: 1,
-            padding: 4,
+            p: 4,
             minHeight: '120px',
             paddingInline: 5,
             display: 'flex',
             flexDirection: 'column',
             backgroundColor: theme.palette.background.default,
         }}>
-            <Typography variant="body2"
+            <Typography variant="h6"
                         sx={{
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightMedium,
-                            fontSize: 20
                         }}>
                 {label}
             </Typography>
-            <Typography variant="body1"
+            <Typography variant="h5"
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
-                            fontSize: 26
                         }}>
                 {value}
             </Typography>

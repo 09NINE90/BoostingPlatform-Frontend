@@ -19,7 +19,7 @@ import DescriptionEditor from "src/layouts/utils/ui/DescriptionEditor.jsx";
 import ProfileDescriptionItem from "src/layouts/utils/ui/ProfileDescriptionItem.jsx";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
 
-const CustomerProfileInfo = () => {
+const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatus, totalOrders}) => {
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
@@ -30,22 +30,24 @@ const CustomerProfileInfo = () => {
     const [userAvatar, setUserAvatar] = useState(userAvatarFromStore);
     const [userName, setUserName] = useState(usernameFromStore);
     const [descriptionProfile, setDescriptionProfile] = useState(descriptionProfileFromStore);
-    const [discountPercentage, setDiscountPercentage] = useState(null);
-    const [cashbackBalance, setCashbackBalance] = useState(null);
-    const [customerStatus, setCustomerStatus] = useState(null);
-    const [totalOrders, setTotalOrders] = useState(null);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
+    const [isLoadingNameSave, setIsLoadingNameSave] = useState(false)
+    const [isLoadingDescriptionSave, setIsLoadingDescriptionSave] = useState(false)
+
     const handleNameSave = async (newName) => {
-        setUserName(newName);
-        dispatch(setUsername(newName));
-        setIsEditingName(false);
+        setIsLoadingNameSave(true)
         try {
             await changeNickname(newName);
+            setUserName(newName);
+            dispatch(setUsername(newName));
+            setIsEditingName(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingNameSave(false)
         }
     };
 
@@ -54,6 +56,7 @@ const CustomerProfileInfo = () => {
     };
 
     const handleDescriptionSave = async (newDescription) => {
+        setIsLoadingDescriptionSave(true)
         try {
             await changeDescriptionProfile(newDescription);
             setDescriptionProfile(newDescription);
@@ -61,6 +64,8 @@ const CustomerProfileInfo = () => {
             setIsEditingDescription(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingDescriptionSave(false)
         }
     };
 
@@ -81,28 +86,9 @@ const CustomerProfileInfo = () => {
         }
     };
 
-    const fetchCustomerProfile = useCallback(async () => {
-        if (discountPercentage === null) {
-            try {
-                const profile = await getCustomerProfileData()
-                setTotalOrders(profile.totalOrders);
-                setCustomerStatus(profile.status);
-                setCashbackBalance(profile.cashbackBalance);
-                setDiscountPercentage(profile.discountPercentage)
-            } catch (err) {
-                console.log(handleApiError(err));
-            }
-        }
-    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
-
-
-    useEffect(() => {
-        fetchCustomerProfile();
-    }, [fetchCustomerProfile]);
-
     return (
         <Box sx={{
-            padding: 3,
+            p: 3,
             height: 'fit-content',
             backgroundColor: theme.palette.background.paper,
         }}>
@@ -124,6 +110,7 @@ const CustomerProfileInfo = () => {
                                 initialName={userName}
                                 onSave={handleNameSave}
                                 onCancel={handleNameCancel}
+                                loading={isLoadingNameSave}
                             />
                         ) : (
                             <UsernameInfoItem
@@ -158,6 +145,7 @@ const CustomerProfileInfo = () => {
                                 initialDescription={descriptionProfile}
                                 onSave={handleDescriptionSave}
                                 onCancel={handleDescriptionCancel}
+                                loading={isLoadingDescriptionSave}
                             />
                         ) : (
                             <ProfileDescriptionItem

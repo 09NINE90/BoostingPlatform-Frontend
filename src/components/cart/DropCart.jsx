@@ -10,7 +10,7 @@ const DropCart = ({content, anchorEl, handleClose}) => {
                 elevation: 4,
                 sx: {
                     mt: 2,
-                    minWidth: '40vw',
+                    minWidth: '50vw',
                     minHeight: '20vw',
                     overflow: 'visible',
                     backgroundColor: '#110134',

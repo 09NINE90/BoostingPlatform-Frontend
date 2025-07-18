@@ -1,6 +1,7 @@
 import React, {useRef} from "react";
 import {Box} from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import UserAvatarPlaceholder from "src/assets/icons/UserAvatarPlaceholder.jsx";
 
 const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
     const fileInputRef = useRef(null);
@@ -11,23 +12,39 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
     };
 
     return (
-        <Box sx={{position: 'relative', display: 'inline-block'}}>
-            <Box
-                component="img"
-                src={src}
-                sx={{
-                    width: size,
-                    height: size,
-                    cursor: 'pointer',
-                    objectFit: 'cover',
-                    borderRadius: 0,
-                    '&:hover .hover-edit-icon': {
-                        opacity: 1
-                    },
-                    transition: 'box-shadow 0.3s ease'
-                }}
-                onClick={handleAvatarClick}
-            />
+        <Box sx={{ position: 'relative', display: 'inline-block' }}>
+            {src ? (
+                <Box
+                    component="img"
+                    src={src}
+                    sx={{
+                        width: size,
+                        height: size,
+                        cursor: 'pointer',
+                        objectFit: 'cover',
+                        borderRadius: 0,
+                        '&:hover ~ .hover-edit-icon': {
+                            opacity: 1
+                        },
+                        transition: 'box-shadow 0.3s ease'
+                    }}
+                    onClick={handleAvatarClick}
+                />
+            ) : (
+                <Box
+                    sx={{
+                        width: size,
+                        height: size,
+                        cursor: 'pointer',
+                        '&:hover ~ .hover-edit-icon': {
+                            opacity: 1
+                        }
+                    }}
+                    onClick={handleAvatarClick}
+                >
+                    <UserAvatarPlaceholder size={size} />
+                </Box>
+            )}
 
             <Box
                 className="hover-edit-icon"
@@ -36,7 +53,7 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
                     bottom: 0,
                     right: 0,
                     backgroundColor: 'rgba(0,0,0,0.6)',
-                    padding: 1,
+                    p: 1,
                     opacity: 0,
                     transition: 'opacity 0.2s',
                     cursor: 'pointer',
@@ -45,7 +62,7 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
                     justifyContent: 'center'
                 }}
             >
-                <PhotoCameraIcon sx={{color: 'white', fontSize: '1.2rem'}}/>
+                <PhotoCameraIcon sx={{ color: 'white', fontSize: '1.2rem' }} />
             </Box>
 
             <input
@@ -53,7 +70,7 @@ const UserAvatar = ({src, size = 120, onAvatarClick, onFileChange}) => {
                 ref={fileInputRef}
                 onChange={onFileChange}
                 accept="image/*"
-                style={{display: 'none'}}
+                style={{ display: 'none' }}
             />
         </Box>
     );

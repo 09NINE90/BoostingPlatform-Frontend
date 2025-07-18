@@ -1,66 +1,43 @@
 import React, {useState} from "react";
-import {Box, LinearProgress, Typography} from "@mui/material";
+import {Box, Chip, LinearProgress, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
+import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
+import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
+import CustomerStatusDescription from "src/layouts/customer/profile/utils/ui/CustomerStatusDescription.jsx";
 
-const CashbackProgress = () => {
-
-    const [totalSpent, setTotalSpent] = useState(0);
-
-    const getCashbackLevel = () => {
-        if (totalSpent >= 2000) {
-            return {level: "Legend", percentage: 20, nextLevel: null, progress: 100};
-        } else if (totalSpent >= 1000) {
-            return {
-                level: "Hero",
-                percentage: 15,
-                nextLevel: "Legend",
-                progress: ((totalSpent - 1000) / 1000) * 100
-            };
-        } else {
-            return {
-                level: "Explorer",
-                percentage: 10,
-                nextLevel: "Hero",
-                progress: (totalSpent / 1000) * 100
-            };
-        }
-    };
-
-    const cashbackInfo = getCashbackLevel();
+const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountStatus, discountPercentage}) => {
 
     return (
         <Box sx={{
             flex: 1,
-            height: 'fit-content',
-            backgroundColor: theme.palette.background.paper,
-            padding: 10,
+            p: 10,
             mt: 3,
+            backgroundColor: theme.palette.background.paper
         }}>
-            <Typography variant="h5" sx={{color: '#fff', marginBottom: 2}}>
-                Unlock higher cashback rewards as you level up!
+            <Typography variant="h4" sx={{
+                mb: 2,
+                color: theme.palette.text.primary,
+                fontWeight: theme.typography.fontWeightMedium,
+            }}>
+                Account Status
             </Typography>
-            <Typography variant="body1" sx={{color: '#fff', marginBottom: 1}}>
-                Current Level: {cashbackInfo.level} • {cashbackInfo.percentage}% Cashback
+            <Typography
+                variant="body1"
+                component="div"
+                sx={{
+                    color: '#fff',
+                    mb: 5,
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: theme.typography.fontWeightLight,
+                }}>
+                <HelpIconWithTooltip
+                    tooltipTitle={<CustomerStatusDescription customerNextStatus={nextCustomerStatus}/>}/>
+                Current status:
+                <Chip label={customerStatus} sx={{marginInline: 2}}/>
+                • {discountPercentage}% cashback by order
             </Typography>
-            {cashbackInfo.nextLevel && (
-                <>
-                    <LinearProgress
-                        variant="determinate"
-                        value={cashbackInfo.progress}
-                        sx={{
-                            height: 10,
-                            borderRadius: 5,
-                            backgroundColor: 'rgba(255,255,255,0.1)',
-                            '& .MuiLinearProgress-bar': {
-                                backgroundColor: '#6a6ad8'
-                            }
-                        }}
-                    />
-                    <Typography variant="body2" sx={{color: '#fff', marginTop: 1}}>
-                        ${totalSpent} spent • Next level: {cashbackInfo.nextLevel}
-                    </Typography>
-                </>
-            )}
+            <AccountProgressbar progress={progressAccountStatus}/>
         </Box>
     )
 }

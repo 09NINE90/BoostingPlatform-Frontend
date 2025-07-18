@@ -19,6 +19,8 @@ import {store} from "src/store/store.js";
 import {toast} from "react-toastify";
 
 const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
+
+    const [isLoading, setIsLoading] = useState(false);
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
@@ -103,6 +105,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
             totalTime: totalTime
         };
 
+        setIsLoading(true)
         try {
             await postOffersToCart(cartItem);
             const currentCount = selectCountCartItems(store.getState());
@@ -110,7 +113,8 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
             toast.success('Successfully added to cart')
         } catch (error) {
             toast.error(error.message);
-            console.log(error);
+        } finally {
+            setIsLoading(false)
         }
     }, [offerData, basePrice, selectedOptions, totalPrice, totalTime, selectedPlatform]);
 
@@ -233,7 +237,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     }, [optionsBlocks, selectedOptions, renderOption]);
 
     return (
-        <div className="m-2 mt-7 min-w-[300px] max-w-[400px] bg-surface">
+        <div className="min-w-[300px] max-w-[400px] bg-background-paper">
             <div className="relative z-0">
                 <img
                     src={offerData.imageUrl}
@@ -264,6 +268,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
                         <h3 className="font-bold">Estimated Time: {totalTime} hours</h3>
                     </div>
                     <Button
+                        loading={isLoading}
                         variant="contained"
                         startIcon={<ShoppingCartOutlinedIcon />}
                         onClick={handleAddToCart}

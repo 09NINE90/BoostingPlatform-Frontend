@@ -52,6 +52,42 @@ const theme = createTheme({
         fontWeightBold: 700,
     },
     components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                },
+                notchedOutline: {
+                    borderRadius: 0,
+                },
+            },
+        },
+        MuiSelect: {
+            styleOverrides: {
+                outlined: {
+                    borderRadius: 0,
+                },
+            },
+        },
+        MuiCheckbox: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                },
+                icon: {
+                    borderRadius: 0,
+                },
+            },
+        },
+        MuiInputLabel: {
+          styleOverrides: {
+              root: {
+                  '& .Mui-error': {
+                      color: customColors.customRed
+                  }
+              }
+          }
+        },
         MuiTextField: {
             styleOverrides: {
                 root: {
@@ -97,11 +133,18 @@ const theme = createTheme({
                 disableRipple: true,
             }
         },
-        MuiIconButton:{
+        MuiIconButton: {
             defaultProps: {
                 disableRipple: true,
             }
-        }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                },
+            },
+        },
     },
     spacing: 4,
 });

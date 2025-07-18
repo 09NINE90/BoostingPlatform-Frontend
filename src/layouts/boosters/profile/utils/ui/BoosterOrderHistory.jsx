@@ -5,6 +5,7 @@ import {handleApiError} from 'src/components/error/ErrorPage.jsx';
 import {getBoosterOrdersHistory} from 'src/services/orderApi.js';
 import theme from 'src/theme/theme.jsx';
 import OrderHistoryCard from 'src/layouts/boosters/profile/utils/ui/OrderHistoryCard.jsx';
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const BoosterOrderHistory = () => {
 
@@ -33,7 +34,7 @@ const BoosterOrderHistory = () => {
             {
                 mt: 3,
                 mr: 3,
-                padding: 10,
+                p: 10,
                 width: '73%',
                 maxWidth: '100%',
                 display: 'flex',
@@ -49,7 +50,10 @@ const BoosterOrderHistory = () => {
                 }}>
                 Order History
             </Typography>
-            {orderHistory.length === 0 && (
+            {loading && (
+                <CustomLoader size={0.6} height='100%'/>
+            )}
+            {!loading && orderHistory.length === 0 && (
                 <Box
                     sx={{
                         height: '100%',
@@ -59,9 +63,9 @@ const BoosterOrderHistory = () => {
                         justifyContent: 'center',
                     }}>
                     <Typography
+                        variant="body1"
                         sx={{
-                            fontSize: 18,
-                            padding: 1/2,
+                            p: 1/2,
                             position: 'absolute',
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightRegular,

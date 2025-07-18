@@ -1,52 +1,51 @@
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {Button} from "@mui/material";
 import OrderInfoCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoCell.jsx";
 import OrderStatusCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderStatusCell.jsx";
 import theme from "src/theme/theme.jsx";
+import {Link} from "react-router-dom";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const OrdersTableBody = ({allOrders, openModal}) => {
+const OrdersTableBody = ({allOrders}) => {
+
+    const CustomCell = ({width, item, center = true}) => {
+        return (
+            <TableCell
+                align={center ? 'center' : 'left'}
+                sx={{width: width}}
+            >
+                <div className='text-text-primary kanit-light'>{item}</div>
+            </TableCell>
+        )
+    }
+
     return (
         <TableBody>
             {allOrders.map((order) => (
                 <TableRow
                     key={order.orderId}
-                    sx={{'&:last-child td, &:last-child th': {border: 0}, p: 2}}
+                    sx={{
+                        borderBottom: `2px solid ${theme.palette.divider}`,
+                        '&:last-child': {borderBottom: 0},
+                        p: 2,
+                    }}
                 >
-                    <TableCell component="th" scope="row" sx={{width: '35%'}}>
-                        <OrderInfoCell orderByRow={order}/>
-                    </TableCell>
-                    <TableCell sx={{width: '15%'}}>
-                        <div className='text-text-primary kanit-light'>{order.gameName}</div>
-                    </TableCell>
-                    <TableCell align="center" sx={{width: '15%'}}>
-                        <div className='text-text-primary kanit-light'>{order.gamePlatform}</div>
-                    </TableCell>
-                    <TableCell align="center" sx={{width: '15%'}}>
-                        <div className='text-text-primary kanit-light'>${order.boosterSalary}</div>
-                    </TableCell>
-                    <TableCell align="center" sx={{width: '10%'}}>
-                        <OrderStatusCell orderStatus={order.orderStatus}/>
-                    </TableCell>
-                    <TableCell align="center" sx={{width: '10%'}}>
-                        <Button
-                            onClick={() => openModal(order)}
-                            sx={{
-                                color: theme.palette.text.primary,
-                                backgroundColor: theme.palette.background.default,
-                                fontWeight: theme.typography.fontWeightLight,
-                                border: 1,
-                                borderColor: theme.palette.text.primary,
-                                '&:hover': {
-                                    backgroundColor: theme.palette.background.paper,
-                                    borderColor: theme.palette.primary.main,
-                                }
-                            }}
-                        >
-                            GET INFO
-                        </Button>
-                    </TableCell>
+                    <CustomCell center={false} width='35%' item={<OrderInfoCell orderByRow={order}/>}/>
+                    <CustomCell center={false} width='15%' item={order.gameName}/>
+                    <CustomCell width='15%' item={order.gamePlatform}/>
+                    <CustomCell width='15%' item={`${order.boosterSalary} $`}/>
+                    <CustomCell width='10%' item={<OrderStatusCell orderStatus={order.orderStatus}/>}/>
+                    <CustomCell width='10%' item=
+                        {order.chatId && (
+                            <ContainedBlueButton
+                                to={`/booster/chat/${order.chatId}/${order.orderId}`}
+                                component={Link}
+                                sx={{width:'70%'}}
+                            >
+                                GET INFO
+                            </ContainedBlueButton>
+                        )}/>
                 </TableRow>
             ))}
         </TableBody>

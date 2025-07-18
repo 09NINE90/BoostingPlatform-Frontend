@@ -1,8 +1,10 @@
 import {useState} from "react";
-import {Box, Button, TextareaAutosize} from "@mui/material";
+import {Box, TextareaAutosize} from "@mui/material";
 import theme from "src/theme/theme.jsx";
+import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
+const DescriptionEditor = ({initialDescription, onSave, onCancel, loading}) => {
     const [tempDescription, setTempDescription] = useState(initialDescription);
 
     return (
@@ -19,7 +21,7 @@ const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
                     width: '100%',
                     height: '80px',
                     minHeight: '80px',
-                    padding: '8px',
+                    p: '8px',
                     border: '1px solid',
                     borderColor: theme.palette.third.hover,
                     color: theme.palette.text.primary,
@@ -40,38 +42,21 @@ const DescriptionEditor = ({initialDescription, onSave, onCancel}) => {
                 display: 'flex',
                 justifyContent: 'flex-end',
             }}>
-                <Button
+                <OutlinedBlueButton
                     variant="outlined"
                     size="small"
                     onClick={onCancel}
-                    sx={{
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.background.default,
-                        fontWeight: theme.typography.fontWeightLight,
-                        border: 1,
-                        borderColor: theme.palette.text.primary,
-                        textDecoration: 'none',
-                        '&:hover': {
-                            backgroundColor: theme.palette.background.paper,
-                            borderColor: theme.palette.third.main,
-                        }
-                    }}>
+                >
                     Cancel
-                </Button>
-                <Button
+                </OutlinedBlueButton>
+                <ContainedBlueButton
+                    loading={loading}
                     variant="contained"
                     size="small"
                     onClick={() => onSave(tempDescription)}
-                    sx={{
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}>
+                >
                     Save
-                </Button>
+                </ContainedBlueButton>
             </Box>
         </Box>
     );

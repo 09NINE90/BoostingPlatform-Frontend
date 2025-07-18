@@ -28,6 +28,10 @@ import '@fontsource/kanit/700.css';
 import {ToastContainer} from "react-toastify";
 import EmailConfirmationPage from "src/pages/EmailConfirmationPage.jsx";
 import BalanceHistoryPage from "src/pages/BalanceHistoryPage.jsx";
+import ChatComponent from "src/components/chats/ChatComponent.jsx";
+import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
+import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
+import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
 
 const root = document.getElementById('root');
 
@@ -42,15 +46,25 @@ export const App = () => {
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
 
+                <Route path='/chat/:chatId' element={<ChatComponent/>}/>
+
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
                     <Route path="/games/:id" element={<HomeMain/>}></Route>
                     <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
+                    <Route path="/become/booster" element={<BecomeBoosterPage/>}></Route>
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>
                     <Route path="/profile" element={<ProfilePage/>}></Route>
                 </Route>
+
+                <Route element={<ProtectedRoute allowedRoles={CUSTOMER_ROLE}/>}>
+                    <Route element={<HomePage/>}>
+                        <Route index path="chat/:chatId/:orderId" element={<CustomerChat/>}/>
+                    </Route>
+                </Route>
+
                 <Route element={<ProtectedRoute allowedRoles={BOOSTER_ROLE}/>}>
                     <Route path="/booster" element={<BoosterMainPage/>}>
                         <Route index path="dashboard" element={<Dashboard/>}/>
@@ -58,6 +72,7 @@ export const App = () => {
                         <Route path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
                         <Route path="balanceHistory" element={<BalanceHistoryPage/>}></Route>
                         <Route path="profile" element={<ProfileBoosterPage/>}></Route>
+                        <Route path="chat/:chatId/:orderId" element={<BoosterChat/>}></Route>
                     </Route>
                 </Route>
             </Routes>

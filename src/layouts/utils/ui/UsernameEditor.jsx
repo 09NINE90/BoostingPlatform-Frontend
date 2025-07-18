@@ -1,14 +1,18 @@
 import {useState} from "react";
-import {Box, Button, TextField} from "@mui/material";
+import {Box} from "@mui/material";
+import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 
-const UsernameEditor = ({initialName, onSave, onCancel}) => {
+const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
     const [tempName, setTempName] = useState(initialName);
 
     return (
         <Box sx={{
             display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: '400px',
         }}>
-            <TextField
+            <BlueTextField
+                label="Change nickname"
                 type="text"
                 value={tempName}
                 onChange={(e) => setTempName(e.target.value)}
@@ -27,12 +31,23 @@ const UsernameEditor = ({initialName, onSave, onCancel}) => {
                 }}
             />
             <Box sx={{display: 'flex', gap: 1, justifyContent: 'center'}}>
-                <Button variant="contained" size="small" onClick={() => onSave(tempName)}>
+                <ContainedBlueButton
+                    loading={loading}
+                    variant="contained"
+                    size="small"
+                    onClick={() => onSave(tempName)}
+                    sx={{p: 2,}}
+                >
                     Save
-                </Button>
-                <Button variant="outlined" size="small" onClick={onCancel}>
+                </ContainedBlueButton>
+                <OutlinedBlueButton
+                    variant="outlined"
+                    size="small"
+                    onClick={onCancel}
+                    sx={{p: 2, width: '100%',}}
+                >
                     Cancel
-                </Button>
+                </OutlinedBlueButton>
             </Box>
         </Box>
     );

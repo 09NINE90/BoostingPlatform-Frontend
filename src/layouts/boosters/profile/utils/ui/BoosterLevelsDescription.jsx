@@ -3,7 +3,9 @@ import React from "react";
 const BoosterLevelsDescription = ({boosterNextLevel}) => {
     return (
         <div className='kanit-light text-text-primary space-y-1.5'>
-            <div className='kanit-medium'>Your next level <span className='text-third'>{boosterNextLevel}</span></div>
+            {boosterNextLevel && (
+                <div className='kanit-medium'>Your next level <span className='text-third'>{boosterNextLevel}</span></div>
+            )}
             <div className='kanit-medium'>All levels rules:</div>
             <div><span className='kanit-medium text-third'>ROOKIE</span> - 45% by order (default level)</div>
             <div><span className='kanit-medium text-third'>VETERAN</span> - 50% by order (500$ total income or

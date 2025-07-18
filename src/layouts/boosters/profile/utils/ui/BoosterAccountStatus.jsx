@@ -2,14 +2,14 @@ import {Box, Chip, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React from "react";
 import BoosterLevelsDescription from "src/layouts/boosters/profile/utils/ui/BoosterLevelsDescription.jsx";
-import AccountProgressbar from "src/layouts/boosters/profile/utils/ui/AccountProgressbar.jsx";
+import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
 import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
 
 const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder, progressAccountStatus}) => {
     return (
         <Box sx={{
             flex: 1,
-            padding: 10,
+            p: 10,
             mt: 3,
             backgroundColor: theme.palette.background.paper
         }}>
@@ -20,14 +20,16 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
             }}>
                 Account Status
             </Typography>
-            <Typography variant="body1"
-                        sx={{
-                            color: '#fff',
-                            marginBottom: 5,
-                            display: 'flex',
-                            alignItems: 'center',
-                            fontWeight: theme.typography.fontWeightLight,
-                        }}>
+            <Typography
+                variant="body1"
+                component="div"
+                sx={{
+                    color: theme.palette.text.primary,
+                    mb: 5,
+                    display: 'flex',
+                    alignItems: 'center',
+                    fontWeight: theme.typography.fontWeightLight,
+                }}>
                 <HelpIconWithTooltip
                     tooltipTitle={<BoosterLevelsDescription boosterNextLevel={boosterNextLevel}/>}/>
                 Current Level:

@@ -37,7 +37,11 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
 
+    const [isLoadingNameSave, setIsLoadingNameSave] = useState(false)
+    const [isLoadingDescriptionSave, setIsLoadingDescriptionSave] = useState(false)
+
     const handleNameSave = async (newName) => {
+        setIsLoadingNameSave(true)
         try {
             await changeNickname(newName);
             setUserName(newName);
@@ -45,6 +49,8 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
             setIsEditingName(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingNameSave(false)
         }
     };
 
@@ -53,6 +59,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
     };
 
     const handleDescriptionSave = async (newDescription) => {
+        setIsLoadingDescriptionSave(true)
         try {
             await changeDescriptionProfile(newDescription);
             setDescriptionProfile(newDescription);
@@ -60,6 +67,8 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
             setIsEditingDescription(false);
         } catch (error) {
             console.log(handleApiError(error));
+        } finally {
+            setIsLoadingDescriptionSave(false)
         }
     };
 
@@ -82,7 +91,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
 
     return (
         <Box sx={{
-            padding: 3,
+            p: 3,
             height: 'fit-content',
             backgroundColor: theme.palette.background.paper,
         }}>
@@ -104,6 +113,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                                 initialName={userName}
                                 onSave={handleNameSave}
                                 onCancel={handleNameCancel}
+                                loading={isLoadingNameSave}
                             />
                         ) : (
                             <UsernameInfoItem
@@ -140,6 +150,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                                 initialDescription={descriptionProfile}
                                 onSave={handleDescriptionSave}
                                 onCancel={handleDescriptionCancel}
+                                loading={isLoadingDescriptionSave}
                             />
                         ) : (
                             <ProfileDescriptionItem

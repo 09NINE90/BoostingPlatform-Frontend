@@ -1,5 +1,5 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
-import {Box, Chip, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
 import theme from "src/theme/theme.jsx";
 
@@ -9,16 +9,16 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
         return (
             <Box padding={3} width={'100%'} bgcolor={theme.palette.background.default}>
                 <Typography
+                    variant="h6"
                     sx={{
-                        fontSize: 20,
                         color: theme.palette.third.main,
                         fontWeight: theme.typography.fontWeightLight,
                     }}>
                     {param}
                 </Typography>
                 <Typography
+                    variant='body2'
                     sx={{
-                        fontSize: 14,
                         color: theme.palette.text.secondary,
                         fontWeight: theme.typography.fontWeightRegular,
                     }}>
@@ -49,20 +49,29 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
                         size={'150px'}
                     />
                     <Typography
+                        variant="h6"
                         sx={{
-                            fontSize: 20,
                             fontWeight: theme.typography.fontWeightBold,
                         }}>
                         {boosterInfo.boosterName}
                     </Typography>
                     <Typography
+                        variant='body2'
                         sx={{
-                            padding: 3,
-                            fontSize: 14,
+                            p: 3,
                             width: '100%',
+                            whiteSpace: 'pre-line',
                             color: theme.palette.text.primary,
                             backgroundColor: theme.palette.background.default,
                             fontWeight: theme.typography.fontWeightLight,
+                            maxHeight: '150px',
+                            overflow: 'hidden',
+                            transition: 'max-height 0.3s ease',
+                            '&:hover': {
+                                maxHeight: 'none',
+                                overflow: 'visible'
+                            },
+                            cursor: 'pointer'
                         }}>
                         {boosterInfo.boosterDescription}
                     </Typography>

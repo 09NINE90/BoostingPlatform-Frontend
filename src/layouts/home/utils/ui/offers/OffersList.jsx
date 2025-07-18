@@ -7,7 +7,7 @@ import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OfferCard from "src/layouts/home/utils/ui/offers/OfferCard.jsx";
 import CategoriesFilter from "src/layouts/home/utils/ui/offers/CategoriesFilter.jsx";
 import OfferPagination from "src/layouts/home/utils/ui/offers/OfferPagination.jsx";
-import {ClipLoader} from "react-spinners";
+import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
 const OffersList = memo(({gameId}) => {
     const [currentCategory, setCurrentCategory] = useState(null);
@@ -127,7 +127,7 @@ const OffersList = memo(({gameId}) => {
                                 ))}
 
                                 {!offerLoading && offers.length === 0 && (
-                                    <EmptyResponse text={'no offers by filter \'' + currentCategory + '\''}/>
+                                    <EmptyResponse text={'no offers by filter \'' + currentCategory + '\''} minHeight='40%'/>
                                 )}
                             </Box>
                             {offers.length < recordTotal && (
@@ -142,9 +142,9 @@ const OffersList = memo(({gameId}) => {
                 </>
             )}
             {(categoryLoading || offerLoading) && (
-                <div className="flex justify-center items-center h-[100vh]">
-                    <ClipLoader color="#FD980B" size={100} cssOverride={{display: "block"}}/>
-                </div>
+                <Box sx={{height: '100vh'}}>
+                    <CustomLoader size={0.8} height='50%'/>
+                </Box>
             )}
         </Box>
     )

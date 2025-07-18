@@ -1,15 +1,11 @@
 import "../../styles/AuthForms.css";
 import {useState} from "react";
-import {useSelector} from "react-redux";
-import {selectAuthStatus} from "../../store/slice/authSlice.js";
 import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
-import Button from "@mui/material/Button";
 import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
-import {ClipLoader} from "react-spinners";
-import theme from "src/theme/theme.jsx";
+import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
 const SignUp = ({closeModal, signInRedirect}) => {
 
@@ -18,13 +14,11 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
-    const [requredFieldEmpty, setRequredFieldEmpty] = useState(false);
+    const [requiredFieldEmpty, setRequiredFieldEmpty] = useState(false);
     const [passwordFieldIsValid, setPasswordFieldIsValid] = useState(true);
     const [emailFieldIsValid, setEmailFieldIsValid] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-
-    const status = useSelector(selectAuthStatus);
 
     const signUp = async () => {
         if (nickname !== "" && confirmPassword !== "") {
@@ -55,7 +49,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 setIsLoading(false);
             }
         } else {
-            setRequredFieldEmpty(true);
+            setRequiredFieldEmpty(true);
         }
     };
 
@@ -85,19 +79,21 @@ const SignUp = ({closeModal, signInRedirect}) => {
         setPassword(password);
     }
 
+    const linkClass = "text-sky-400 hover:text-sky-700";
+
     return (
         <div className="flex flex-col justify-between">
             <div className="h-full p-2 kanit-light">
                 By continuing, you agree to our&nbsp;
                 <NavLink
-                    className={"text-sky-400 hover:text-sky-700"}
+                    className={"linkClass"}
                     to="/"
                 >
                     User Agreement
                 </NavLink>
                 &nbsp;and acknowledge that you understand the&nbsp;
                 <NavLink
-                    className={"text-sky-400 hover:text-sky-700"}
+                    className={"linkClass"}
                     to="/"
                 >
                     Privacy Policy
@@ -116,7 +112,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
             }
             <div className="mb-2 flex flex-col gap-2">
                 <TextField
-                    error={requredFieldEmpty}
+                    error={requiredFieldEmpty}
                     required
                     sx={{my: 1}}
                     type="text"
@@ -125,7 +121,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     label="Nickname"
                 />
                 <TextField
-                    error={!emailFieldIsValid || requredFieldEmpty}
+                    error={!emailFieldIsValid || requiredFieldEmpty}
                     required
                     sx={{my: 1}}
                     type="email"
@@ -134,7 +130,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     label="Email"
                 />
                 <TextField
-                    error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requredFieldEmpty}
+                    error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requiredFieldEmpty}
                     required
                     sx={{my: 1}}
                     type="password"
@@ -150,13 +146,13 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     : null
                 }
                 <TextField
-                    error={requredFieldEmpty || errorMessage === "Passwords do not match!"}
+                    error={requiredFieldEmpty || errorMessage === "Passwords do not match!"}
                     required
                     sx={{mt: 1}}
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    label="Confirm Password"
+                    label="Confirm password"
                     onKeyDown={(event) => {
                         if (event.key === 'Enter')
                             signUp();
@@ -167,7 +163,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 <div>
                     Already have account?
                     <NavLink
-                        className={"text-sky-400 hover:text-sky-700"}
+                        className={linkClass}
                         onClick={signInRedirect}
                     >
                         &nbsp;Sign In
@@ -175,25 +171,16 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 </div>
             </div>
             <div>
-                <Button
+                <ContainedBlueButton
                     loading={isLoading}
                     className="w-2/3"
                     variant="contained"
                     color="primary"
                     onClick={signUp}
-                    sx={{
-                        py: 2,
-                        width: '100%',
-                        color: theme.palette.text.primary,
-                        backgroundColor: theme.palette.third.main,
-                        fontWeight: theme.typography.fontWeightLight,
-                        '&:hover': {
-                            backgroundColor: theme.palette.third.hover,
-                        }
-                    }}
+                    sx={{py: 2, width: '100%'}}
                 >
                     Sign Up
-                </Button>
+                </ContainedBlueButton>
             </div>
         </div>
     );
