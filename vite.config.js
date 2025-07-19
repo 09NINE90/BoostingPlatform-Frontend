@@ -19,19 +19,13 @@ export default defineConfig({
     },
     server: {
         hmr: false,
-        proxy: {
-            "/api": {
-                target: 'http://localhost:6969',
-                changeOrigin: true,
-                secure: false,
-            },
-        },
-        watch: {
-            usePolling: true,
-        },
-        host: true,
-        strictPort: true,
-        port: 3000,
+        proxy: process.env.NODE_ENV === 'development' ? {
+          "/api": {
+            target: 'http://localhost:6969',
+            changeOrigin: true,
+            secure: false,
+          },
+        } : undefined,
     },
     resolve: {
         alias: {
