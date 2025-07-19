@@ -62,7 +62,7 @@ deploy-develop:
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 3000:3000 -e BACKEND_URL=$DEV_BACKEND_URL -e NGINX_PORT=${NGINX_PORT:-80} --env-file /root/env/front.env $DOCKER_IMAGE"
+    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 3000:3000 -e BACKEND_URL=$DEV_BACKEND_URL -e NGINX_PORT=${DEV_NGINX_PORT:-80} --env-file /root/env/front.env $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: on_success
@@ -98,7 +98,7 @@ deploy-main:
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 3000:3000 -e BACKEND_URL=$PROD_BACKEND_URL -e NGINX_PORT=${NGINX_PORT:-80} --env-file /root/env/front.env $DOCKER_IMAGE"
+    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p 3000:3000 -e BACKEND_URL=$PROD_BACKEND_URL -e NGINX_PORT=${PROD_NGINX_PORT:-80} --env-file /root/env/front.env $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual
