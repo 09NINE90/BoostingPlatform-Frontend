@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
@@ -66,7 +66,9 @@ export const AuthModal = ({
         }
     };
 
-    if (modalIsOpen) handleProfileMenuClose?.();
+    useEffect(() => {
+        if (modalIsOpen) handleProfileMenuClose?.();
+    }, []);
 
     return (
         <ModalTemplate

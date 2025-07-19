@@ -6,6 +6,7 @@ import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import HiddenFieldWithShowIcon from '../common/HiddenFieldWithShowIcon.jsx'
 
 const SignUp = ({closeModal, signInRedirect}) => {
 
@@ -129,7 +130,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     onChange={(e) => onChangeEmail(e.target.value)}
                     label="Email"
                 />
-                <TextField
+                <HiddenFieldWithShowIcon
                     error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requiredFieldEmpty}
                     required
                     sx={{my: 1}}
@@ -145,7 +146,7 @@ const SignUp = ({closeModal, signInRedirect}) => {
                     </div>
                     : null
                 }
-                <TextField
+                <HiddenFieldWithShowIcon
                     error={requiredFieldEmpty || errorMessage === "Passwords do not match!"}
                     required
                     sx={{mt: 1}}

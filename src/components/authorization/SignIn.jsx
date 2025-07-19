@@ -22,6 +22,7 @@ import {getCountCartItemsApi} from "src/services/offerApi.js";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import HiddenFieldWithShowIcon from '../common/HiddenFieldWithShowIcon.jsx'
 
 const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -126,7 +127,7 @@ const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
                                 setCredentials({...credentials, email: e.target.value})
                             }
                         />
-                        <TextField
+                        <HiddenFieldWithShowIcon
                             error={requiredFieldEmpty}
                             required
                             label="Password"

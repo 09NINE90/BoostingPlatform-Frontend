@@ -1,4 +1,4 @@
-import {Box, Typography, IconButton, styled} from '@mui/material';
+import {Box, Typography, IconButton, styled, ClickAwayListener} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import PropTypes from 'prop-types';
 import theme from "src/theme/theme.jsx";
@@ -88,61 +88,65 @@ const ModalTemplate = ({
     if (!isOpen) return null;
 
     const handleOverlayClick = (e) => {
-        if (e.target === e.currentTarget) {
             onClose();
-        }
     };
 
     return (
-        <StyledModalOverlay onClick={handleOverlayClick}>
-            <StyledModal
-                sx={{
-                    width,
-                    minWidth,
-                    maxWidth,
-                    minHeight,
-                    maxHeight,
-                    backgroundColor,
-                    ...additionalStyles,
-                }}
-                className={modalClassName}
+        <StyledModalOverlay>
+            <ClickAwayListener
+                mouseEvent="onMouseDown"
+                touchEvent="onTouchStart"
+                onClickAway={handleOverlayClick}
             >
-                <StyledModalContent className={modalContentClassName}>
-                    {viewCloseIcon && (
-                        <StyledCloseButton onClick={onClose}>
-                            <CloseIcon/>
-                        </StyledCloseButton>
-                    )}
+                <StyledModal
+                    sx={{
+                        width,
+                        minWidth,
+                        maxWidth,
+                        minHeight,
+                        maxHeight,
+                        backgroundColor,
+                        ...additionalStyles,
+                    }}
+                    className={modalClassName}
+                >
+                    <StyledModalContent className={modalContentClassName}>
+                        {viewCloseIcon && (
+                            <StyledCloseButton onClick={onClose}>
+                                <CloseIcon/>
+                            </StyledCloseButton>
+                        )}
 
 
-                    {title && (
-                        <Typography
-                            variant="h5"
-                            sx={{
-                                fontWeight: theme.typography.fontWeightBold,
-                                color: theme.palette.text.primary,
-                                mb: 3,
-                            }}>
-                            {title}
-                        </Typography>
-                    )}
+                        {title && (
+                            <Typography
+                                variant="h5"
+                                sx={{
+                                    fontWeight: theme.typography.fontWeightBold,
+                                    color: theme.palette.text.primary,
+                                    mb: 3,
+                                }}>
+                                {title}
+                            </Typography>
+                        )}
 
-                    <Box sx={{
-                        flex: 1,
-                        display: 'flex',
-                        flexDirection: 'column',
-                    }}>
-                        {content}
-                    </Box>
+                        <Box sx={{
+                            flex: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                        }}>
+                            {content}
+                        </Box>
 
-                    <Box sx={{
-                        mt: 'auto',
-                        pt: 2,
-                    }}>
-                        {actions}
-                    </Box>
-                </StyledModalContent>
-            </StyledModal>
+                        <Box sx={{
+                            mt: 'auto',
+                            pt: 2,
+                        }}>
+                            {actions}
+                        </Box>
+                    </StyledModalContent>
+                </StyledModal>
+            </ClickAwayListener>
         </StyledModalOverlay>
     );
 };
