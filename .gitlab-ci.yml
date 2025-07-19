@@ -44,6 +44,7 @@ docker-build-develop:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD http://$CI_REGISTRY
   script:
     - echo "VITE_SECRET_KEY=$VITE_SECRET_KEY" > .env.production
+    - echo "BACKEND_URL=$DEV_BACKEND_URL" >> .env.production
     - docker build -t $DOCKER_IMAGE .
     - docker push $DOCKER_IMAGE
   rules:
