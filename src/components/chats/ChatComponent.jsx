@@ -22,7 +22,7 @@ const ChatComponent = ({chatId, onReady}) => {
     const subscriptionRef = React.useRef(null);
 
     const {connect, disconnect, subscribe, sendMessage, unsubscribe, isConnected} = useWebSocket(
-        'ws://localhost:6969/ws',
+        '/ws',
         {
             onConnect: () => {
                 subscriptionRef.current = subscribe(`/topic/chat/${chatId}`, (message) => {
