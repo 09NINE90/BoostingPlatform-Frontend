@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
@@ -20,6 +20,8 @@ export const AuthModal = ({
                               setModalType,
                               handleProfileMenuClose
                           }) => {
+    const [currentEmail, setCurrentEmail] = useState(null);
+
     const getModalTitle = () => {
         const titles = {
             SIGN_IN_STATE: SIGN_IN_TEXT,
@@ -50,6 +52,7 @@ export const AuthModal = ({
             case FORGOT_PASSWORD_STATE:
                 return (
                     <ForgotPassword
+                        setCurrentEmail={setCurrentEmail}
                         signInRedirect={() => setModalType(SIGN_IN_STATE)}
                         newPasswordRedirect={() => setModalType(NEW_PASSWORD_STATE)}
                     />
@@ -57,6 +60,7 @@ export const AuthModal = ({
             case NEW_PASSWORD_STATE:
                 return (
                     <NewPassword
+                        currentEmail={currentEmail}
                         closeModal={toggleModal}
                         signInRedirect={() => setModalType(SIGN_IN_STATE)}
                     />
