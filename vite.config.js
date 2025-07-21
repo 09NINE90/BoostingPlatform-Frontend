@@ -20,11 +20,16 @@ export default defineConfig({
     server: {
         hmr: false,
         proxy: process.env.NODE_ENV === 'development' ? {
-          "/api": {
-            target: 'http://localhost:6969',
-            changeOrigin: true,
-            secure: false,
-          },
+            "/api": {
+                target: 'http://localhost:6969',
+                changeOrigin: true,
+                secure: false,
+            },
+            "/ws": {
+                target: 'ws://localhost:6969',
+                changeOrigin: true,
+                secure: false,
+            }
         } : undefined,
     },
     resolve: {
