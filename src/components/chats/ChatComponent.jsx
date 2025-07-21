@@ -19,10 +19,14 @@ const ChatComponent = ({chatId, onReady}) => {
     const userToken = useSelector(selectToken);
     const username = useSelector(selectUsername);
 
+    const wsUrl = window.location.protocol === 'https:'
+        ? `wss://${window.location.host}/ws`
+        : `ws://${window.location.host}/ws`;
+
     const subscriptionRef = React.useRef(null);
 
     const {connect, disconnect, subscribe, sendMessage, unsubscribe, isConnected} = useWebSocket(
-        'ws://localhost/ws',
+        wsUrl,
         {
             onConnect: () => {
                 subscriptionRef.current = subscribe(`/topic/chat/${chatId}`, (message) => {
