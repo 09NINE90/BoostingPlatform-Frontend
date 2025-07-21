@@ -3,7 +3,7 @@ import Alert from "@mui/material/Alert";
 import {TextField} from "@mui/material";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import {
-    clearAuth,
+    clearAuth, selectEmail,
     setAuth,
     setAvatar,
     setCountCartItems, setDescription,
@@ -20,12 +20,12 @@ import {useDispatch} from "react-redux";
 import {NavLink, useNavigate} from "react-router";
 import {changePassword} from "src/services/authApi.js";
 
-const NewPassword = ({closeModal, signInRedirect}) => {
+const NewPassword = ({closeModal, signInRedirect, currentEmail}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [fieldEmail, setFieldEmail] = useState("");
+    const [fieldEmail, setFieldEmail] = useState(currentEmail);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState(null);
@@ -127,6 +127,7 @@ const NewPassword = ({closeModal, signInRedirect}) => {
             }
             <div className="mb-2 flex flex-col gap-2">
                 <TextField
+                    disabled={true}
                     error={!emailFieldIsValid || requiredFieldEmpty}
                     required
                     sx={{my: 1}}

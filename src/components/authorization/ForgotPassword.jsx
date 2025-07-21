@@ -9,7 +9,7 @@ import {resetPassword, resetPasswordValidate} from "src/services/authApi.js";
 import {toast} from "react-toastify";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 
-const ForgotPassword = ({signInRedirect, newPasswordRedirect}) => {
+const ForgotPassword = ({signInRedirect, newPasswordRedirect, setCurrentEmail}) => {
 
     const [credentials, setCredentials] = useState({email: "", confirmationCode: ""});
     const [requiredEmailFieldEmpty, setRequiredEmailFieldEmpty] = useState(false);
@@ -53,9 +53,15 @@ const ForgotPassword = ({signInRedirect, newPasswordRedirect}) => {
                 code: credentials.confirmationCode
             }
             await resetPasswordValidate(request);
+            setCurrentEmail(credentials.email.trim());
             newPasswordRedirect()
         } catch (err) {
-            setErrorMessage(handleApiError(err))
+            if (err.status === 400){
+                setErrorMessage('The confirmation code was entered incorrectly.')
+
+            } else {
+                setErrorMessage(err.message)
+            }
         } finally {
             setIsLoading2(false)
         }
