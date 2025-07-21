@@ -56,7 +56,12 @@ const ForgotPassword = ({signInRedirect, newPasswordRedirect, setCurrentEmail}) 
             setCurrentEmail(credentials.email.trim());
             newPasswordRedirect()
         } catch (err) {
-            setErrorMessage(handleApiError(err))
+            if (err.status === 400){
+                setErrorMessage('The confirmation code was entered incorrectly.')
+
+            } else {
+                setErrorMessage(err.message)
+            }
         } finally {
             setIsLoading2(false)
         }
