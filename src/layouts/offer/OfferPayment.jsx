@@ -242,7 +242,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
     }, [optionsBlocks, selectedOptions, renderOption]);
 
     return (
-        <div className="min-w-[300px] max-w-[400px] bg-background-paper">
+        <div className="min-w-[300px] md:max-w-[400px] bg-background-paper">
             <div className="relative z-0">
                 <img
                     src={offerData.imageUrl}

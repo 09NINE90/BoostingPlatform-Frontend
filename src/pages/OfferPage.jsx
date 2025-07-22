@@ -94,7 +94,7 @@ const OfferPage = () => {
                 </>
             )}
             {!offerData && (
-                <Box sx={{minHeight: '100vh', pt: '20%'}}>
+                <Box sx={{minHeight: '100vh', width: '100%', pt: '20%'}}>
                     <CustomLoader height='100%'/>
                 </Box>
             )}
