@@ -5,13 +5,14 @@ const InfoCardItem = ({label, value}) => {
 
     return (
         <Box sx={{
-            mr: 5,
-            mt: 2,
-            gap: 5,
+            mr: { xs: 0, sm: 5 },
+            mt: { xs: 0, sm: 2 },
+            gap: { xs: 1, sm: 5 },
             flex: 1,
-            p: 4,
-            minHeight: '120px',
-            paddingInline: 5,
+            p: { xs: 2, sm: 4 },
+            minHeight: { xs: 'auto', sm: '120px' },
+            width: { xs: '100%', sm: 'auto' },
+            paddingInline: { xs: 2, sm: 5 },
             display: 'flex',
             flexDirection: 'column',
             backgroundColor: theme.palette.background.default,
@@ -20,6 +21,7 @@ const InfoCardItem = ({label, value}) => {
                         sx={{
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightMedium,
+                            fontSize: { xs: '1rem', sm: '1.25rem' }
                         }}>
                 {label}
             </Typography>
@@ -27,6 +29,7 @@ const InfoCardItem = ({label, value}) => {
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
+                            fontSize: { xs: '1rem', sm: '1.25rem' }
                         }}>
                 {value}
             </Typography>

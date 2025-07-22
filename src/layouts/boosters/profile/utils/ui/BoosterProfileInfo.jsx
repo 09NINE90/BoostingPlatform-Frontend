@@ -91,12 +91,17 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
 
     return (
         <Box sx={{
-            p: 3,
+            p: {xs: 1, sm: 3},
             height: 'fit-content',
             backgroundColor: theme.palette.background.paper,
         }}>
-            <Box sx={{display: 'flex', alignItems: 'start', mb: 3}}>
-                <Box mt={6} ml={6}>
+            <Box sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                alignItems: { xs: 'center', sm: 'start' },
+                mb: 3
+            }}>
+                <Box mt={{ xs: 2, sm: 6 }} ml={{ xs: 0, sm: 6 }}>
                     <UserAvatar
                         src={userAvatar}
                         size={200}
@@ -106,8 +111,15 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                 </Box>
 
 
-                <Box sx={{paddingInline: 10, display: 'flex', flex: 1, flexDirection: 'column', gap: 1}}>
-                    <Box sx={{mt: 2, gap: 1}}>
+                <Box sx={{
+                    paddingInline: { xs: 2, sm: 10 },
+                    display: 'flex',
+                    flex: 1,
+                    flexDirection: 'column',
+                    gap: 1,
+                    width: { xs: '100%', sm: 'auto' }
+                }}>
+                    <Box sx={{ mt: { xs: 2, sm: 2 }, gap: 1 }}>
                         {isEditingName ? (
                             <UsernameEditor
                                 initialName={userName}
@@ -124,7 +136,13 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                         )}
                     </Box>
 
-                    <Box sx={{display: 'flex', alignItems: 'center', gap: 5}}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        alignItems: { xs: 'flex-start', sm: 'center' },
+                        gap: { xs: 1, sm: 5 },
+                        mt: { xs: 1, sm: 0 }
+                    }}>
                         <ProfileInfoItem label="ID" value={secondIdFromStore}/>
                         <ProfileInfoItem label="Email" value={emailFromStore} copyable={true}/>
                     </Box>
@@ -133,8 +151,10 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                         mt: 1,
                         display: 'flex',
                         flex: 1,
+                        flexDirection: { xs: 'column', sm: 'row' },
                         justifyContent: 'space-between',
-                        alignItems: 'center',
+                        alignItems: { xs: 'flex-start', sm: 'center' },
+                        gap: { xs: 2, sm: 0 }
                     }}>
                         <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
                         <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
