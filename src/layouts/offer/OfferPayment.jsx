@@ -13,13 +13,14 @@ import {
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {postOffersToCart} from "src/services/offerApi.js";
-import {useDispatch} from "react-redux";
-import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {selectAuth, selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {store} from "src/store/store.js";
 import {toast} from "react-toastify";
 
-const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
+const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen}) => {
 
+    const isAuth = useSelector(selectAuth);
     const [isLoading, setIsLoading] = useState(false);
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
@@ -89,6 +90,10 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     }, [selectedOptions, basePrice, baseTime, optionsBlocks]);
 
     const handleAddToCart = useCallback(async () => {
+        if (!isAuth) {
+            setModalIsOpen(true);
+            return;
+        }
         const cartItem = {
             offerId: offerData.offerId,
             basePrice: basePrice,
