@@ -1,15 +1,19 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useMemo, useState} from 'react';
 import {useParams} from 'react-router';
 import Box from '@mui/material/Box';
 import OfferInfo from '../layouts/offer/OfferInfo';
 import OfferPayment from '../layouts/offer/OfferPayment';
 import {getOfferData, getOptions} from "src/services/optionApi.js";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import {AuthModal} from "src/components/authorization/AuthModal.jsx";
+import {SIGN_IN_STATE} from "src/utils/constants/authForm.js";
 
 const OfferPage = () => {
     const {offerId} = useParams();
     const [options, setOptions] = useState([]);
     const [offerData, setOfferData] = useState(null);
+    const [modelType, setModalType] = useState(SIGN_IN_STATE);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [gamePlatforms, setGamePlatforms] = useState([]);
 
     useEffect(() => {
@@ -31,6 +35,21 @@ const OfferPage = () => {
 
         fetchData();
     }, [offerId]);
+
+    const toggleModal = useCallback(() => {
+        setModalIsOpen((prev) => !prev);
+    }, [setModalIsOpen]);
+
+    const renderModal = useMemo(() => {
+        return (
+            <AuthModal
+                modalIsOpen={modalIsOpen}
+                toggleModal={toggleModal}
+                modelType={modelType}
+                setModalType={setModalType}
+            />
+        )
+    }, [modalIsOpen, toggleModal, modelType, setModalType])
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0);
@@ -66,6 +85,7 @@ const OfferPage = () => {
                             flexShrink: 0,
                         }}>
                         <OfferPayment
+                            setModalIsOpen={setModalIsOpen}
                             offerData={offerData}
                             optionsBlocks={options}
                             gamePlatforms={gamePlatforms}
@@ -78,6 +98,7 @@ const OfferPage = () => {
                     <CustomLoader height='100%'/>
                 </Box>
             )}
+            {renderModal}
         </Box>
     );
 };
