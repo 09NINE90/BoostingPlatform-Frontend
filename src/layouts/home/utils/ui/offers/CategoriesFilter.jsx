@@ -3,13 +3,24 @@ import React from "react";
 
 const CategoriesFilter = ({categories, currentCategory, setCurrentCategory}) => {
     return (
-        <Box sx={{display: 'flex', overflowX: 'auto', mb: 3}}>
+        <Box
+            sx={{
+                gap: 1,
+                display: 'flex',
+                flexWrap: 'wrap',
+                overflowX: 'auto',
+                mb: 3
+            }}>
             {categories.length > 0 && (
                 <Chip
                     label="Clear filters"
                     clickable
                     onClick={() => setCurrentCategory(null)}
-                    sx={{marginRight: 1, backgroundColor: '#19054D', ":hover": {backgroundColor: '#e68900'}}}
+                    sx={{
+                        flexShrink: 0,
+                        backgroundColor: '#19054D',
+                        ":hover": {backgroundColor: '#e68900'}
+                    }}
                 />
             )}
             {categories.map((subcategory) => (
@@ -19,7 +30,7 @@ const CategoriesFilter = ({categories, currentCategory, setCurrentCategory}) => 
                     clickable
                     onClick={() => setCurrentCategory(subcategory.name)}
                     sx={{
-                        marginRight: 1,
+                        flexShrink: 0,
                         color: 'white',
                         ...(currentCategory === subcategory.name && {
                             bgcolor: 'primary.main',

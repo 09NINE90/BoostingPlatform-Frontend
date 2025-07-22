@@ -102,7 +102,7 @@ const OffersList = memo(({gameId}) => {
     }
 
     return (
-        <Box sx={{padding: 2, flex: "1"}}>
+        <Box sx={{padding: 2, flex: 1}}>
             <div className="kanit-bold text-2xl mb-2">
                 {game.name} Offers
             </div>
@@ -116,11 +116,15 @@ const OffersList = memo(({gameId}) => {
                     {offers && (
                         <>
                             <Box sx={{
-                                display: offers.length > 0 && 'grid',
-                                gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                                display: offers.length > 0 ? { xs: 'flex', sm: 'grid' } : 'block',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                alignItems: { xs: 'center', sm: 'stretch' },
+                                gridTemplateColumns: { sm: 'repeat(auto-fill, minmax(300px, 1fr))' },
                                 gap: 2,
                                 gridAutoRows: 'auto',
-                                height: '620px',
+                                height: { xs: 'auto', sm: '620px' },
+                                justifyContent: { xs: 'center', sm: 'flex-start' },
+                                width: '100%',
                             }}>
                                 {offers.map((offer) => (
                                     <OfferCard key={offer.id} offer={offer}/>
