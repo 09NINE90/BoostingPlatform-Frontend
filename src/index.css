@@ -76,6 +76,14 @@ input[type='number'] {
     padding: 12px 16px;
 }
 
+@media (max-width: 640px) {
+    .custom-toast {
+        width: 80% !important;
+        margin-top: 90px !important;
+        margin-right: 5px !important;
+    }
+}
+
 .dashboard-active {
     display: flex;
     flex-direction: column;

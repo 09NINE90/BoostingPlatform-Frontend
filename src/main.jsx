@@ -41,7 +41,8 @@ export const App = () => {
             <ToastContainer position="top-right" autoClose={1000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"
-                            className="mt-20 mr-4"/>
+                            className="mt-20 mr-4"
+            />
             <Routes>
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
