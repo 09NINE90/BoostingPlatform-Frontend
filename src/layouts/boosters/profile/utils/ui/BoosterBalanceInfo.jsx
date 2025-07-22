@@ -11,14 +11,15 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
     return (
         <Box sx={{
             mt: 3,
-            p: 5,
-            maxWidth: '25%',
+            p: {xs: 3, sm: 5},
+            maxWidth: {xs: '100%', sm:'25%'},
             minWidth: '25%',
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{
-                color: theme.palette.text.primary,
                 mb: 2,
+                fontSize: {xs: 20},
+                color: theme.palette.text.primary,
                 fontWeight: theme.typography.fontWeightMedium,
             }}>
                 My balance
@@ -29,15 +30,16 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                 backgroundColor: theme.palette.background.default,
             }}>
                 <Typography variant="h5" sx={{
-                    color: theme.palette.third.main,
                     mb: 2,
+                    fontSize: {xs: 20},
+                    color: theme.palette.third.main,
                     fontWeight: theme.typography.fontWeightMedium,
                 }}>
                     Available for withdrawal
                 </Typography>
                 <Typography variant="h4" sx={{
-                    color: theme.palette.text.primary,
                     mb: 2,
+                    color: theme.palette.text.primary,
                     fontWeight: theme.typography.fontWeightMedium,
                 }}>
                     $ {balance}

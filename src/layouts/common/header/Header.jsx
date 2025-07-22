@@ -142,7 +142,7 @@ const Header = () => {
                             sx={{
                                 textAlign: 'center',
                                 fontWeight: theme.typography.fontWeightLight,
-                                color: isActive ? theme.palette.primary.main : theme.palette.text.primary,
+                                color: isActive ? theme.palette.third.main : theme.palette.text.primary,
                                 textTransform: 'uppercase',
                             }}
                         >
@@ -189,7 +189,12 @@ const Header = () => {
                                 <CustomMenuItemText navTo='/profile' text='Profile'/>
                             </>
                         )}
-                        <Divider/>
+                        <Divider sx={{
+                            height: 2,
+                            width: '100%',
+                            backgroundColor: theme.palette.divider,
+                            my: 1
+                        }}/>
                         <ListItem button onClick={handleLogout}>
                             <ListItemText primary={<CustomPrimaryText text='Logout'/>}/>
                         </ListItem>
@@ -211,7 +216,7 @@ const Header = () => {
                 }}
         >
             <div className="flex flex-row items-center justify-between px-5 py-2">
-                <div className="flex items-center">
+                <div className="flex items-center gap-2">
                     <LogoHome forBoosterPage={forBoosterPage}/>
                     {!forBoosterPage && !isMobile && (
                         <Search/>
@@ -251,9 +256,31 @@ const Header = () => {
                         </nav>
                     </>
                 ) : (
-                    <IconButton onClick={toggleDrawer(true)}>
-                        <MenuIcon sx={{fontSize: 30}}/>
-                    </IconButton>
+                    <>
+                        {isAuthenticated ? (
+                                <Box sx={{display: 'flex'}}>
+                                    {!forBoosterPage && <Cart cartCount={cartCount}/>}
+                                    <IconButton onClick={toggleDrawer(true)}>
+                                        <MenuIcon sx={{fontSize: 35}}/>
+                                    </IconButton>
+                                </Box>
+                            )
+                            : (
+                                <div className="flex justify-center hover:scale-101" ref={profileRef}>
+                                    <IconButton onClick={() => setModalIsOpen(true)}
+                                                sx={{
+                                                    transition: 'box-shadow 0.3s ease',
+                                                    borderRadius: 0,
+                                                    '&:hover': {
+                                                        backgroundColor: 'transparent',
+                                                        boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
+                                                    }
+                                                }}>
+                                        <ProfileIcon className="w-[50px]"/>
+                                    </IconButton>
+                                </div>
+                            )}
+                    </>
                 )}
             </div>
             {renderModal}

@@ -12,14 +12,20 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
         setTimeout(() => setCopied(false), 1500);
     };
     return (
-        <Box sx={{display: 'flex', alignItems: 'center', mt: 0.5,  height: '24px' }}>
+        <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            mt: 0.5,
+            height: '24px',
+        }}>
             {label && (
                 <Typography variant="body2"
                             sx={{
                                 color: theme.palette.third.main,
                                 fontWeight: theme.typography.fontWeightLight,
                                 mr: 2,
-                                lineHeight: '24px'
+                                lineHeight: '24px',
+                                fontSize: { xs: '0.875rem', sm: '1rem' }
                             }}>
                     {label}:
                 </Typography>
@@ -30,7 +36,8 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
                             fontWeight: theme.typography.fontWeightLight,
                             lineHeight: '24px',
                             display: 'flex',
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            fontSize: { xs: '0.875rem', sm: '1rem' },
                         }}>
                 {value}
             </Typography>

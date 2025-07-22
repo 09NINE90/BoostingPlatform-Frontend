@@ -61,7 +61,7 @@ const Cart = ({cartCount}) => {
     return (
         <>
             {isAuth && (
-                <div className="px-4 hover:scale-103">
+                <div className="md:px-4 hover:scale-103">
                     <Badge badgeContent={cartCount}>
                         <IconButton onClick={handleCartClick} disableRipple
                                     sx={{
