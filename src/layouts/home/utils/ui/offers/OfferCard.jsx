@@ -1,34 +1,140 @@
 import {NavLink} from "react-router";
 import React from "react";
+import {Box, Button, Tooltip, Typography} from "@mui/material";
+import theme from "src/theme/theme.jsx";
+import {useIsTextOverflowed} from "src/utils/functions.js";
 
 const OfferCard = ({offer}) => {
+
+    const [textRef, isOverflowed] = useIsTextOverflowed();
+
     return (
         <NavLink to={`/offer/${offer.id}`}>
-            <div className="group relative w-full max-w-[300px] h-[300px] flex flex-col overflow-hidden">
-                <img
+            <Box
+                sx={{
+                    position: 'relative',
+                    width: { xs: '90vw', sm: 300 },
+                    maxWidth: { xs: 380, sm: 300 },
+                    height: { xs: '90vw', sm: 300 },
+                    maxHeight: { xs: 380, sm: 300 },
+                    aspectRatio: '1/1',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    overflow: 'hidden',
+                    margin: { xs: '0 auto', sm: 0 },
+                    '&:hover .offer-description': {
+                        whiteSpace: 'normal',
+                        overflow: 'visible',
+                        textOverflow: 'clip'
+                    },
+                }}
+            >
+                <Box
+                    component="img"
                     src={offer.imageUrl}
                     alt={offer.title}
-                    className="absolute top-0 left-0 w-full h-full object-fill z-0"
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'fill',
+                        zIndex: 0
+                    }}
                 />
 
-                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-[#0A0022] via-[#0A0022b3] to-[#0A002200] z-10"/>
+                {/* Градиентный оверлей */}
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(to top, #0A0022, #0A0022b3, #0A002200)',
+                        zIndex: 10
+                    }}
+                />
 
-                <div className="relative z-20 flex flex-col h-full justify-end p-4">
-                    <h2 className="text-text-primary kanit-bold text-xl mb-2">{offer.title}</h2>
+                <Box
+                    sx={{
+                        position: 'relative',
+                        zIndex: 20,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        justifyContent: 'flex-end',
+                        p: 2
+                    }}
+                >
+                    <Typography
+                        variant="h5"
+                        sx={{
+                            color: theme.palette.text.primary,
+                            fontWeight: theme.typography.fontWeightBold,
+                            mb: 1,
+                        }}
+                    >
+                        {offer.title}
+                    </Typography>
 
-                    <p className="text-text-primary/90 kanit-light mb-4 truncate group-hover:whitespace-normal group-hover:overflow-visible group-hover:text-clip">
-                        {offer.description}
-                    </p>
+                    <Tooltip
+                        title={offer.description}
+                        disableHoverListener={!isOverflowed}
+                    >
+                        <Typography
+                            ref={textRef}
+                            sx={{
+                                color: theme.palette.text.primary,
+                                fontWeight: theme.typography.fontWeightLight,
+                                mb: 2,
+                                width: '95%',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                            }}
+                        >
+                            {offer.description}
+                        </Typography>
+                    </Tooltip>
 
-                    <div className="flex justify-between items-end">
-                        <span className="text-text-primary kanit-light text-lg">$ {offer.price}</span>
-                        <button
-                            className="bg-primary hover:bg-secondary text-text-primary kanit-regular px-4 py-2">
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'flex-end'
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                color: theme.palette.text.primary,
+                                fontWeight: theme.typography.fontWeightLight,
+                                fontSize: '1.125rem'
+                            }}
+                        >
+                            $ {offer.price}
+                        </Typography>
+
+                        <Button
+                            variant="contained"
+                            sx={{
+                                backgroundColor: theme.palette.primary.main,
+                                '&:hover': {
+                                    backgroundColor: theme.palette.secondary.main,
+                                },
+                                color: theme.palette.text.primary,
+                                fontWeight: theme.typography.fontWeightRegular,
+                                px: 2,
+                                py: 1
+                            }}
+                        >
                             Buy Now
-                        </button>
-                    </div>
-                </div>
-            </div>
+                        </Button>
+                    </Box>
+                </Box>
+            </Box>
         </NavLink>
     )
 }
