@@ -17,7 +17,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
@@ -36,7 +36,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
