@@ -29,12 +29,13 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
                     mb: 5,
                     display: 'flex',
                     alignItems: 'center',
+                    fontSize: {xs: 12, sm: 16},
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
                 <HelpIconWithTooltip
                     tooltipTitle={<BoosterLevelsDescription boosterNextLevel={boosterNextLevel}/>}/>
                 Current Level:
-                <Chip label={boosterLevel} sx={{marginInline: 2}}/>
+                <Chip label={boosterLevel} sx={{marginInline: 2, fontSize: {xs: 10, sm: 12}}}/>
                 • {percentageOfOrder}% by order
             </Typography>
             <AccountProgressbar progress={progressAccountStatus}/>
