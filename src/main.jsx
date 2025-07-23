@@ -2,7 +2,7 @@ import './index.css';
 import {persistor, store} from "./store/store";
 import {BrowserRouter, matchPath, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {createRoot} from 'react-dom/client';
-import {Provider} from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import HomePage from "./pages/HomePage.jsx";
 import {PersistGate} from "redux-persist/integration/react";
 import ProfilePage from "./pages/ProfilePage.jsx"
@@ -12,7 +12,7 @@ import Dashboard from './layouts/boosters/dashboard/Dashboard.jsx';
 import Orders from './layouts/boosters/ordersByBooster/Orders.jsx';
 import ProtectedRoute from './utils/routing/ProtectedRoute.jsx';
 import {CssBaseline, ThemeProvider} from '@mui/material';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
@@ -30,10 +30,16 @@ import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
 import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
 import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
 import ChatPage from "src/pages/ChatPage.jsx";
+import FloatingBecomeBoosterButton from "src/utils/FloatingBecomeBoosterButton.jsx";
+import {selectAuth} from "src/store/slice/authSlice.js";
 
 const root = document.getElementById('root');
 
 export const App = () => {
+
+    const isAuthenticated = useSelector(selectAuth);
+    const [isBecomeBoosterLocation, setBecomeBoosterLocation] = useState(false);
+    const becomeBoosterLocation = '/become/booster';
 
     const titleMatchers = [
         { path: "/booster/dashboard", title: "V-Boost - Dashboard" },
@@ -44,6 +50,7 @@ export const App = () => {
         { path: "/profile", title: "V-Boost - My profile" },
         { path: "/chat/:chatId/:orderId", title: "V-Boost - Chat" },
         { path: "/offer/:offerId", title: "V-Boost - Offer" },
+        { path: becomeBoosterLocation, title: "V-Boost - Booster Application Form" },
     ];
 
     const TitleUpdater = () => {
@@ -56,6 +63,8 @@ export const App = () => {
             document.title = matched
                 ? matched.title
                 : "V-Boost - Professional Game Boosting Service";
+
+            setBecomeBoosterLocation(location.pathname === becomeBoosterLocation);
         }, [location]);
 
         return null;
@@ -64,6 +73,9 @@ export const App = () => {
     return (
         <BrowserRouter>
             <TitleUpdater/>
+            {!isAuthenticated && !isBecomeBoosterLocation &&(
+                <FloatingBecomeBoosterButton/>
+            )}
             <ToastContainer position="top-right" autoClose={1000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"
