@@ -63,7 +63,7 @@ const OrderTable = () => {
                         sx={{
                             fontWeight: theme.typography.fontWeightMedium,
                             color: theme.palette.text.primary,
-                            fontSize: {xs: 20},
+                            fontSize: {xs: 20, sm: 34},
                             mb: 5
                         }}>
                 Your Orders

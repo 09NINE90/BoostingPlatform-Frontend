@@ -9,7 +9,7 @@ const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
 
     return (
         <Box sx={{
-            display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: '400px',
+            display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: {xs: '100%',sm: '400px'},
         }}>
             <BlueTextField
                 label="Change nickname"
