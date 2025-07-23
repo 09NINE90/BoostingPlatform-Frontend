@@ -3,7 +3,7 @@ import Alert from "@mui/material/Alert";
 import {TextField} from "@mui/material";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import {
-    clearAuth, selectEmail,
+    clearAuth,
     setAuth,
     setAvatar,
     setCountCartItems, setDescription,
@@ -19,6 +19,7 @@ import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {NavLink, useNavigate} from "react-router";
 import {changePassword} from "src/services/authApi.js";
+import HiddenFieldWithShowIcon from "src/components/common/HiddenFieldWithShowIcon.jsx";
 
 const NewPassword = ({closeModal, signInRedirect, currentEmail}) => {
 
@@ -136,7 +137,7 @@ const NewPassword = ({closeModal, signInRedirect, currentEmail}) => {
                     onChange={(e) => onChangeEmail(e.target.value)}
                     label="Email"
                 />
-                <TextField
+                <HiddenFieldWithShowIcon
                     error={!passwordFieldIsValid || errorMessage === "Passwords do not match!" || requiredFieldEmpty}
                     required
                     sx={{my: 1}}
@@ -152,7 +153,7 @@ const NewPassword = ({closeModal, signInRedirect, currentEmail}) => {
                     </div>
                     : null
                 }
-                <TextField
+                <HiddenFieldWithShowIcon
                     error={requiredFieldEmpty || errorMessage === "Passwords do not match!"}
                     required
                     sx={{mt: 1}}
