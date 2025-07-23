@@ -6,7 +6,7 @@ const CustomTextItem = ({text, item, fontSize = 18}) => {
     return (
         <Box
             sx={{
-                mb: 3,
+                mb: {xs: 1.5, sm: 3},
                 width: '100%',
                 display: "flex",
                 justifyContent: "space-between",
