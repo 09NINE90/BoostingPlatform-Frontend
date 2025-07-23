@@ -93,8 +93,8 @@ const BoosterChat = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 height: '100%',
-                flexDirection: {xs: "column", sm: "row"},
                 p: 3,
+                flexDirection: {xs: "column", sm: "row"},
                 paddingInline: {xs: 2, sm: 25},
             }}>
             <OrderChatBoosterInfo order={order}

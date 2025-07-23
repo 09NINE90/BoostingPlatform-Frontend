@@ -32,6 +32,7 @@ import ChatComponent from "src/components/chats/ChatComponent.jsx";
 import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
 import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
 import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
+import ChatPage from "src/pages/ChatPage.jsx";
 
 const root = document.getElementById('root');
 
@@ -61,7 +62,7 @@ export const App = () => {
                 </Route>
 
                 <Route element={<ProtectedRoute allowedRoles={CUSTOMER_ROLE}/>}>
-                    <Route element={<HomePage/>}>
+                    <Route element={<ChatPage/>}>
                         <Route index path="chat/:chatId/:orderId" element={<CustomerChat/>}/>
                     </Route>
                 </Route>

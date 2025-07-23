@@ -59,6 +59,12 @@ const ChatComponent = ({chatId, onReady}) => {
     }, [isConnected, onReady]);
 
     useEffect(() => {
+        if (!isConnected && userToken !== null) {
+            connect(userToken)
+        }
+    }, [isConnected]);
+
+    useEffect(() => {
         const fetchMessages = async () => {
             if (!userToken) return;
             setIsLoading(true)

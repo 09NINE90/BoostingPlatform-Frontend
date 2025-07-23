@@ -51,7 +51,8 @@ const BalanceHistory = () => {
     return (
         <Box sx={{minHeight: '80vh',}}>
             <Box sx={{
-                p: 3,
+                p: {xs: 1, sm: 3},
+                overflowX: 'auto',
                 backgroundColor: theme.palette.background.paper,
             }}>
                 <Table>

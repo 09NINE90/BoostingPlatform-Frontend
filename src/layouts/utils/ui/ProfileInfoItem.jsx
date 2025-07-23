@@ -9,6 +9,7 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
     const handleCopy = () => {
         navigator.clipboard.writeText(value);
         setCopied(true);
+        if (navigator.vibrate) navigator.vibrate(50);
         setTimeout(() => setCopied(false), 1500);
     };
     return (

@@ -38,7 +38,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                     p: 5,
                     width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
-                    height: "85vh",
+                    height: {xs: 'fit-content', sm: "85vh"},
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
                 }}>

@@ -18,7 +18,7 @@ const EmptyResponse = ({text, minHeight = '100%'}) => {
             <Typography
                 variant="h4"
                 sx={{
-                    fontSize: {xs: 22},
+                    fontSize: {xs: 22, sm: undefined},
                     mb: {xs: 3}
                 }}
                 color={theme.palette.third.main}

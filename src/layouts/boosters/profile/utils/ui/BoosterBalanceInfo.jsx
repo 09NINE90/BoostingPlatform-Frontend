@@ -18,7 +18,7 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
         }}>
             <Typography variant="h4" sx={{
                 mb: 2,
-                fontSize: {xs: 20},
+                fontSize: {xs: 20, sm: 34},
                 color: theme.palette.text.primary,
                 fontWeight: theme.typography.fontWeightMedium,
             }}>
@@ -31,7 +31,7 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
             }}>
                 <Typography variant="h5" sx={{
                     mb: 2,
-                    fontSize: {xs: 20},
+                    fontSize: {xs: 20, sm: 30},
                     color: theme.palette.third.main,
                     fontWeight: theme.typography.fontWeightMedium,
                 }}>
