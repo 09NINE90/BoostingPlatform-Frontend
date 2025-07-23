@@ -10,7 +10,7 @@ const BalanceHistoryPage = () => {
                 gap: 3,
                 p: 3,
                 display: 'flex',
-                paddingInline: 25,
+                paddingInline: {xs: 2, sm: 25},
                 height: 'fit-content',
                 flexDirection: 'column',
             }}>
