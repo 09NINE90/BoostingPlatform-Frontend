@@ -18,6 +18,7 @@ const EmptyResponse = ({text, minHeight = '100%'}) => {
             <Typography
                 variant="h4"
                 sx={{
+                    textAlign: 'center',
                     fontSize: {xs: 22, sm: undefined},
                     mb: {xs: 3}
                 }}

@@ -127,7 +127,7 @@ const Header = () => {
 
         return (
             <ListItem
-                button
+                button="true"
                 component={NavLink}
                 to={navTo}
                 sx={{
@@ -195,12 +195,12 @@ const Header = () => {
                             backgroundColor: theme.palette.divider,
                             my: 1
                         }}/>
-                        <ListItem button onClick={handleLogout}>
+                        <ListItem button="true" onClick={handleLogout}>
                             <ListItemText primary={<CustomPrimaryText text='Logout'/>}/>
                         </ListItem>
                     </>
                 ) : (
-                    <ListItem button onClick={toggleModal}>
+                    <ListItem button="true" onClick={toggleModal}>
                         <ListItemText primary={<CustomPrimaryText text='Sign in / Sign up'/>}/>
                     </ListItem>
                 )}

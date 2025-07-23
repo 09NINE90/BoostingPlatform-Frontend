@@ -31,12 +31,13 @@ const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountSt
                     mb: 5,
                     display: 'flex',
                     alignItems: 'center',
+                    fontSize: {xs: 12, sm: 16},
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
                 <HelpIconWithTooltip
                     tooltipTitle={<CustomerStatusDescription customerNextStatus={nextCustomerStatus}/>}/>
                 Current status:
-                <Chip label={customerStatus} sx={{marginInline: 2}}/>
+                <Chip label={customerStatus} sx={{marginInline: 2, fontSize: {xs: 10, sm: 12}}}/>
                 • {discountPercentage}% cashback by order
             </Typography>
             <AccountProgressbar progress={progressAccountStatus}/>
