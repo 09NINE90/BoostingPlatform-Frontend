@@ -1,23 +1,21 @@
 import './index.css';
 import {persistor, store} from "./store/store";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {BrowserRouter, matchPath, Navigate, Route, Routes, useLocation} from "react-router-dom";
 import {createRoot} from 'react-dom/client';
 import {Provider} from "react-redux";
 import HomePage from "./pages/HomePage.jsx";
 import {PersistGate} from "redux-persist/integration/react";
 import ProfilePage from "./pages/ProfilePage.jsx"
 import BoosterMainPage from './pages/BoosterMainPage.jsx';
-import {ADMIN_ROLE, CUSTOMER_ROLE, BOOSTER_ROLE} from './utils/constants/roles.js'
+import {ADMIN_ROLE, BOOSTER_ROLE, CUSTOMER_ROLE} from './utils/constants/roles.js'
 import Dashboard from './layouts/boosters/dashboard/Dashboard.jsx';
 import Orders from './layouts/boosters/ordersByBooster/Orders.jsx';
-import OrderDetailPage from './pages/OrderDetailPage.jsx';
 import ProtectedRoute from './utils/routing/ProtectedRoute.jsx';
-import {ThemeProvider, CssBaseline} from '@mui/material';
-import React from 'react';
+import {CssBaseline, ThemeProvider} from '@mui/material';
+import React, {useEffect} from 'react';
 import theme from './theme/theme.jsx';
 import HomeMain from './layouts/home/HomeMain.jsx';
 import OfferPage from './pages/OfferPage.jsx';
-import {Navigate} from 'react-router-dom';
 import ProfileBoosterPage from './pages/ProfileBoosterPage.jsx';
 import '@fontsource/kanit/100.css';
 import '@fontsource/kanit/200.css';
@@ -28,7 +26,6 @@ import '@fontsource/kanit/700.css';
 import {ToastContainer} from "react-toastify";
 import EmailConfirmationPage from "src/pages/EmailConfirmationPage.jsx";
 import BalanceHistoryPage from "src/pages/BalanceHistoryPage.jsx";
-import ChatComponent from "src/components/chats/ChatComponent.jsx";
 import BoosterChat from "src/components/chats/booster/BoosterChat.jsx";
 import CustomerChat from "src/components/chats/customer/CustomerChat.jsx";
 import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
@@ -37,8 +34,36 @@ import ChatPage from "src/pages/ChatPage.jsx";
 const root = document.getElementById('root');
 
 export const App = () => {
+
+    const titleMatchers = [
+        { path: "/booster/dashboard", title: "V-Boost - Dashboard" },
+        { path: "/booster/orders", title: "V-Boost - My orders" },
+        { path: "/booster/profile", title: "V-Boost - My profile" },
+        { path: "/booster/balanceHistory", title: "V-Boost - Balance history" },
+        { path: "/booster/chat/:chatId/:orderId", title: "V-Boost - Chat" },
+        { path: "/profile", title: "V-Boost - My profile" },
+        { path: "/chat/:chatId/:orderId", title: "V-Boost - Chat" },
+        { path: "/offer/:offerId", title: "V-Boost - Offer" },
+    ];
+
+    const TitleUpdater = () => {
+        const location = useLocation();
+
+        useEffect(() => {
+            const matched = titleMatchers.find(({path}) =>
+                matchPath({path, end: false}, location.pathname)
+            );
+            document.title = matched
+                ? matched.title
+                : "V-Boost - Professional Game Boosting Service";
+        }, [location]);
+
+        return null;
+    }
+
     return (
         <BrowserRouter>
+            <TitleUpdater/>
             <ToastContainer position="top-right" autoClose={1000}
                             toastClassName="custom-toast"
                             bodyClassName="custom-toast-body"
@@ -47,8 +72,6 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<Navigate to="/LoE" replace/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
-
-                <Route path='/chat/:chatId' element={<ChatComponent/>}/>
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
@@ -71,7 +94,6 @@ export const App = () => {
                     <Route path="/booster" element={<BoosterMainPage/>}>
                         <Route index path="dashboard" element={<Dashboard/>}/>
                         <Route path="orders" element={<Orders/>}></Route>
-                        <Route path="orderDetail/:uuid" element={<OrderDetailPage/>}></Route>
                         <Route path="balanceHistory" element={<BalanceHistoryPage/>}></Route>
                         <Route path="profile" element={<ProfileBoosterPage/>}></Route>
                         <Route path="chat/:chatId/:orderId" element={<BoosterChat/>}></Route>
