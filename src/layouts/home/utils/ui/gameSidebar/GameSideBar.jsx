@@ -89,7 +89,7 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
                         }}
                     >
                         <Games sx={{fontSize: '1.5rem'}}/>
-                        <Typography variant="h6" sx={{fontWeight: theme.typography.fontWeightBold}}>
+                        <Typography variant="h5" sx={{fontWeight: theme.typography.fontWeightBold}}>
                             Select Game
                         </Typography>
                     </AccordionSummary>
