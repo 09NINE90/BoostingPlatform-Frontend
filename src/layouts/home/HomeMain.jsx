@@ -63,8 +63,10 @@ const HomeMain = () => {
         <>
             <div className='flex flex-col'>
                 <>
-                    <Carousel carouselItems={carouselItems}/>
-                    <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
+                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                        <Carousel carouselItems={carouselItems}/>
+                        <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
+                    </Box>
                     <Box sx={{
                         display: 'flex',
                         flexDirection: { xs: 'column', md: 'row' },
