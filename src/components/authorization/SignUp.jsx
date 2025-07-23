@@ -1,4 +1,3 @@
-import "../../styles/AuthForms.css";
 import {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
