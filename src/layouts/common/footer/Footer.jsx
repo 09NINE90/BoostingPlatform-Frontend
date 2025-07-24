@@ -17,7 +17,7 @@ const Footer = () => {
             <PaymentMethods/>
             <Box
                 display='flex'
-                flexDirection={{xs: 'column', md: 'row'}}
+                flexDirection={{xs: 'column', lg: 'row'}}
                 justifyContent="space-between"
                 width='90%'
                 marginTop='55px'
