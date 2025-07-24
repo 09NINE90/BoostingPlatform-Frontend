@@ -7,10 +7,13 @@ import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrdersTableBody from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableBody.jsx";
 import OrdersTableHead from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersTableHead.jsx";
-import {Box} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import OrdersMobileView from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersMobileView.jsx";
 
 const Orders = () => {
+    const isMobile = useMediaQuery('(max-width:1024px)');
+
     const [allOrders, setAllOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -30,6 +33,7 @@ const Orders = () => {
 
 
     const fetchAllOrders = useCallback(async () => {
+        setAllOrders([])
         try {
             setLoading(true);
             const allOrdersApi = await getOrdersByBooster(selectedFilters)
@@ -55,23 +59,32 @@ const Orders = () => {
 
     return (
         <div className="flex justify-center items-center">
-            <TableContainer
-                className={(loading || allOrders.length === 0) ? ('bg-background max-w-[100vw] min-h-[100vh]') : ('bg-background max-w-[100vw]')}>
-                <Table sx={{minWidth: 650}} aria-label="simple table">
-                    <OrdersTableHead setSelectedFilters={setSelectedFilters} selectedFilters={selectedFilters}/>
-                    {!loading && (
-                        <OrdersTableBody allOrders={allOrders}/>
+            {isMobile ? (
+                <OrdersMobileView
+                    orders={allOrders}
+                    loading={loading}
+                    selectedFilters={selectedFilters}
+                    setSelectedFilters={setSelectedFilters}
+                />
+            ) : (
+                <TableContainer>
+                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <OrdersTableHead
+                            setSelectedFilters={setSelectedFilters}
+                            selectedFilters={selectedFilters}
+                        />
+                        {!loading && <OrdersTableBody allOrders={allOrders}/>}
+                    </Table>
+                    {!loading && allOrders.length === 0 && (
+                        <EmptyResponse text={'no orders by filter'}/>
                     )}
-                </Table>
-                {!loading && allOrders.length === 0 && (
-                    <EmptyResponse text={'no orders by filter'}/>
-                )}
-                {loading && (
-                    <Box sx={{pt: '7%'}}>
-                        <CustomLoader height='100%'/>
-                    </Box>
-                )}
-            </TableContainer>
+                    {loading && (
+                        <Box sx={{ pt: '7%' }}>
+                            <CustomLoader height='100%'/>
+                        </Box>
+                    )}
+                </TableContainer>
+            )}
         </div>
     );
 
