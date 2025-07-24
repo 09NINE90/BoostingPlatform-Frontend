@@ -1,7 +1,7 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import {Box, Typography} from "@mui/material";
 import React from "react";
-import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
+import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 

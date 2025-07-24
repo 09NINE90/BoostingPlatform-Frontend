@@ -1,4 +1,4 @@
-import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
+import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import {Box, Typography} from "@mui/material";

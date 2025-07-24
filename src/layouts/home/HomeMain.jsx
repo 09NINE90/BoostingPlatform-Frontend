@@ -63,13 +63,13 @@ const HomeMain = () => {
         <>
             <div className='flex flex-col'>
                 <>
-                    <Box sx={{display: {xs: 'none', sm: 'block'}}}>
+                    <Box sx={{display: {xs: 'none', md: 'block'}}}>
                         <Carousel carouselItems={carouselItems}/>
                         <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
                     </Box>
                     <Box sx={{
                         display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
+                        flexDirection: { xs: 'column', lg: 'row' },
                         gap: { xs: 2, md: 5 }
                     }}>
                         <GameSideBar gameList={games} currentGame={currentGameId} onGameSelect={setCurrentGameId}/>

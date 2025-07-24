@@ -1,7 +1,7 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Typography} from "@mui/material";
 import React from "react";
-import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
+import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
@@ -58,7 +58,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                     <CustomTextItem text='Platform' item={order.gamePlatform}/>
                     <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
-                    <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    <AccordionOrderOptions selectedOptions={order.selectedOptions}/>
                     {tipOrderHistory && (
                         <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
                     )}

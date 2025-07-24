@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Box, Chip, LinearProgress, Typography} from "@mui/material";
+import React from "react";
+import {Box, Chip, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
 import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
@@ -10,7 +10,7 @@ const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountSt
     return (
         <Box sx={{
             flex: 1,
-            p: {xs: 3, sm: 10},
+            p: {xs: 3, sm: 5, md: 10},
             py: {xs: 5},
             mt: 3,
             backgroundColor: theme.palette.background.paper

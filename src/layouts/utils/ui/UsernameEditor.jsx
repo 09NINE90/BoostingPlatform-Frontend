@@ -20,12 +20,12 @@ const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
                 sx={{
                     '& .MuiInputBase-root': {
                         height: 40,
-                        width: '260px',
+                        width: {xs: 'auto', sm:'260px'},
 
                     },
                     '& .MuiInputBase-input': {
                         py: 0.5,
-                        width: '260px',
+                        width: {xs: 'auto', sm:'260px'},
                     },
                     flexGrow: 1
                 }}

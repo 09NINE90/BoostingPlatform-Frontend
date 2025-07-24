@@ -116,14 +116,15 @@ const OffersList = memo(({gameId}) => {
                     {offers && (
                         <>
                             <Box sx={{
-                                display: offers.length > 0 ? { xs: 'flex', sm: 'grid' } : 'block',
-                                flexDirection: { xs: 'column', sm: 'row' },
-                                alignItems: { xs: 'center', sm: 'stretch' },
+                                display: offers.length > 0 ? { xs: 'flex', lg: 'grid' } : 'block',
+                                alignItems: { xs: 'center', lg: 'stretch' },
+                                flexWrap: 'wrap',
                                 gridTemplateColumns: { sm: 'repeat(auto-fill, minmax(300px, 1fr))' },
-                                gap: 2,
+                                gap: 4,
                                 gridAutoRows: 'auto',
-                                height: { xs: 'auto', sm: '620px' },
-                                justifyContent: { xs: 'center', sm: 'flex-start' },
+                                height: { xs: 'auto', xl: '620px' },
+                                justifyItems: { xs: 'center', lg: 'stretch' },
+                                justifyContent: { xs: 'center', lg: 'flex-start' },
                                 width: '100%',
                             }}>
                                 {offers.map((offer) => (

@@ -18,8 +18,11 @@ import ProfileDescriptionItem from "src/layouts/utils/ui/ProfileDescriptionItem.
 import UsernameInfoItem from "src/layouts/utils/ui/UsernameInfoItem.jsx";
 import InfoCardItem from "src/layouts/utils/ui/InfoCardItem.jsx";
 import DescriptionEditor from "src/layouts/utils/ui/DescriptionEditor.jsx";
-import theme from "src/theme/theme.jsx";
 import UserAvatar from "src/layouts/utils/ui/UserAvatar.jsx";
+import InfoCardsGroup from "src/layouts/utils/ui/InfoCardsGroup.jsx";
+import InfoCardsContainer from "src/layouts/utils/ui/InfoCardsContainer.jsx";
+import ProfileInfoGroup from "src/layouts/utils/ui/ProfileInfoGroup.jsx";
+import ProfileContainer from "src/layouts/utils/ui/ProfileContainer.jsx";
 
 const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOfCompletedOrders}) => {
 
@@ -90,103 +93,78 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
     };
 
     return (
-        <Box sx={{
-            p: {xs: 1, sm: 3},
-            height: 'fit-content',
-            backgroundColor: theme.palette.background.paper,
-        }}>
+        <ProfileContainer>
+            <Box mt={{xs: 2, md: 6}} ml={{xs: 0, md: 6}}>
+                <UserAvatar
+                    src={userAvatar}
+                    size={200}
+                    onAvatarClick={() => console.log('Avatar clicked')}
+                    onFileChange={handleAvatarChange}
+                />
+            </Box>
+
+
             <Box sx={{
+                paddingInline: {xs: 2, sm: 5, md: 10},
                 display: 'flex',
-                flexDirection: {xs: 'column', sm: 'row'},
-                alignItems: {xs: 'center', sm: 'start'},
-                mb: 3
+                flex: 1,
+                flexDirection: 'column',
+                gap: 1,
+                width: {xs: '100%', md: 'auto'}
             }}>
-                <Box mt={{xs: 2, sm: 6}} ml={{xs: 0, sm: 6}}>
-                    <UserAvatar
-                        src={userAvatar}
-                        size={200}
-                        onAvatarClick={() => console.log('Avatar clicked')}
-                        onFileChange={handleAvatarChange}
-                    />
+                <Box sx={{mt: {xs: 2, sm: 2}, gap: 1}}>
+                    {isEditingName ? (
+                        <UsernameEditor
+                            initialName={userName}
+                            onSave={handleNameSave}
+                            onCancel={handleNameCancel}
+                            loading={isLoadingNameSave}
+                        />
+                    ) : (
+                        <UsernameInfoItem
+                            value={userName}
+                            setIsEditingName={setIsEditingName}
+                            copyable={true}
+                        />
+                    )}
                 </Box>
 
+                <ProfileInfoGroup>
+                    <ProfileInfoItem label="ID" value={secondIdFromStore}/>
+                    <ProfileInfoItem label="Email" value={emailFromStore} copyable={true}/>
+                </ProfileInfoGroup>
 
-                <Box sx={{
-                    paddingInline: {xs: 2, sm: 10},
-                    display: 'flex',
-                    flex: 1,
-                    flexDirection: 'column',
-                    gap: 1,
-                    width: {xs: '100%', sm: 'auto'}
-                }}>
-                    <Box sx={{mt: {xs: 2, sm: 2}, gap: 1}}>
-                        {isEditingName ? (
-                            <UsernameEditor
-                                initialName={userName}
-                                onSave={handleNameSave}
-                                onCancel={handleNameCancel}
-                                loading={isLoadingNameSave}
-                            />
-                        ) : (
-                            <UsernameInfoItem
-                                value={userName}
-                                setIsEditingName={setIsEditingName}
-                                copyable={true}
-                            />
-                        )}
-                    </Box>
+                <InfoCardsContainer>
+                    <InfoCardsGroup>
+                        <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
+                        <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
+                    </InfoCardsGroup>
+                    <InfoCardsGroup>
+                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
+                        <InfoCardItem label='Total tip' value={`$ ${totalTips}`}/>
+                    </InfoCardsGroup>
+                </InfoCardsContainer>
 
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: {xs: 'column', sm: 'row'},
-                        alignItems: {xs: 'flex-start', sm: 'center'},
-                        gap: {xs: 1, sm: 5},
-                        mt: {xs: 1, sm: 0}
-                    }}>
-                        <ProfileInfoItem label="ID" value={secondIdFromStore}/>
-                        <ProfileInfoItem label="Email" value={emailFromStore} copyable={true}/>
-                    </Box>
+                <BoosterGameTags gameTags={gameTags}/>
 
-                    <Box sx={{
-                        mt: 1,
-                        display: 'flex',
-                        flex: 1,
-                        flexDirection: {xs: 'column', sm: 'row'},
-                        justifyContent: 'space-between',
-                        alignItems: {xs: 'flex-start', sm: 'center'},
-                        gap: {xs: 2, sm: 0}
-                    }}>
-                        <Box sx={{display: 'flex', gap: {xs: 2, sm: 0}, width: '100%'}}>
-                            <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
-                            <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
-                        </Box>
-                        <Box sx={{display: 'flex', gap: {xs: 2, sm: 0}, width: '100%'}}>
-                            <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
-                            <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
-                        </Box>
-                    </Box>
-
-                    <BoosterGameTags gameTags={gameTags}/>
-
-                    <Box sx={{mt: 2, width: '100%'}}>
-                        {isEditingDescription ? (
-                            <DescriptionEditor
-                                initialDescription={descriptionProfile}
-                                onSave={handleDescriptionSave}
-                                onCancel={handleDescriptionCancel}
-                                loading={isLoadingDescriptionSave}
-                            />
-                        ) : (
-                            <ProfileDescriptionItem
-                                label='About me'
-                                value={descriptionProfile}
-                                setIsEditingDescription={setIsEditingDescription}
-                            />
-                        )}
-                    </Box>
+                <Box sx={{mt: 2, width: '100%'}}>
+                    {isEditingDescription ? (
+                        <DescriptionEditor
+                            initialDescription={descriptionProfile}
+                            onSave={handleDescriptionSave}
+                            onCancel={handleDescriptionCancel}
+                            loading={isLoadingDescriptionSave}
+                        />
+                    ) : (
+                        <ProfileDescriptionItem
+                            label='About me'
+                            value={descriptionProfile}
+                            setIsEditingDescription={setIsEditingDescription}
+                        />
+                    )}
                 </Box>
             </Box>
-        </Box>
+        </ProfileContainer>
     )
 }
 

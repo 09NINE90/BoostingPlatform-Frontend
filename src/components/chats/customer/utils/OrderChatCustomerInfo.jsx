@@ -1,7 +1,7 @@
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React, {useCallback, useEffect, useState} from "react";
-import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
+import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
 import {getBoosterOrderById, getCustomerOrderById} from "src/services/orderApi.js";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
@@ -111,7 +111,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                         <CustomTextItem text='End order at' item={toLocaleDateTime(order.endTimeExecution)}/>
                     )}
                     <CustomTextItem text='Price' item={`$ ${order.totalPrice}`}/>
-                    <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    <AccordionOrderOptions selectedOptions={order.selectedOptions}/>
                     {boosterInfo && (
                         <BoosterInfo boosterInfo={boosterInfo}/>
                     )}

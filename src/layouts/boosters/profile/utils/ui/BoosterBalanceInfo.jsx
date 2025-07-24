@@ -12,7 +12,7 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
         <Box sx={{
             mt: 3,
             p: {xs: 3, sm: 5},
-            maxWidth: {xs: '100%', sm:'25%'},
+            maxWidth: {xs: '100%', lg:'25%'},
             minWidth: '25%',
             backgroundColor: theme.palette.background.paper
         }}>
@@ -27,29 +27,35 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
             <Box sx={{
                 mt: 5,
                 p: 5,
+                display: 'flex',
+                flexDirection: {xs: 'column', sm: 'row', lg: 'column',},
+                width: '100%',
+                justifyContent: 'space-between',
                 backgroundColor: theme.palette.background.default,
             }}>
-                <Typography variant="h5" sx={{
-                    mb: 2,
-                    fontSize: {xs: 20, sm: 30},
-                    color: theme.palette.third.main,
-                    fontWeight: theme.typography.fontWeightMedium,
-                }}>
-                    Available for withdrawal
-                </Typography>
-                <Typography variant="h4" sx={{
-                    mb: 2,
-                    color: theme.palette.text.primary,
-                    fontWeight: theme.typography.fontWeightMedium,
-                }}>
-                    $ {balance}
-                </Typography>
+                <Box>
+                    <Typography variant="h5" sx={{
+                        mb: 2,
+                        fontSize: {xs: 20, md: 30},
+                        color: theme.palette.third.main,
+                        fontWeight: theme.typography.fontWeightMedium,
+                    }}>
+                        Available for withdrawal
+                    </Typography>
+                    <Typography variant="h4" sx={{
+                        mb: 2,
+                        color: theme.palette.text.primary,
+                        fontWeight: theme.typography.fontWeightMedium,
+                    }}>
+                        $ {balance}
+                    </Typography>
+                </Box>
                 <Box sx={{
-                    minWidth: '100%',
+                    minWidth: {xs: '50%', lg: '100%'},
                     display: "flex",
                     flexDirection: "column",
                     gap: 3,
-                    mt: 5
+                    mt: {xs: 5, sm: 0, lg: 5}
                 }}>
                     <ContainedBlueButton
                         onClick={openModal}

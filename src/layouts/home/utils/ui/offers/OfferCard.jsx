@@ -13,10 +13,10 @@ const OfferCard = ({offer}) => {
             <Box
                 sx={{
                     position: 'relative',
-                    width: { xs: '90vw', sm: 300 },
-                    maxWidth: { xs: 380, sm: 300 },
-                    height: { xs: '90vw', sm: 300 },
-                    maxHeight: { xs: 380, sm: 300 },
+                    width: { xs: '90vw', md: 300 },
+                    maxWidth: { xs: 380, md: 300 },
+                    height: { xs: '90vw', md: 300 },
+                    maxHeight: { xs: 380, md: 300 },
                     aspectRatio: '1/1',
                     display: 'flex',
                     flexDirection: 'column',
