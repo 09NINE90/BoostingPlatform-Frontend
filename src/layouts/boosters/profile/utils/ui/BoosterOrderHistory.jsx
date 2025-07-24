@@ -34,8 +34,8 @@ const BoosterOrderHistory = () => {
             {
                 mt: 3,
                 mr: 3,
-                p: {xs: 3, sm: 10},
-                width: {xs: '100%', sm:'73%'},
+                p: {xs: 3, sm: 5, md: 10},
+                width: {xs: '100%', lg:'73%'},
                 maxWidth: '100%',
                 display: 'flex',
                 flexDirection: 'column',

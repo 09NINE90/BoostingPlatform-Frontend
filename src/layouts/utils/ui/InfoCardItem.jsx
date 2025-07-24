@@ -5,17 +5,15 @@ const InfoCardItem = ({label, value}) => {
 
     return (
         <Box sx={{
-            mr: { xs: 0, sm: 5 },
-            mt: { xs: 0, sm: 2 },
-            gap: { xs: 1, sm: 5 },
+            gap: { xs: 1, lg: 5 },
             flex: 1,
-            p: { xs: 2, sm: 4 },
+            p: { xs: 2, lg: 4 },
             minHeight: { xs: 'auto', sm: '120px' },
             width: { xs: '100%', sm: 'auto' },
             paddingInline: { xs: 2, sm: 5 },
             display: 'flex',
             flexDirection: 'column',
-            alignItems: {xs: 'center', sm: 'flex-start'},
+            alignItems: {xs: 'center', lg: 'flex-start'},
             backgroundColor: theme.palette.background.default,
         }}>
             <Typography variant="h6"

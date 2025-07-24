@@ -1,4 +1,4 @@
-import {Box, Card, CardContent, Typography, useMediaQuery} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {getBalanceHistory} from "src/services/financeApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
@@ -7,11 +7,10 @@ import BalanceHistoryTableHead from "src/layouts/boosters/balance/utils/ui/Balan
 import BalanceHistoryTableBody from "src/layouts/boosters/balance/utils/ui/BalanceHistoryTableBody.jsx";
 import theme from "src/theme/theme.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
-import {toLocaleDateTime} from "src/utils/functions.js";
 import MobileBalanceHistory from "src/layouts/boosters/balance/utils/ui/MobileBalanceHistory.jsx";
 
 const BalanceHistory = () => {
-    const isMobile = useMediaQuery('(max-width:768px)');
+    const isMobile = useMediaQuery('(max-width:1024px)');
 
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);

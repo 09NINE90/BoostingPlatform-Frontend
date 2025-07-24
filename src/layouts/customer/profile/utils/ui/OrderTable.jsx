@@ -53,7 +53,7 @@ const OrderTable = () => {
 
     return (
         <Box sx={{
-            p: {xs: 3, sm: 5},
+            p: {xs: 3, sm: 5, md: 10},
             mt: 3,
             minHeight: '450px',
             maxWidth: '100%',
