@@ -69,8 +69,9 @@ const ChatMessages = ({messages, username}) => {
                             )}
                             <Box
                                 sx={{
+                                    lineHeight: 1.2,
                                     whiteSpace: 'pre-line',
-                                    lineHeight: 1,
+                                    overflowWrap: 'break-word',
                                     fontWeight: theme.typography.fontWeightLight,
                                 }}
                                 dangerouslySetInnerHTML={{__html: cleanHtml}}
