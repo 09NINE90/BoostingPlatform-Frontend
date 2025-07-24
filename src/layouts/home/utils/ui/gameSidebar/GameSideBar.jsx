@@ -48,7 +48,7 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
 
     return (
         <>
-            <Box sx={{display: {xs: 'none', md: 'flex'}, p: 2, flexDirection: 'column'}}>
+            <Box sx={{display: {xs: 'none', lg: 'flex'}, p: 2, flexDirection: 'column'}}>
                 <Box sx={{display: 'flex', alignItems: 'center', gap: 2, mb: 2}}>
                     <Games/>
                     <Typography variant="h4" sx={{fontWeight: theme.typography.fontWeightBold}}>
@@ -68,7 +68,7 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
             </Box>
 
             {/* Мобильная версия */}
-            <Box sx={{display: {xs: 'block', md: 'none'}, mb: 2}}>
+            <Box sx={{display: {xs: 'block', lg: 'none'}, mb: 2}}>
                 <Accordion
                     sx={{
                         backgroundColor: theme.palette.background.default,
