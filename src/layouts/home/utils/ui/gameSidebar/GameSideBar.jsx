@@ -27,7 +27,13 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
                     px: 2,
                     '&.Mui-selected': {
                         backgroundColor: theme.palette.background.paper,
-                    }
+                    },
+                    '&.Mui-selected:hover': {
+                        backgroundColor: theme.palette.background.paper,
+                    },
+                    '&.Mui-selected.Mui-focusVisible': {
+                        backgroundColor: theme.palette.background.paper,
+                    },
                 }}
             >
                 <ListItemText
