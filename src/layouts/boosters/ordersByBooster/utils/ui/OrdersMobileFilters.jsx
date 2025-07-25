@@ -3,10 +3,12 @@ import {useCallback, useEffect, useState} from 'react';
 import {getFiltersForOrdersByBooster} from "src/services/orderApi.js";
 import theme from "src/theme/theme.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
-import MobileSortFilter from "src/layouts/boosters/ordersByBooster/utils/ui/MobileSortFilter.jsx";
+import MobileSortFilter from "src/layouts/utils/ui/MobileSortFilter.jsx";
+import {BOOSTER_PRICE, GAME_NAME, GAME_PLATFORM} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
 
-const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
+const OrdersMobileFilters = ({selectedFilters, setSelectedFilters}) => {
     const [expanded, setExpanded] = useState(false);
+    const orderSortKeys =[BOOSTER_PRICE, GAME_NAME, GAME_PLATFORM];
 
     const [filters, setFilters] = useState({
         statuses: [],
@@ -91,12 +93,12 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
                 const newDirection = prev.sort.asc === false ? null : !prev.sort.asc;
                 return {
                     ...prev,
-                    sort: newDirection !== null ? { key, asc: newDirection } : null,
+                    sort: newDirection !== null ? {key, asc: newDirection} : null,
                 };
             }
             return {
                 ...prev,
-                sort: { key, asc: true },
+                sort: {key, asc: true},
             };
         });
     };
@@ -183,13 +185,17 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
                         max={maxBound}
                     />
 
-                    <Divider sx={{ my: 2 }} />
+                    <Divider sx={{my: 2}}/>
 
-                    <Typography variant="subtitle1" sx={{ fontWeight: theme.typography.fontWeightLight }}>
+                    <Typography variant="subtitle1" sx={{fontWeight: theme.typography.fontWeightLight}}>
                         Sort by
                     </Typography>
 
-                    <MobileSortFilter handleSort={handleSort} tempFilters={tempFilters}/>
+                    <MobileSortFilter
+                        sortKeys={orderSortKeys}
+                        handleSort={handleSort}
+                        tempFilters={tempFilters}
+                    />
 
                     <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 3}}>
                         <Button onClick={handleCancel} sx={{color: theme.palette.statuses.red}}>
@@ -205,4 +211,4 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
     );
 };
 
-export default MobileFilters;
+export default OrdersMobileFilters;

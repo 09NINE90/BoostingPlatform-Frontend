@@ -41,7 +41,7 @@ const OrderInfoCell = ({orderByRow}) => {
     }
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column', mb: 2}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', gap: 1, mb: 2}}>
             <Typography variant="body2"
                         sx={{
                             color: theme.palette.text.primary,
@@ -49,9 +49,13 @@ const OrderInfoCell = ({orderByRow}) => {
                         }}>
                 {orderByRow.offerName}
             </Typography>
+            {isMobile && (
+                <Typography variant="body2" color="text.secondary">
+                    Platform: {orderByRow.gamePlatform}
+                </Typography>
+            )}
             <Typography variant="body2"
                         sx={{
-                            mt: 2,
                             color: theme.palette.primary.main,
                             fontWeight: theme.typography.fontWeightLight
                         }}>
@@ -62,7 +66,6 @@ const OrderInfoCell = ({orderByRow}) => {
                 )
                 : (
                     <OrderOptions order={orderByRow}/>
-
                 )
             }
             {orderByRow.startTimeExecution && (

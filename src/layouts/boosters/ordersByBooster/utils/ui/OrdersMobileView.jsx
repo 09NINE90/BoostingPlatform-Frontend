@@ -3,7 +3,7 @@ import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderStatusCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderStatusCell.jsx";
 import OrderInfoCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoCell.jsx";
-import MobileFilters from "src/layouts/boosters/ordersByBooster/utils/ui/MobileFilters.jsx";
+import OrdersMobileFilters from "src/layouts/boosters/ordersByBooster/utils/ui/OrdersMobileFilters.jsx";
 import {Link} from "react-router-dom";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
@@ -12,7 +12,7 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
 
     return (
         <Box sx={{p: 2, width: '100%'}}>
-            <MobileFilters
+            <OrdersMobileFilters
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
             />
@@ -22,7 +22,7 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
             )}
 
             {loading && (
-                <Box sx={{pt: '7%'}}>
+                <Box sx={{pt: '10%'}}>
                     <CustomLoader height='100%'/>
                 </Box>
             )}
@@ -31,10 +31,10 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
                 <Box
                     key={order.orderId}
                     sx={{
-                        mb: 3,
                         p: 2,
+                        mb: 3,
+                        boxShadow: 2,
                         backgroundColor: theme.palette.background.paper,
-
                     }}
                 >
                     <Box sx={{display: 'flex', justifyContent: 'space-between', mb: 1}}>
@@ -51,10 +51,6 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
                             size="medium"
                         />
                     </Box>
-
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                        Platform: {order.gamePlatform}
-                    </Typography>
 
                     <OrderStatusCell orderStatus={order.orderStatus}/>
 
