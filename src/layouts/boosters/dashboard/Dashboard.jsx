@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect} from 'react'
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
-
 import {useState} from 'react';
 import {acceptOrder, getDashboardOrders} from "src/services/orderApi.js";
 import AcceptModal from "src/layouts/boosters/dashboard/utils/ui/AcceptModal.jsx";
@@ -11,16 +10,19 @@ import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderPagination from "src/layouts/boosters/dashboard/utils/ui/OrderPagination.jsx";
 import DashboardTableBody from "src/layouts/boosters/dashboard/utils/ui/DashboardTableBody.jsx";
 import DashboardTableHead from "src/layouts/boosters/dashboard/utils/ui/DashboardTableHead.jsx";
-import {Box} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import DashboardMobileView from "src/layouts/boosters/dashboard/utils/ui/DashboardMobileView.jsx";
 
 const Dashboard = () => {
+    const isMobile = useMediaQuery('(max-width:1024px)');
+
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [allOrders, setAllOrders] = useState([]);
     const [pageNumber, setPageNumber] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [employeesPerPage, setEmployeesPerPage] = useState(500);
+    const [employeesPerPage, setEmployeesPerPage] = useState(isMobile ? 20 : 500);
     const [recordTotal, setRecordTotal] = useState(0);
     const [acceptLoading, setAcceptLoading] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -41,6 +43,7 @@ const Dashboard = () => {
     });
 
     const fetchAllOrders = useCallback(async () => {
+        setAllOrders([]);
         setLoading(true);
         try {
             const allOrdersApi = await getDashboardOrders(selectedFilters)
@@ -113,30 +116,42 @@ const Dashboard = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <div className="flex-grow relative">
-                <TableContainer
-                    className={(loading || allOrders.length === 0)
-                        ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
-                        : 'bg-background max-w-[100vw] pb-16'
-                    }
-                >
-                    <Table sx={{minWidth: 650}} aria-label="simple table">
-                        <DashboardTableHead setPageNumber={setPageNumber}
-                                            setSelectedFilters={setSelectedFilters}
-                                            selectedFilters={selectedFilters}
-                        />
-                        {!loading && (
-                            <DashboardTableBody allOrders={allOrders} openModal={openModal}/>
+                {isMobile ? (
+                    <DashboardMobileView
+                        setSelectedFilters={setSelectedFilters}
+                        selectedFilters={selectedFilters}
+                        setPageNumber={setPageNumber}
+                        allOrders={allOrders}
+                        openModal={openModal}
+                        loading={loading}
+                    />
+                )
+                : (
+                    <TableContainer
+                        className={(loading || allOrders.length === 0)
+                            ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
+                            : 'bg-background max-w-[100vw] pb-16'
+                        }
+                    >
+                        <Table sx={{minWidth: 650}} aria-label="simple table">
+                            <DashboardTableHead setPageNumber={setPageNumber}
+                                                setSelectedFilters={setSelectedFilters}
+                                                selectedFilters={selectedFilters}
+                            />
+                            {!loading && (
+                                <DashboardTableBody allOrders={allOrders} openModal={openModal}/>
+                            )}
+                        </Table>
+                        {loading && (
+                            <Box sx={{pt: '7%'}}>
+                                <CustomLoader height='100%'/>
+                            </Box>
                         )}
-                    </Table>
-                    {loading && (
-                        <Box sx={{pt: '7%'}}>
-                            <CustomLoader height='100%'/>
-                        </Box>
+                        {!loading && allOrders.length === 0 && (
+                            <EmptyResponse text={'no orders by filter'}/>
+                        )}
+                    </TableContainer>
                     )}
-                    {!loading && allOrders.length === 0 && (
-                        <EmptyResponse text={'no orders by filter'}/>
-                    )}
-                </TableContainer>
             </div>
             <OrderPagination employeesPerPage={employeesPerPage}
                              recordTotal={recordTotal}

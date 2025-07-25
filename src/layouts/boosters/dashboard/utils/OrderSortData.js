@@ -8,6 +8,7 @@ const sortKeysTitle = new Map([
     ['BOOSTER_PRICE', 'SALARY'],
     ['GAME_NAME', 'GAME NAME'],
     ['GAME_PLATFORM', 'GAME PLATFORM'],
+    ['TOTAL_PRICE', 'PRICE'],
 ]);
 
 export {OFFER_NAME, TOTAL_PRICE, BOOSTER_PRICE, GAME_NAME, GAME_PLATFORM, sortKeysTitle}

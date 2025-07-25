@@ -1,34 +1,49 @@
-import {Box, Button, Checkbox, Collapse, Divider, FormControlLabel, Slider, Typography} from '@mui/material';
-import {useCallback, useEffect, useState} from 'react';
-import {getFiltersForOrdersByBooster} from "src/services/orderApi.js";
 import theme from "src/theme/theme.jsx";
+import {
+    Box,
+    Typography,
+    FormControlLabel,
+    Checkbox,
+    Collapse,
+    Slider,
+    Button,
+    Divider
+} from '@mui/material'
+import {useState, useEffect, useCallback} from 'react'
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
-import MobileSortFilter from "src/layouts/boosters/ordersByBooster/utils/ui/MobileSortFilter.jsx";
+import MobileSortFilter from "src/layouts/utils/ui/MobileSortFilter.jsx";
+import {
+    GAME_NAME,
+    GAME_PLATFORM,
+    TOTAL_PRICE
+} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
+import {getFiltersDashboard} from "src/services/orderApi.js";
 
-const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
+
+const DashboardMobileFilters = ({setPageNumber, selectedFilters, setSelectedFilters}) => {
     const [expanded, setExpanded] = useState(false);
+    const dashboardSortKeys =[TOTAL_PRICE, GAME_NAME, GAME_PLATFORM];
 
     const [filters, setFilters] = useState({
-        statuses: [],
         gamePlatforms: [],
         gameNames: [],
         price: {priceMin: 0, priceMax: 10000}
-    });
+    })
 
-    const [tempFilters, setTempFilters] = useState(selectedFilters);
+    const [tempFilters, setTempFilters] = useState(selectedFilters)
 
-    const fetchOrdersFilterData = useCallback(async () => {
+    const fetchDashboardFilters = useCallback(async () => {
         try {
-            const orderFiltersApi = await getFiltersForOrdersByBooster()
-            setFilters(orderFiltersApi);
+            const response = await getFiltersDashboard()
+            setFilters(response)
         } catch (error) {
-            console.log(error);
+            console.error(error)
         }
-    }, [getFiltersForOrdersByBooster, setFilters]);
+    }, [])
 
     useEffect(() => {
-        fetchOrdersFilterData();
-    }, [fetchOrdersFilterData]);
+        fetchDashboardFilters()
+    }, [fetchDashboardFilters])
 
     const handleCheckboxChange = (key, value) => {
         setTempFilters((prev) => ({
@@ -36,77 +51,74 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
             [key]: prev[key]?.includes(value)
                 ? prev[key].filter((v) => v !== value)
                 : [...(prev[key] || []), value],
-        }));
-    };
+        }))
+    }
 
     const handlePriceChange = (event, newValue) => {
         setTempFilters((prev) => ({
             ...prev,
-            price: {
+            totalPrice: {
                 priceFrom: newValue[0],
                 priceTo: newValue[1],
-            },
-        }));
-    };
+            }
+        }))
+    }
 
     const handleApply = () => {
-        setSelectedFilters(tempFilters);
-        setExpanded(false);
-    };
+        setSelectedFilters(tempFilters)
+        setExpanded(false)
+    }
 
     const handleCancel = () => {
-        setTempFilters(selectedFilters);
-        setExpanded(false);
-    };
+        setTempFilters(selectedFilters)
+        setExpanded(false)
+    }
 
     const handleSelectAll = () => {
         setTempFilters({
             gameNames: [...filters.gameNames],
             gamePlatforms: [...filters.gamePlatforms],
-            statuses: [...filters.statuses],
-            price: {
+            totalPrice: {
                 priceFrom: filters.price.priceMin,
                 priceTo: filters.price.priceMax
             },
             sort: tempFilters.sort ?? null
-        });
-    };
+        })
+    }
 
     const handleClearAll = () => {
         setTempFilters({
             gameNames: [],
             gamePlatforms: [],
-            statuses: [],
-            price: {
-                priceFrom: filters.price.priceMin,
-                priceTo: filters.price.priceMax
+            totalPrice: {
+                priceFrom: null,
+                priceTo: null
             },
             sort: null
-        });
-    };
+        })
+    }
 
     const handleSort = (key) => {
+        setPageNumber(0)
         setTempFilters((prev) => {
             if (prev.sort?.key === key) {
-                const newDirection = prev.sort.asc === false ? null : !prev.sort.asc;
+                const newDirection = prev.sort.asc === false ? null : !prev.sort.asc
                 return {
                     ...prev,
-                    sort: newDirection !== null ? { key, asc: newDirection } : null,
-                };
+                    sort: newDirection !== null ? {key, asc: newDirection} : null,
+                }
             }
             return {
                 ...prev,
-                sort: { key, asc: true },
-            };
-        });
-    };
+                sort: {key, asc: true},
+                pageNumber: 1
+            }
+        })
+    }
 
     const renderCheckboxGroup = (title, key, options) => (
         <Box sx={{mb: 2}}>
-            <Typography variant="subtitle1"
-                        sx={{
-                            fontWeight: theme.typography.fontWeightLight,
-                        }}>
+            <Typography variant="subtitle1" sx={{fontWeight: theme.typography.fontWeightLight}}>
                 {title}
             </Typography>
             {options.map((opt) => (
@@ -127,69 +139,59 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
                 />
             ))}
         </Box>
-    );
+    )
 
-    const minBound = filters.price.priceMin ?? 0;
-    const maxBound = filters.price.priceMax ?? 10000;
-    const priceFrom = tempFilters.price?.priceFrom ?? minBound;
-    const priceTo = tempFilters.price?.priceTo ?? maxBound;
+    const minBound = filters.price.priceMin ?? 0
+    const maxBound = filters.price.priceMax ?? 10000
+    const priceFrom = tempFilters.totalPrice?.priceFrom ?? minBound
+    const priceTo = tempFilters.totalPrice?.priceTo ?? maxBound
 
     return (
         <Box sx={{mb: 2}}>
-            <OutlinedBlueButton
-                onClick={() => setExpanded(!expanded)}
-                sx={{
-                    width: '100%',
-                }}
-            >
+            <OutlinedBlueButton onClick={() => setExpanded(!expanded)} sx={{width: '100%'}}>
                 Filters
             </OutlinedBlueButton>
 
             <Collapse in={expanded}>
-                <Box sx={{mt: 2, p: 2, backgroundColor: 'background.paper',}}>
+                <Box sx={{mt: 2, p: 2, backgroundColor: 'background.paper'}}>
                     <Box sx={{display: 'flex', justifyContent: 'space-between', mb: 2}}>
                         <Button onClick={handleSelectAll} size="small"
-                                sx={{
-                                    fontSize: 14,
-                                    color: theme.palette.primary.main
-                                }}>
+                                sx={{fontSize: 14, color: theme.palette.primary.main}}>
                             Select all
                         </Button>
                         <Button onClick={handleClearAll} size="small"
-                                sx={{
-                                    fontSize: 14,
-                                    color: theme.palette.statuses.red
-                                }}>
+                                sx={{fontSize: 14, color: theme.palette.statuses.red}}>
                             Clear all
                         </Button>
                     </Box>
+
                     {renderCheckboxGroup('Games', 'gameNames', filters.gameNames)}
                     {renderCheckboxGroup('Platforms', 'gamePlatforms', filters.gamePlatforms)}
-                    {renderCheckboxGroup('Statuses', 'statuses', filters.statuses)}
 
                     <Divider sx={{my: 2}}/>
 
-                    <Typography variant="subtitle1"
-                                sx={{
-                                    fontWeight: theme.typography.fontWeightLight,
-                                }}>
+                    <Typography variant="subtitle1" sx={{fontWeight: theme.typography.fontWeightLight}}>
                         Price Range
                     </Typography>
                     <Slider
-                        value={[priceFrom ?? minBound, priceTo ?? maxBound]}
+                        value={[priceFrom, priceTo]}
                         onChange={handlePriceChange}
                         valueLabelDisplay="auto"
                         min={minBound}
                         max={maxBound}
                     />
 
-                    <Divider sx={{ my: 2 }} />
+                    <Divider sx={{my: 2}}/>
 
-                    <Typography variant="subtitle1" sx={{ fontWeight: theme.typography.fontWeightLight }}>
+                    <Typography variant="subtitle1" sx={{fontWeight: theme.typography.fontWeightLight}}>
                         Sort by
                     </Typography>
 
-                    <MobileSortFilter handleSort={handleSort} tempFilters={tempFilters}/>
+                    <MobileSortFilter
+                        sortKeys={dashboardSortKeys}
+                        handleSort={handleSort}
+                        tempFilters={tempFilters}
+                    />
 
                     <Box sx={{display: 'flex', justifyContent: 'space-between', mt: 3}}>
                         <Button onClick={handleCancel} sx={{color: theme.palette.statuses.red}}>
@@ -202,7 +204,7 @@ const MobileFilters = ({selectedFilters, setSelectedFilters}) => {
                 </Box>
             </Collapse>
         </Box>
-    );
-};
+    )
+}
 
-export default MobileFilters;
+export default DashboardMobileFilters;

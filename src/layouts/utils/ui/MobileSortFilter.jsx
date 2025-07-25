@@ -1,16 +1,11 @@
-import {
-    BOOSTER_PRICE,
-    GAME_NAME,
-    GAME_PLATFORM,
-    sortKeysTitle
-} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
+import {sortKeysTitle} from "src/layouts/boosters/dashboard/utils/OrderSortData.js";
 import {Box, Button} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 
-const MobileSortFilter = ({handleSort, tempFilters}) => {
+const MobileSortFilter = ({sortKeys,handleSort, tempFilters}) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, mt: 1 }}>
-            {[BOOSTER_PRICE, GAME_NAME, GAME_PLATFORM].map((key) => {
+            {sortKeys.map((key) => {
                 const isActive = tempFilters.sort?.key === key;
                 const direction = tempFilters.sort?.asc ? '↑' : '↓';
 
