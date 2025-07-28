@@ -67,8 +67,8 @@ const Orders = () => {
                     setSelectedFilters={setSelectedFilters}
                 />
             ) : (
-                <TableContainer>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableContainer sx={{height: '100vh'}}>
+                    <Table sx={{minWidth: 650}} aria-label="simple table">
                         <OrdersTableHead
                             setSelectedFilters={setSelectedFilters}
                             selectedFilters={selectedFilters}
@@ -79,7 +79,7 @@ const Orders = () => {
                         <EmptyResponse text={'no orders by filter'}/>
                     )}
                     {loading && (
-                        <Box sx={{ pt: '7%' }}>
+                        <Box sx={{pt: '7%'}}>
                             <CustomLoader height='100%'/>
                         </Box>
                     )}

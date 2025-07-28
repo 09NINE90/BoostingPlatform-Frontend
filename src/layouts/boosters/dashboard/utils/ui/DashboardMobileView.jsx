@@ -7,6 +7,7 @@ import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
 import DashboardMobileFilters from "src/layouts/boosters/dashboard/utils/ui/DashboardMobileFilters.jsx";
 import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
+import PlatformIconContainer from "src/layouts/utils/ui/PlatformIconContainer.jsx";
 
 const DashboardMobileView = ({
                                  setSelectedFilters,
@@ -72,9 +73,13 @@ const DashboardMobileView = ({
                         <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
                             Game: {order.gameName}
                         </Typography>
-                        <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
-                            Platform: {order.gamePlatform}
-                        </Typography>
+
+                        <Box sx={{display: 'flex', alignItems: 'center'}}>
+                            <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
+                                Platform: {order.gamePlatform}
+                            </Typography>
+                            <PlatformIconContainer platformId={order.gamePlatform} />
+                        </Box>
 
                         {order.selectedOptions.length > 0 ? (
                                 <>
