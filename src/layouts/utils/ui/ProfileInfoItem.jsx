@@ -1,17 +1,26 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Box, IconButton, Tooltip, Typography} from "@mui/material";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import theme from "src/theme/theme.jsx";
 
 const ProfileInfoItem = ({label = null, value, copyable = false}) => {
     const [copied, setCopied] = useState(false);
+    const [open, setOpen] = useState(false);
 
-    const handleCopy = () => {
+    useEffect(() => {
+        const handleOutsideClick = () => setOpen(false);
+        document.addEventListener('click', handleOutsideClick);
+        return () => document.removeEventListener('click', handleOutsideClick);
+    }, []);
+
+    const handleCopy = (e) => {
         navigator.clipboard.writeText(value);
         setCopied(true);
-        if (navigator.vibrate) navigator.vibrate(50);
+        e.stopPropagation();
+        setOpen((prev) => !prev);
         setTimeout(() => setCopied(false), 1500);
     };
+
     return (
         <Box sx={{
             display: 'flex',
@@ -26,7 +35,7 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
                                 fontWeight: theme.typography.fontWeightLight,
                                 mr: 2,
                                 lineHeight: '24px',
-                                fontSize: { xs: '0.875rem', sm: '1rem' }
+                                fontSize: {xs: '0.875rem', sm: '1rem'}
                             }}>
                     {label}:
                 </Typography>
@@ -38,12 +47,20 @@ const ProfileInfoItem = ({label = null, value, copyable = false}) => {
                             lineHeight: '24px',
                             display: 'flex',
                             alignItems: 'center',
-                            fontSize: { xs: '0.875rem', sm: '1rem' },
+                            fontSize: {xs: '0.875rem', sm: '1rem'},
                         }}>
                 {value}
             </Typography>
             {copyable && (
-                <Tooltip title={copied ? "Copied!" : "Copy"}>
+                <Tooltip
+                    title="Copied!"
+                    open={open && copied}
+                    onClose={() => setOpen(false)}
+                    onOpen={() => setOpen(true)}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                >
                     <IconButton
                         size="medium"
                         onClick={handleCopy}

@@ -43,7 +43,7 @@ const OrdersTableBody = ({allOrders}) => {
                                 component={Link}
                                 sx={{width:'70%'}}
                             >
-                                GET INFO
+                                OPEN CHAT
                             </ContainedBlueButton>
                         )}/>
                 </TableRow>

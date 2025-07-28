@@ -11,7 +11,7 @@ import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}) => {
 
     return (
-        <Box sx={{p: 2, width: '100%'}}>
+        <Box sx={{p: 2, width: '100%', paddingInline: {xs: 2, sm: 15}}}>
             <OrdersMobileFilters
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
@@ -64,7 +64,7 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
                                 component={Link}
                                 sx={{width: '150px'}}
                             >
-                                GET INFO
+                                OPEN CHAT
                             </ContainedBlueButton>
                         </Box>
                     )}
