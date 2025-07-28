@@ -5,19 +5,10 @@ import {Box, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import {gamePlatforms} from "src/utils/constants/gamePlatforms.js";
+import CustomTableCell from "src/layouts/utils/ui/CustomTableCell.jsx";
 
 const DashboardTableBody = ({allOrders, openModal}) => {
-
-    const CustomCell = ({width, item, center = true}) => {
-        return (
-            <TableCell
-                align={center ? 'center' : 'left'}
-                sx={{width: width}}
-            >
-                <div className='text-text-primary kanit-light'>{item}</div>
-            </TableCell>
-        )
-    }
 
     return (
         <TableBody>
@@ -55,10 +46,10 @@ const DashboardTableBody = ({allOrders, openModal}) => {
                             <OrderOptions order={order}/>
                         </Box>
                     </TableCell>
-                    <CustomCell center={false} width='15%' item={order.gameName}/>
-                    <CustomCell width='15%' item={order.gamePlatform}/>
-                    <CustomCell width='15%' item={`${order.totalPrice} $`}/>
-                    <CustomCell width='20%' item={
+                    <CustomTableCell center={false} width='15%' item={order.gameName}/>
+                    <CustomTableCell width='15%' item={gamePlatforms.get(order.gamePlatform)} iconName={order.gamePlatform}/>
+                    <CustomTableCell width='15%' item={`${order.totalPrice} $`}/>
+                    <CustomTableCell width='20%' item={
                         <ContainedBlueButton
                             onClick={() => openModal(order)}
                             sx={{width: '40%', height: '30px',}}

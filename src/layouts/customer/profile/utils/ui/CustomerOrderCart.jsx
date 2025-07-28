@@ -1,11 +1,11 @@
 import theme from "src/theme/theme.jsx";
-import {gamePlatforms} from "src/layouts/customer/profile/utils/data/GamePlatforms.js";
 import {Box, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import {useIsTextOverflowed} from "src/utils/functions.js";
 import {Link} from "react-router-dom";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
+import {gamePlatforms} from "src/utils/constants/gamePlatforms.js";
 
 const CustomerOrderCart = ({order, onOpen}) => {
 

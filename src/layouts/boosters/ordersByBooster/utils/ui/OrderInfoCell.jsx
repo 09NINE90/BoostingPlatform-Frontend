@@ -4,6 +4,7 @@ import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import React from "react";
 import {toLocaleDateTime} from "src/utils/functions.js";
 import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
+import PlatformIconContainer from "src/layouts/utils/ui/PlatformIconContainer.jsx";
 
 const OrderInfoCell = ({orderByRow}) => {
     const isMobile = useMediaQuery('(max-width:1024px)');
@@ -50,9 +51,12 @@ const OrderInfoCell = ({orderByRow}) => {
                 {orderByRow.offerName}
             </Typography>
             {isMobile && (
-                <Typography variant="body2" color="text.secondary">
-                    Platform: {orderByRow.gamePlatform}
-                </Typography>
+                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
+                        Platform: {orderByRow.gamePlatform}
+                    </Typography>
+                    <PlatformIconContainer platformId={orderByRow.gamePlatform} />
+                </Box>
             )}
             <Typography variant="body2"
                         sx={{
