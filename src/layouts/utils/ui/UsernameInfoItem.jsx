@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Box, IconButton, Tooltip, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -6,10 +6,19 @@ import EditIcon from "@mui/icons-material/Edit";
 
 const UsernameInfoItem = ({value, setIsEditingName, copyable = false}) => {
     const [copied, setCopied] = useState(false);
+    const [open, setOpen] = useState(false);
 
-    const handleCopy = () => {
+    useEffect(() => {
+        const handleOutsideClick = () => setOpen(false);
+        document.addEventListener('click', handleOutsideClick);
+        return () => document.removeEventListener('click', handleOutsideClick);
+    }, []);
+
+    const handleCopy = (e) => {
         navigator.clipboard.writeText(value);
         setCopied(true);
+        e.stopPropagation();
+        setOpen((prev) => !prev);
         setTimeout(() => setCopied(false), 1500);
     };
     return (
@@ -31,7 +40,15 @@ const UsernameInfoItem = ({value, setIsEditingName, copyable = false}) => {
                     {value}
                 </Typography>
                 {copyable && (
-                    <Tooltip title={copied ? "Copied!" : "Copy"}>
+                    <Tooltip
+                        title="Copied!"
+                        open={open && copied}
+                        onClose={() => setOpen(false)}
+                        onOpen={() => setOpen(true)}
+                        disableFocusListener
+                        disableHoverListener
+                        disableTouchListener
+                    >
                         <IconButton
                             size="small"
                             onClick={handleCopy}
