@@ -55,7 +55,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
-                    <CustomTextItem text='Platform' item={order.gamePlatform}/>
+                    <CustomTextItem text='Platform' item={order.gamePlatform.name}/>
                     <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
                     <AccordionOrderOptions selectedOptions={order.selectedOptions}/>
