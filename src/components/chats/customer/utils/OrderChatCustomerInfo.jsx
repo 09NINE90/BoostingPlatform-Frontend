@@ -105,7 +105,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
-                    <CustomTextItem text='Platform' item={order.gamePlatform}/>
+                    <CustomTextItem text='Platform' item={order.gamePlatform.name}/>
                     <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     {order.endTimeExecution && (
                         <CustomTextItem text='End order at' item={toLocaleDateTime(order.endTimeExecution)}/>

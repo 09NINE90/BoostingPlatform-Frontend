@@ -111,17 +111,6 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
                 </Box>
 
                 <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center'}}>
-                    {cartItems.length === 0 && (
-                        <Typography variant="caption"
-                                    sx={{
-                                        mb: 1,
-                                        color: theme.palette.third.main,
-                                        fontWeight: theme.typography.fontWeightLight
-                                    }}
-                        >
-                            Select one of the items in the shopping cart to proceed to payment.
-                        </Typography>
-                    )}
                     <ContainedBlueButton
                         disabled={cartItems.length === 0}
                         loading={loading}

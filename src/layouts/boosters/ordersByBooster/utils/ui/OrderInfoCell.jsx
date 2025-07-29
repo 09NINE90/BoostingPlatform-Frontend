@@ -53,9 +53,9 @@ const OrderInfoCell = ({orderByRow}) => {
             {isMobile && (
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
                     <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
-                        Platform: {orderByRow.gamePlatform}
+                        Platform: {orderByRow.gamePlatform.name}
                     </Typography>
-                    <PlatformIconContainer platformId={orderByRow.gamePlatform} />
+                    <PlatformIconContainer platformId={orderByRow.gamePlatform.title} />
                 </Box>
             )}
             <Typography variant="body2"
