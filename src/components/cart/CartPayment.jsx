@@ -18,7 +18,8 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
     return (
         <Box
             sx={{
-                borderLeft: '1px solid ' + theme.palette.divider,
+                borderTop: {xs: '1px solid ' + theme.palette.divider, lg: 'none'},
+                borderLeft: {xs: 'none', lg: '1px solid ' + theme.palette.divider},
                 pl: 2,
                 width: {xs: '100%', lg: '17vw'},
                 height: '100%',
@@ -26,7 +27,7 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
                 flexDirection: 'column',
             }}
         >
-            <Typography variant="h6" sx={{mb: 2}}>
+            <Typography variant="h6" sx={{mb: 2, mt: {xs: 2, lg: 0}}}>
                 Total: {cartItems.length}
             </Typography>
 
