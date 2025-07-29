@@ -14,7 +14,7 @@ import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 
-const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
+const CartItems = ({item, onRemoveItem}) => {
 
     const [isDeleteLoading, setIsDeleteLoading] = useState(false);
     const dispatch = useDispatch();
@@ -144,20 +144,6 @@ const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
                             }}>
                     $ {item.totalPrice}
                 </Typography>
-                <Checkbox
-                    checked={isSelected}
-                    onChange={() => onToggle(item)}
-                    sx={{
-                        color: theme.palette.third.hover,
-                        '&.Mui-checked': {
-                            color: theme.palette.third.main,
-                        },
-                        p: 0,
-                        '& .MuiSvgIcon-root': {
-                            fontSize: 24,
-                        },
-                    }}
-                />
                 <Button
                     variant="contained"
                     loading={isDeleteLoading}

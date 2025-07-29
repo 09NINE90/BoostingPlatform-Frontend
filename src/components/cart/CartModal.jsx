@@ -12,16 +12,8 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = f
 
     const dispatch = useDispatch();
     const countCartItems = useSelector(selectCountCartItems);
-    const [selectedIds, setSelectedIds] = useState([]);
+    const [selectedIds, setSelectedIds] = useState(cartItems.map(item => item.id));
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleToggleItem = (item) => {
-        setSelectedIds((prev) =>
-            prev.includes(item.id)
-                ? prev.filter((id) => id !== item.id)
-                : [...prev, item.id]
-        );
-    };
 
     const handleProceed = async () => {
         setIsLoading(true)
@@ -63,8 +55,6 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = f
                             <CartItems
                                 key={item.id}
                                 item={item}
-                                isSelected={selectedIds.includes(item.id)}
-                                onToggle={handleToggleItem}
                                 onRemoveItem={onRemoveItem}
                                 isMobile={true}
                             />
@@ -76,7 +66,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = f
 
                 {cartItems.length > 0 && (
                     <CartPayment
-                        cartItems={cartItems.filter((item) => selectedIds.includes(item.id))}
+                        cartItems={cartItems}
                         onProceed={handleProceed}
                         loading={isLoading}
                         isMobile={true}
@@ -112,8 +102,6 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = f
                         <CartItems
                             key={item.id}
                             item={item}
-                            isSelected={selectedIds.includes(item.id)}
-                            onToggle={handleToggleItem}
                             onRemoveItem={onRemoveItem}
                         />
                     ))
@@ -124,7 +112,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = f
 
             {cartItems.length > 0 && (
                 <CartPayment
-                    cartItems={cartItems.filter((item) => selectedIds.includes(item.id))}
+                    cartItems={cartItems}
                     onProceed={handleProceed}
                     loading={isLoading}
                 />
