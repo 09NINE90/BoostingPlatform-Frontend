@@ -25,7 +25,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
-    const [selectedPlatform, setSelectedPlatform] = useState('PC');
+    const [selectedPlatform, setSelectedPlatform] = useState(gamePlatforms[0]?.title);
     const dispatch = useDispatch();
 
     const handleChange = (blockId, value, label, optionTitle) => {
@@ -258,11 +258,11 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                     {gamePlatforms.map((item) => (
                         <Button
                             sx={{ m: 1 }}
-                            key={item}
-                            variant={selectedPlatform === item ? "contained" : "outlined"}
-                            onClick={() => setSelectedPlatform(item)}
+                            key={item.id}
+                            variant={selectedPlatform === item.title ? "contained" : "outlined"}
+                            onClick={() => setSelectedPlatform(item.title)}
                         >
-                            {item}
+                            {item.title}
                         </Button>
                     ))}
                 </Box>

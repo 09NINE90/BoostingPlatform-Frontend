@@ -5,7 +5,6 @@ import {useIsTextOverflowed} from "src/utils/functions.js";
 import {Link} from "react-router-dom";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
-import {gamePlatforms} from "src/utils/constants/gamePlatforms.js";
 
 const CustomerOrderCart = ({order, onOpen}) => {
 
@@ -50,7 +49,7 @@ const CustomerOrderCart = ({order, onOpen}) => {
                     <span className="text-third">ID: {order.secondId}</span>
                     <h3 className="text-lg kanit-regular text-text-primary">
                                         <span
-                                            className="text-third">Platform:</span> {gamePlatforms.get(order.gamePlatform)}
+                                            className="text-third">Platform:</span> {order.gamePlatform.name}
                     </h3>
                 </Box>
 

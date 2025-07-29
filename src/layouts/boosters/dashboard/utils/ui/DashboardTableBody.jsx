@@ -5,7 +5,6 @@ import {Box, Typography} from "@mui/material";
 import TableBody from "@mui/material/TableBody";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
-import {gamePlatforms} from "src/utils/constants/gamePlatforms.js";
 import CustomTableCell from "src/layouts/utils/ui/CustomTableCell.jsx";
 
 const DashboardTableBody = ({allOrders, openModal}) => {
@@ -47,7 +46,7 @@ const DashboardTableBody = ({allOrders, openModal}) => {
                         </Box>
                     </TableCell>
                     <CustomTableCell center={false} width='15%' item={order.gameName}/>
-                    <CustomTableCell width='15%' item={gamePlatforms.get(order.gamePlatform)} iconName={order.gamePlatform}/>
+                    <CustomTableCell width='15%' item={order.gamePlatform.name} iconName={order.gamePlatform.title}/>
                     <CustomTableCell width='15%' item={`${order.totalPrice} $`}/>
                     <CustomTableCell width='20%' item={
                         <ContainedBlueButton

@@ -7,11 +7,3 @@ export const platformIcons = [
     { id: 'XBOX', Icon: XboxIcon, alt: 'Xbox' },
     { id: 'PS', Icon: PlayStationIcon, alt: 'PlayStation' }
 ];
-
-export const gamePlatforms = new Map([
-    ['PC', 'PC'],
-    ['PS', 'Play Station'],
-    ['XBOX', 'Xbox']
-]);
-
-

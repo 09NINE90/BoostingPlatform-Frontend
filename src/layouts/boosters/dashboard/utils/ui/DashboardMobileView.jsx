@@ -76,9 +76,9 @@ const DashboardMobileView = ({
 
                         <Box sx={{display: 'flex', alignItems: 'center'}}>
                             <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
-                                Platform: {order.gamePlatform}
+                                Platform: {order.gamePlatform.name}
                             </Typography>
-                            <PlatformIconContainer platformId={order.gamePlatform} />
+                            <PlatformIconContainer platformId={order.gamePlatform.title} />
                         </Box>
 
                         {order.selectedOptions.length > 0 ? (
