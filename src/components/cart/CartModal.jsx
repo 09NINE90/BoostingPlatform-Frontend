@@ -5,8 +5,10 @@ import React, {useState} from "react";
 import {postCreateOrders} from "src/services/orderApi.js";
 import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
+import {Box} from "@mui/material";
+import theme from "src/theme/theme.jsx";
 
-const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
+const CartModal = ({cartItems, onRemoveItem, onOrderComplete, isMobileDrawer = false }) => {
 
     const dispatch = useDispatch();
     const countCartItems = useSelector(selectCountCartItems);
@@ -35,9 +37,76 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
         }
     };
 
+    if (isMobileDrawer) {
+        return (
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: 'calc(100% - 56px)',
+                overflow: 'hidden'
+            }}>
+                <Box sx={{
+                    flex: 1,
+                    overflowY: 'auto',
+                    maxHeight: '50%',
+                    mb: 2,
+                    '&::-webkit-scrollbar': {
+                        width: '4px',
+                    },
+                    '&::-webkit-scrollbar-thumb': {
+                        backgroundColor: theme.palette.grey[400],
+                        borderRadius: '2px',
+                    }
+                }}>
+                    {cartItems.length > 0 ? (
+                        cartItems.map((item) => (
+                            <CartItems
+                                key={item.id}
+                                item={item}
+                                isSelected={selectedIds.includes(item.id)}
+                                onToggle={handleToggleItem}
+                                onRemoveItem={onRemoveItem}
+                                isMobile={true}
+                            />
+                        ))
+                    ) : (
+                        <EmptyResponse text={'Your cart is empty.'} minHeight={'50vh'} />
+                    )}
+                </Box>
+
+                {cartItems.length > 0 && (
+                    <CartPayment
+                        cartItems={cartItems.filter((item) => selectedIds.includes(item.id))}
+                        onProceed={handleProceed}
+                        loading={isLoading}
+                        isMobile={true}
+                    />
+                )}
+            </Box>
+        );
+    }
+
     return (
-        <div className="flex h-[40vh]">
-            <div className="flex-1 overflow-y-auto pr-3 custom-scrollbar">
+        <Box sx={{
+            display: 'flex',
+            height: '40vh',
+            '& .custom-scrollbar': {
+                scrollbarWidth: 'thin',
+                '&::-webkit-scrollbar': {
+                    width: '6px'
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    backgroundColor: 'grey.400',
+                    borderRadius: '3px'
+                }
+            }
+        }}>
+            <Box sx={{
+                flex: 1,
+                overflowY: 'auto',
+                pr: 3,
+                className: 'custom-scrollbar'
+            }}>
                 {cartItems.length > 0 ? (
                     cartItems.map((item) => (
                         <CartItems
@@ -51,7 +120,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
                 ) : (
                     <EmptyResponse text={'Your cart is empty.'} minHeight={'100%'}/>
                 )}
-            </div>
+            </Box>
 
             {cartItems.length > 0 && (
                 <CartPayment
@@ -60,7 +129,7 @@ const CartModal = ({cartItems, onRemoveItem, onOrderComplete}) => {
                     loading={isLoading}
                 />
             )}
-        </div>
+        </Box>
     );
 };
 export default CartModal;

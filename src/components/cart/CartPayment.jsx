@@ -20,7 +20,7 @@ const CartPayment = ({cartItems, onProceed, loading}) => {
             sx={{
                 borderLeft: '1px solid ' + theme.palette.divider,
                 pl: 2,
-                width: '17vw',
+                width: {xs: '100%', lg: '17vw'},
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',

@@ -1,5 +1,5 @@
 import Badge from "@mui/material/Badge";
-import {Box, IconButton} from "@mui/material";
+import {Box, IconButton, useMediaQuery} from "@mui/material";
 import CartIcon from "src/assets/icons/CartIcon.jsx";
 import React, {useCallback, useEffect, useState} from "react";
 import {getCartItemsApi} from "src/services/offerApi.js";
@@ -11,8 +11,8 @@ import DropCart from "src/components/cart/DropCart.jsx";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
-
 const Cart = ({cartCount}) => {
+    const isMobile = useMediaQuery('(max-width:1024px)');
 
     const isAuth = useSelector(selectAuth);
     const reduxCount = useSelector(selectCountCartItems);
@@ -89,6 +89,7 @@ const Cart = ({cartCount}) => {
                                         cartItems={cartItems}
                                         onRemoveItem={handleRemoveItem}
                                         onOrderComplete={handleRemoveOrderedItems}
+                                        isMobileDrawer={isMobile}
                                     />
                                 )}
                             </>}
