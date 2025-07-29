@@ -63,7 +63,7 @@ const CartItems = ({item, isSelected, onToggle, onRemoveItem}) => {
                             textAlign: 'left'
                         }}
                     >
-                        {item.gamePlatform}
+                        {item.gamePlatform.name}
                     </Typography>
                 </Box>
 
