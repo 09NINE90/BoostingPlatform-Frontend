@@ -135,6 +135,7 @@ const ChatComponent = ({chatId, onReady}) => {
                 py: 3,
                 backgroundColor: theme.palette.background.paper,
                 boxShadow: 1,
+                pb: {xs: 20, md: 0}
             }}
         >
             {isLoading && (
