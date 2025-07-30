@@ -20,7 +20,7 @@ const DashboardMobileView = ({
     const isMobile = useMediaQuery('(max-width:700px)');
 
     return (
-        <Box sx={{p: 2, width: '100%', pb: 15, paddingInline: {xs: 2, sm: 15}}}>
+        <Box sx={{p: 2, width: '100%', pb: 25, paddingInline: {xs: 2, sm: 15}}}>
             <DashboardMobileFilters
                 setPageNumber={setPageNumber}
                 selectedFilters={selectedFilters}
