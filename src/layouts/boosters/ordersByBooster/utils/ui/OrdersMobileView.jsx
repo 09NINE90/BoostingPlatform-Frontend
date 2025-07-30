@@ -11,7 +11,7 @@ import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}) => {
 
     return (
-        <Box sx={{p: 2, width: '100%', paddingInline: {xs: 2, sm: 15}}}>
+        <Box sx={{p: 2, width: '100%', pb: 15, paddingInline: {xs: 2, sm: 15}}}>
             <OrdersMobileFilters
                 selectedFilters={selectedFilters}
                 setSelectedFilters={setSelectedFilters}
