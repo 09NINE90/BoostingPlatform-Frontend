@@ -10,6 +10,7 @@ const Footer = () => {
         <Box
             position="static"
             bottom={0}
+            pb={20}
             className="flex flex-col items-center py-4"
         >
             <div className="w-[80%] max-w-[1200px] border-t-2 border-background-paper mb-4 md:mb-15"/>

@@ -8,20 +8,20 @@ const DropCart = ({content, anchorEl, handleClose}) => {
     if (isMobile) {
         return (
             <Drawer
-                anchor="top"
+                anchor="bottom"
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
                 sx={{
+                    zIndex: 9999,
                     '& .MuiDrawer-paper': {
-                        backgroundColor: theme.palette.background.default,
+                        backgroundColor: theme.palette.background.paper,
                         padding: '16px',
                         minHeight: '40vh',
-                        maxHeight: '80vh',
+                        maxHeight: '90vh',
                         backgroundImage: 'none',
                     },
                 }}
             >
-                {/* Заголовок и кнопка закрытия */}
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',

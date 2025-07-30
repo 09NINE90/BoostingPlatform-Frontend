@@ -7,7 +7,7 @@ const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageC
         <Box
             sx={{
                 position: 'fixed',
-                bottom: 0,
+                bottom: {xs: 50, lg: 0},
                 left: 0,
                 right: 0,
                 backgroundColor: theme.palette.background.default,

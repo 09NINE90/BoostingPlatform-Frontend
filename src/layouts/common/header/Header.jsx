@@ -1,22 +1,14 @@
 import {useSelector, useDispatch} from "react-redux";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {NavLink, useLocation, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {
     AppBar,
-    Box,
-    Divider,
-    Drawer,
     IconButton,
-    List,
-    ListItem,
-    ListItemText,
-    Typography,
     useMediaQuery
 } from '@mui/material';
 import ProfileIcon from "../../../assets/icons/ProfileIcon.jsx";
 import DropMenu from "src/layouts/common/header/utils/ui/DropMenu.jsx";
 import {clearAuth, selectAuth, selectAvatar, selectRole, selectUsername} from "src/store/slice/authSlice.js";
-import Search from "src/layouts/common/header/utils/ui/Search.jsx";
 import LogoHome from "src/layouts/common/header/utils/ui/LogoHome.jsx";
 import Cart from "src/layouts/common/header/utils/ui/Cart.jsx";
 import {toast} from "react-toastify";
@@ -25,13 +17,12 @@ import BoosterHeader from "src/layouts/boosters/BoosterHeader.jsx";
 import {postLogout} from "src/services/authApi.js";
 import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import {AuthModal} from "src/components/authorization/AuthModal.jsx";
-import MenuIcon from '@mui/icons-material/Menu';
-import theme from "src/theme/theme.jsx";
+import MobileBottomNavigation from "src/layouts/common/header/utils/ui/MobileBottomNavigation.jsx";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Header = () => {
 
-    const isMobile = useMediaQuery('(max-width:768px)');
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const isMobile = useMediaQuery('(max-width:1024px)');
 
     const role = useSelector(selectRole);
     const userAvatar = useSelector(selectAvatar);
@@ -48,10 +39,6 @@ const Header = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const toggleDrawer = (open) => () => {
-        setDrawerOpen(open);
-    };
-
     const handleProfileClick = useCallback((event) => {
         setAnchorEl(event.currentTarget);
     }, [setAnchorEl])
@@ -61,7 +48,7 @@ const Header = () => {
     }, [setAnchorEl]);
 
     const handleOpenProfile = useCallback(() => {
-        if (role === CUSTOMER_ROLE) navigate("/profile");
+        if (!forBoosterPage) navigate("/profile");
         else navigate("/booster/profile");
         handleProfileMenuClose();
     }, [navigate, handleProfileMenuClose])
@@ -108,166 +95,29 @@ const Header = () => {
         };
     }, []);
 
-    const CustomPrimaryText = ({text}) => {
-        return (
-            <Typography variant='h4'
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: theme.typography.fontWeightLight,
-                            textTransform: 'uppercase',
-                        }}>
-                {text}
-            </Typography>
-        )
-    }
-
-    const CustomMenuItemText = ({navTo, text}) => {
-        const location = useLocation();
-        const isActive = location.pathname === navTo;
-
-        return (
-            <ListItem
-                button="true"
-                component={NavLink}
-                to={navTo}
-                sx={{
-                    width: '100%',
-                    justifyContent: 'center',
-                }}
-            >
-                <ListItemText
-                    primary={
-                        <Typography
-                            variant="h4"
-                            sx={{
-                                textAlign: 'center',
-                                fontWeight: theme.typography.fontWeightLight,
-                                color: isActive ? theme.palette.third.main : theme.palette.text.primary,
-                                textTransform: 'uppercase',
-                            }}
-                        >
-                            {text}
-                        </Typography>
-                    }
-                />
-            </ListItem>
-        );
-    };
-
-    const mobileMenuContent = (
-        <Box
-            sx={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-            role="presentation"
-            onClick={toggleDrawer(false)}
-            onKeyDown={toggleDrawer(false)}
-        >
-            <List
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: 0,
-                }}
-            >
-                {isAuthenticated ? (
-                    <>
-                        {role === BOOSTER_ROLE ? (
-                            <>
-                                <CustomMenuItemText navTo='/booster/profile' text='Profile'/>
-                                <CustomMenuItemText navTo='/booster/dashboard' text='Dashboard'/>
-                                <CustomMenuItemText navTo='/booster/orders' text='My Orders'/>
-                                <CustomMenuItemText navTo='/booster/balanceHistory' text='Balance History'/>
-                            </>
-                        ) : (
-                            <>
-                                <CustomMenuItemText navTo='/profile' text='Profile'/>
-                            </>
-                        )}
-                        <Divider sx={{
-                            height: 2,
-                            width: '100%',
-                            backgroundColor: theme.palette.divider,
-                            my: 1
-                        }}/>
-                        <ListItem button="true" onClick={handleLogout}>
-                            <ListItemText primary={<CustomPrimaryText text='Logout'/>}/>
-                        </ListItem>
-                    </>
-                ) : (
-                    <ListItem button="true" onClick={toggleModal}>
-                        <ListItemText primary={<CustomPrimaryText text='Sign in / Sign up'/>}/>
-                    </ListItem>
-                )}
-            </List>
-        </Box>
-    );
-
     return (
-        <AppBar position='sticky' enableColorOnDark
-                sx={{
-                    backgroundColor: 'background.paper',
-                    backgroundImage: 'none',
-                }}
-        >
-            <div className="flex flex-row items-center justify-between px-5 py-2">
-                <div className="flex items-center gap-2">
-                    <LogoHome forBoosterPage={forBoosterPage}/>
-                    {!forBoosterPage && !isMobile && (
-                        <Search/>
-                    )}
-                </div>
-                {!isMobile ? (
-                    <>
-                        {forBoosterPage && <BoosterHeader/>}
-                        <nav className="flex justify-between flex-row text-center">
-                            {!forBoosterPage && <Cart cartCount={cartCount}/>}
+        <>
+            <AppBar position='sticky' enableColorOnDark
+                    sx={{
+                        backgroundColor: 'background.paper',
+                        backgroundImage: 'none',
+                    }}
+            >
+                <div className="flex flex-row items-center justify-between px-5 py-2">
+                    <div className="flex items-center gap-2">
+                        <LogoHome forBoosterPage={forBoosterPage}/>
+                        {/*{!forBoosterPage && !isMobile && (*/}
+                        {/*    <Search/>*/}
+                        {/*)}*/}
+                    </div>
+                    {!isMobile ? (
+                        <>
+                            {forBoosterPage && <BoosterHeader/>}
+                            <nav className="flex justify-between flex-row text-center">
+                                {!forBoosterPage && <Cart cartCount={cartCount}/>}
 
-                            <div className="flex justify-center hover:scale-101" ref={profileRef}>
-                                <IconButton onClick={handleProfileClick}
-                                            sx={{
-                                                transition: 'box-shadow 0.3s ease',
-                                                borderRadius: 0,
-                                                '&:hover': {
-                                                    backgroundColor: 'transparent',
-                                                    boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
-                                                }
-                                            }}>
-                                    <ProfileIcon className="w-[50px]"/>
-                                    {username && (
-                                        <div className="kanit-light text-xl ml-6">
-                                            {username}
-                                        </div>
-                                    )}
-                                </IconButton>
-
-                                <DropMenu anchorEl={anchorEl}
-                                          handleClose={handleProfileMenuClose}
-                                          isAuthenticated={isAuthenticated}
-                                          handleOpenProfile={handleOpenProfile}
-                                          handleLogout={handleLogout}
-                                          onOpen={toggleModal}/>
-                            </div>
-                        </nav>
-                    </>
-                ) : (
-                    <>
-                        {isAuthenticated ? (
-                                <Box sx={{display: 'flex'}}>
-                                    {!forBoosterPage && <Cart cartCount={cartCount}/>}
-                                    <IconButton onClick={toggleDrawer(true)}>
-                                        <MenuIcon sx={{fontSize: 35}}/>
-                                    </IconButton>
-                                </Box>
-                            )
-                            : (
                                 <div className="flex justify-center hover:scale-101" ref={profileRef}>
-                                    <IconButton onClick={() => setModalIsOpen(true)}
+                                    <IconButton onClick={handleProfileClick}
                                                 sx={{
                                                     transition: 'box-shadow 0.3s ease',
                                                     borderRadius: 0,
@@ -277,25 +127,59 @@ const Header = () => {
                                                     }
                                                 }}>
                                         <ProfileIcon className="w-[50px]"/>
+                                        {username && (
+                                            <div className="kanit-light text-xl ml-6">
+                                                {username}
+                                            </div>
+                                        )}
                                     </IconButton>
+
+                                    <DropMenu anchorEl={anchorEl}
+                                              handleClose={handleProfileMenuClose}
+                                              isAuthenticated={isAuthenticated}
+                                              handleOpenProfile={handleOpenProfile}
+                                              handleLogout={handleLogout}
+                                              onOpen={toggleModal}/>
                                 </div>
-                            )}
-                    </>
-                )}
-            </div>
-            {renderModal}
-            <Drawer anchor='right' open={drawerOpen} onClose={toggleDrawer(false)}
-                    PaperProps={{
-                        sx: {
-                            width: '90vw',
-                            backgroundColor: theme.palette.background.default,
-                            backgroundImage: 'none',
-                        },
-                    }}
-            >
-                {mobileMenuContent}
-            </Drawer>
-        </AppBar>
+                            </nav>
+                        </>
+                    ) : (
+                        <>
+                            {!isAuthenticated ? (
+                                    <div className="flex justify-center hover:scale-101" ref={profileRef}>
+                                        <IconButton onClick={() => setModalIsOpen(true)}
+                                                    sx={{
+                                                        transition: 'box-shadow 0.3s ease',
+                                                        borderRadius: 0,
+                                                        '&:hover': {
+                                                            backgroundColor: 'transparent',
+                                                            boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
+                                                        }
+                                                    }}>
+                                            <ProfileIcon className="w-[50px]"/>
+                                        </IconButton>
+                                    </div>
+                                )
+                                : (
+                                    <div className="flex justify-center">
+                                        <IconButton onClick={() => handleLogout()}>
+                                            <LogoutIcon/>
+                                        </IconButton>
+                                    </div>
+                                )}
+                        </>
+                    )}
+                </div>
+                {renderModal}
+            </AppBar>
+            {isMobile && isAuthenticated && (
+                <MobileBottomNavigation
+                    isAuthenticated={isAuthenticated}
+                    role={role}
+                    cartCount={cartCount}
+                />
+            )}
+        </>
     );
 }
 
