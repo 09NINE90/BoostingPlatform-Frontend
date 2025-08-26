@@ -62,7 +62,7 @@ deploy-develop:
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p ${DEV_NGINX_HTTP_PORT:-80}:${DEV_NGINX_HTTP_PORT:-80}  -p ${DEV_NGINX_HTTPS_PORT:-443}:${DEV_NGINX_HTTPS_PORT:-443} -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e SSL_EMAIL=$SSL_EMAIL -e BACKEND_URL=$DEV_BACKEND_URL -e NGINX_PORT=${DEV_NGINX_PORT:-80} -e NGINX_HTTP_PORT=${DEV_NGINX_HTTP_PORT:-80} -e NGINX_HTTPS_PORT=${DEV_NGINX_HTTPS_PORT:-443} -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot:/var/www/certbot -v /custom/ssl:/etc/nginx/ssl --env-file /root/env/front.env $DOCKER_IMAGE"
+    - sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "docker run -d --name v-boosting -p ${DEV_NGINX_HTTP_PORT:-80}:${DEV_NGINX_HTTP_PORT:-80} -p ${DEV_NGINX_HTTPS_PORT:-443}:${DEV_NGINX_HTTPS_PORT:-443} -e SERVER_NAME:${SERVER_NAME} -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e SSL_EMAIL=$SSL_EMAIL -e BACKEND_URL=$DEV_BACKEND_URL -e NGINX_PORT=${DEV_NGINX_PORT:-80} -e NGINX_HTTP_PORT=${DEV_NGINX_HTTP_PORT:-80} -e NGINX_HTTPS_PORT=${DEV_NGINX_HTTPS_PORT:-443} -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot:/var/www/certbot -v /custom/ssl:/etc/nginx/ssl --env-file /root/env/front.env $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "develop"'
       when: on_success
@@ -98,7 +98,7 @@ deploy-main:
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker run -d --name v-boosting -p ${PROD_NGINX_HTTP_PORT:-80}:${PROD_NGINX_HTTP_PORT:-80}  -p ${PROD_NGINX_HTTPS_PORT:-443}:${PROD_NGINX_HTTPS_PORT:-443} -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e BACKEND_URL=$PROD_BACKEND_URL -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e SSL_EMAIL=$SSL_EMAIL -e NGINX_PORT=${PROD_NGINX_PORT:-80} -e NGINX_HTTP_PORT=${PROD_NGINX_HTTP_PORT:-80} -e NGINX_HTTPS_PORT=${PROD_NGINX_HTTPS_PORT:-443} -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot:/var/www/certbot -v /custom/ssl:/etc/nginx/ssl $DOCKER_IMAGE"
+    - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker run -d --name v-boosting -p ${PROD_NGINX_HTTP_PORT:-80}:${PROD_NGINX_HTTP_PORT:-80}  -p ${PROD_NGINX_HTTPS_PORT:-443}:${PROD_NGINX_HTTPS_PORT:-443} -e SERVER_NAME:${SERVER_NAME} -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e BACKEND_URL=$PROD_BACKEND_URL -e USE_LETSENCRYPT=${USE_LETSENCRYPT:-true} -e SSL_EMAIL=$SSL_EMAIL -e NGINX_PORT=${PROD_NGINX_PORT:-80} -e NGINX_HTTP_PORT=${PROD_NGINX_HTTP_PORT:-80} -e NGINX_HTTPS_PORT=${PROD_NGINX_HTTPS_PORT:-443} -v /etc/letsencrypt:/etc/letsencrypt -v /var/www/certbot:/var/www/certbot -v /custom/ssl:/etc/nginx/ssl $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual
