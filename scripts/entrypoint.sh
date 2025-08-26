@@ -99,6 +99,10 @@ setup_certificates() {
 # Substitute environment variables in nginx config
 setup_nginx_config() {
     echo "Generating nginx configuration..."
+    echo "NGINX_PORT: ${NGINX_PORT}"
+    echo "NGINX_HTTP_PORT: ${NGINX_HTTP_PORT}"
+    echo "NGINX_HTTPS_PORT: ${NGINX_HTTPS_PORT}"
+    echo "SERVER_NAME: ${SERVER_NAME}"
     envsubst '${NGINX_PORT} ${NGINX_HTTP_PORT} ${NGINX_HTTPS_PORT} ${BACKEND_URL} ${SERVER_NAME} ${SSL_CERT_PATH} ${SSL_KEY_PATH}' \
         < /etc/nginx/conf.d/default.conf.template \
         > /etc/nginx/conf.d/default.conf
