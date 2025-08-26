@@ -98,7 +98,7 @@ deploy-main:
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker pull $DOCKER_IMAGE"
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker stop v-boosting || true"
     - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker rm v-boosting || true"
-    - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker run -d --name v-boosting -p 5173:3000 $DOCKER_IMAGE"
+    - sshpass -p "$PROD_SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $PROD_SSH_USER@$PROD_SSH_HOST "docker run -d --name v-boosting -p 5173:$PROD_LISTENING_PORT $DOCKER_IMAGE"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       when: manual
