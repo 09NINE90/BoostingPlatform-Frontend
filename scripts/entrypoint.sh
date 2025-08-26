@@ -103,6 +103,8 @@ setup_nginx_config() {
     echo "NGINX_HTTP_PORT: ${NGINX_HTTP_PORT}"
     echo "NGINX_HTTPS_PORT: ${NGINX_HTTPS_PORT}"
     echo "SERVER_NAME: ${SERVER_NAME}"
+    echo "SSL_CERT_PATH: ${SSL_CERT_PATH}"
+    echo "SSL_KEY_PATH: ${SSL_KEY_PATH}"
     envsubst '${NGINX_PORT} ${NGINX_HTTP_PORT} ${NGINX_HTTPS_PORT} ${BACKEND_URL} ${SERVER_NAME} ${SSL_CERT_PATH} ${SSL_KEY_PATH}' \
         < /etc/nginx/conf.d/default.conf.template \
         > /etc/nginx/conf.d/default.conf
