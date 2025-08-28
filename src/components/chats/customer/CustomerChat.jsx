@@ -50,7 +50,9 @@ const CustomerChat = () => {
                 alignItems: "center",
                 height: '100%',
                 p: 3,
-                paddingInline: 25,
+                flexDirection: {xs: "column", sm: "row"},
+                paddingInline: {xs: 2, sm: 25},
+                mb: {xs: '20%', sm: 0}
             }}>
             <OrderChatCustomerInfo orderId={orderId} openModal={openModal} tipOrderHistory={tipOrderHistory}/>
             <ChatComponent chatId={chatId}/>

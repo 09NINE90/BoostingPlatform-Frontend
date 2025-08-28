@@ -1,7 +1,7 @@
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import React, {useCallback, useEffect, useState} from "react";
-import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
+import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
 import {getBoosterOrderById, getCustomerOrderById} from "src/services/orderApi.js";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
@@ -67,7 +67,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
@@ -86,9 +86,9 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
-                    height: "85vh",
+                    height: {xs: 'fit-content', sm: "85vh"},
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
                 }}>
@@ -105,13 +105,13 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
-                    <CustomTextItem text='Platform' item={order.gamePlatform}/>
+                    <CustomTextItem text='Platform' item={order.gamePlatform.name}/>
                     <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     {order.endTimeExecution && (
                         <CustomTextItem text='End order at' item={toLocaleDateTime(order.endTimeExecution)}/>
                     )}
                     <CustomTextItem text='Price' item={`$ ${order.totalPrice}`}/>
-                    <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    <AccordionOrderOptions selectedOptions={order.selectedOptions}/>
                     {boosterInfo && (
                         <BoosterInfo boosterInfo={boosterInfo}/>
                     )}

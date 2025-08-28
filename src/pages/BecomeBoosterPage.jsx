@@ -144,7 +144,14 @@ const BecomeBoosterPage = () => {
                     flexDirection: 'column',
                 }}
             >
-                <Typography variant="h4" gutterBottom sx={{mb: 3, fontWeight: theme.typography.fontWeightBold}}>
+                <Typography
+                    variant="h4"
+                    gutterBottom
+                    sx={{
+                        mb: 3,
+                        fontSize: {xs: 28, sm: 34},
+                        fontWeight: theme.typography.fontWeightBold
+                    }}>
                     Booster Application Form
                 </Typography>
 
@@ -156,7 +163,12 @@ const BecomeBoosterPage = () => {
                         backgroundColor: theme.palette.background.paper,
                     }}
                 >
-                    <Box sx={{display: 'flex', gap: 3, mb: 3}}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: {xs: 'column', sm: 'row'},
+                        gap: 3,
+                        mb: 3
+                    }}>
                         <BlueTextField
                             fullWidth
                             label="Nickname"

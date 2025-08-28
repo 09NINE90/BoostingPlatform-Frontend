@@ -1,5 +1,6 @@
 import React from "react";
 import {ApplePay, Bitcoin, GooglePay, Mastercard, PayPal, Visa} from "src/assets/icons/index.js";
+import {Box} from "@mui/material";
 
 const PaymentMethods = () => {
     const paymentMethods = [
@@ -12,23 +13,45 @@ const PaymentMethods = () => {
     ];
 
     return (
-        <div className="flex justify-between w-[80%] max-w-[1200px] px-8">
-            <div className="hidden md:flex w-full justify-between">
+        <Box sx={{
+            width: '80%',
+            maxWidth: 1200,
+            px: {xs: 2, md: 8},
+            mx: 'auto'
+        }}>
+            <Box sx={{
+                display: {xs: 'none', md: 'flex'},
+                justifyContent: 'space-between',
+                width: '100%'
+            }}>
                 {paymentMethods.map(({id, Icon, alt}) => (
-                    <div key={id} className="flex items-center">
+                    <Box key={id} sx={{display: 'flex', alignItems: 'center'}}>
                         <Icon aria-label={alt}/>
-                    </div>
+                    </Box>
                 ))}
-            </div>
+            </Box>
 
-            <div className="flex md:hidden flex-wrap justify-center gap-4 w-full px-2">
+            <Box sx={{
+                display: {xs: 'grid', md: 'none'},
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: 3,
+                width: '100%',
+                justifyItems: 'center',
+                px: 2
+            }}>
                 {paymentMethods.map(({id, Icon, alt}) => (
-                    <div key={id} className="h-8 flex items-center">
+                    <Box key={id} sx={{
+                        height: 'fit-content',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '100%'
+                    }}>
                         <Icon aria-label={alt}/>
-                    </div>
+                    </Box>
                 ))}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 };
 

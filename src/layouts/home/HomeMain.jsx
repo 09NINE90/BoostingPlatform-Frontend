@@ -7,6 +7,7 @@ import Carousel from "./utils/ui/Carousel.jsx";
 import {getCarouselItemsApi} from "src/services/offerApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import {Box} from "@mui/material";
 
 const HomeMain = () => {
     const {id} = useParams();
@@ -62,12 +63,18 @@ const HomeMain = () => {
         <>
             <div className='flex flex-col'>
                 <>
-                    <Carousel carouselItems={carouselItems}/>
-                    <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
-                    <div className='flex flex-row gap-5]'>
+                    <Box sx={{display: {xs: 'none', md: 'block'}}}>
+                        <Carousel carouselItems={carouselItems}/>
+                        <div className="w-[100%] max-w-[1200px] border-t-2 border-background-paper my-8 mx-auto"/>
+                    </Box>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', lg: 'row' },
+                        gap: { xs: 2, md: 5 }
+                    }}>
                         <GameSideBar gameList={games} currentGame={currentGameId} onGameSelect={setCurrentGameId}/>
                         <OffersList gameId={currentGameId}/>
-                    </div>
+                    </Box>
                 </>
             </div>
         </>

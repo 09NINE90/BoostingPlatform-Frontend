@@ -1,10 +1,13 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Typography, useMediaQuery} from "@mui/material";
 import theme from "src/theme/theme.jsx";
-import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
+import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import React from "react";
 import {toLocaleDateTime} from "src/utils/functions.js";
+import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
+import PlatformIconContainer from "src/layouts/utils/ui/PlatformIconContainer.jsx";
 
 const OrderInfoCell = ({orderByRow}) => {
+    const isMobile = useMediaQuery('(max-width:1024px)');
 
     const OrderTime = ({text, time}) => {
         return (
@@ -39,7 +42,7 @@ const OrderInfoCell = ({orderByRow}) => {
     }
 
     return (
-        <Box sx={{display: 'flex', flexDirection: 'column'}}>
+        <Box sx={{display: 'flex', flexDirection: 'column', gap: 1, mb: 2}}>
             <Typography variant="body2"
                         sx={{
                             color: theme.palette.text.primary,
@@ -47,15 +50,28 @@ const OrderInfoCell = ({orderByRow}) => {
                         }}>
                 {orderByRow.offerName}
             </Typography>
+            {isMobile && (
+                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
+                        Platform: {orderByRow.gamePlatform.name}
+                    </Typography>
+                    <PlatformIconContainer platformId={orderByRow.gamePlatform.title} />
+                </Box>
+            )}
             <Typography variant="body2"
                         sx={{
-                            mt: 2,
                             color: theme.palette.primary.main,
                             fontWeight: theme.typography.fontWeightLight
                         }}>
                 ID: {orderByRow.secondId}
             </Typography>
-            <OrderOptions order={orderByRow}/>
+            {isMobile ? (
+                    <AccordionOrderOptions selectedOptions={orderByRow.selectedOptions}/>
+                )
+                : (
+                    <OrderOptions order={orderByRow}/>
+                )
+            }
             {orderByRow.startTimeExecution && (
                 <OrderTime text='Start time execution' time={toLocaleDateTime(orderByRow.startTimeExecution)}/>
             )}

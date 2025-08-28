@@ -5,21 +5,22 @@ const InfoCardItem = ({label, value}) => {
 
     return (
         <Box sx={{
-            mr: 5,
-            mt: 2,
-            gap: 5,
+            gap: { xs: 1, lg: 5 },
             flex: 1,
-            p: 4,
-            minHeight: '120px',
-            paddingInline: 5,
+            p: { xs: 2, lg: 4 },
+            minHeight: { xs: 'auto', sm: '120px' },
+            width: { xs: '100%', sm: 'auto' },
+            paddingInline: { xs: 2, sm: 5 },
             display: 'flex',
             flexDirection: 'column',
+            alignItems: {xs: 'center', lg: 'flex-start'},
             backgroundColor: theme.palette.background.default,
         }}>
             <Typography variant="h6"
                         sx={{
                             color: theme.palette.third.main,
                             fontWeight: theme.typography.fontWeightMedium,
+                            fontSize: { xs: '1rem', sm: '1.5rem' }
                         }}>
                 {label}
             </Typography>
@@ -27,6 +28,7 @@ const InfoCardItem = ({label, value}) => {
                         sx={{
                             color: theme.palette.text.primary,
                             fontWeight: theme.typography.fontWeightMedium,
+                            fontSize: { xs: '1rem', sm: '1.8rem' }
                         }}>
                 {value}
             </Typography>

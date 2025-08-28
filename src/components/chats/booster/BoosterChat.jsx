@@ -29,6 +29,7 @@ const BoosterChat = () => {
     const closeModal = () => setModalIsOpen(false);
 
     const fetchTipOrderHistory = useCallback(async () => {
+        setTipOrderHistory(null);
         try {
             const tipOrderHistoryApi = await getOrderTipHistory(orderId);
             setTipOrderHistory(tipOrderHistoryApi)
@@ -69,7 +70,7 @@ const BoosterChat = () => {
     }
 
     useEffect(() => {
-        if (order && tipOrderHistory) {
+        if (order && tipOrderHistory !== null) {
             setIsLoading(false);
         }
     }, [order, tipOrderHistory]);
@@ -93,7 +94,8 @@ const BoosterChat = () => {
                 alignItems: "center",
                 height: '100%',
                 p: 3,
-                paddingInline: 25,
+                flexDirection: {xs: "column", sm: "row"},
+                paddingInline: {xs: 2, sm: 25},
             }}>
             <OrderChatBoosterInfo order={order}
                                   isLoading={isLoading}

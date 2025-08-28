@@ -13,18 +13,19 @@ import {
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {postOffersToCart} from "src/services/offerApi.js";
-import {useDispatch} from "react-redux";
-import {selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
+import {useDispatch, useSelector} from "react-redux";
+import {selectAuth, selectCountCartItems, setCountCartItems} from "src/store/slice/authSlice.js";
 import {store} from "src/store/store.js";
 import {toast} from "react-toastify";
 
-const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
+const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen}) => {
 
+    const isAuth = useSelector(selectAuth);
     const [isLoading, setIsLoading] = useState(false);
     const [basePrice] = useState(200);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
-    const [selectedPlatform, setSelectedPlatform] = useState('PC');
+    const [selectedPlatform, setSelectedPlatform] = useState(gamePlatforms[0]?.title);
     const dispatch = useDispatch();
 
     const handleChange = (blockId, value, label, optionTitle) => {
@@ -89,6 +90,10 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     }, [selectedOptions, basePrice, baseTime, optionsBlocks]);
 
     const handleAddToCart = useCallback(async () => {
+        if (!isAuth) {
+            setModalIsOpen(true);
+            return;
+        }
         const cartItem = {
             offerId: offerData.offerId,
             basePrice: basePrice,
@@ -237,7 +242,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
     }, [optionsBlocks, selectedOptions, renderOption]);
 
     return (
-        <div className="min-w-[300px] max-w-[400px] bg-background-paper">
+        <div className="min-w-[300px] md:max-w-[400px] bg-background-paper">
             <div className="relative z-0">
                 <img
                     src={offerData.imageUrl}
@@ -253,11 +258,11 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms}) => {
                     {gamePlatforms.map((item) => (
                         <Button
                             sx={{ m: 1 }}
-                            key={item}
-                            variant={selectedPlatform === item ? "contained" : "outlined"}
-                            onClick={() => setSelectedPlatform(item)}
+                            key={item.id}
+                            variant={selectedPlatform === item.title ? "contained" : "outlined"}
+                            onClick={() => setSelectedPlatform(item.title)}
                         >
-                            {item}
+                            {item.title}
                         </Button>
                     ))}
                 </Box>

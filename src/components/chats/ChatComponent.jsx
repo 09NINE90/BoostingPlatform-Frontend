@@ -59,6 +59,12 @@ const ChatComponent = ({chatId, onReady}) => {
     }, [isConnected, onReady]);
 
     useEffect(() => {
+        if (!isConnected && userToken !== null) {
+            connect(userToken)
+        }
+    }, [isConnected]);
+
+    useEffect(() => {
         const fetchMessages = async () => {
             if (!userToken) return;
             setIsLoading(true)
@@ -121,13 +127,15 @@ const ChatComponent = ({chatId, onReady}) => {
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                height: "85vh",
-                width: "70%",
+                height: {xs: '60%', sm: '85vh'},
+                width: {xs: '100%', sm: '70%'},
+                mt: {xs: 2, sm: 0},
                 minWidth: "70%",
                 px: 5,
                 py: 3,
                 backgroundColor: theme.palette.background.paper,
                 boxShadow: 1,
+                pb: {xs: 20, md: 0}
             }}
         >
             {isLoading && (

@@ -34,8 +34,8 @@ const BoosterOrderHistory = () => {
             {
                 mt: 3,
                 mr: 3,
-                p: 10,
-                width: '73%',
+                p: {xs: 3, sm: 5, md: 10},
+                width: {xs: '100%', lg:'73%'},
                 maxWidth: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -45,6 +45,7 @@ const BoosterOrderHistory = () => {
                 variant='h4'
                 sx={{
                     mb: 2,
+                    fontSize: {xs: 20, sm: 34},
                     color: theme.palette.text.primary,
                     fontWeight: theme.typography.fontWeightMedium,
                 }}>
@@ -91,7 +92,7 @@ const BoosterOrderHistory = () => {
                     },
                 }}>
                 {orderHistory.map((order) => (
-                    <Box key={order.id} sx={{ flexShrink: 0, width: 400}}>
+                    <Box key={order.id} sx={{ flexShrink: 0, width: {xs: 300, sm: 400}}}>
                         <OrderHistoryCard order={order}/>
                     </Box>
                 ))}

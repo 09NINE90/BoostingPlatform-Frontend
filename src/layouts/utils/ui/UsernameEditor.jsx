@@ -9,7 +9,7 @@ const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
 
     return (
         <Box sx={{
-            display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: '400px',
+            display: 'flex', flexDirection: 'row', gap: 1, minHeight: '40px', width: {xs: '100%',sm: '400px'},
         }}>
             <BlueTextField
                 label="Change nickname"
@@ -20,12 +20,12 @@ const UsernameEditor = ({initialName, onSave, onCancel, loading}) => {
                 sx={{
                     '& .MuiInputBase-root': {
                         height: 40,
-                        width: '260px',
+                        width: {xs: 'auto', sm:'260px'},
 
                     },
                     '& .MuiInputBase-input': {
                         py: 0.5,
-                        width: '260px',
+                        width: {xs: 'auto', sm:'260px'},
                     },
                     flexGrow: 1
                 }}

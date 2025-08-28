@@ -1,6 +1,7 @@
 {
-  "name": "vboost",
-  "short_name": "vboost",
+  "name": "V-Boost",
+  "short_name": "V-Boost",
+  "start_url": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

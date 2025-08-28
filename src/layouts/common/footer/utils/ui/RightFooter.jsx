@@ -11,15 +11,15 @@ const RightFooter = () => {
     }
 
     return (
-        <div className="flex flex-col justify-start items-center md:items-end">
-            <div className="flex flex-col kanit-medium text-lg md:text-xl text-center md:text-right">
+        <div className="flex flex-col justify-start items-center xl:items-end">
+            <div className="flex flex-col kanit-medium text-lg xl:text-xl text-center xl:text-right">
                 <CustomLink link='/become/booster' text='Become booster'/>
                 <CustomLink text='Our mission'/>
                 <CustomLink text='About us'/>
                 <CustomLink text='Support'/>
                 <CustomLink text='FAQ'/>
             </div>
-            <div className="flex flex-col mt-3 text-center md:text-right">
+            <div className="flex flex-col mt-3 text-center xl:text-right">
                 <div className="kanit-bold">
                     Contact:
                 </div>

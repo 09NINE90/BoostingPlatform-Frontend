@@ -9,12 +9,13 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
     return (
         <Box sx={{
             flex: 1,
-            p: 10,
+            p: {xs: 3, sm: 5, md: 10},
             mt: 3,
             backgroundColor: theme.palette.background.paper
         }}>
             <Typography variant="h4" sx={{
                 mb: 2,
+                fontSize: {xs: 20, sm: 34},
                 color: theme.palette.text.primary,
                 fontWeight: theme.typography.fontWeightMedium,
             }}>
@@ -28,12 +29,13 @@ const BoosterAccountStatus = ({boosterNextLevel, boosterLevel, percentageOfOrder
                     mb: 5,
                     display: 'flex',
                     alignItems: 'center',
+                    fontSize: {xs: 12, sm: 16},
                     fontWeight: theme.typography.fontWeightLight,
                 }}>
                 <HelpIconWithTooltip
                     tooltipTitle={<BoosterLevelsDescription boosterNextLevel={boosterNextLevel}/>}/>
                 Current Level:
-                <Chip label={boosterLevel} sx={{marginInline: 2}}/>
+                <Chip label={boosterLevel} sx={{marginInline: 2, fontSize: {xs: 10, sm: 12}}}/>
                 • {percentageOfOrder}% by order
             </Typography>
             <AccountProgressbar progress={progressAccountStatus}/>

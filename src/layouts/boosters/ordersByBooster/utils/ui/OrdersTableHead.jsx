@@ -154,7 +154,7 @@ const OrdersTableHead = ({selectedFilters, setSelectedFilters}) => {
                 </TableCell>
                 <TableCell align="center" sx={{width: '15%'}}>
                     <div className='text-text-primary flex justify-center items-center kanit-regular text-xl'>
-                        Price
+                        Salary
                         <button onClick={() => setOpenFilter(openFilter === 'price' ? null : 'price')}
                                 className="ml-2">
                             <FilterIcon

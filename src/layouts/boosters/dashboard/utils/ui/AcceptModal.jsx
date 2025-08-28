@@ -1,7 +1,7 @@
 import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import {Box, Typography} from "@mui/material";
 import React from "react";
-import OrderOptions from "src/layouts/boosters/dashboard/utils/ui/OrderOptions.jsx";
+import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
@@ -36,7 +36,7 @@ const AcceptModal = ({isOpen, onClose, onAccept, selectedOrder, isLoading}) => {
                         }}>
                         <CustomText text1='Order' text2={`${selectedOrder.offerName} #${selectedOrder.secondId}`}/>
                         <CustomText text1='Game' text2={selectedOrder.gameName}/>
-                        <CustomText text1='Platform' text2={selectedOrder.gamePlatform}/>
+                        <CustomText text1='Platform' text2={selectedOrder.gamePlatform.name}/>
                         <OrderOptions order={selectedOrder}/>
                         <CustomText text1='Price' text2={`${selectedOrder.totalPrice}$`}/>
 

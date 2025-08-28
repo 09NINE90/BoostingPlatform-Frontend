@@ -13,11 +13,11 @@ import theme from "src/theme/theme.jsx";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 
-const OrderChatOptions = ({selectedOptions}) => {
+const AccordionOrderOptions = ({selectedOptions}) => {
     if (!selectedOptions?.length) return null;
 
     return (
-        <Accordion defaultExpanded={false} sx={{background: theme.palette.background.default,}}>
+        <Accordion defaultExpanded={false} sx={{background: theme.palette.background.default, mt: 2}}>
             <AccordionSummary expandIcon={<ExpandMoreIcon/>} sx={{px: 2}}>
                 <Typography variant="subtitle1" color="text.secondary"
                             fontWeight={theme.typography.fontWeightLight}>
@@ -68,4 +68,4 @@ const OrderChatOptions = ({selectedOptions}) => {
     );
 };
 
-export default OrderChatOptions;
+export default AccordionOrderOptions;

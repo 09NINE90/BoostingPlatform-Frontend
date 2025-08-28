@@ -1,7 +1,7 @@
 import theme from "src/theme/theme.jsx";
 import {Box, Typography} from "@mui/material";
 import React from "react";
-import OrderChatOptions from "src/components/chats/utils/OrderChatOptions.jsx";
+import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.jsx";
 import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesData.js";
 import CustomTextItem from "src/components/chats/utils/CustomTextItem.jsx";
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
@@ -17,7 +17,7 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
                     height: "85vh",
                     flexDirection: 'column',
@@ -36,9 +36,9 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 sx={{
                     display: 'flex',
                     p: 5,
-                    width: '29%',
+                    width: {xs: '100%', sm: '29%'},
                     minWidth: '29%',
-                    height: "85vh",
+                    height: {xs: 'fit-content', sm: "85vh"},
                     flexDirection: 'column',
                     backgroundColor: theme.palette.background.paper,
                 }}>
@@ -55,10 +55,10 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                     <CustomTextItem text='Order' item={order.secondId}/>
                     <CustomTextItem text='Status' item={order.orderStatus}/>
                     <CustomTextItem text='Game' item={order.gameName}/>
-                    <CustomTextItem text='Platform' item={order.gamePlatform}/>
+                    <CustomTextItem text='Platform' item={order.gamePlatform.name}/>
                     <CustomTextItem text='Start order at' item={toLocaleDateTime(order.startTimeExecution)}/>
                     <CustomTextItem text='Salary' item={`$ ${order.boosterSalary}`}/>
-                    <OrderChatOptions selectedOptions={order.selectedOptions}/>
+                    <AccordionOrderOptions selectedOptions={order.selectedOptions}/>
                     {tipOrderHistory && (
                         <TipOrderHistory tipOrderHistory={tipOrderHistory}/>
                     )}

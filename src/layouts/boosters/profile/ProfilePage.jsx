@@ -58,7 +58,7 @@ const ProfileMain = () => {
 
     if (error) {
         return (
-            <ErrorPage error={error} />
+            <ErrorPage error={error}/>
         )
     }
 
@@ -73,7 +73,15 @@ const ProfileMain = () => {
     }
 
     return (
-        <Box sx={{height: '100%', p: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
+        <Box
+            sx={{
+                height: '100%',
+                p: 3,
+                paddingInline: {xs: 2, lg: 25},
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 3
+            }}>
             <BoosterProfileInfo
                 balance={balance}
                 totalIncome={totalIncome}
@@ -90,6 +98,7 @@ const ProfileMain = () => {
             <Box sx={{
                 gap: 3,
                 display: 'flex',
+                flexDirection: {xs: 'column', lg: 'row'},
                 justifyContent: 'space-between',
             }}>
                 <BoosterOrderHistory/>

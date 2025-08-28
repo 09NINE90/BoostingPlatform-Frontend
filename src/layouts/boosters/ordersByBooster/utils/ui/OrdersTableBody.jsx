@@ -1,24 +1,13 @@
 import TableBody from "@mui/material/TableBody";
 import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
 import OrderInfoCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderInfoCell.jsx";
 import OrderStatusCell from "src/layouts/boosters/ordersByBooster/utils/ui/OrderStatusCell.jsx";
 import theme from "src/theme/theme.jsx";
 import {Link} from "react-router-dom";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import CustomTableCell from "src/layouts/utils/ui/CustomTableCell.jsx";
 
 const OrdersTableBody = ({allOrders}) => {
-
-    const CustomCell = ({width, item, center = true}) => {
-        return (
-            <TableCell
-                align={center ? 'center' : 'left'}
-                sx={{width: width}}
-            >
-                <div className='text-text-primary kanit-light'>{item}</div>
-            </TableCell>
-        )
-    }
 
     return (
         <TableBody>
@@ -31,19 +20,19 @@ const OrdersTableBody = ({allOrders}) => {
                         p: 2,
                     }}
                 >
-                    <CustomCell center={false} width='35%' item={<OrderInfoCell orderByRow={order}/>}/>
-                    <CustomCell center={false} width='15%' item={order.gameName}/>
-                    <CustomCell width='15%' item={order.gamePlatform}/>
-                    <CustomCell width='15%' item={`${order.boosterSalary} $`}/>
-                    <CustomCell width='10%' item={<OrderStatusCell orderStatus={order.orderStatus}/>}/>
-                    <CustomCell width='10%' item=
+                    <CustomTableCell center={false} width='35%' item={<OrderInfoCell orderByRow={order}/>}/>
+                    <CustomTableCell center={false} width='15%' item={order.gameName}/>
+                    <CustomTableCell width='15%' item={order.gamePlatform.name} iconName={order.gamePlatform.title}/>
+                    <CustomTableCell width='15%' item={`${order.boosterSalary} $`}/>
+                    <CustomTableCell width='10%' item={<OrderStatusCell orderStatus={order.orderStatus}/>}/>
+                    <CustomTableCell width='10%' item=
                         {order.chatId && (
                             <ContainedBlueButton
                                 to={`/booster/chat/${order.chatId}/${order.orderId}`}
                                 component={Link}
                                 sx={{width:'70%'}}
                             >
-                                GET INFO
+                                OPEN CHAT
                             </ContainedBlueButton>
                         )}/>
                 </TableRow>

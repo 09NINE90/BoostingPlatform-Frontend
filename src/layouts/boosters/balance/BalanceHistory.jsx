@@ -1,4 +1,4 @@
-import {Box} from "@mui/material";
+import {Box, useMediaQuery} from "@mui/material";
 import React, {useCallback, useEffect, useState} from "react";
 import {getBalanceHistory} from "src/services/financeApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
@@ -7,8 +7,10 @@ import BalanceHistoryTableHead from "src/layouts/boosters/balance/utils/ui/Balan
 import BalanceHistoryTableBody from "src/layouts/boosters/balance/utils/ui/BalanceHistoryTableBody.jsx";
 import theme from "src/theme/theme.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import MobileBalanceHistory from "src/layouts/boosters/balance/utils/ui/MobileBalanceHistory.jsx";
 
 const BalanceHistory = () => {
+    const isMobile = useMediaQuery('(max-width:1024px)');
 
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -51,13 +53,20 @@ const BalanceHistory = () => {
     return (
         <Box sx={{minHeight: '80vh',}}>
             <Box sx={{
-                p: 3,
+                p: {xs: 1, sm: 3},
+                overflowX: 'auto',
                 backgroundColor: theme.palette.background.paper,
             }}>
-                <Table>
-                    <BalanceHistoryTableHead/>
-                    <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
-                </Table>
+                {isMobile ? (
+                    <MobileBalanceHistory balanceHistoryList={balanceHistoryList} />
+                ) : (
+                    <Box sx={{ overflowX: 'auto' }}>
+                        <Table>
+                            <BalanceHistoryTableHead/>
+                            <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
+                        </Table>
+                    </Box>
+                )}
             </Box>
         </Box>
     )

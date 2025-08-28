@@ -53,7 +53,7 @@ const OrderTable = () => {
 
     return (
         <Box sx={{
-            p: 5,
+            p: {xs: 3, sm: 5, md: 10},
             mt: 3,
             minHeight: '450px',
             maxWidth: '100%',
@@ -63,6 +63,7 @@ const OrderTable = () => {
                         sx={{
                             fontWeight: theme.typography.fontWeightMedium,
                             color: theme.palette.text.primary,
+                            fontSize: {xs: 20, sm: 34},
                             mb: 5
                         }}>
                 Your Orders

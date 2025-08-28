@@ -7,7 +7,7 @@ const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageC
         <Box
             sx={{
                 position: 'fixed',
-                bottom: 0,
+                bottom: {xs: 50, lg: 0},
                 left: 0,
                 right: 0,
                 backgroundColor: theme.palette.background.default,
@@ -19,14 +19,14 @@ const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageC
                     mx: 'auto'
                 }}>
                 <TablePagination
-                    rowsPerPageOptions={[50, 100, 300, 500]}
+                    rowsPerPageOptions={[20, 50, 100, 300, 500]}
                     component="div"
                     count={recordTotal}
                     rowsPerPage={employeesPerPage}
                     page={pageNumber}
                     onPageChange={handlePageChange}
                     onRowsPerPageChange={handleRowsPerPageChange}
-                    className="bg-divider text-text-primary"
+                    className="bg-background text-text-primary"
                     classes={{
                         root: "text-text-primary",
                         selectIcon: "text-text-primary",
@@ -34,6 +34,7 @@ const OrderPagination = ({recordTotal, employeesPerPage, pageNumber, handlePageC
                     }}
                     sx={{
                         color: 'text-primary',
+                        backgroundColor: theme.palette.background.default,
                         '& .MuiTablePagination-selectLabel, & .MuiTablePagination-displayedRows': {
                             color: 'text-primary'
                         },

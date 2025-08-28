@@ -42,7 +42,7 @@ function ProfileMain() {
 
     if (error) {
         return (
-            <ErrorPage error={error} />
+            <ErrorPage error={error}/>
         )
     }
 
@@ -57,7 +57,15 @@ function ProfileMain() {
     }
 
     return (
-        <Box sx={{p: 3, paddingInline: 25, display: 'flex', flexDirection: 'column', gap: 3}}>
+        <Box
+            sx={{
+                height: 'fit-content',
+                p: 3,
+                paddingInline: {xs: 2, lg: 25},
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 3
+            }}>
             <CustomerProfileInfo
                 discountPercentage={discountPercentage}
                 cashbackBalance={cashbackBalance}

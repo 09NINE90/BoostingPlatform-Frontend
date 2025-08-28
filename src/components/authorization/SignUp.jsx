@@ -1,5 +1,4 @@
-import "../../styles/AuthForms.css";
-import {useState} from "react";
+import React, {useState} from "react";
 import {NavLink} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
@@ -87,14 +86,14 @@ const SignUp = ({closeModal, signInRedirect}) => {
             <div className="h-full p-2 kanit-light">
                 By continuing, you agree to our&nbsp;
                 <NavLink
-                    className={"linkClass"}
+                    className={linkClass}
                     to="/"
                 >
                     User Agreement
                 </NavLink>
                 &nbsp;and acknowledge that you understand the&nbsp;
                 <NavLink
-                    className={"linkClass"}
+                    className={linkClass}
                     to="/"
                 >
                     Privacy Policy
