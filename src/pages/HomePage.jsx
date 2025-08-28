@@ -1,16 +1,16 @@
-import Header from '../layouts/home/Header.jsx';
-import {promoList} from '../layouts/home/HomeData.js';
+import Header from '../layouts/common/header/Header.jsx';
 import { Outlet } from "react-router";
-import Promo from '../layouts/home/Promo.jsx';
-import '../styles/HomePage.css';
+import Footer from '../layouts/common/footer/Footer.jsx';
+import { Box } from '@mui/material';
 
 const HomePage = () => {
     return (
         <>
             <Header/>
-            <main>
-                <Outlet/>
-            </main>
+                <Box>
+                    <Outlet/>
+                </Box>
+            <Footer/>
         </>
     );
 };

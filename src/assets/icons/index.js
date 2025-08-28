@@ -1,0 +1,11 @@
+export {default as ApplePay} from './ApplePay.jsx';
+export {default as PayPal} from './PayPal.jsx';
+export {default as Bitcoin} from './Bitcoin.jsx';
+export {default as GooglePay} from './GooglePay.jsx';
+export {default as Visa} from './Visa.jsx';
+export {default as Mastercard} from './Mastercard.jsx';
+export {default as YouTube} from './YouTube.jsx';
+export {default as Telegram} from './Telegram.jsx';
+export {default as Mail} from './Mail.jsx';
+export {default as WhatsApp} from './WhatsApp.jsx';
+export {default as Games} from './Games.jsx';

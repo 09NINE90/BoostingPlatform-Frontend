@@ -1,44 +1,29 @@
 import React from 'react';
-import styles from '../../styles/Header.module.css'
-import { Link} from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
-import { IconButton } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
+import {NavLink} from 'react-router-dom';
 
 
 const BoosterHeader = () => {
 
     const navButton = (path, title) => {
-        return(
-            <NavLink
-                to={path}
-                className={"px-5"}
+        return (
+            <NavLink to={path}
+                     className={({ isActive }) =>
+                         `px-5 ${isActive ? 'text-primary' : 'hover:text-primary'}`
+                     }
             >
-                <p className="">{title}</p>
+                <p className="text-xl kanit-regular uppercase hover:text-primary">
+                    {title}
+                </p>
             </NavLink>
         )
     };
 
     return (
-        <header className={styles.header}>
-            <Link to="/">
-                <div className={""}>
-                    V-Boosting
-                </div>
-            </Link>
-            <div className="flex items-center justify-between">
-                {navButton("/booster/dashboard", "Dashboard")}
-                {navButton("/booster/orders", "My Orders")}
-            </div>
-            <nav className="flex justify-between flex-row" >
-                
-                <div className="px-4">
-                    <IconButton > 
-                        <PersonIcon/>  
-                    </IconButton>
-                </div>
-            </nav>
-        </header>
+        <div className="flex items-center justify-between">
+            {navButton("/booster/dashboard", "Dashboard")}
+            {navButton("/booster/orders", "My Orders")}
+            {navButton("/booster/balanceHistory", "Balance history")}
+        </div>
     );
 }
 

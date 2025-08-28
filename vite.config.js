@@ -1,29 +1,64 @@
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import {visualizer} from 'rollup-plugin-visualizer'
 
 // https://vite.dev/config/
-
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  server: {
-    proxy: {
-      "/api": {
-        target: 'http://localhost:6969',
-        changeOrigin: true,
-        secure: false,
-      }
+    plugins: [
+        react(),
+        tailwindcss(),
+        visualizer({
+            open: true,
+            gzipSize: true,
+            brotliSize: true,
+        }),
+    ],
+    define: {
+        global: {},
     },
-    watch: {
-      usePolling: true,
+    server: {
+        hmr: false,
+        proxy: process.env.NODE_ENV === 'development' ? {
+            "/api": {
+                target: 'http://localhost:6969',
+                changeOrigin: true,
+                secure: false,
+            },
+            "/ws": {
+                target: 'ws://localhost:6969',
+                changeOrigin: true,
+                secure: false,
+            }
+        } : undefined,
     },
-    host: true, // needed for the Docker Container port mapping to work
-    strictPort: true,
-    port: 5173, // you can replace this port with any port
-  },
-  resolve: {
-    alias: {
-      src: '/src'
+    resolve: {
+        alias: {
+            src: '/src'
+        }
+    },
+    build: {
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+                pure_funcs: ['console.info', 'console.warn'],
+            },
+            format: {
+                comments: false,
+            },
+        },
+        rollupOptions: {
+            output: {
+                manualChunks: (id) => {
+                    if (id.includes('node_modules')) {
+                        return 'vendor'
+                    }
+                }
+            }
+        },
+        sourcemap: false,
+        chunkSizeWarningLimit: 1000,
     }
-  }
 })
