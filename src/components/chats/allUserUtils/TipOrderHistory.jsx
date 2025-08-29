@@ -58,7 +58,7 @@ const TipOrderHistory = ({tipOrderHistory}) => {
             <AccordionSummary expandIcon={<ExpandMoreIcon/>} sx={{px: 2}}>
                 <Typography variant="subtitle1" color="text.secondary"
                             fontWeight={theme.typography.fontWeightLight}>
-                    Tip history
+                    Tips history
                 </Typography>
             </AccordionSummary>
 

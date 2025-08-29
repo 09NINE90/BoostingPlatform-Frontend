@@ -44,9 +44,6 @@ const OfferInfo = ({offerData}) => {
     return (
         <Box className="space-y-6">
             <Breadcrumbs separator="›" aria-label="breadcrumb" className="text-gray-400">
-                <Link color="primary" component={NavLink} to={`/${offerData.secondGameId}`} className="hover:underline">
-                    Home
-                </Link>
                 <Link color="primary" component={NavLink} to={`/games/${offerData.secondGameId}`}
                       className="hover:underline">
                     {offerData.gameName}

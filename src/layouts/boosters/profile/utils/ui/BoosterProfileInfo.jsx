@@ -141,7 +141,7 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
                     </InfoCardsGroup>
                     <InfoCardsGroup>
                         <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
-                        <InfoCardItem label='Total tip' value={`$ ${totalTips}`}/>
+                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
                     </InfoCardsGroup>
                 </InfoCardsContainer>
 
