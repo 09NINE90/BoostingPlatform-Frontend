@@ -41,7 +41,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
         });
     };
 
-    const { totalPrice, totalTime } = useMemo(() => {
+    const {totalPrice, totalTime} = useMemo(() => {
         let price = basePrice;
         let time = baseTime;
         let totalPercentChange = 0;
@@ -86,7 +86,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
             price += (price * totalPercentChange) / 100;
         }
 
-        return { totalPrice: price, totalTime: time };
+        return {totalPrice: price, totalTime: time};
     }, [selectedOptions, basePrice, baseTime, optionsBlocks]);
 
     const handleAddToCart = useCallback(async () => {
@@ -132,18 +132,18 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
 
         return (
             <div key={option.id} className="mb-5">
-                <h3 className="mb-2 font-semibold">{option.title}</h3>
-
                 {option.type === "SELECT" && (
                     <FormControl fullWidth>
                         <InputLabel color="secondary">{option.title}</InputLabel>
                         <Select
                             value={selected?.value || ""}
+                            label={option.title}
                             onChange={(e) => {
                                 const selectedItem = option.items.find(item => item.value === e.target.value);
                                 handleChange(option.id, e.target.value, selectedItem.label, option.title);
                             }}
                             color="secondary"
+                            variant="outlined"
                         >
                             {option.items.map((item) => (
                                 <MenuItem key={item.value} value={item.value}>
@@ -188,7 +188,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                     <Box>
                         {option.items.map((item) => (
                             <Button
-                                sx={{ m: 1 }}
+                                sx={{m: 1}}
                                 key={item.value}
                                 variant={selected?.value === item.value ? "contained" : "outlined"}
                                 onClick={() => handleChange(option.id, item.value, item.label, option.title)}
@@ -249,7 +249,8 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                     alt="background"
                     className="w-full h-full object-cover opacity-100"
                 />
-                <div className="absolute inset-0 h-[calc(100%)] bg-gradient-to-t from-surface to-transparent z-10 pointer-events-none" />
+                <div
+                    className="absolute inset-0 h-[calc(100%)] bg-gradient-to-t from-surface to-transparent z-10 pointer-events-none"/>
             </div>
             <div className="relative -mt-40 z-20 p-5 text-white rounded-xl">
                 {renderOptions}
@@ -257,7 +258,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                     Choose platform:
                     {gamePlatforms.map((item) => (
                         <Button
-                            sx={{ m: 1 }}
+                            sx={{m: 1}}
                             key={item.id}
                             variant={selectedPlatform === item.title ? "contained" : "outlined"}
                             onClick={() => setSelectedPlatform(item.title)}
@@ -266,7 +267,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                         </Button>
                     ))}
                 </Box>
-                <Divider />
+                <Divider/>
                 <div className="flex flex-col">
                     <div className="my-5">
                         <h3 className="font-bold">Total Price: ${totalPrice.toFixed(2)}</h3>
@@ -275,7 +276,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
                     <Button
                         loading={isLoading}
                         variant="contained"
-                        startIcon={<ShoppingCartOutlinedIcon />}
+                        startIcon={<ShoppingCartOutlinedIcon/>}
                         onClick={handleAddToCart}
                     >
                         Add to cart

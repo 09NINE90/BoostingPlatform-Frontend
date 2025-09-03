@@ -63,7 +63,7 @@ const OrderTipModal = ({isOpen, onClose, selectedOrder, refreshTipHistory}) => {
         <ModalTemplate
             isOpen={isOpen}
             onClose={onClose}
-            title='Send tip'
+            title='Send tips'
             backgroundColor={theme.palette.background.paper}
             content={
                 <Box

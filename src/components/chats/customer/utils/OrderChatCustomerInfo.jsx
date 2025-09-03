@@ -125,7 +125,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
                             onClick={() => openModal(order)}
                             sx={{mt: 2, p: 2, width: '100%',}}
                         >
-                            send tip
+                            send tips
                         </ContainedBlueButton>
                     </Box>
                 )}

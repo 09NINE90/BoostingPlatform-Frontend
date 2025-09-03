@@ -126,7 +126,7 @@ const BecomeBoosterPage = () => {
                     <NavLink to={'/'}
                              className={'kanit-light text-sky-400 hover:text-sky-700 mt-5'}
                     >
-                        Back to home page?
+                        Back to home page
                     </NavLink>
                 </Box>
             </Box>

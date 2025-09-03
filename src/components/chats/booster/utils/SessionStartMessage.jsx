@@ -14,5 +14,3 @@ export const getSessionStartMessage = (duration, streamLink, dateStart) => {
         </div>
           `.trim();
 };
-
-
