@@ -21,7 +21,7 @@ const MobileBalanceHistory = ({balanceHistoryList}) => {
                             display: 'flex',
                             alignItems: 'center',
                             fontWeight: theme.typography.fontWeightLight,
-                            color: item.recordType === 'TIP'
+                            color: item.recordType === 'TIPS'
                                 ? theme.palette.primary.main
                                 : item.recordType === 'SALARY'
                                     ? theme.palette.third.main

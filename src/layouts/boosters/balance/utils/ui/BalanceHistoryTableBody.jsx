@@ -33,7 +33,7 @@ const BalanceHistoryTableBody = ({balanceHistoryList}) => {
                 >
                     <span
                         className={`px-3 py-1 text-xs kanit-light ${
-                            type === 'TIP'
+                            type === 'TIPS'
                                 ? 'bg-background-default text-primary border border-primary'
                                 : type === 'SALARY'
                                     ? 'bg-background-default text-third border border-third'
