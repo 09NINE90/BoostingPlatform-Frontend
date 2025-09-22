@@ -42,10 +42,7 @@ const EmailConfirmationPage = () => {
 
         const confirm = async () => {
             try {
-                const confirmationToken = {
-                    token: tokenParam,
-                }
-                const {role, token} = await confirmEmail(confirmationToken);
+                const {role, token} = await confirmEmail(tokenParam);
                 dispatch(setToken(token));
                 dispatch(setRole(role));
                 dispatch(setAuth(true));
