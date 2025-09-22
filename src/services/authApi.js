@@ -39,7 +39,7 @@ export const postRegister = async (credentials) => {
 }
 
 export const confirmEmail = async (confirmationToken) => {
-    const confirmEmailResponse = await api.post(`/auth/verify-email`, confirmationToken);
+    const confirmEmailResponse = await api.post(`/auth/verify-email/${confirmationToken}`);
     if (!confirmEmailResponse.data) {
         throw new Error('Сервер не вернул данные');
     }
