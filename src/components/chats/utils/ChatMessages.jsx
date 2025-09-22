@@ -8,6 +8,10 @@ import {formatDividerDate, isSameDay, toLocaleTime} from "src/utils/functions.js
 const ChatMessages = ({messages, username}) => {
     let lastDate = null;
 
+    const domPurifyConfig = {
+        ADD_ATTR: ['target', 'rel'],
+    };
+
     return (
         <>
             {messages.map((msg) => {
@@ -16,7 +20,7 @@ const ChatMessages = ({messages, username}) => {
                 lastDate = currentDate;
 
                 const rawHtml = marked(msg.text);
-                const cleanHtml = DOMPurify.sanitize(rawHtml);
+                const cleanHtml = DOMPurify.sanitize(rawHtml, domPurifyConfig);
                 const isMine = msg.sender === username;
 
                 return (
