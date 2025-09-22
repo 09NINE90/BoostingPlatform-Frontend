@@ -10,7 +10,15 @@ import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 
-const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrderHistory, isLoading}) => {
+const OrderChatBoosterInfo = ({
+                                  order,
+                                  openModal,
+                                  openStartSessionModal,
+                                  openFinishSessionModal,
+                                  tipOrderHistory,
+                                  isLoading,
+                                  isSessionLoading
+                              }) => {
     if (isLoading) {
         return (
             <Box
@@ -65,12 +73,25 @@ const OrderChatBoosterInfo = ({order, openModal, openStartSessionModal, tipOrder
                 </Box>
                 {order.orderStatus === IN_PROGRESS && (
                     <Box>
-                        <OutlinedBlueButton
-                            onClick={() => openStartSessionModal()}
-                            sx={{mt: 2, p: 2, width: '100%',}}
-                        >
-                            Start session
-                        </OutlinedBlueButton>
+                        {order.hasActiveSession ? (
+                                <OutlinedBlueButton
+                                    loading={isSessionLoading}
+                                    onClick={() => openFinishSessionModal()}
+                                    sx={{mt: 2, p: 2, width: '100%',}}
+                                >
+                                    Finish session
+                                </OutlinedBlueButton>
+                            )
+                            : (
+                                <OutlinedBlueButton
+                                    loading={isSessionLoading}
+                                    onClick={() => openStartSessionModal()}
+                                    sx={{mt: 2, p: 2, width: '100%',}}
+                                >
+                                    Start session
+                                </OutlinedBlueButton>
+                            )
+                        }
                         <ContainedBlueButton
                             onClick={() => openModal()}
                             sx={{mt: 2, p: 2, width: '100%',}}

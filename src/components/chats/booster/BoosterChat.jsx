@@ -3,14 +3,20 @@ import {useParams} from "react-router";
 import {Box} from "@mui/material";
 import OrderChatBoosterInfo from "src/components/chats/booster/utils/OrderChatBoosterInfo.jsx";
 import React, {useCallback, useEffect, useState} from "react";
-import {completeExecutionOrder, getBoosterOrderById} from "src/services/orderApi.js";
+import {
+    completeExecutionOrder,
+    finishSessionRequest,
+    getBoosterOrderById,
+    startSessionRequest
+} from "src/services/orderApi.js";
 import {toast} from "react-toastify";
 import OrderFinishModal from "src/components/chats/booster/utils/OrderFinishModal.jsx";
 import {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {getOrderTipHistory} from "src/services/financeApi.js";
 import StartSessionModal from "src/components/chats/booster/utils/StartSessionModal.jsx";
-import {getSessionStartMessage} from "src/components/chats/booster/utils/SessionStartMessage.jsx";
+import {getSessionFinishMessage, getSessionStartMessage} from "src/components/chats/booster/utils/SessionMessage.jsx";
 import {formatUTCDateTime} from "src/utils/functions.js";
+import FinishSessionModal from "./utils/FinishSessionModal.jsx";
 
 const BoosterChat = () => {
 
@@ -18,13 +24,17 @@ const BoosterChat = () => {
 
     const [sendMessageFn, setSendMessageFn] = useState(null);
     const [startSessionModalIsOpen, setStartSessionModalIsOpen] = useState(false);
+    const [finishSessionModalIsOpen, setFinishSessionModalIsOpen] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [order, setOrder] = useState(null);
     const [tipOrderHistory, setTipOrderHistory] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSessionLoading, setIsSessionLoading] = useState(false);
 
     const openStartSessionModal = () => setStartSessionModalIsOpen(true);
     const closeStartSessionModal = () => setStartSessionModalIsOpen(false);
+    const openFinishSessionModal = () => setFinishSessionModalIsOpen(true);
+    const closeFinishSessionModal = () => setFinishSessionModalIsOpen(false);
     const openModal = () => setModalIsOpen(true);
     const closeModal = () => setModalIsOpen(false);
 
@@ -45,17 +55,71 @@ const BoosterChat = () => {
         } catch (err) {
             console.error(handleApiError(err))
         }
-    }, [getBoosterOrderById, setOrder])
+    }, [getBoosterOrderById, setOrder]);
 
-    const startSession = (duration, streamLink) => {
+    const handleSessionOperation = async (operation, onSuccess, successMessage) => {
+        setIsSessionLoading(true);
+
+        try {
+            const result = await operation();
+            if (onSuccess) await onSuccess(result);
+            toast.success(successMessage);
+            return result;
+        } catch (err) {
+            console.error(handleApiError(err));
+            throw err;
+        } finally {
+            setIsSessionLoading(false);
+        }
+    };
+
+    const refreshOrder = async () => {
+        const orderApi = await getBoosterOrderById(orderId);
+        setOrder(orderApi);
+        return orderApi;
+    };
+
+    const sendChatMessage = (messageText) => {
         if (!sendMessageFn) return;
 
-        console.log(duration, streamLink);
-
         sendMessageFn(`/app/chat/${chatId}`, {
-            text: getSessionStartMessage(duration, streamLink, formatUTCDateTime(new Date())),
+            text: messageText,
             timestamp: new Date().toISOString(),
         });
+    };
+
+    const startSession = async (duration, streamLink) => {
+        await handleSessionOperation(
+            async () => {
+                await startSessionRequest(orderId, {
+                    duration: duration,
+                    streamLink: streamLink
+                });
+            },
+            async () => {
+                sendChatMessage(getSessionStartMessage(duration, streamLink, formatUTCDateTime(new Date())));
+                await refreshOrder();
+            },
+            'Session started successfully'
+        );
+    };
+
+    const finishSession = async (progressMessage, imgurLink) => {
+        await handleSessionOperation(
+            async () => {
+                return await finishSessionRequest(
+                    order.activeSessionId,
+                    {
+                        progressMessage: progressMessage,
+                        imgurLink: imgurLink
+                    });
+            },
+            async (sessionInfo) => {
+                sendChatMessage(getSessionFinishMessage(sessionInfo));
+                await refreshOrder();
+            },
+            'Session finished successfully'
+        );
     };
 
     const handleCompleteExecution = async () => {
@@ -99,8 +163,10 @@ const BoosterChat = () => {
             }}>
             <OrderChatBoosterInfo order={order}
                                   isLoading={isLoading}
+                                  isSessionLoading={isSessionLoading}
                                   openModal={openModal}
                                   openStartSessionModal={openStartSessionModal}
+                                  openFinishSessionModal={openFinishSessionModal}
                                   tipOrderHistory={tipOrderHistory}
             />
             <ChatComponent
@@ -115,8 +181,16 @@ const BoosterChat = () => {
             {startSessionModalIsOpen && (
                 <StartSessionModal
                     isOpen={startSessionModalIsOpen}
+                    isSessionLoading={isSessionLoading}
                     onClose={closeStartSessionModal}
                     startSession={startSession}
+                />
+            )}
+            {finishSessionModalIsOpen && (
+                <FinishSessionModal
+                    isOpen={finishSessionModalIsOpen}
+                    onClose={closeFinishSessionModal}
+                    finishSession={finishSession}
                 />
             )}
         </Box>

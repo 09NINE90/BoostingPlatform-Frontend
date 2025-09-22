@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const StartSessionModal = ({isOpen, onClose, startSession}) => {
+const StartSessionModal = ({isOpen, isSessionLoading, onClose, startSession}) => {
 
     const [duration, setDuration] = useState(1);
     const [streamLink, setStreamLink] = useState('');
@@ -45,6 +45,7 @@ const StartSessionModal = ({isOpen, onClose, startSession}) => {
             }
             actions={
                 <ContainedBlueButton
+                    loading={isSessionLoading}
                     onClick={handleStartSession}
                     sx={{mt: 5, width: '100%',}}
                 >

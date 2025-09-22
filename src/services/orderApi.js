@@ -62,3 +62,15 @@ export const getBoosterOrderById = async (orderId) => {
     const response = await api.get(`/order/booster/${orderId}`);
     return response.data;
 }
+
+export const startSessionRequest = async (orderId, request) => {
+    const response = await api.post(`/order/booster/${orderId}/session/start`, request);
+    return response.data;
+}
+
+export const finishSessionRequest = async (orderSessionId, request) => {
+    const response = await api.post(`/order/booster/${orderSessionId}/session/finish`, request);
+    return response.data;
+}
+
+
