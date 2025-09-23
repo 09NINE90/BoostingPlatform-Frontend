@@ -38,14 +38,13 @@ const BlueTextField = ({sx = {}, maxLength, showCounter = false, ...props}) => {
         }
     };
 
-
     return (
-        <Box sx={{ position: 'relative' }}>
+        <Box sx={{position: 'relative'}}>
             <TextField
                 variant="outlined"
                 fullWidth
                 sx={baseSx}
-                inputProps={{ maxLength: maxLength }}
+                inputProps={{maxLength: maxLength}}
                 {...props}
                 onChange={handleChange}
             />
