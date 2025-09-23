@@ -76,3 +76,30 @@ export const formatDividerDate = (date) => {
     return toLocaleDate(date);
 }
 
+export const validateUrl = (url) => {
+    if (!url) return {isValid: true, message: ''};
+
+    try {
+        const urlObj = new URL(url);
+
+        const allowedProtocols = ['http:', 'https:'];
+        if (!allowedProtocols.includes(urlObj.protocol)) {
+            return {
+                isValid: false,
+                message: 'Only http and https protocols are allowed.'
+            };
+        }
+
+        if (!urlObj.hostname) {
+            return {isValid: false, message: 'Invalid domain'};
+        }
+
+        return {isValid: true, message: ''};
+    } catch (error) {
+        return {
+            isValid: false,
+            message: 'Incorrect link format'
+        };
+    }
+};
+

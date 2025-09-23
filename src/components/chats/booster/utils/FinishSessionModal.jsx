@@ -3,17 +3,27 @@ import ContainedBlueButton from "../../../../layouts/utils/ui/ContainedBlueButto
 import React, {useState} from "react";
 import {Box} from "@mui/material";
 import BlueTextField from "../../../../layouts/utils/ui/BlueTextField.jsx";
+import {validateUrl} from "../../../../utils/functions.js";
 
 const FinishSessionModal = ({isOpen, isSessionLoading, onClose, finishSession}) => {
 
     const [progressMessage, setProgressMassage] = useState('');
-    const [imgurLink, setImgurLink] = useState('');
+    const [reportLink, setReportLink] = useState('');
+    const [reportError, setReportError] = useState('');
 
     const handleFinishSession = () => {
-        if (progressMessage && imgurLink) {
-            finishSession(progressMessage, imgurLink);
+        if (progressMessage && reportLink && !reportError) {
+            finishSession(progressMessage, reportLink);
             onClose();
         }
+    };
+
+    const handleChangeReportLink = (e) => {
+        const value = e.target.value;
+        setReportLink(value);
+
+        const validation = validateUrl(value);
+        setReportError(validation.message);
     };
 
     return (
@@ -37,16 +47,19 @@ const FinishSessionModal = ({isOpen, isSessionLoading, onClose, finishSession}) 
                     />
                     <BlueTextField
                         required
-                        label="Imgur link"
+                        error={!!reportError}
+                        helperText={reportError}
+                        label="Report link"
                         variant="outlined"
-                        value={imgurLink}
-                        onChange={(e) => setImgurLink(e.target.value)}
+                        value={reportLink}
+                        onChange={handleChangeReportLink}
                         fullWidth
                     />
                 </Box>
             }
             actions={
                 <ContainedBlueButton
+                    disabled={!progressMessage || !reportLink || !!reportError}
                     loading={isSessionLoading}
                     onClick={handleFinishSession}
                     sx={{mt: 5, width: '100%',}}

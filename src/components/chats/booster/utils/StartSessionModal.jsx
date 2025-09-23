@@ -3,17 +3,27 @@ import ModalTemplate from "src/utils/modalTemplate/ModalTemplate.jsx";
 import React, {useState} from "react";
 import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import {validateUrl} from "../../../../utils/functions.js";
 
 const StartSessionModal = ({isOpen, isSessionLoading, onClose, startSession}) => {
 
     const [duration, setDuration] = useState(1);
     const [streamLink, setStreamLink] = useState('');
+    const [error, setError] = useState('');
 
     const handleStartSession = () => {
-        if (duration) {
+        if (duration && !error) {
             startSession(duration, streamLink);
             onClose();
         }
+    };
+
+    const handleChangeLink = (e) => {
+        const value = e.target.value;
+        setStreamLink(value);
+
+        const validation = validateUrl(value);
+        setError(validation.message);
     };
 
     return (
@@ -35,16 +45,19 @@ const StartSessionModal = ({isOpen, isSessionLoading, onClose, startSession}) =>
                         fullWidth
                     />
                     <BlueTextField
+                        error={!!error}
+                        helperText={error}
                         label="Stream link (optional)"
                         variant="outlined"
                         value={streamLink}
-                        onChange={(e) => setStreamLink(e.target.value)}
+                        onChange={handleChangeLink}
                         fullWidth
                     />
                 </Box>
             }
             actions={
                 <ContainedBlueButton
+                    disabled={!duration || !!error}
                     loading={isSessionLoading}
                     onClick={handleStartSession}
                     sx={{mt: 5, width: '100%',}}
