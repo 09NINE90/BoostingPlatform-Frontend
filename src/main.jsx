@@ -32,6 +32,7 @@ import BecomeBoosterPage from "src/pages/BecomeBoosterPage.jsx";
 import ChatPage from "src/pages/ChatPage.jsx";
 import FloatingBecomeBoosterButton from "src/utils/FloatingBecomeBoosterButton.jsx";
 import {selectAuth} from "src/store/slice/authSlice.js";
+import DefaultGameRedirect from "./utils/DefaultGameRedirect.jsx";
 
 const root = document.getElementById('root');
 
@@ -82,7 +83,7 @@ export const App = () => {
                             className="mt-20 mr-4"
             />
             <Routes>
-                <Route path="/" element={<Navigate to="/LoE" replace/>}/>
+                <Route path="/" element={<DefaultGameRedirect/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
 
                 <Route element={<HomePage/>}>
