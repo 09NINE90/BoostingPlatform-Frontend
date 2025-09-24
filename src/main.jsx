@@ -33,6 +33,7 @@ import ChatPage from "src/pages/ChatPage.jsx";
 import FloatingBecomeBoosterButton from "src/utils/FloatingBecomeBoosterButton.jsx";
 import {selectAuth} from "src/store/slice/authSlice.js";
 import DefaultGameRedirect from "./utils/DefaultGameRedirect.jsx";
+import AuthModalWrapper from "./utils/AuthModalWrapper.jsx";
 
 const root = document.getElementById('root');
 
@@ -82,9 +83,12 @@ export const App = () => {
                             bodyClassName="custom-toast-body"
                             className="mt-20 mr-4"
             />
+            <AuthModalWrapper/>
             <Routes>
                 <Route path="/" element={<DefaultGameRedirect/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
+                <Route path="/auth/signin" element={null}/>
+                <Route path="/auth/signup" element={null}/>
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
