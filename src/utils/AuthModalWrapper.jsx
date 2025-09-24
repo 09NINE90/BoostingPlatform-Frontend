@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {SIGN_IN_STATE, SIGN_UP_STATE} from "./constants/authForm.js";
 import {AuthModal} from "../components/authorization/AuthModal.jsx";
 
@@ -7,7 +7,6 @@ export const AuthModalWrapper = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modelType, setModalType] = useState(SIGN_IN_STATE);
     const location = useLocation();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const path = location.pathname;
@@ -25,9 +24,6 @@ export const AuthModalWrapper = () => {
 
     const toggleModal = () => {
         setModalIsOpen(prev => !prev);
-        if (modalIsOpen) {
-            navigate(-1);
-        }
     };
 
     const handleProfileMenuClose = () => {
