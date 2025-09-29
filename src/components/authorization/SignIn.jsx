@@ -23,6 +23,7 @@ import {BOOSTER_ROLE, CUSTOMER_ROLE} from "src/utils/constants/roles.js";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import HiddenFieldWithShowIcon from '../common/HiddenFieldWithShowIcon.jsx'
+import {useLocation} from "react-router-dom";
 
 const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
     const [credentials, setCredentials] = useState({email: "", password: ""});
@@ -30,6 +31,7 @@ const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
     const [requiredFieldEmpty, setRequiredFieldEmpty] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
+    const location = useLocation();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const status = useSelector(selectAuthStatus);
@@ -75,6 +77,10 @@ const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
             }
 
             toast.success('Sign in successfully');
+            const path = location.pathname;
+            if (path !== '/') {
+                navigate('/');
+            }
             closeModal();
 
         } catch (error) {
