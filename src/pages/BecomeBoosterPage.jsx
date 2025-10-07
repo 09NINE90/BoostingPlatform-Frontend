@@ -35,7 +35,7 @@ const BecomeBoosterPage = () => {
         trackerLinks: '',
         progressImages: '',
         additionalInfo: '',
-        referrerId: referrerId,
+        referrerId: referrerId === 'default' ? '' : referrerId,
     });
 
     const [manualGameInput, setManualGameInput] = useState(false);

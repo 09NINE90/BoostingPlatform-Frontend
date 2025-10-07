@@ -21,7 +21,7 @@ const FloatingBecomeBoosterButton = () => {
     return (
         <Box
             component={NavLink}
-            to="/become/booster"
+            to="/become/booster/default"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
