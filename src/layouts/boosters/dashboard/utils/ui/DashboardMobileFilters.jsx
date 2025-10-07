@@ -22,7 +22,7 @@ import {getFiltersDashboard} from "src/services/orderApi.js";
 
 const DashboardMobileFilters = ({setPageNumber, selectedFilters, setSelectedFilters}) => {
     const [expanded, setExpanded] = useState(false);
-    const dashboardSortKeys =[TOTAL_PRICE, GAME_NAME, GAME_PLATFORM];
+    const dashboardSortKeys = [TOTAL_PRICE, GAME_NAME, GAME_PLATFORM];
 
     const [filters, setFilters] = useState({
         gamePlatforms: [],
@@ -32,18 +32,18 @@ const DashboardMobileFilters = ({setPageNumber, selectedFilters, setSelectedFilt
 
     const [tempFilters, setTempFilters] = useState(selectedFilters)
 
-    const fetchDashboardFilters = useCallback(async () => {
+    const fetchDashboardFilters = async () => {
         try {
             const response = await getFiltersDashboard()
             setFilters(response)
         } catch (error) {
             console.error(error)
         }
-    }, [])
+    }
 
     useEffect(() => {
         fetchDashboardFilters()
-    }, [fetchDashboardFilters])
+    }, [])
 
     const handleCheckboxChange = (key, value) => {
         setTempFilters((prev) => ({

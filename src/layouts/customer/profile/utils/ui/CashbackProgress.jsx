@@ -1,11 +1,58 @@
-import React from "react";
-import {Box, Chip, Typography} from "@mui/material";
+import React, {useMemo} from "react";
+import {Box, Chip, Skeleton, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import HelpIconWithTooltip from "src/layouts/utils/ui/HelpIconWithTooltip.jsx";
 import AccountProgressbar from "src/layouts/utils/ui/AccountProgressbar.jsx";
 import CustomerStatusDescription from "src/layouts/customer/profile/utils/ui/CustomerStatusDescription.jsx";
 
-const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountStatus, discountPercentage}) => {
+const CashbackProgress = ({
+                              customerStatus,
+                              nextCustomerStatus,
+                              progressAccountStatus,
+                              discountPercentage,
+                              isLoading
+                          }) => {
+
+    const renderCustomerStatus = useMemo(() => {
+        if (isLoading) {
+            return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Skeleton
+                        variant="rounded"
+                        width={80}
+                        height={24}
+                        sx={{
+                            transform: 'none',
+                            borderRadius: '16px',
+                        }}
+                    />
+                    <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{
+                            transform: 'none',
+                        }}
+                    />
+                </Box>
+            )
+        }
+
+        return (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Chip
+                    label={customerStatus}
+                    sx={{
+                        fontSize: {xs: 10, sm: 12},
+                        height: 24
+                    }}
+                />
+                <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
+                    • {discountPercentage}% cashback
+                </Typography>
+            </Box>
+        )
+    }, [isLoading, customerStatus, discountPercentage])
 
     return (
         <Box sx={{
@@ -23,23 +70,30 @@ const CashbackProgress = ({customerStatus, nextCustomerStatus, progressAccountSt
             }}>
                 Account Status
             </Typography>
-            <Typography
-                variant="body1"
-                component="div"
-                sx={{
-                    color: '#fff',
-                    mb: 5,
-                    display: 'flex',
-                    alignItems: 'center',
-                    fontSize: {xs: 12, sm: 16},
-                    fontWeight: theme.typography.fontWeightLight,
-                }}>
+            <Box sx={{
+                color: theme.palette.text.primary,
+                mb: 5,
+                display: 'flex',
+                alignItems: 'center',
+                fontSize: {xs: 12, sm: 16},
+                fontWeight: theme.typography.fontWeightLight,
+                minHeight: 32,
+            }}>
                 <HelpIconWithTooltip
-                    tooltipTitle={<CustomerStatusDescription customerNextStatus={nextCustomerStatus}/>}/>
-                Current status:
-                <Chip label={customerStatus} sx={{marginInline: 2, fontSize: {xs: 10, sm: 12}}}/>
-                • {discountPercentage}% cashback by order
-            </Typography>
+                    tooltipTitle={<CustomerStatusDescription customerNextStatus={nextCustomerStatus}/>}
+                />
+                <Typography
+                    variant="body1"
+                    component="span"
+                    sx={{
+                        mx: 1,
+                        whiteSpace: 'nowrap'
+                    }}
+                >
+                    Current status:
+                </Typography>
+                {renderCustomerStatus}
+            </Box>
             <AccountProgressbar progress={progressAccountStatus}/>
         </Box>
     )

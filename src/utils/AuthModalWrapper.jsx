@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useLocation} from 'react-router-dom';
 import {SIGN_IN_STATE, SIGN_UP_STATE} from "./constants/authForm.js";
 import {AuthModal} from "../components/authorization/AuthModal.jsx";
@@ -6,6 +6,8 @@ import {AuthModal} from "../components/authorization/AuthModal.jsx";
 export const AuthModalWrapper = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modelType, setModalType] = useState(SIGN_IN_STATE);
+    const [referrerId, setReferrerId] = useState(null);
+
     const location = useLocation();
 
     useEffect(() => {
@@ -14,20 +16,20 @@ export const AuthModalWrapper = () => {
         if (path === '/auth/signin') {
             setModalType(SIGN_IN_STATE);
             setModalIsOpen(true);
-        } else if (path === '/auth/signup') {
+        } else if (path.startsWith('/auth/signup')) {
+            const parts = path.split('/');
+            const refId = parts[parts.length - 1] !== 'signup' ? parts[parts.length - 1] : null;
+            setReferrerId(refId);
             setModalType(SIGN_UP_STATE);
             setModalIsOpen(true);
         } else {
             setModalIsOpen(false);
         }
-    }, [location]);
+    }, [location.pathname]);
 
-    const toggleModal = () => {
-        setModalIsOpen(prev => !prev);
-    };
-
-    const handleProfileMenuClose = () => {
-    };
+    const toggleModal = useCallback(() => {
+        setModalIsOpen((prev) => !prev);
+    }, [setModalIsOpen]);
 
     return (
         <AuthModal
@@ -35,7 +37,9 @@ export const AuthModalWrapper = () => {
             toggleModal={toggleModal}
             modelType={modelType}
             setModalType={setModalType}
-            handleProfileMenuClose={handleProfileMenuClose}
+            handleProfileMenuClose={() => {}}
+            referrerId={referrerId}
+            viewCloseIcon={false}
         />
     );
 };

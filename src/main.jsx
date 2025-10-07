@@ -88,13 +88,13 @@ export const App = () => {
                 <Route path="/" element={<DefaultGameRedirect/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
                 <Route path="/auth/signin" element={null}/>
-                <Route path="/auth/signup" element={null}/>
+                <Route path="/auth/signup/:referrerId" element={null}/>
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
                     <Route path="/games/:id" element={<HomeMain/>}></Route>
                     <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
-                    <Route path="/become/booster" element={<BecomeBoosterPage/>}></Route>
+                    <Route path="/become/booster/:referrerId" element={<BecomeBoosterPage/>}></Route>
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>

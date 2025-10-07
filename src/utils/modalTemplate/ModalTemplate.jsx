@@ -88,7 +88,9 @@ const ModalTemplate = ({
     if (!isOpen) return null;
 
     const handleOverlayClick = (e) => {
+        if (viewCloseIcon) {
             onClose();
+        }
     };
 
     return (

@@ -1,27 +1,28 @@
-import {Box, Typography} from '@mui/material';
-import React, {useCallback, useEffect, useState} from 'react';
+import {Box, Skeleton, Typography} from '@mui/material';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {getBoosterProfileData} from 'src/services/userApi.js';
 import {handleApiError} from 'src/components/error/ErrorPage.jsx';
 import {getBoosterOrdersHistory} from 'src/services/orderApi.js';
 import theme from 'src/theme/theme.jsx';
 import OrderHistoryCard from 'src/layouts/boosters/profile/utils/ui/OrderHistoryCard.jsx';
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import OrderHistoryCards from "./OrderHistoryCards.jsx";
 
 const BoosterOrderHistory = () => {
 
     const [orderHistory, setOrderHistory] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const fetchBoosterOrderHistory = useCallback(async () => {
-        setLoading(true);
+        setIsLoading(true);
         try {
             const orderHistoryApi = await getBoosterOrdersHistory()
             setOrderHistory(orderHistoryApi);
         } catch (err) {
             setError(handleApiError(err));
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
     }, [getBoosterProfileData,]);
 
@@ -29,13 +30,58 @@ const BoosterOrderHistory = () => {
         fetchBoosterOrderHistory();
     }, [fetchBoosterOrderHistory]);
 
+    const renderOrderHistory = useMemo(() => {
+        if (isLoading) {
+            return (
+                <OrderHistoryCards>
+                    {[...Array(3)].map((_, index) => (
+                        <Box key={index} sx={{flexShrink: 0, width: {xs: 300, sm: 400}}}>
+                            <OrderHistoryCard isLoading={isLoading}/>
+                        </Box>
+                    ))}
+                </OrderHistoryCards>
+            )
+        }
+        if (!isLoading && orderHistory.length === 0) {
+            return (
+                <Box sx={{
+                    height: 250,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            p: 1 / 2,
+                            color: theme.palette.third.main,
+                            fontWeight: theme.typography.fontWeightRegular,
+                        }}>
+                        So far, you don't have a history of completed orders...
+                    </Typography>
+                </Box>
+            )
+        }
+
+        return (
+            <OrderHistoryCards>
+                {orderHistory.map((order) => (
+                    <Box key={order.id} sx={{flexShrink: 0, width: {xs: 300, sm: 400}}}>
+                        <OrderHistoryCard order={order}/>
+                    </Box>
+                ))}
+            </OrderHistoryCards>
+        )
+
+    }, [isLoading, orderHistory]);
+
     return (
         <Box sx={
             {
                 mt: 3,
                 mr: 3,
                 p: {xs: 3, sm: 5, md: 10},
-                width: {xs: '100%', lg:'73%'},
+                width: {xs: '100%', lg: '73%'},
                 maxWidth: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -51,52 +97,7 @@ const BoosterOrderHistory = () => {
                 }}>
                 Order History
             </Typography>
-            {loading && (
-                <CustomLoader size={0.6} height='100%'/>
-            )}
-            {!loading && orderHistory.length === 0 && (
-                <Box
-                    sx={{
-                        height: '100%',
-                        display: 'flex',
-                        position:'relative',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}>
-                    <Typography
-                        variant="body1"
-                        sx={{
-                            p: 1/2,
-                            position: 'absolute',
-                            color: theme.palette.third.main,
-                            fontWeight: theme.typography.fontWeightRegular,
-                        }}>
-                        So far, you don't have a history of completed orders...
-                    </Typography>
-                </Box>
-            )}
-            <Box
-                sx={{
-                    py: 5,
-                    gap: 3,
-                    display: 'flex',
-                    overflowX: 'auto',
-                    '&::-webkit-scrollbar': {
-                        height: '8px',
-                        borderRadius: '4px',
-                        backgroundColor: theme.palette.third.hover,
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                        borderRadius: '4px',
-                        backgroundColor: theme.palette.third.main,
-                    },
-                }}>
-                {orderHistory.map((order) => (
-                    <Box key={order.id} sx={{ flexShrink: 0, width: {xs: 300, sm: 400}}}>
-                        <OrderHistoryCard order={order}/>
-                    </Box>
-                ))}
-            </Box>
+            {renderOrderHistory}
         </Box>
     )
 }

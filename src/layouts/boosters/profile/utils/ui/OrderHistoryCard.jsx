@@ -1,12 +1,97 @@
 import theme from "src/theme/theme.jsx";
-import {Box, Tooltip, Typography} from "@mui/material";
+import {Box, Skeleton, Tooltip, Typography} from "@mui/material";
 import React from "react";
 import {toLocaleDateTime, useIsTextOverflowed} from "src/utils/functions.js";
 
-const OrderHistoryCard = ({order}) => {
+const OrderHistoryCard = ({order, isLoading}) => {
 
     const [textRef, isOverflowed] = useIsTextOverflowed();
 
+    if (isLoading) {
+        return (
+            <Box sx={{
+                border: 1,
+                p: 5,
+                height: 200,
+                width: '100%',
+                display: "flex",
+                position: 'relative',
+                flexDirection: 'column',
+                borderColor: theme.palette.third.main,
+                backgroundColor: theme.palette.background.default
+            }}>
+                <Skeleton
+                    variant="text"
+                    width={100}
+                    height={20}
+                    sx={{
+                        position: 'absolute',
+                        top: 16,
+                        right: 16,
+                        transform: 'none',
+                    }}
+                />
+
+                <Box sx={{mt: 2, width: '100%'}}>
+                    <Skeleton
+                        variant="text"
+                        width="50%"
+                        height={24}
+                        sx={{transform: 'none'}}
+                    />
+                    <Skeleton
+                        variant="text"
+                        width="60%"
+                        height={20}
+                        sx={{
+                            transform: 'none',
+                            mt: 0.5
+                        }}
+                    />
+                </Box>
+
+                <Box sx={{
+                    mt: 'auto',
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: 'flex-end',
+                    width: '100%'
+                }}>
+                    <Box sx={{width: '60%'}}>
+                        <Skeleton
+                            variant="text"
+                            width="100%"
+                            height={20}
+                            sx={{transform: 'none'}}
+                        />
+                    </Box>
+
+                    <Box sx={{
+                        display: "flex",
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '35%'
+                    }}>
+                        <Skeleton
+                            variant="text"
+                            width="80%"
+                            height={20}
+                            sx={{transform: 'none'}}
+                        />
+                        <Skeleton
+                            variant="text"
+                            width="60%"
+                            height={24}
+                            sx={{
+                                transform: 'none',
+                                mt: 0.5
+                            }}
+                        />
+                    </Box>
+                </Box>
+            </Box>
+        )
+    }
     return (
         <Box sx={{
             border: 1,

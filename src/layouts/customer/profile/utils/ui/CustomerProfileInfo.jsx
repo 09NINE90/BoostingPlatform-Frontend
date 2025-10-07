@@ -22,7 +22,7 @@ import InfoCardsGroup from "src/layouts/utils/ui/InfoCardsGroup.jsx";
 import ProfileInfoGroup from "src/layouts/utils/ui/ProfileInfoGroup.jsx";
 import ProfileContainer from "src/layouts/utils/ui/ProfileContainer.jsx";
 
-const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatus, totalOrders}) => {
+const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatus, totalOrders, isLoading}) => {
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
     const usernameFromStore = useSelector(selectUsername);
@@ -133,12 +133,12 @@ const CustomerProfileInfo = ({discountPercentage, cashbackBalance, customerStatu
 
                 <InfoCardsContainer>
                     <InfoCardsGroup>
-                        <InfoCardItem label='Total orders' value={totalOrders}/>
-                        <InfoCardItem label='Status' value={customerStatus}/>
+                        <InfoCardItem label='Total orders' value={totalOrders} isLoading={isLoading}/>
+                        <InfoCardItem label='Status' value={customerStatus} isLoading={isLoading}/>
                     </InfoCardsGroup>
                     <InfoCardsGroup>
-                        <InfoCardItem label='Current discount' value={`${discountPercentage}%`}/>
-                        <InfoCardItem label='Cashback balance' value={cashbackBalance}/>
+                        <InfoCardItem label='Current discount' value={`${discountPercentage}%`} isLoading={isLoading}/>
+                        <InfoCardItem label='Cashback balance' value={cashbackBalance} isLoading={isLoading}/>
                     </InfoCardsGroup>
                 </InfoCardsContainer>
 

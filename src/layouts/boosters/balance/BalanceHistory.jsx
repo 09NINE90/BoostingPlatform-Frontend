@@ -1,5 +1,5 @@
 import {Box, useMediaQuery} from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getBalanceHistory} from "src/services/financeApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import Table from "@mui/material/Table";
@@ -28,11 +28,29 @@ const BalanceHistory = () => {
         }
     }, [getBalanceHistory, setBalanceHistoryList]);
 
+    const renderBalanceHistoryTable = useMemo(() => {
+        if (isMobile) {
+            return (
+                <MobileBalanceHistory balanceHistoryList={balanceHistoryList} isLoading={isLoading}/>
+            )
+        }
+
+        return (
+            <Box sx={{ overflowX: 'auto' }}>
+                <Table>
+                    <BalanceHistoryTableHead/>
+                    <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
+                </Table>
+            </Box>
+        )
+    }, [isLoading, isMobile, balanceHistoryList]);
+
+
     useEffect(() => {
         fetchBalanceHistory();
     }, [fetchBalanceHistory]);
 
-    if (isLoading) {
+    if (isLoading && !isMobile) {
         return (
             <div className="min-h-[100vh]">
                 <div className="fixed inset-0 flex items-center justify-center">
@@ -57,16 +75,7 @@ const BalanceHistory = () => {
                 overflowX: 'auto',
                 backgroundColor: theme.palette.background.paper,
             }}>
-                {isMobile ? (
-                    <MobileBalanceHistory balanceHistoryList={balanceHistoryList} />
-                ) : (
-                    <Box sx={{ overflowX: 'auto' }}>
-                        <Table>
-                            <BalanceHistoryTableHead/>
-                            <BalanceHistoryTableBody balanceHistoryList={balanceHistoryList}/>
-                        </Table>
-                    </Box>
-                )}
+                {renderBalanceHistoryTable}
             </Box>
         </Box>
     )

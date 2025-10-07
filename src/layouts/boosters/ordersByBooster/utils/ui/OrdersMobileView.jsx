@@ -7,8 +7,18 @@ import OrdersMobileFilters from "src/layouts/boosters/ordersByBooster/utils/ui/O
 import {Link} from "react-router-dom";
 import theme from "src/theme/theme.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
+import SkeletonOrderCart from "../../../dashboard/utils/ui/SkeletonOrderCart.jsx";
+import {useMemo} from "react";
 
 const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}) => {
+
+    const skeletonOrders = useMemo(() => {
+        if (!loading) return null;
+
+        return [...Array(4)].map((_, index) => (
+            <SkeletonOrderCart index={index} key={index}/>
+        ));
+    }, [loading]);
 
     return (
         <Box sx={{p: 2, width: '100%', pb: 15, paddingInline: {xs: 2, sm: 15}}}>
@@ -21,13 +31,9 @@ const OrdersMobileView = ({orders, loading, selectedFilters, setSelectedFilters}
                 <EmptyResponse text={'no orders by filter'}/>
             )}
 
-            {loading && (
-                <Box sx={{pt: '10%'}}>
-                    <CustomLoader height='100%'/>
-                </Box>
-            )}
-            {/* Карточки заказов */}
-            {orders.map((order) => (
+            {skeletonOrders}
+
+            {!loading && orders.map((order) => (
                 <Box
                     key={order.orderId}
                     sx={{

@@ -1,13 +1,14 @@
 import React, {useState} from "react";
-import {NavLink} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import {postRegister} from "../../services/authApi.js";
 import {TextField} from "@mui/material";
 import Alert from '@mui/material/Alert';
 import {toast} from "react-toastify";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import HiddenFieldWithShowIcon from '../common/HiddenFieldWithShowIcon.jsx'
+import {useNavigate} from "react-router";
 
-const SignUp = ({closeModal, signInRedirect}) => {
+const SignUp = ({closeModal, signInRedirect, referrerId}) => {
 
     const [nickname, setNickname] = useState("");
     const [email, setEmail] = useState("");
@@ -19,11 +20,13 @@ const SignUp = ({closeModal, signInRedirect}) => {
     const [emailFieldIsValid, setEmailFieldIsValid] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const signUp = async () => {
         if (nickname !== "" && confirmPassword !== "") {
+            setIsLoading(true);
             try {
-                setIsLoading(true);
 
                 if (password !== confirmPassword) {
                     setErrorMessage("Passwords do not match!");
@@ -33,11 +36,16 @@ const SignUp = ({closeModal, signInRedirect}) => {
                 const credentials = {
                     nickname: nickname,
                     email: email,
-                    password: password
+                    password: password,
+                    refererId: referrerId,
                 }
 
                 const message = await postRegister(credentials);
 
+                const path = location.pathname;
+                if (path.startsWith('/auth')) {
+                    navigate('/');
+                }
                 closeModal();
 
                 toast.success(message.confirmation + message.username);

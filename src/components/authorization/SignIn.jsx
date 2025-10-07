@@ -69,6 +69,11 @@ const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
                 setProfile(profile)
                 dispatch(setCountCartItems(countCartItems));
 
+                const path = location.pathname;
+                if (path.startsWith('/auth')) {
+                    navigate('/');
+                }
+
             } else if (role === BOOSTER_ROLE) {
                 const profile = await getBoosterProfileData();
 
@@ -77,10 +82,7 @@ const SignIn = ({closeModal, signUpRedirect, forgotPasswordRedirect}) => {
             }
 
             toast.success('Sign in successfully');
-            const path = location.pathname;
-            if (path !== '/') {
-                navigate('/');
-            }
+
             closeModal();
 
         } catch (error) {

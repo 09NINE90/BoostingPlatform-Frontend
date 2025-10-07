@@ -38,3 +38,8 @@ export const changeDescriptionProfile = async (nickname) => {
     const response = await api.post(`/users/me/description`, null, {params: {description: nickname}});
     return response.data;
 }
+
+export const getUserReferralInfo = async () => {
+    const response = await api.get(`/users/referrals`);
+    return response.data;
+}
