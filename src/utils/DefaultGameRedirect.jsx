@@ -1,7 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import React, {useEffect} from "react";
 import {getAllGamesApi} from "../services/gamesApi.js";
-import CustomLoader from "../layouts/boosters/utils/ui/CustomLoader.jsx";
+import HomeMain from "../layouts/home/HomeMain.jsx";
 
 const DefaultGameRedirect = () => {
     const navigate = useNavigate();
@@ -21,11 +21,7 @@ const DefaultGameRedirect = () => {
     }, [navigate]);
 
     return (
-        <div className="min-h-[100vh]">
-            <div className="flex justify-center items-center mt-[40vh]">
-                <CustomLoader height='100%'/>
-            </div>
-        </div>
+        <HomeMain/>
     )
 };
 

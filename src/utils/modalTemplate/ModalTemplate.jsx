@@ -168,7 +168,7 @@ ModalTemplate.propTypes = {
     minHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     backgroundColor: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    viewCloseIcon: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    viewCloseIcon: PropTypes.bool,
 };
 
 export default ModalTemplate;

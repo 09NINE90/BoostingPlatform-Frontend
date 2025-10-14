@@ -11,7 +11,7 @@ import {IN_PROGRESS} from "src/layouts/boosters/ordersByBooster/utils/StatusesDa
 import TipOrderHistory from "src/components/chats/allUserUtils/TipOrderHistory.jsx";
 import {toLocaleDateTime} from "src/utils/functions.js";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
-import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import OrderInfoSkeleton from "../../utils/OrderInfoSkeleton.jsx";
 
 const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
@@ -63,20 +63,7 @@ const OrderChatCustomerInfo = ({orderId, openModal, tipOrderHistory}) => {
 
     if (isLoading) {
         return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    p: 5,
-                    width: {xs: '100%', sm: '29%'},
-                    minWidth: '29%',
-                    height: "85vh",
-                    flexDirection: 'column',
-                    backgroundColor: theme.palette.background.paper,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                <CustomLoader size={0.7} height='100%'/>
-            </Box>
+            <OrderInfoSkeleton/>
         );
     }
 

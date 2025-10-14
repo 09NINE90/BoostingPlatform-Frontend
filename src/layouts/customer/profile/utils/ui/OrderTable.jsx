@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {getOrdersByCreator} from "src/services/orderApi.js";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import OrderStatusesFilter from "src/layouts/customer/profile/utils/ui/OrderStatusesFilter.jsx";
@@ -8,7 +8,7 @@ import theme from "src/theme/theme.jsx";
 import CustomerOrderCart from "src/layouts/customer/profile/utils/ui/CustomerOrderCart.jsx";
 import {getMiniBoosterProfileData} from "src/services/userApi.js";
 import BoosterMiniProfileModal from "src/layouts/customer/profile/utils/ui/BoosterMiniProfileModal.jsx";
-import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import CustomerOrderCartSkeleton from "./CustomerOrderCartSkeleton.jsx";
 
 const OrderTable = () => {
 
@@ -47,6 +47,34 @@ const OrderTable = () => {
         }
     }, [getOrdersByCreator, selectedStatus]);
 
+    const renderOrderList = useMemo(() => {
+        if (isLoading) {
+            return [...Array(4)].map((_, index) => (
+                <CustomerOrderCartSkeleton index={index} key={index}/>
+            ));
+        }
+
+        if (orders.length === 0 && selectedStatus.status !== null) {
+            return (
+                <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
+            )
+        }
+
+        if (orders.length === 0 && selectedStatus.status === null) {
+            return (
+                <EmptyResponse text={'you have not orders'} minHeight='100%'/>
+            )
+        }
+
+        return (
+            <>
+                {orders.map((order) => (
+                    <CustomerOrderCart key={order.orderId} order={order} onOpen={openBoosterProfile}/>
+                ))}
+            </>
+        )
+    })
+
     useEffect(() => {
         fetchOrdersData();
     }, [fetchOrdersData]);
@@ -71,24 +99,8 @@ const OrderTable = () => {
 
             <OrderStatusesFilter statuses={statuses} setSelectedStatus={setSelectedStatus}
                                  selectedStatus={selectedStatus}/>
-            {orders && (
-                <>
-                    {orders.map((order) => (
-                        <CustomerOrderCart key={order.orderId} order={order} onOpen={openBoosterProfile}/>
-                    ))}
-                </>
-            )}
-            {!isLoading && orders.length === 0 && selectedStatus.status !== null && (
-                <EmptyResponse text={'no orders by filter'} minHeight='100%'/>
-            )}
-            {!isLoading && orders.length === 0 && selectedStatus.status === null && (
-                <EmptyResponse text={'you have not orders'} minHeight='100%'/>
-            )}
-            {isLoading && (
-                <Box sx={{py: '7%'}}>
-                    <CustomLoader size={0.7} height='100%'/>
-                </Box>
-            )}
+
+            {renderOrderList}
             {modalIsOpen && (
                 <BoosterMiniProfileModal onClose={closeModal} isOpen={modalIsOpen} boosterInfo={boosterProfile}/>
             )}
