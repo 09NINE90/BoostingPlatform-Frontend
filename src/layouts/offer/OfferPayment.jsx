@@ -22,7 +22,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
 
     const isAuth = useSelector(selectAuth);
     const [isLoading, setIsLoading] = useState(false);
-    const [basePrice] = useState(200);
+    const [basePrice] = useState(offerData.price);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [selectedPlatform, setSelectedPlatform] = useState(gamePlatforms[0]?.title);
