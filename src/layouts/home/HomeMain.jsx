@@ -1,15 +1,24 @@
 import React, {useEffect, useState} from 'react'
 import GameSideBar from './utils/ui/gameSidebar/GameSideBar.jsx'
 import OffersList from "./utils/ui/offers/OffersList.jsx"
-import {useParams} from 'react-router'
+import {useNavigate, useParams} from 'react-router'
 import {getAllGamesApi} from "src/services/gamesApi.js";
 import Carousel from "./utils/ui/carousel/Carousel.jsx";
 import {getCarouselItemsApi} from "src/services/offerApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
 import {Box} from "@mui/material";
+import {useSelector} from "react-redux";
+import {selectRole} from "../../store/slice/authSlice.js";
+import {BOOSTER_ROLE} from "../../utils/constants/roles.js";
+import CustomLoader from "../boosters/utils/ui/CustomLoader.jsx";
 
 const HomeMain = () => {
     const {id} = useParams();
+
+    const role = useSelector(selectRole);
+
+    const navigate = useNavigate();
+
     const [games, setGames] = useState([]);
     const [currentGameId, setCurrentGameId] = useState(id);
     const [carouselItems, setCarouselItems] = useState([]);
@@ -19,6 +28,9 @@ const HomeMain = () => {
     window.history.replaceState('', '', `/${currentGameId}`)
 
     useEffect(() => {
+        if (role === BOOSTER_ROLE) {
+            navigate('/booster/dashboard')
+        }
         if (!id) return;
 
         const fetchAllData = async () => {
@@ -41,6 +53,16 @@ const HomeMain = () => {
         };
         fetchAllData();
     }, [id]);
+
+    if (role === BOOSTER_ROLE) {
+        return (
+            <div className="min-h-[100vh]">
+                <div className="flex justify-center items-center mt-[40vh]">
+                    <CustomLoader height='100%'/>
+                </div>
+            </div>
+        )
+    }
 
     if (error) {
         return (
