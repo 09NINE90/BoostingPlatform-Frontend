@@ -16,10 +16,13 @@ const OfferPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [gamePlatforms, setGamePlatforms] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
         if (!offerId) return;
 
         const fetchData = async () => {
+            setIsLoading(true);
             try {
                 const [optionsData, offerData] = await Promise.all([
                     getOptions(offerId),
@@ -30,6 +33,8 @@ const OfferPage = () => {
                 setGamePlatforms(offerData.gamePlatforms)
             } catch (err) {
                 console.error('Ошибка при загрузке данных:', err);
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -55,6 +60,12 @@ const OfferPage = () => {
         window.scrollTo(0, 0);
     }, []);
 
+    if (isLoading) {
+        return (
+            <CustomLoader/>
+        )
+    }
+
     return (
         <Box
             sx={{
@@ -70,34 +81,27 @@ const OfferPage = () => {
                 mt: 8,
             }}
         >
-            {offerData && (
-                <>
-                    <Box
-                        sx={{
-                            flex: 1,
-                            minWidth: 0,
-                        }}>
-                        <OfferInfo offerData={offerData}/>
-                    </Box>
-                    <Box
-                        sx={{
-                            width: {xs: '100%', lg: 400},
-                            flexShrink: 0,
-                        }}>
-                        <OfferPayment
-                            setModalIsOpen={setModalIsOpen}
-                            offerData={offerData}
-                            optionsBlocks={options}
-                            gamePlatforms={gamePlatforms}
-                        />
-                    </Box>
-                </>
-            )}
-            {!offerData && (
-                <Box sx={{minHeight: '100vh', width: '100%', pt: '20%'}}>
-                    <CustomLoader height='100%'/>
+            <>
+                <Box
+                    sx={{
+                        flex: 1,
+                        minWidth: 0,
+                    }}>
+                    <OfferInfo offerData={offerData}/>
                 </Box>
-            )}
+                <Box
+                    sx={{
+                        width: {xs: '100%', lg: 400},
+                        flexShrink: 0,
+                    }}>
+                    <OfferPayment
+                        setModalIsOpen={setModalIsOpen}
+                        offerData={offerData}
+                        optionsBlocks={options}
+                        gamePlatforms={gamePlatforms}
+                    />
+                </Box>
+            </>
             {renderModal}
         </Box>
     );

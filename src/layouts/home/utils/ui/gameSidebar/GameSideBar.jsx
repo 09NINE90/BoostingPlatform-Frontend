@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
     Accordion,
     AccordionDetails,
@@ -13,9 +13,28 @@ import {Games} from "src/assets/icons/index.js";
 import GameListItem from "src/layouts/home/utils/ui/gameSidebar/GameListItem.jsx";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import theme from "src/theme/theme.jsx";
+import GameListItemSkeleton from "./GameListItemSkeleton.jsx";
 
 
-const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
+const GameSideBar = ({gameList, currentGame, onGameSelect, isLoading}) => {
+
+    const renderGameList = useMemo(() => {
+        if (isLoading) {
+            return [...Array(5)].map((_, index) => (
+                    <GameListItemSkeleton index={index} key={index}/>
+                )
+            )
+        }
+        return gameList.map((game) => (
+                <GameListItem
+                    key={game.id}
+                    game={game}
+                    currentGame={currentGame}
+                    onClick={() => onGameSelect(game.secondId)}
+                />
+            )
+        )
+    }, [gameList, currentGame, onGameSelect, isLoading])
 
     const MobileGameListItem = ({game, currentGame, onClick}) => {
         return (
@@ -42,8 +61,8 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
                             <Typography
                                 variant='h6'
                                 sx={{
-                                fontWeight: currentGame === game.secondId ? theme.typography.fontWeightBold : theme.typography.fontWeightLight,
-                            }}>
+                                    fontWeight: currentGame === game.secondId ? theme.typography.fontWeightBold : theme.typography.fontWeightLight,
+                                }}>
                                 {game.name}
                             </Typography>
                         }
@@ -62,14 +81,7 @@ const GameSideBar = ({gameList, currentGame, onGameSelect}) => {
                     </Typography>
                 </Box>
                 <List>
-                    {gameList.map((game) => (
-                        <GameListItem
-                            key={game.id}
-                            game={game}
-                            currentGame={currentGame}
-                            onClick={() => onGameSelect(game.secondId)}
-                        />
-                    ))}
+                    {renderGameList}
                 </List>
             </Box>
 

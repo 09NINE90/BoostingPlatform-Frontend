@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassword';
@@ -18,7 +18,9 @@ export const AuthModal = ({
                               toggleModal,
                               modelType,
                               setModalType,
-                              handleProfileMenuClose
+                              handleProfileMenuClose,
+                              referrerId,
+                              viewCloseIcon
                           }) => {
     const [currentEmail, setCurrentEmail] = useState(null);
 
@@ -32,43 +34,45 @@ export const AuthModal = ({
         return titles[modelType] || '';
     };
 
-    const renderModalContent = () => {
-        switch (modelType) {
-            case SIGN_IN_STATE:
-                return (
-                    <SignIn
-                        closeModal={toggleModal}
-                        signUpRedirect={() => setModalType(SIGN_UP_STATE)}
-                        forgotPasswordRedirect={() => setModalType(FORGOT_PASSWORD_STATE)}
-                    />
-                );
-            case SIGN_UP_STATE:
-                return (
-                    <SignUp
-                        closeModal={toggleModal}
-                        signInRedirect={() => setModalType(SIGN_IN_STATE)}
-                    />
-                );
-            case FORGOT_PASSWORD_STATE:
-                return (
-                    <ForgotPassword
-                        setCurrentEmail={setCurrentEmail}
-                        signInRedirect={() => setModalType(SIGN_IN_STATE)}
-                        newPasswordRedirect={() => setModalType(NEW_PASSWORD_STATE)}
-                    />
-                );
-            case NEW_PASSWORD_STATE:
-                return (
-                    <NewPassword
-                        currentEmail={currentEmail}
-                        closeModal={toggleModal}
-                        signInRedirect={() => setModalType(SIGN_IN_STATE)}
-                    />
-                );
-            default:
-                return null;
-        }
-    };
+    const renderModalContent = useMemo(() => {
+            switch (modelType) {
+                case SIGN_IN_STATE:
+                    return (
+                        <SignIn
+                            closeModal={toggleModal}
+                            signUpRedirect={() => setModalType(SIGN_UP_STATE)}
+                            forgotPasswordRedirect={() => setModalType(FORGOT_PASSWORD_STATE)}
+                        />
+                    );
+                case SIGN_UP_STATE:
+                    return (
+                        <SignUp
+                            closeModal={toggleModal}
+                            signInRedirect={() => setModalType(SIGN_IN_STATE)}
+                            referrerId={referrerId}
+                        />
+                    );
+                case FORGOT_PASSWORD_STATE:
+                    return (
+                        <ForgotPassword
+                            setCurrentEmail={setCurrentEmail}
+                            signInRedirect={() => setModalType(SIGN_IN_STATE)}
+                            newPasswordRedirect={() => setModalType(NEW_PASSWORD_STATE)}
+                        />
+                    );
+                case NEW_PASSWORD_STATE:
+                    return (
+                        <NewPassword
+                            currentEmail={currentEmail}
+                            closeModal={toggleModal}
+                            signInRedirect={() => setModalType(SIGN_IN_STATE)}
+                        />
+                    );
+                default:
+                    return null;
+            }
+        }, [modelType, toggleModal, modelType, setModalType, currentEmail, setCurrentEmail]
+    );
 
     useEffect(() => {
         if (modalIsOpen) handleProfileMenuClose?.();
@@ -79,7 +83,8 @@ export const AuthModal = ({
             isOpen={modalIsOpen}
             onClose={toggleModal}
             title={getModalTitle()}
-            content={renderModalContent()}
+            content={renderModalContent}
+            viewCloseIcon={viewCloseIcon}
         />
     );
 };

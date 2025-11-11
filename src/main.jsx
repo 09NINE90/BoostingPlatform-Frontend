@@ -44,15 +44,15 @@ export const App = () => {
     const becomeBoosterLocation = '/become/booster';
 
     const titleMatchers = [
-        { path: "/booster/dashboard", title: "V-Boost - Dashboard" },
-        { path: "/booster/orders", title: "V-Boost - My orders" },
-        { path: "/booster/profile", title: "V-Boost - My profile" },
-        { path: "/booster/balanceHistory", title: "V-Boost - Balance history" },
-        { path: "/booster/chat/:chatId/:orderId", title: "V-Boost - Chat" },
-        { path: "/profile", title: "V-Boost - My profile" },
-        { path: "/chat/:chatId/:orderId", title: "V-Boost - Chat" },
-        { path: "/offer/:offerId", title: "V-Boost - Offer" },
-        { path: becomeBoosterLocation, title: "V-Boost - Booster Application Form" },
+        {path: "/booster/dashboard", title: "V-Boost - Dashboard"},
+        {path: "/booster/orders", title: "V-Boost - My orders"},
+        {path: "/booster/profile", title: "V-Boost - My profile"},
+        {path: "/booster/balanceHistory", title: "V-Boost - Balance history"},
+        {path: "/booster/chat/:chatId/:orderId", title: "V-Boost - Chat"},
+        {path: "/profile", title: "V-Boost - My profile"},
+        {path: "/chat/:chatId/:orderId", title: "V-Boost - Chat"},
+        {path: "/offer/:offerId", title: "V-Boost - Offer"},
+        {path: becomeBoosterLocation, title: "V-Boost - Booster Application Form"},
     ];
 
     const TitleUpdater = () => {
@@ -75,7 +75,7 @@ export const App = () => {
     return (
         <BrowserRouter>
             <TitleUpdater/>
-            {!isAuthenticated && !isBecomeBoosterLocation &&(
+            {!isAuthenticated && !isBecomeBoosterLocation && (
                 <FloatingBecomeBoosterButton/>
             )}
             <ToastContainer position="top-right" autoClose={1000}
@@ -88,13 +88,13 @@ export const App = () => {
                 <Route path="/" element={<DefaultGameRedirect/>}/>
                 <Route path="/confirmSignUp/:tokenParam" element={<EmailConfirmationPage/>}/>
                 <Route path="/auth/signin" element={null}/>
-                <Route path="/auth/signup" element={null}/>
+                <Route path="/auth/signup/:referrerId" element={null}/>
 
                 <Route element={<HomePage/>}>
                     <Route path=":id" element={<HomeMain/>}></Route>
                     <Route path="/games/:id" element={<HomeMain/>}></Route>
                     <Route path="/offer/:offerId" element={<OfferPage/>}></Route>
-                    <Route path="/become/booster" element={<BecomeBoosterPage/>}></Route>
+                    <Route path="/become/booster/:referrerId" element={<BecomeBoosterPage/>}></Route>
                 </Route>
 
                 <Route element={<ProtectedRoute isAuthCheck={true}/>}>

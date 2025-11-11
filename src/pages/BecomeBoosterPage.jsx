@@ -11,14 +11,17 @@ import {
     Divider
 } from '@mui/material';
 import theme from "src/theme/theme.jsx";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import BlueTextField from "src/layouts/utils/ui/BlueTextField.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import {getGamesNames} from "src/services/gamesApi.js";
 import {becomeBooster} from "src/services/userApi.js";
 import {NavLink} from "react-router-dom";
+import {useParams} from "react-router";
 
 const BecomeBoosterPage = () => {
+
+    const {referrerId} = useParams();
 
     const [success, setSuccess] = useState(false)
     const [formData, setFormData] = useState({
@@ -31,7 +34,8 @@ const BecomeBoosterPage = () => {
         boostingExperience: '',
         trackerLinks: '',
         progressImages: '',
-        additionalInfo: ''
+        additionalInfo: '',
+        referrerId: referrerId === 'default' ? '' : referrerId,
     });
 
     const [manualGameInput, setManualGameInput] = useState(false);
@@ -78,7 +82,7 @@ const BecomeBoosterPage = () => {
 
     useEffect(() => {
         fetchGamesNames()
-    }, [fetchGamesNames])
+    }, [])
 
     if (success) {
         return (

@@ -103,3 +103,8 @@ export const validateUrl = (url) => {
     }
 };
 
+
+export const isDeepEmpty = (value) => {
+    return value === null || value === ''
+        || value === undefined || !value;
+}

@@ -9,7 +9,8 @@ import {
     Slider,
     Divider,
     Box,
-    Button
+    Button,
+    Typography
 } from "@mui/material";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {postOffersToCart} from "src/services/offerApi.js";
@@ -22,7 +23,7 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
 
     const isAuth = useSelector(selectAuth);
     const [isLoading, setIsLoading] = useState(false);
-    const [basePrice] = useState(200);
+    const [basePrice] = useState(offerData.price);
     const [baseTime] = useState(8);
     const [selectedOptions, setSelectedOptions] = useState({});
     const [selectedPlatform, setSelectedPlatform] = useState(gamePlatforms[0]?.title);
@@ -156,6 +157,9 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
 
                 {option.type === "CHECKBOX" && (
                     <div>
+                        <Typography variant="body1" color="textPrimary">
+                            {option.title}:
+                        </Typography>
                         {option.items.map((item) => (
                             <FormControlLabel
                                 key={item.value}
@@ -186,31 +190,44 @@ const OfferPayment = ({offerData, optionsBlocks, gamePlatforms, setModalIsOpen})
 
                 {option.type === "BUTTONS" && (
                     <Box>
-                        {option.items.map((item) => (
-                            <Button
-                                sx={{m: 1}}
-                                key={item.value}
-                                variant={selected?.value === item.value ? "contained" : "outlined"}
-                                onClick={() => handleChange(option.id, item.value, item.label, option.title)}
-                            >
-                                {item.label}
-                            </Button>
-                        ))}
+                        <Typography variant="body1" color="textPrimary">
+                            {option.title}:
+                        </Typography>
+                        <Box sx={{display: "flex", flexDirection: "column"}}>
+                            {option.items.map((item) => (
+                                <Button
+                                    sx={{
+                                        m: 1,
+                                        width: 'fit-content',
+                                    }}
+                                    key={item.value}
+                                    variant={selected?.value === item.value ? "contained" : "outlined"}
+                                    onClick={() => handleChange(option.id, item.value, item.label, option.title)}
+                                >
+                                    {item.label}
+                                </Button>
+                            ))}
+                        </Box>
                     </Box>
                 )}
 
                 {(option.type === "SLIDER" || option.type === "SLIDER_INVERT") && (
-                    <Slider
-                        marks
-                        valueLabelDisplay="auto"
-                        value={selected?.value || option.min}
-                        min={option.min}
-                        max={option.max}
-                        step={option.step}
-                        onChange={handleSliderChange}
-                        aria-labelledby="slider"
-                        color="primary"
-                    />
+                    <>
+                        <Typography variant="body1" color="textPrimary">
+                            {option.title}:
+                        </Typography>
+                        <Slider
+                            marks
+                            valueLabelDisplay="auto"
+                            value={selected?.value || option.min}
+                            min={option.min}
+                            max={option.max}
+                            step={option.step}
+                            onChange={handleSliderChange}
+                            aria-labelledby="slider"
+                            color="primary"
+                        />
+                    </>
                 )}
             </div>
         );

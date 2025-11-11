@@ -32,7 +32,6 @@ const BoosterMiniProfileModal = ({onClose, isOpen, boosterInfo}) => {
         <ModalTemplate
             isOpen={isOpen}
             onClose={onClose}
-            viewCloseIcon={false}
             backgroundColor={theme.palette.background.paper}
             title='Booster by order'
             content={

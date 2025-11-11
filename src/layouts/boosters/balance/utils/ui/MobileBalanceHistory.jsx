@@ -1,13 +1,70 @@
-import {Box, Card, CardContent, Typography} from "@mui/material";
+import {Box, Card, CardContent, Skeleton, Typography} from "@mui/material";
 import {toLocaleDateTime} from "src/utils/functions.js";
 import theme from "src/theme/theme.jsx";
-import React from "react";
+import React, {useMemo} from "react";
 
-const MobileBalanceHistory = ({balanceHistoryList}) => {
+const MobileBalanceHistory = ({balanceHistoryList, isLoading}) => {
+
+    const renderBalanceHistory = useMemo(() => {
+
+        const balanceToRender = isLoading ? [...Array(4)] : balanceHistoryList;
+
+        if (isLoading) {
+            return (
+                <Box display="flex" flexDirection="column" gap={2}>
+                    {balanceToRender.map((_, index) => (
+                        <Card key={index} variant="outlined" sx={{
+                            backgroundColor: theme.palette.background.default,
+                            height: 180,
+                        }}>
+                            <CardContent>
+                                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                                    <Skeleton variant="text" width={80} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={100} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                                    <Skeleton variant="text" width={60} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={80} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                                    <Skeleton variant="text" width={100} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={120} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                                    <Skeleton variant="text" width={110} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={120} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', alignItems: 'center', mb: 2}}>
+                                    <Skeleton variant="text" width={70} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={60} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+
+                                <Box sx={{display: 'flex', alignItems: 'center'}}>
+                                    <Skeleton variant="text" width={120} height={17} sx={{transform: 'none', mr: 2}}/>
+                                    <Skeleton variant="text" width={90} height={17} sx={{transform: 'none'}}/>
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+            )
+        }
+
+    }, [balanceHistoryList, isLoading]);
+
+    if (isLoading) return renderBalanceHistory;
+
     return (
         <Box display="flex" flexDirection="column" gap={2}>
             {balanceHistoryList.map((item) => (
-                <Card key={item.id} variant="outlined" sx={{backgroundColor: theme.palette.background.default}}>
+                <Card key={item.id} variant="outlined" sx={{
+                    backgroundColor: theme.palette.background.default,
+                    height: 180,
+                }}>
                     <CardContent>
                         <Box sx={{display: 'flex', alignItems: 'center', fontWeight: theme.typography.fontWeightLight}}>
                             <Typography

@@ -2,57 +2,64 @@ import {Box} from '@mui/material';
 import OrderTable from "src/layouts/customer/profile/utils/ui/OrderTable.jsx";
 import CashbackProgress from "src/layouts/customer/profile/utils/ui/CashbackProgress.jsx";
 import CustomerProfileInfo from "src/layouts/customer/profile/utils/ui/CustomerProfileInfo.jsx";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {getCustomerProfileData} from "src/services/userApi.js";
 import ErrorPage, {handleApiError} from "src/components/error/ErrorPage.jsx";
-import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import UserReferral from "../../utils/ui/UserReferral.jsx";
 
-function ProfileMain() {
-    const [discountPercentage, setDiscountPercentage] = useState(null);
-    const [cashbackBalance, setCashbackBalance] = useState(null);
-    const [customerStatus, setCustomerStatus] = useState(null);
-    const [nextCustomerStatus, setNextCustomerStatus] = useState(null);
-    const [progressAccountStatus, setProgressAccountStatus] = useState(null);
-    const [totalOrders, setTotalOrders] = useState(null);
-    const [loading, setLoading] = useState(false);
+const DEFAULT_STATE_PROFILE = {
+    discountPercentage: null,
+    cashbackBalance: null,
+    customerStatus: null,
+    nextCustomerStatus: null,
+    progressAccountStatus: null,
+    totalOrders: null,
+    userId: null,
+}
+
+const ProfileMain = () => {
+
+    const [state, setState] = useState(DEFAULT_STATE_PROFILE);
+
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchCustomerProfile = useCallback(async () => {
-        setLoading(true);
+    const updateState = (updates) => {
+        setState((prevState) => ({
+            ...prevState,
+            ...updates,
+        }))
+    };
+
+    const fetchCustomerProfile = async () => {
+        setIsLoading(true);
         try {
-            const profile = await getCustomerProfileData()
-            setTotalOrders(profile.totalOrders);
-            setCustomerStatus(profile.status);
-            setCashbackBalance(profile.cashbackBalance);
-            setDiscountPercentage(profile.discountPercentage);
-            setNextCustomerStatus(profile.nextStatus);
-            setProgressAccountStatus(profile.progressAccountStatus);
+            const response = await getCustomerProfileData()
+            updateState({
+                userId: response.uuid,
+                totalOrders: response.totalOrders,
+                customerStatus: response.status,
+                cashbackBalance: response.cashbackBalance,
+                discountPercentage: response.discountPercentage,
+                nextCustomerStatus: response.nextStatus,
+                progressAccountStatus: response.progressAccountStatus,
+            });
         } catch (err) {
             setError(handleApiError(err));
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
-    }, [getCustomerProfileData, setCustomerStatus, setCashbackBalance, setDiscountPercentage]);
+    };
 
 
     useEffect(() => {
         window.scrollTo(0, 0);
         fetchCustomerProfile();
-    }, [fetchCustomerProfile]);
+    }, []);
 
     if (error) {
         return (
             <ErrorPage error={error}/>
-        )
-    }
-
-    if (loading) {
-        return (
-            <div className="min-h-[100vh]">
-                <div className="fixed inset-0 flex items-center justify-center">
-                    <CustomLoader height='100%'/>
-                </div>
-            </div>
         )
     }
 
@@ -67,16 +74,21 @@ function ProfileMain() {
                 gap: 3
             }}>
             <CustomerProfileInfo
-                discountPercentage={discountPercentage}
-                cashbackBalance={cashbackBalance}
-                customerStatus={customerStatus}
-                totalOrders={totalOrders}
+                discountPercentage={state.discountPercentage}
+                cashbackBalance={state.cashbackBalance}
+                customerStatus={state.customerStatus}
+                totalOrders={state.totalOrders}
+                isLoading={isLoading}
             />
             <CashbackProgress
-                discountPercentage={discountPercentage}
-                customerStatus={customerStatus}
-                nextCustomerStatus={nextCustomerStatus}
-                progressAccountStatus={progressAccountStatus}
+                discountPercentage={state.discountPercentage}
+                customerStatus={state.customerStatus}
+                nextCustomerStatus={state.nextCustomerStatus}
+                progressAccountStatus={state.progressAccountStatus}
+                isLoading={isLoading}
+            />
+            <UserReferral
+                userId={state.userId}
             />
             <OrderTable/>
         </Box>

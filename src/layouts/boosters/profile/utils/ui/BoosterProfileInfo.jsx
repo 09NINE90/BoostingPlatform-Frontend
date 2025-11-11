@@ -24,7 +24,7 @@ import InfoCardsContainer from "src/layouts/utils/ui/InfoCardsContainer.jsx";
 import ProfileInfoGroup from "src/layouts/utils/ui/ProfileInfoGroup.jsx";
 import ProfileContainer from "src/layouts/utils/ui/ProfileContainer.jsx";
 
-const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOfCompletedOrders}) => {
+const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOfCompletedOrders, isLoading}) => {
 
     const dispatch = useDispatch();
     const userAvatarFromStore = useSelector(selectAvatar);
@@ -136,16 +136,16 @@ const BoosterProfileInfo = ({balance, totalIncome, totalTips, gameTags, numberOf
 
                 <InfoCardsContainer>
                     <InfoCardsGroup>
-                        <InfoCardItem label='Available balance' value={`$ ${balance}`}/>
-                        <InfoCardItem label='Complited orders' value={numberOfCompletedOrders}/>
+                        <InfoCardItem label='Available balance' value={`$ ${balance}`} isLoading={isLoading}/>
+                        <InfoCardItem label='Complited orders' value={numberOfCompletedOrders} isLoading={isLoading}/>
                     </InfoCardsGroup>
                     <InfoCardsGroup>
-                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`}/>
-                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`}/>
+                        <InfoCardItem label='Total income' value={`$ ${totalIncome}`} isLoading={isLoading}/>
+                        <InfoCardItem label='Total tips' value={`$ ${totalTips}`} isLoading={isLoading}/>
                     </InfoCardsGroup>
                 </InfoCardsContainer>
 
-                <BoosterGameTags gameTags={gameTags}/>
+                <BoosterGameTags gameTags={gameTags} isLoading={isLoading}/>
 
                 <Box sx={{mt: 2, width: '100%'}}>
                     {isEditingDescription ? (

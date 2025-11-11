@@ -9,6 +9,7 @@ import {toLocaleDateTime} from "src/utils/functions.js";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import OrderInfoSkeleton from "../../utils/OrderInfoSkeleton.jsx";
 
 const OrderChatBoosterInfo = ({
                                   order,
@@ -21,21 +22,8 @@ const OrderChatBoosterInfo = ({
                               }) => {
     if (isLoading) {
         return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    p: 5,
-                    width: {xs: '100%', sm: '29%'},
-                    minWidth: '29%',
-                    height: "85vh",
-                    flexDirection: 'column',
-                    backgroundColor: theme.palette.background.paper,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                <CustomLoader size={0.7} height='100%'/>
-            </Box>
-        )
+            <OrderInfoSkeleton/>
+        );
     }
 
     if (order) {

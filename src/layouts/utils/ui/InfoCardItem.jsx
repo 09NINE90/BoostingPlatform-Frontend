@@ -1,7 +1,38 @@
-import {Box, Typography} from "@mui/material";
+import {Box, Chip, Skeleton, Typography} from "@mui/material";
 import theme from "src/theme/theme.jsx";
+import {isDeepEmpty} from "../../../utils/functions.js";
+import React, {useMemo} from "react";
 
-const InfoCardItem = ({label, value}) => {
+const InfoCardItem = ({label, value, isLoading}) => {
+
+    const renderItemValue = useMemo(() => {
+        if (isLoading) {
+            return (
+                <Skeleton
+                    variant="text"
+                    sx={{
+                        width: '60%',
+                        height: '100%',
+                        transform: 'none',
+                    }}
+                />
+            )
+        }
+
+        return (
+            <Typography
+                variant="h5"
+                sx={{
+                    color: theme.palette.text.primary,
+                    fontWeight: theme.typography.fontWeightMedium,
+                    fontSize: { xs: '1rem', sm: '1.8rem' },
+                    lineHeight: 1
+                }}
+            >
+                {value}
+            </Typography>
+        )
+    }, [isLoading, value]);
 
     return (
         <Box sx={{
@@ -24,14 +55,15 @@ const InfoCardItem = ({label, value}) => {
                         }}>
                 {label}
             </Typography>
-            <Typography variant="h5"
-                        sx={{
-                            color: theme.palette.text.primary,
-                            fontWeight: theme.typography.fontWeightMedium,
-                            fontSize: { xs: '1rem', sm: '1.8rem' }
-                        }}>
-                {value}
-            </Typography>
+            <Box sx={{
+                height: { xs: 24, sm: 32 },
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: {xs: 'center', lg: 'flex-start'},
+                width: '100%'
+            }}>
+                {renderItemValue}
+            </Box>
         </Box>
     )
 }

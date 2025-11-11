@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import {EffectCoverflow, Pagination, Navigation, Autoplay} from 'swiper/modules';
+import {EffectCoverflow, Navigation, Autoplay} from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -9,11 +9,18 @@ import 'swiper/css/navigation';
 
 import RightArrow from 'src/assets/icons/RightArrow.jsx'
 import LeftArrow from 'src/assets/icons/LeftArrow.jsx'
+import CarouselSkeleton from "./CarouselSkeleton.jsx";
 
-const Carousel = ({carouselItems}) => {
+const Carousel = ({carouselItems, isLoading}) => {
     const prevRef = useRef(null);
     const nextRef = useRef(null);
     const [swiperReady, setSwiperReady] = useState(false);
+
+    if (isLoading) {
+        return (
+            <CarouselSkeleton/>
+        )
+    }
 
     if (carouselItems.length === 0) {
         return null;

@@ -80,7 +80,96 @@ const Header = () => {
                 handleProfileMenuClose={handleProfileMenuClose}
             />
         )
-    }, [modalIsOpen, toggleModal, modelType, setModalType])
+    }, [modalIsOpen, toggleModal, modelType, setModalType]);
+
+    const renderDesktopHeader = useMemo(() => {
+        return (
+            <>
+                {forBoosterPage && <BoosterHeader/>}
+                <nav className="flex justify-between flex-row text-center">
+                    {!forBoosterPage && <Cart cartCount={cartCount}/>}
+
+                    <div className="flex justify-center hover:scale-101" ref={profileRef}>
+                        <IconButton onClick={handleProfileClick}
+                                    sx={{
+                                        transition: 'box-shadow 0.3s ease',
+                                        borderRadius: 0,
+                                        '&:hover': {
+                                            backgroundColor: 'transparent',
+                                            boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
+                                        }
+                                    }}>
+                            <ProfileIcon className="w-[50px]"/>
+                            {username && (
+                                <div className="kanit-light text-xl ml-6">
+                                    {username}
+                                </div>
+                            )}
+                        </IconButton>
+
+                        <DropMenu anchorEl={anchorEl}
+                                  handleClose={handleProfileMenuClose}
+                                  isAuthenticated={isAuthenticated}
+                                  handleOpenProfile={handleOpenProfile}
+                                  handleLogout={handleLogout}
+                                  onOpen={toggleModal}/>
+                    </div>
+                </nav>
+            </>
+        );
+    }, [
+        forBoosterPage,
+        cartCount,
+        username,
+        anchorEl,
+        isAuthenticated,
+        handleProfileClick,
+        handleProfileMenuClose,
+        handleOpenProfile,
+        handleLogout,
+        toggleModal
+    ]);
+
+    const renderMobileHeader = useMemo(() => {
+        if (!isAuthenticated) {
+            return (
+                <div className="flex justify-center hover:scale-101" ref={profileRef}>
+                    <IconButton onClick={() => setModalIsOpen(true)}
+                                sx={{
+                                    transition: 'box-shadow 0.3s ease',
+                                    borderRadius: 0,
+                                    '&:hover': {
+                                        backgroundColor: 'transparent',
+                                        boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
+                                    }
+                                }}>
+                        <ProfileIcon className="w-[50px]"/>
+                    </IconButton>
+                </div>
+            );
+        }
+
+        return (
+            <div className="flex justify-center">
+                <IconButton onClick={handleLogout}>
+                    <LogoutIcon/>
+                </IconButton>
+            </div>
+        );
+    }, [isAuthenticated, handleLogout]);
+
+    const renderMobileNavigation = useMemo(() => {
+        if (isMobile && isAuthenticated) {
+            return (
+                <MobileBottomNavigation
+                    isAuthenticated={isAuthenticated}
+                    role={role}
+                    cartCount={cartCount}
+                />
+            );
+        }
+        return null;
+    }, [isMobile, isAuthenticated, role, cartCount]);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -105,80 +194,13 @@ const Header = () => {
             >
                 <div className="flex flex-row items-center justify-between px-5 py-2">
                     <div className="flex items-center gap-2">
-                        <LogoHome forBoosterPage={forBoosterPage}/>
-                        {/*{!forBoosterPage && !isMobile && (*/}
-                        {/*    <Search/>*/}
-                        {/*)}*/}
+                        <LogoHome forBoosterPage={forBoosterPage} isMobile={isMobile}/>
                     </div>
-                    {!isMobile ? (
-                        <>
-                            {forBoosterPage && <BoosterHeader/>}
-                            <nav className="flex justify-between flex-row text-center">
-                                {!forBoosterPage && <Cart cartCount={cartCount}/>}
-
-                                <div className="flex justify-center hover:scale-101" ref={profileRef}>
-                                    <IconButton onClick={handleProfileClick}
-                                                sx={{
-                                                    transition: 'box-shadow 0.3s ease',
-                                                    borderRadius: 0,
-                                                    '&:hover': {
-                                                        backgroundColor: 'transparent',
-                                                        boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
-                                                    }
-                                                }}>
-                                        <ProfileIcon className="w-[50px]"/>
-                                        {username && (
-                                            <div className="kanit-light text-xl ml-6">
-                                                {username}
-                                            </div>
-                                        )}
-                                    </IconButton>
-
-                                    <DropMenu anchorEl={anchorEl}
-                                              handleClose={handleProfileMenuClose}
-                                              isAuthenticated={isAuthenticated}
-                                              handleOpenProfile={handleOpenProfile}
-                                              handleLogout={handleLogout}
-                                              onOpen={toggleModal}/>
-                                </div>
-                            </nav>
-                        </>
-                    ) : (
-                        <>
-                            {!isAuthenticated ? (
-                                    <div className="flex justify-center hover:scale-101" ref={profileRef}>
-                                        <IconButton onClick={() => setModalIsOpen(true)}
-                                                    sx={{
-                                                        transition: 'box-shadow 0.3s ease',
-                                                        borderRadius: 0,
-                                                        '&:hover': {
-                                                            backgroundColor: 'transparent',
-                                                            boxShadow: '0px 5px 10px 2px rgba(253, 152, 11, 0.2)',
-                                                        }
-                                                    }}>
-                                            <ProfileIcon className="w-[50px]"/>
-                                        </IconButton>
-                                    </div>
-                                )
-                                : (
-                                    <div className="flex justify-center">
-                                        <IconButton onClick={() => handleLogout()}>
-                                            <LogoutIcon/>
-                                        </IconButton>
-                                    </div>
-                                )}
-                        </>
-                    )}
+                    {!isMobile ? renderDesktopHeader : renderMobileHeader}
                 </div>
                 {renderModal}
             </AppBar>
-            {isMobile && isAuthenticated && (
-                <MobileBottomNavigation
-                    isAuthenticated={isAuthenticated}
-                    role={role}
-                    cartCount={cartCount}
-                />
-            )}
+            {renderMobileNavigation}
         </>
     );
 }

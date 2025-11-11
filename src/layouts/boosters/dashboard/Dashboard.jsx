@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback, useEffect, useMemo} from 'react'
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import {useState} from 'react';
@@ -25,7 +25,8 @@ const Dashboard = () => {
     const [employeesPerPage, setEmployeesPerPage] = useState(isMobile ? 20 : 500);
     const [recordTotal, setRecordTotal] = useState(0);
     const [acceptLoading, setAcceptLoading] = useState(false);
-    const [loading, setLoading] = useState(true);
+
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedFilters, setSelectedFilters] = useState({
         gameNames: [],
@@ -44,7 +45,7 @@ const Dashboard = () => {
 
     const fetchAllOrders = useCallback(async () => {
         setAllOrders([]);
-        setLoading(true);
+        setIsLoading(true);
         try {
             const allOrdersApi = await getDashboardOrders(selectedFilters)
             setAllOrders(allOrdersApi.orders);
@@ -54,7 +55,7 @@ const Dashboard = () => {
             setAllOrders([]);
             setError(handleApiError(err))
         } finally {
-            setLoading(false);
+            setIsLoading(false);
         }
 
     }, [getDashboardOrders, setAllOrders, selectedFilters]);
@@ -102,6 +103,48 @@ const Dashboard = () => {
         }));
     };
 
+    const renderDashboard = useMemo(() => {
+        if(isMobile) {
+            return (
+                <DashboardMobileView
+                    setSelectedFilters={setSelectedFilters}
+                    selectedFilters={selectedFilters}
+                    setPageNumber={setPageNumber}
+                    allOrders={allOrders}
+                    openModal={openModal}
+                    loading={isLoading}
+                />
+            )
+        }
+
+        return (
+            <TableContainer
+                className={(isLoading || allOrders.length === 0)
+                    ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
+                    : 'bg-background max-w-[100vw] pb-16'
+                }
+            >
+                <Table sx={{minWidth: 650}} aria-label="simple table">
+                    <DashboardTableHead setPageNumber={setPageNumber}
+                                        setSelectedFilters={setSelectedFilters}
+                                        selectedFilters={selectedFilters}
+                    />
+                    {!isLoading && (
+                        <DashboardTableBody allOrders={allOrders} openModal={openModal}/>
+                    )}
+                </Table>
+                {!isMobile && isLoading && (
+                    <Box sx={{pt: '7%'}}>
+                        <CustomLoader height='100%'/>
+                    </Box>
+                )}
+                {!isLoading && allOrders.length === 0 && (
+                    <EmptyResponse text={'no orders by filter'}/>
+                )}
+            </TableContainer>
+        )
+    }, [isMobile, isLoading, allOrders, setSelectedFilters, selectedFilters])
+
     useEffect(() => {
         window.scrollTo(0, 0);
         fetchAllOrders();
@@ -116,42 +159,7 @@ const Dashboard = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <div className="flex-grow relative">
-                {isMobile ? (
-                    <DashboardMobileView
-                        setSelectedFilters={setSelectedFilters}
-                        selectedFilters={selectedFilters}
-                        setPageNumber={setPageNumber}
-                        allOrders={allOrders}
-                        openModal={openModal}
-                        loading={loading}
-                    />
-                )
-                : (
-                    <TableContainer
-                        className={(loading || allOrders.length === 0)
-                            ? 'bg-background max-w-[100vw] min-h-[calc(100vh-64px)]'
-                            : 'bg-background max-w-[100vw] pb-16'
-                        }
-                    >
-                        <Table sx={{minWidth: 650}} aria-label="simple table">
-                            <DashboardTableHead setPageNumber={setPageNumber}
-                                                setSelectedFilters={setSelectedFilters}
-                                                selectedFilters={selectedFilters}
-                            />
-                            {!loading && (
-                                <DashboardTableBody allOrders={allOrders} openModal={openModal}/>
-                            )}
-                        </Table>
-                        {loading && (
-                            <Box sx={{pt: '7%'}}>
-                                <CustomLoader height='100%'/>
-                            </Box>
-                        )}
-                        {!loading && allOrders.length === 0 && (
-                            <EmptyResponse text={'no orders by filter'}/>
-                        )}
-                    </TableContainer>
-                    )}
+                {renderDashboard}
             </div>
             <OrderPagination employeesPerPage={employeesPerPage}
                              recordTotal={recordTotal}

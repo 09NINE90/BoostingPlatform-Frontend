@@ -7,7 +7,7 @@ import {Box, Divider} from "@mui/material";
 import theme from "src/theme/theme.jsx";
 import ChatMessages from "src/components/chats/utils/ChatMessages.jsx";
 import ChatInput from "src/components/chats/utils/ChatInput.jsx";
-import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
+import ChatSkeleton from "./utils/ChatSkeleton.jsx";
 
 const ChatComponent = ({chatId, onReady}) => {
 
@@ -122,6 +122,12 @@ const ChatComponent = ({chatId, onReady}) => {
         }
     }, [messages]);
 
+    if (isLoading) {
+        return (
+            <ChatSkeleton/>
+        )
+    }
+
     return (
         <Box
             sx={{
@@ -138,28 +144,21 @@ const ChatComponent = ({chatId, onReady}) => {
                 pb: {xs: 20, md: 0}
             }}
         >
-            {isLoading && (
-                <CustomLoader size={0.8} height='100%'/>
-            )}
-            {!isLoading && (
-                <>
-                    <Box
-                        sx={{
-                            flex: 1,
-                            overflowY: "auto",
-                            pr: 1,
-                        }}
-                    >
-                        <ChatMessages messages={messages} username={username}/>
-                        <div ref={messagesEndRef}/>
-                    </Box>
+            <Box
+                sx={{
+                    flex: 1,
+                    overflowY: "auto",
+                    pr: 1,
+                }}
+            >
+                <ChatMessages messages={messages} username={username}/>
+                <div ref={messagesEndRef}/>
+            </Box>
 
-                    <Divider sx={{my: 2}}/>
+            <Divider sx={{my: 2}}/>
 
-                    <ChatInput inputMessage={inputMessage} setInputMessage={setInputMessage}
-                               handleSendMessage={handleSendMessage} isConnected={isConnected}/>
-                </>
-            )}
+            <ChatInput inputMessage={inputMessage} setInputMessage={setInputMessage}
+                       handleSendMessage={handleSendMessage} isConnected={isConnected}/>
         </Box>
     );
 };

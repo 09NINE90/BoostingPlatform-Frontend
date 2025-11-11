@@ -1,12 +1,39 @@
 import theme from "src/theme/theme.jsx";
-import {Box, Typography} from "@mui/material";
+import {Box, Skeleton, Typography} from "@mui/material";
 import HistoryIcon from '@mui/icons-material/History';
 import {Link} from 'react-router-dom';
-import React from "react";
+import React, {useMemo} from "react";
 import OutlinedBlueButton from "src/layouts/utils/ui/OutlinedBlueButton.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
 
-const BoosterBalanceInfo = ({balance, openModal}) => {
+const BoosterBalanceInfo = ({balance, openModal, isLoading}) => {
+
+    const renderBalance = useMemo(() => {
+        if (isLoading) {
+            return (
+                <Skeleton
+                    variant="text"
+                    sx={{
+                        width: '50%',
+                        height: 40,
+                        mb: 2,
+                        transform: 'none',
+                    }}
+                />
+            )
+        }
+
+        return (
+            <Typography variant="h4" sx={{
+                mb: 2,
+                height: 40,
+                color: theme.palette.text.primary,
+                fontWeight: theme.typography.fontWeightMedium,
+            }}>
+                $ {balance}
+            </Typography>
+        )
+    }, [isLoading, balance]);
 
     return (
         <Box sx={{
@@ -42,13 +69,7 @@ const BoosterBalanceInfo = ({balance, openModal}) => {
                     }}>
                         Available for withdrawal
                     </Typography>
-                    <Typography variant="h4" sx={{
-                        mb: 2,
-                        color: theme.palette.text.primary,
-                        fontWeight: theme.typography.fontWeightMedium,
-                    }}>
-                        $ {balance}
-                    </Typography>
+                    {renderBalance}
                 </Box>
                 <Box sx={{
                     minWidth: {xs: '50%', lg: '100%'},

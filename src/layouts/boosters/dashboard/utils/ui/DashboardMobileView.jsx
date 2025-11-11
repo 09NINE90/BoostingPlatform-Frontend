@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useMemo} from "react";
 import theme from "src/theme/theme.jsx";
-import {Box, Chip, Typography, useMediaQuery} from "@mui/material";
+import {Box, Chip, Skeleton, Typography, useMediaQuery} from "@mui/material";
 import EmptyResponse from "src/components/EmptyResponse.jsx";
 import CustomLoader from "src/layouts/boosters/utils/ui/CustomLoader.jsx";
 import ContainedBlueButton from "src/layouts/utils/ui/ContainedBlueButton.jsx";
@@ -8,6 +8,7 @@ import AccordionOrderOptions from "src/layouts/utils/ui/AccordionOrderOptions.js
 import DashboardMobileFilters from "src/layouts/boosters/dashboard/utils/ui/DashboardMobileFilters.jsx";
 import OrderOptions from "src/layouts/utils/ui/OrderOptions.jsx";
 import PlatformIconContainer from "src/layouts/utils/ui/PlatformIconContainer.jsx";
+import SkeletonDashboardCart from "./SkeletonDashboardCart.jsx";
 
 const DashboardMobileView = ({
                                  setSelectedFilters,
@@ -18,6 +19,14 @@ const DashboardMobileView = ({
                                  loading
                              }) => {
     const isMobile = useMediaQuery('(max-width:700px)');
+
+    const skeletonOrders = useMemo(() => {
+        if (!loading) return null;
+
+        return [...Array(4)].map((_, index) => (
+            <SkeletonDashboardCart index={index} key={index}/>
+        ));
+    }, [loading, allOrders]);
 
     return (
         <Box sx={{p: 2, width: '100%', pb: 25, paddingInline: {xs: 2, sm: 15}}}>
@@ -31,13 +40,8 @@ const DashboardMobileView = ({
                 <EmptyResponse text="no orders by filter"/>
             )}
 
-            {loading && (
-                <Box sx={{pt: '10%'}}>
-                    <CustomLoader height="100%"/>
-                </Box>
-            )}
-
-            {allOrders.map((order) => (
+            {skeletonOrders}
+            {!loading && allOrders.map((order) => (
                     <Box
                         key={order.orderId}
                         sx={{
@@ -78,7 +82,7 @@ const DashboardMobileView = ({
                             <Typography variant="body2" sx={{mb: 0.5, color: theme.palette.text.secondary}}>
                                 Platform: {order.gamePlatform.name}
                             </Typography>
-                            <PlatformIconContainer platformId={order.gamePlatform.title} />
+                            <PlatformIconContainer platformId={order.gamePlatform.title}/>
                         </Box>
 
                         {order.selectedOptions.length > 0 ? (

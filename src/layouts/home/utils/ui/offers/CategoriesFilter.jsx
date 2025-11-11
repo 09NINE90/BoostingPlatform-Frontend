@@ -9,7 +9,7 @@ const CategoriesFilter = ({categories, currentCategory, setCurrentCategory}) => 
                 display: 'flex',
                 flexWrap: 'wrap',
                 overflowX: 'auto',
-                mb: 3
+                mb: 3,
             }}>
             {categories.length > 0 && (
                 <Chip

@@ -5,7 +5,7 @@ import theme from "src/theme/theme.jsx";
 const OrderOptions = ({order}) => {
     return (
         <>
-            {order.selectedOptions.length > 0 && (
+            {order.selectedOptions && order.selectedOptions.length > 0 && (
                 <List dense disablePadding>
                     {order.selectedOptions.map((option, idx) => (
                         <ListItem key={idx} alignItems="flex-start" sx={{px: 2}}>
